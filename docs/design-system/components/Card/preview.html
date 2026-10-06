@@ -1,0 +1,16 @@
+<!-- @dsCard group="Perfil" height=260 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Card</title></head>
+<body style="margin:0;background:var(--ground)">
+<div id="root" class="sv-stage is-column"></div>
+<script>
+  var V = window.ScoutVestiario, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(V.Card, {
+  header: h(V.ClubBand, { name: 'Caio Ventura', subtitle: 'Meio-campista, 23 anos' }),
+  title: 'Carreira', subtitle: 'Clubes profissionais',
+  footer: 'Dados de exemplo'
+}, h('p', { style: { margin: 0, color: 'var(--ink-soft)' } }, 'Conteúdo do cartão sobre surface, com padding horizontal space-5.')));
+</script>
+</body>
+</html>

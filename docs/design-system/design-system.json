@@ -1,0 +1,136 @@
+{
+  "v": 3,
+  "layout": "files",
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-10-06T20:40:00Z"
+  },
+  "title": "Scout Vestiário",
+  "namespace": "ScoutVestiario",
+  "libraries": [
+    {
+      "name": "react",
+      "version": "18"
+    },
+    {
+      "name": "react-dom",
+      "version": "18"
+    }
+  ],
+  "sections": {},
+  "groups": [
+    "Icons"
+  ],
+  "assetGroups": {
+    "Icons": {
+      "name": "Icons",
+      "tile": "xs",
+      "order": [
+        "magnifying-glass.svg",
+        "eye.svg",
+        "eye-slash.svg",
+        "note-pencil.svg",
+        "list-numbers.svg",
+        "arrows-left-right.svg",
+        "dots-six-vertical.svg",
+        "arrow-left.svg",
+        "x.svg",
+        "arrow-clockwise.svg",
+        "sign-out.svg",
+        "plus.svg",
+        "check.svg"
+      ],
+      "files": {
+        "magnifying-glass.svg": {
+          "name": "magnifying-glass.svg",
+          "blob": "0ebd005987f66fe65f817f0655562974",
+          "size": 267,
+          "type": "image/svg+xml"
+        },
+        "eye.svg": {
+          "name": "eye.svg",
+          "blob": "59a659df8630640e54c82fce6e6b455d",
+          "size": 725,
+          "type": "image/svg+xml"
+        },
+        "eye-slash.svg": {
+          "name": "eye-slash.svg",
+          "blob": "e81de0fd266106998d984725ce6d0f89",
+          "size": 1024,
+          "type": "image/svg+xml"
+        },
+        "note-pencil.svg": {
+          "name": "note-pencil.svg",
+          "blob": "d0a15c353ef5e6988921ad4c5df78c81",
+          "size": 456,
+          "type": "image/svg+xml"
+        },
+        "list-numbers.svg": {
+          "name": "list-numbers.svg",
+          "blob": "ec3c87920bc76b3db24102cde1c64925",
+          "size": 702,
+          "type": "image/svg+xml"
+        },
+        "arrows-left-right.svg": {
+          "name": "arrows-left-right.svg",
+          "blob": "451463505cec3e0902fb7b13f971f4b9",
+          "size": 396,
+          "type": "image/svg+xml"
+        },
+        "dots-six-vertical.svg": {
+          "name": "dots-six-vertical.svg",
+          "blob": "1332065c8855b27aaddac1d494b5f106",
+          "size": 391,
+          "type": "image/svg+xml"
+        },
+        "arrow-left.svg": {
+          "name": "arrow-left.svg",
+          "blob": "565e593a1fbec2d6c9c9ca1d63c0fbf9",
+          "size": 272,
+          "type": "image/svg+xml"
+        },
+        "x.svg": {
+          "name": "x.svg",
+          "blob": "372c584331e24af2cf8b6ff5fd2c915b",
+          "size": 308,
+          "type": "image/svg+xml"
+        },
+        "arrow-clockwise.svg": {
+          "name": "arrow-clockwise.svg",
+          "blob": "38528b252c496c51d5dc2106b84527bf",
+          "size": 320,
+          "type": "image/svg+xml"
+        },
+        "sign-out.svg": {
+          "name": "sign-out.svg",
+          "blob": "601081246115060329e24bab59a29706",
+          "size": 370,
+          "type": "image/svg+xml"
+        },
+        "plus.svg": {
+          "name": "plus.svg",
+          "blob": "9b1d7ea0f7b7c7e61d0c638b515831e6",
+          "size": 236,
+          "type": "image/svg+xml"
+        },
+        "check.svg": {
+          "name": "check.svg",
+          "blob": "be11ea177ff9646cc13b63f250021ca7",
+          "size": 239,
+          "type": "image/svg+xml"
+        }
+      }
+    }
+  },
+  "blobs": {},
+  "docs": {
+    "readme": "project/README.md",
+    "sections": []
+  },
+  "lastChange": {
+    "by": "Leonardo Santos",
+    "at": "2026-10-06T20:42:13Z",
+    "via": "Claude Code",
+    "note": "ClubBand usa teamColors com fallback para a secundária e para o token club"
+  }
+}

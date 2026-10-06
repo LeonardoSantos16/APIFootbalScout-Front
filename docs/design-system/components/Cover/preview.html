@@ -1,0 +1,42 @@
+<!-- @dsCard height=288 -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@100..112,700..800&family=Figtree:wght@400;500&display=swap">
+<style>
+  html, body { margin: 0; background: var(--ground); }
+  .cover { position: relative; width: 960px; height: 288px; overflow: hidden; background: var(--ground); }
+  .cover svg { position: absolute; left: 0; top: 0; }
+  .club { fill: var(--club); }
+  .surface { fill: var(--surface); }
+  .strong { fill: var(--surface-strong); }
+  .pitch { fill: var(--pitch); }
+  .ink { fill: var(--ink); }
+  .cut { fill: var(--ground); font-family: var(--font-display); font-weight: 800; font-size: 300px; font-variant-numeric: tabular-nums; }
+  .r-lg { rx: var(--radius-lg); }
+  .r-md { rx: var(--radius-md); }
+  .r-pill { rx: 20px; }
+  .text { position: absolute; left: var(--space-5); bottom: var(--space-5); max-width: 440px; display: grid; gap: var(--space-2); }
+  .name { margin: 0; font-family: var(--font-display); font-weight: 800; font-size: 72px; line-height: 0.95; color: var(--ink); }
+  .tag { margin: 0; font-family: var(--font-body); font-size: 13px; line-height: 18px; color: var(--ink-muted); }
+</style>
+<div class="cover">
+  <svg width="960" height="288" viewBox="0 0 960 288" aria-hidden="true">
+    <!--
+      blocks: club 224×320 slab (radius-lg), surface 160×152 card (radius-lg), surface-strong 64×128 (radius-md), pitch 96×40 (radius-md), ink 120×40 pill
+      arrangement: one tall club slab bleeding top and bottom with satellites to its right and left, the way the profile band leads every card
+      pattern: an oversized "90" in the display face cut out of the slab in ground — per-90 is the unit the whole product reads in
+      steps and radii: space-3 12, space-4 16, space-5 24, space-6 40; radius-md 10, radius-lg 16, pill = half of 40
+    -->
+    <defs>
+      <clipPath id="slab"><rect x="568" y="-16" width="224" height="320" rx="16"></rect></clipPath>
+    </defs>
+    <rect class="strong r-md" x="488" y="176" width="64" height="128"></rect>
+    <rect class="club r-lg" x="568" y="-16" width="224" height="320"></rect>
+    <text class="cut" x="552" y="300" clip-path="url(#slab)">90</text>
+    <rect class="surface r-lg" x="808" y="24" width="168" height="152"></rect>
+    <rect class="pitch r-md" x="808" y="192" width="96" height="40"></rect>
+    <rect class="ink r-pill" x="808" y="248" width="120" height="40"></rect>
+  </svg>
+  <div class="text">
+    <p class="name">Scout<br>Vestiário</p>
+    <p class="tag">Interface escura para análise de jogadores, com a cor do clube no topo.</p>
+  </div>
+</div>

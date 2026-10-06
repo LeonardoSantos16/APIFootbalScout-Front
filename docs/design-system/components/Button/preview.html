@@ -1,0 +1,16 @@
+<!-- @dsCard group="Ações" height=88 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Button</title></head>
+<body style="margin:0;background:var(--ground)">
+<div id="root" class="sv-stage"></div>
+<script>
+  var V = window.ScoutVestiario, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+  h(V.Button, { variant: 'primary' }, 'Acompanhar'),
+  h(V.Button, null, 'Comparar'),
+  h(V.Button, { variant: 'ghost' }, 'Cancelar'),
+  h(V.Button, { variant: 'primary', disabled: true }, 'Acompanhar')));
+</script>
+</body>
+</html>

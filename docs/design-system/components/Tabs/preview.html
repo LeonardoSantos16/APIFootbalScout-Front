@@ -1,0 +1,19 @@
+<!-- @dsCard group="Ações" height=80 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Tabs</title></head>
+<body style="margin:0;background:var(--ground)">
+<div id="root" class="sv-stage"></div>
+<script>
+  var V = window.ScoutVestiario, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(function Demo() {
+  var s = React.useState('serie');
+  return h(V.Tabs, { ariaLabel: 'Recorte', value: s[0], onChange: s[1], items: [
+    { id: 'serie', label: 'Brasileirão Série A 2026' },
+    { id: 'copa', label: 'Copa do Brasil 2026' },
+    { id: 'selecao', label: 'Seleção', count: 4 }
+  ] });
+}));
+</script>
+</body>
+</html>
