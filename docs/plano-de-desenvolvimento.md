@@ -117,7 +117,7 @@ Depois de uma ou duas features no formato manual, adotar Spec Kit ou OpenSpec ja
 2. ~~ADRs.~~ Concluido: tokens de sessao, refresh com fila, recorte na URL e shortlist sem otimismo estao em [`adr/`](adr/).
 3. ~~`CONTEXT.md` do front.~~ Concluido como [`GLOSSARY.md`](../GLOSSARY.md), o nome que as skills `domain-modeling`, `tdd` e `codebase-design` leem.
 4. ~~Scaffold.~~ Concluido: Vite, TanStack Router e Query, openapi-typescript + openapi-fetch + openapi-react-query, MSW com `openapi-msw`, Storybook, Vitest e CI. Playwright fica para os testes e2e.
-5. Skill `scout-ui`, escrita depois do scaffold para apontar componentes, formatadores e o dicionario de erros reais, em vez de repetir os docs.
+5. ~~Skill `scout-ui`.~~ Concluido: versao inicial em `.claude/skills/scout-ui/`, com o procedimento de dados, estados, erros, estilo, mocks e stories, e os textos por valor da API. Componentes, formatadores e dicionario de erros entram nela na retrospectiva da F9.
 6. F9 Metricas como primeira feature completa em SDD — pequena, somente leitura e rica em estados.
 7. Retrospectiva e demais features.
 

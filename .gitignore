@@ -22,7 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-.claude/skills/
+.claude/skills/*
+!.claude/skills/scout-ui/
 
 storybook-static
 *.tsbuildinfo

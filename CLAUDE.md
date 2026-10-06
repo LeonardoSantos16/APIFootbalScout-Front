@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Estado do repositorio
 
-Front-end do APIFootballScout (scouting de atletas e gestao de transferencias). O scaffold esta pronto e ainda nao ha telas; a ordem de execucao esta em `docs/plano-de-desenvolvimento.md` (secao 8). Proximos passos: skill `scout-ui` e a F9 Metricas. Playwright entra junto com os testes e2e, e Radix/React Aria e `@phosphor-icons/react` quando o primeiro componente precisar.
+Front-end do APIFootballScout (scouting de atletas e gestao de transferencias). O scaffold esta pronto e ainda nao ha telas; a ordem de execucao esta em `docs/plano-de-desenvolvimento.md` (secao 8). A skill `scout-ui` (`.claude/skills/scout-ui/`) guia qualquer trabalho de interface; o proximo passo e a F9 Metricas. Playwright entra junto com os testes e2e, e Radix/React Aria e `@phosphor-icons/react` quando o primeiro componente precisar.
 
 ## Comandos
 
