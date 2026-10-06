@@ -15,6 +15,14 @@ declare module '@tanstack/react-router' {
   }
 }
 
+const startMocks = async () => {
+  if (import.meta.env.VITE_API_MOCK !== 'true') return
+  const { worker } = await import('./mocks/browser')
+  await worker.start({ onUnhandledRequest: 'bypass' })
+}
+
+await startMocks()
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
