@@ -4,11 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Estado do repositorio
 
-Front-end do APIFootballScout (scouting de atletas e gestao de transferencias). Ainda nao ha codigo: o repo tem so documentacao e o design system. A ordem de execucao esta em `docs/plano-de-desenvolvimento.md` (secao 8); os ADRs estao prontos e o scaffold vem depois do `CONTEXT.md` e da skill `scout-ui`. Quando o scaffold existir, atualize este arquivo com os comandos reais (build, lint, teste unitario isolado, `gen:api`).
+Front-end do APIFootballScout (scouting de atletas e gestao de transferencias). Ainda nao ha codigo: o repo tem so documentacao e o design system. A ordem de execucao esta em `docs/plano-de-desenvolvimento.md` (secao 8); os ADRs e o glossario estao prontos e o scaffold vem depois da skill `scout-ui`. Quando o scaffold existir, atualize este arquivo com os comandos reais (build, lint, teste unitario isolado, `gen:api`).
 
 Stack planejada (secao 6 do plano): React + Vite + TypeScript (SPA), TanStack Router com search params tipados, orval gerando hooks do TanStack Query + zod + handlers MSW, Radix/React Aria com CSS proprio sobre os tokens, Storybook (uma story por estado), Vitest + Testing Library e Playwright. CI roda `gen:api` + `git diff --exit-code` para pegar drift do contrato.
 
 ## Fontes da verdade
+
+- **`GLOSSARY.md`**: o nome de cada conceito do dominio e os sinonimos a evitar. Nomes de componentes, rotas, testes e textos da tela seguem ele.
 
 - **Contrato da API**: OpenAPI em `/openapi/v1.json` do back-end (`https://localhost:7163`, prefixo `/api`). Rotas, payloads e enums vem dele; nunca escreva tipos a mao, gere o client. O back-end (.NET) fica em `../APIFootbalScout`; regras de negocio em `docs/regras-de-negocio.md` e features em `docs/features.md` de la.
 - **`docs/README.md`**: o que o contrato nao mostra — valores do `ScoutConfig` que a validacao do front replica, tempo de vida dos tokens, convencoes de serializacao.

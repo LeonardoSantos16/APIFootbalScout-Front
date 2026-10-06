@@ -60,7 +60,7 @@ Depois de uma ou duas features no formato manual, adotar Spec Kit ou OpenSpec ja
 | Skill | Uso no front |
 | --- | --- |
 | `grill-with-docs` / `grilling` | Estressar cada spec antes de implementar ("e se o perfil der 502 no meio da shortlist?") |
-| `domain-modeling` | `CONTEXT.md` do front com a linguagem do dominio: recorte, afericao, alvo, dossie |
+| `domain-modeling` | `GLOSSARY.md` do front com a linguagem do dominio: recorte, afericao, alvo, acompanhamento |
 | `codebase-design` | Modulos profundos: client da API com refresh, dicionario de erros |
 | `tdd` | Regras de finalizacao do relatorio, compatibilidade de posicoes, interceptor de `401` |
 | `frontend-design` | Direcao estetica e implementacao de telas sem a estetica generica de IA |
@@ -115,7 +115,7 @@ Depois de uma ou duas features no formato manual, adotar Spec Kit ou OpenSpec ja
 
 1. ~~Moodboard e tokens.~~ Concluido: das tres direcoes testadas, a escolhida foi a A (Vestiario, inspirada no FotMob). O design system esta em [`design-system/`](design-system/README.md), com tokens, nove componentes de referencia, icones Phosphor e a regra da faixa do clube a partir de `teamColors`.
 2. ~~ADRs.~~ Concluido: tokens de sessao, refresh com fila, recorte na URL e shortlist sem otimismo estao em [`adr/`](adr/).
-3. `CONTEXT.md` do front.
+3. ~~`CONTEXT.md` do front.~~ Concluido como [`GLOSSARY.md`](../GLOSSARY.md), o nome que as skills `domain-modeling`, `tdd` e `codebase-design` leem.
 4. Skill `scout-ui` e `CLAUDE.md` do front.
 5. Scaffold: Vite, orval, MSW, Storybook, CI.
 6. F9 Metricas como primeira feature completa em SDD — pequena, somente leitura e rica em estados.
@@ -128,7 +128,7 @@ Premissas: um desenvolvedor, backend pronto e estavel, escopo dos documentos atu
 | Etapa | Horas |
 | --- | --- |
 | Moodboard, tokens e design das telas principais | 10–16 |
-| ADRs, `CONTEXT.md`, skill `scout-ui`, `CLAUDE.md` | 4–6 |
+| ADRs, `GLOSSARY.md`, skill `scout-ui`, `CLAUDE.md` | 4–6 |
 | Scaffold (Vite, orval, MSW, Storybook, CI) | 6–10 |
 | Sessao: signup, signin, refresh com fila, `me`, signout, troca de senha | 10–14 |
 | Busca, perfil e seletor de recorte | 8–12 |
