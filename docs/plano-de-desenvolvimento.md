@@ -116,8 +116,8 @@ Depois de uma ou duas features no formato manual, adotar Spec Kit ou OpenSpec ja
 1. ~~Moodboard e tokens.~~ Concluido: das tres direcoes testadas, a escolhida foi a A (Vestiario, inspirada no FotMob). O design system esta em [`design-system/`](design-system/README.md), com tokens, nove componentes de referencia, icones Phosphor e a regra da faixa do clube a partir de `teamColors`.
 2. ~~ADRs.~~ Concluido: tokens de sessao, refresh com fila, recorte na URL e shortlist sem otimismo estao em [`adr/`](adr/).
 3. ~~`CONTEXT.md` do front.~~ Concluido como [`GLOSSARY.md`](../GLOSSARY.md), o nome que as skills `domain-modeling`, `tdd` e `codebase-design` leem.
-4. Skill `scout-ui` e `CLAUDE.md` do front.
-5. Scaffold: Vite, orval, MSW, Storybook, CI.
+4. Scaffold: Vite, cliente tipado da API, MSW, Storybook, CI. O `CLAUDE.md` ja existe e ganha os comandos reais aqui.
+5. Skill `scout-ui`, escrita depois do scaffold para apontar componentes, formatadores e o dicionario de erros reais, em vez de repetir os docs.
 6. F9 Metricas como primeira feature completa em SDD — pequena, somente leitura e rica em estados.
 7. Retrospectiva e demais features.
 
