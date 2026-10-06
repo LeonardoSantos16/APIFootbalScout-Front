@@ -8,7 +8,7 @@ Os documentos do front ja funcionam como spec: o contrato OpenAPI cobre rotas e 
 
 O mapa de estados e a identidade do produto. `Recusada`, `Indisponivel`, `AmostraInsuficiente` e `TemporadaVirada` chegam com `200 OK` e nao sao erro. Uma interface generica trata tudo como carregando / sucesso / erro; esta precisa mostrar **por que** o dado nao existe. O design parte daqui.
 
-Decisoes a registrar como ADR antes de comecar:
+Decisoes registradas como ADR em [`adr/`](adr/):
 
 | Decisao | Direcao sugerida |
 | --- | --- |
@@ -106,15 +106,15 @@ Depois de uma ou duas features no formato manual, adotar Spec Kit ou OpenSpec ja
 
 ## 7. Aprender com a IA
 
-- **Escrever a mao as partes dificeis**: fila de refresh do `401`, repriorizacao da shortlist, formulario de relatorio com edicao parcial. O agente fica com scaffolding, stories e mocks — a mesma divisao do TDD, em que o agente leva ao red e o green e seu.
-- **Plan mode antes de cada tarefa**, comparando o plano com a spec. A divergencia e onde esta o aprendizado.
+- **Escrever a mao as partes dificeis**: fila de refresh do `401`, repriorizacao da shortlist, formulario de relatorio com edicao parcial. O agente fica com scaffolding, stories e mocks
+- **Plan mode antes de cada tarefa**, comparando o plano com a spec. A divergência e onde esta o aprendizado.
 - **`/code-review` nos proprios diffs**, pedindo a explicacao de cada achado.
 - **Retrospectiva por feature**: o que a spec nao previu? Corrigir a spec, a skill `scout-ui` ou o `CLAUDE.md`. Melhorar o contexto e a habilidade central de desenvolver com IA.
 
 ## 8. Ordem de execucao
 
 1. ~~Moodboard e tokens.~~ Concluido: das tres direcoes testadas, a escolhida foi a A (Vestiario, inspirada no FotMob). O design system esta em [`design-system/`](design-system/README.md), com tokens, nove componentes de referencia, icones Phosphor e a regra da faixa do clube a partir de `teamColors`.
-2. ADRs (tokens de sessao, recorte na URL, shortlist sem otimismo).
+2. ~~ADRs.~~ Concluido: tokens de sessao, refresh com fila, recorte na URL e shortlist sem otimismo estao em [`adr/`](adr/).
 3. `CONTEXT.md` do front.
 4. Skill `scout-ui` e `CLAUDE.md` do front.
 5. Scaffold: Vite, orval, MSW, Storybook, CI.

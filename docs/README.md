@@ -9,6 +9,7 @@ Documentacao destinada a quem vai construir a interface. Endpoints, payloads e e
 | [erros.md](erros.md) | Formato `ProblemDetails`, tabela de codigos de erro e mensagem sugerida |
 | [fluxos-de-tela.md](fluxos-de-tela.md) | Jornadas por feature, sessao e refresh de token, estados de tela e regras de UX derivadas do dominio |
 | [plano-de-desenvolvimento.md](plano-de-desenvolvimento.md) | Abordagem SDD, design, skills, agentes, stack e estimativa |
+| [adr/](adr/) | Decisoes de arquitetura: tokens de sessao, refresh com fila, recorte na URL, shortlist sem otimismo |
 | [design-system/](design-system/README.md) | Design system Scout Vestiario: tokens, regras de uso, componentes de referencia e icones. Visualizacao em https://claude.ai/artifact/MJ6hRhufGtPfdXq19TqkxD |
 
 ## Contrato da API
