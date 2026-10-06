@@ -8,7 +8,7 @@ Os documentos do front ja funcionam como spec: o contrato OpenAPI cobre rotas e 
 
 O mapa de estados e a identidade do produto. `Recusada`, `Indisponivel`, `AmostraInsuficiente` e `TemporadaVirada` chegam com `200 OK` e nao sao erro. Uma interface generica trata tudo como carregando / sucesso / erro; esta precisa mostrar **por que** o dado nao existe. O design parte daqui.
 
-Decisoes a registrar como ADR antes de comecar:
+Decisoes registradas como ADR em [`adr/`](adr/):
 
 | Decisao | Direcao sugerida |
 | --- | --- |
@@ -60,7 +60,7 @@ Depois de uma ou duas features no formato manual, adotar Spec Kit ou OpenSpec ja
 | Skill | Uso no front |
 | --- | --- |
 | `grill-with-docs` / `grilling` | Estressar cada spec antes de implementar ("e se o perfil der 502 no meio da shortlist?") |
-| `domain-modeling` | `CONTEXT.md` do front com a linguagem do dominio: recorte, afericao, alvo, dossie |
+| `domain-modeling` | `GLOSSARY.md` do front com a linguagem do dominio: recorte, afericao, alvo, acompanhamento |
 | `codebase-design` | Modulos profundos: client da API com refresh, dicionario de erros |
 | `tdd` | Regras de finalizacao do relatorio, compatibilidade de posicoes, interceptor de `401` |
 | `frontend-design` | Direcao estetica e implementacao de telas sem a estetica generica de IA |
@@ -90,9 +90,9 @@ Depois de uma ou duas features no formato manual, adotar Spec Kit ou OpenSpec ja
 | --- | --- |
 | Base | React + Vite + TypeScript (SPA; Next.js e desnecessario) |
 | Rotas | TanStack Router, com search params tipados para o recorte |
-| Dados | orval gerando hooks do TanStack Query, schemas zod e handlers MSW |
-| Mocks | MSW a partir do OpenAPI: desenvolvimento sem SofaScore e sem a API, com cada estado forcavel (`Recusada`, `502`...) |
-| Componentes | Radix ou React Aria + CSS proprio sobre os tokens |
+| Dados | `openapi-typescript` gerando um arquivo de tipos; `openapi-fetch` (middlewares para token e erro) + `openapi-react-query` nos hooks. O orval foi descartado no scaffold: gerava 111 arquivos, e os mocks aleatorios dele nao cobrem os estados que importam |
+| Mocks | MSW com handlers escritos a mao e tipados pelo contrato via `openapi-msw`: desenvolvimento sem SofaScore e sem a API, com cada estado forcavel (`Recusada`, `502`...) |
+| Componentes | Radix ou React Aria + CSS Modules sobre os tokens ([ADR 0005](adr/0005-css-modules.md)) |
 | Spec visual | Storybook, uma story por estado de cada componente; Chromatic ou teste visual do Playwright para regressao |
 | Testes | Vitest + Testing Library (unidade e componente), Playwright (e2e) |
 | CI | `gen:api` + `git diff --exit-code` para detectar drift do contrato |
@@ -106,18 +106,18 @@ Depois de uma ou duas features no formato manual, adotar Spec Kit ou OpenSpec ja
 
 ## 7. Aprender com a IA
 
-- **Escrever a mao as partes dificeis**: fila de refresh do `401`, repriorizacao da shortlist, formulario de relatorio com edicao parcial. O agente fica com scaffolding, stories e mocks — a mesma divisao do TDD, em que o agente leva ao red e o green e seu.
-- **Plan mode antes de cada tarefa**, comparando o plano com a spec. A divergencia e onde esta o aprendizado.
+- **Escrever a mao as partes dificeis**: fila de refresh do `401`, repriorizacao da shortlist, formulario de relatorio com edicao parcial. O agente fica com scaffolding, stories e mocks
+- **Plan mode antes de cada tarefa**, comparando o plano com a spec. A divergência e onde esta o aprendizado.
 - **`/code-review` nos proprios diffs**, pedindo a explicacao de cada achado.
 - **Retrospectiva por feature**: o que a spec nao previu? Corrigir a spec, a skill `scout-ui` ou o `CLAUDE.md`. Melhorar o contexto e a habilidade central de desenvolver com IA.
 
 ## 8. Ordem de execucao
 
 1. ~~Moodboard e tokens.~~ Concluido: das tres direcoes testadas, a escolhida foi a A (Vestiario, inspirada no FotMob). O design system esta em [`design-system/`](design-system/README.md), com tokens, nove componentes de referencia, icones Phosphor e a regra da faixa do clube a partir de `teamColors`.
-2. ADRs (tokens de sessao, recorte na URL, shortlist sem otimismo).
-3. `CONTEXT.md` do front.
-4. Skill `scout-ui` e `CLAUDE.md` do front.
-5. Scaffold: Vite, orval, MSW, Storybook, CI.
+2. ~~ADRs.~~ Concluido: tokens de sessao, refresh com fila, recorte na URL e shortlist sem otimismo estao em [`adr/`](adr/).
+3. ~~`CONTEXT.md` do front.~~ Concluido como [`GLOSSARY.md`](../GLOSSARY.md), o nome que as skills `domain-modeling`, `tdd` e `codebase-design` leem.
+4. ~~Scaffold.~~ Concluido: Vite, TanStack Router e Query, openapi-typescript + openapi-fetch + openapi-react-query, MSW com `openapi-msw`, Storybook, Vitest e CI. Playwright fica para os testes e2e.
+5. ~~Skill `scout-ui`.~~ Concluido: versao inicial em `.claude/skills/scout-ui/`, com o procedimento de dados, estados, erros, estilo, mocks e stories, e os textos por valor da API. Componentes, formatadores e dicionario de erros entram nela na retrospectiva da F9.
 6. F9 Metricas como primeira feature completa em SDD — pequena, somente leitura e rica em estados.
 7. Retrospectiva e demais features.
 
@@ -128,8 +128,8 @@ Premissas: um desenvolvedor, backend pronto e estavel, escopo dos documentos atu
 | Etapa | Horas |
 | --- | --- |
 | Moodboard, tokens e design das telas principais | 10–16 |
-| ADRs, `CONTEXT.md`, skill `scout-ui`, `CLAUDE.md` | 4–6 |
-| Scaffold (Vite, orval, MSW, Storybook, CI) | 6–10 |
+| ADRs, `GLOSSARY.md`, skill `scout-ui`, `CLAUDE.md` | 4–6 |
+| Scaffold (Vite, cliente tipado, MSW, Storybook, CI) | 6–10 |
 | Sessao: signup, signin, refresh com fila, `me`, signout, troca de senha | 10–14 |
 | Busca, perfil e seletor de recorte | 8–12 |
 | F9 Metricas por 90 | 6–8 |
