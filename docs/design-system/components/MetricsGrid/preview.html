@@ -1,0 +1,21 @@
+<!-- @dsCard group="Métricas" height=300 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>MetricsGrid</title></head>
+<body style="margin:0;background:var(--ground)">
+<div id="root" class="sv-stage is-column"></div>
+<script>
+  var V = window.ScoutVestiario, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(V.Card, { title: 'Métricas por 90', subtitle: 'Brasileirão Série A 2026, clube' },
+  h(V.MetricsGrid, { footnote: 'Calculado sobre 1.284 min jogados. Dados de exemplo.', metrics: [
+    { label: 'Gols', unit: 'por 90', value: '0,21' },
+    { label: 'Assistências', unit: 'por 90', value: '0,28' },
+    { label: 'Passes decisivos', unit: 'por 90', value: '1,82' },
+    { label: 'Desarmes', unit: 'por 90', value: '2,10' },
+    { label: 'Interceptações', unit: 'por 90', state: 'recusada', reason: 'Não publicado pela fonte' },
+    { label: 'Rating', unit: 'média', value: '7,12' },
+    { label: 'Precisão de passe', unit: '%', value: '86,4' }
+  ] })));
+</script>
+</body>
+</html>

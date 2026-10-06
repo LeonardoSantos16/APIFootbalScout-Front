@@ -1,0 +1,12 @@
+<!-- @dsCard group="Feedback" height=96 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>InlineError</title></head>
+<body style="margin:0;background:var(--ground)">
+<div id="root" class="sv-stage is-column"></div>
+<script>
+  var V = window.ScoutVestiario, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(V.Card, null, h(V.InlineError, { message: 'Não foi possível carregar o perfil agora. A fonte de dados está indisponível.', onRetry: function () {} })));
+</script>
+</body>
+</html>

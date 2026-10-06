@@ -1,0 +1,15 @@
+<!-- @dsCard group="Perfil" height=300 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>ClubBand</title></head>
+<body style="margin:0;background:var(--ground)">
+<div id="root" class="sv-stage is-column"></div>
+<script>
+  var V = window.ScoutVestiario, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+  h(V.ClubBand, { name: 'Caio Ventura', subtitle: 'Meio-campista, 23 anos', color: '#8e2a32', action: h(V.Button, { variant: 'primary' }, 'Acompanhar') }),
+  h(V.ClubBand, { name: 'Caio Ventura', subtitle: 'Primária #ffffff descartada, usa a secundária #66b3ff', color: '#ffffff', secondaryColor: '#66b3ff' }),
+  h(V.ClubBand, { name: 'Caio Ventura', subtitle: 'Sem cor utilizável, usa o token club', color: '#000000', secondaryColor: '#ffffff' })));
+</script>
+</body>
+</html>
