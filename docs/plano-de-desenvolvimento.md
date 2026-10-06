@@ -92,7 +92,7 @@ Depois de uma ou duas features no formato manual, adotar Spec Kit ou OpenSpec ja
 | Rotas | TanStack Router, com search params tipados para o recorte |
 | Dados | orval gerando hooks do TanStack Query, schemas zod e handlers MSW |
 | Mocks | MSW a partir do OpenAPI: desenvolvimento sem SofaScore e sem a API, com cada estado forcavel (`Recusada`, `502`...) |
-| Componentes | Radix ou React Aria + CSS proprio sobre os tokens |
+| Componentes | Radix ou React Aria + CSS Modules sobre os tokens ([ADR 0005](adr/0005-css-modules.md)) |
 | Spec visual | Storybook, uma story por estado de cada componente; Chromatic ou teste visual do Playwright para regressao |
 | Testes | Vitest + Testing Library (unidade e componente), Playwright (e2e) |
 | CI | `gen:api` + `git diff --exit-code` para detectar drift do contrato |

@@ -16,7 +16,7 @@ Stack planejada (secao 6 do plano): React + Vite + TypeScript (SPA), TanStack Ro
 - **`docs/README.md`**: o que o contrato nao mostra — valores do `ScoutConfig` que a validacao do front replica, tempo de vida dos tokens, convencoes de serializacao.
 - **`docs/erros.md`**: tratamento por `code` do `ProblemDetails`.
 - **`docs/fluxos-de-tela.md`**: jornadas, sessao/refresh e estados por feature.
-- **`docs/adr/`**: decisoes de arquitetura do front (tokens, refresh, recorte na URL, shortlist). Leia antes de mexer nessas areas; para reverter uma, escreva um ADR novo que a substitua.
+- **`docs/adr/`**: decisoes de arquitetura do front (tokens, refresh, recorte na URL, shortlist, CSS Modules). Leia antes de mexer nessas areas; para reverter uma, escreva um ADR novo que a substitua.
 - **`docs/design-system/`**: Scout Vestiario (so tema escuro). `README.md` tem as regras de uso, `tokens.json` os tokens. Os componentes em `components/` sao referencia em `React.createElement` + `bundle.css`, nao codigo de producao. Edite o repo primeiro e so depois republique o artefato https://claude.ai/artifact/MJ6hRhufGtPfdXq19TqkxD.
 
 `docs/erros.md` e `docs/fluxos-de-tela.md` sao copias de `docs/frontend/` do back-end e podem divergir; na duvida, confira la.
