@@ -9,6 +9,7 @@ Documentacao destinada a quem vai construir a interface. Endpoints, payloads e e
 | [erros.md](erros.md) | Formato `ProblemDetails`, tabela de codigos de erro e mensagem sugerida |
 | [fluxos-de-tela.md](fluxos-de-tela.md) | Jornadas por feature, sessao e refresh de token, estados de tela e regras de UX derivadas do dominio |
 | [plano-de-desenvolvimento.md](plano-de-desenvolvimento.md) | Abordagem SDD, design, skills, agentes, stack e estimativa |
+| [adr/](adr/) | Decisoes de arquitetura: tokens de sessao, refresh com fila, recorte na URL, shortlist sem otimismo, CSS Modules |
 | [design-system/](design-system/README.md) | Design system Scout Vestiario: tokens, regras de uso, componentes de referencia e icones. Visualizacao em https://claude.ai/artifact/MJ6hRhufGtPfdXq19TqkxD |
 
 ## Contrato da API
@@ -20,23 +21,12 @@ O contrato OpenAPI e a fonte da verdade para rotas, requests, responses e enums.
 | Swagger UI | `/swagger` |
 | Documento OpenAPI (3.1) | `/openapi/v1.json` |
 
-Nao escreva tipos a mao: gere o client a partir do documento e rode a geracao de novo sempre que o backend mudar. Exemplo com `orval`, que gera tipos e hooks do TanStack Query:
+Nao escreva tipos a mao: o front gera os tipos a partir do documento com `openapi-typescript` e consome a API com `openapi-fetch` + `openapi-react-query`, que checam rota, parametros e resposta contra esses tipos. O snapshot do contrato fica em `openapi/v1.json`; com a API rodando, atualize e regenere:
 
-```ts
-// orval.config.ts
-export default {
-  scout: {
-    input: 'https://localhost:7163/openapi/v1.json',
-    output: { target: 'src/api/scout.ts', client: 'react-query' },
-  },
-};
+```sh
+npm run api:snapshot
+npm run gen:api
 ```
-
-```json
-"scripts": { "gen:api": "orval" }
-```
-
-Se preferir algo mais leve, `openapi-typescript` + `openapi-fetch` geram so os tipos e um fetch tipado.
 
 Para testar na mao (Postman, Insomnia, Bruno), importe o mesmo documento em vez de manter uma colecao separada.
 
