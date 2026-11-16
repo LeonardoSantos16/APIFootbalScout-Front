@@ -51,6 +51,7 @@ rules:
     - Escrever textos da tela entre aspas, exatamente como devem aparecer
     - Nao citar componentes, hooks ou bibliotecas
   design:
+    - Apontar o esboco aprovado em docs/esbocos/ quando o item tiver tela
     - Listar endpoints consumidos com o caminho do contrato
     - Listar rotas, search params, componentes e handlers MSW por estado
     - Referenciar os ADRs aplicados; uma decisao que contraria um ADR exige ADR novo

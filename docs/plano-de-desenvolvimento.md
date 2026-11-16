@@ -55,7 +55,7 @@ openspec/
       tasks.md                # passos de ate 2 h, ciclos de TDD, retrospectiva
 ```
 
-A change leva o identificador do back-end (`f9-`, `f10-`) e a capability leva o termo do glossario. Nenhuma change e criada antes da hora: o [planejamento base](planejamento-base.md) lista os itens, e cada um passa por grilling -> spec -> TDD quando entra em execucao, ja com o aprendizado do anterior.
+A change leva o identificador do back-end (`f9-`, `f10-`) e a capability leva o termo do glossario. Nenhuma change e criada antes da hora: o [planejamento base](planejamento-base.md) lista os itens, e cada um passa por grilling -> esboco da tela -> spec -> TDD quando entra em execucao, ja com o aprendizado do anterior.
 
 ## 4. Skills
 
@@ -124,7 +124,7 @@ A change leva o identificador do back-end (`f9-`, `f10-`) e a capability leva o 
 4. ~~Scaffold.~~ Concluido: Vite, TanStack Router e Query, openapi-typescript + openapi-fetch + openapi-react-query, MSW com `openapi-msw`, Storybook, Vitest e CI. Playwright fica para os testes e2e.
 5. ~~Skill `scout-ui`.~~ Concluido: versao inicial em `.claude/skills/scout-ui/`, com o procedimento de dados, estados, erros, estilo, mocks e stories, e os textos por valor da API. Componentes, formatadores e dicionario de erros entram nela na retrospectiva da F9.
 6. ~~Planejamento base.~~ Concluido: [`planejamento-base.md`](planejamento-base.md) com a ordem dos itens, o escopo e as perguntas para o grilling de cada um; OpenSpec iniciado com `openspec/config.yaml`, sem nenhuma change ainda.
-7. Itens do planejamento base, um por vez: grilling -> spec no OpenSpec -> TDD -> retrospectiva, comecando pelo CI e depois a F9 Metricas.
+7. Itens do planejamento base, um por vez: grilling -> esboco da tela -> spec no OpenSpec -> TDD -> retrospectiva, comecando pelo CI e depois a F9 Metricas.
 
 ## 9. Estimativa
 
