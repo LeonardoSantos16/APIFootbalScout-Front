@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Estado do repositorio
 
-Front-end do APIFootballScout (scouting de atletas e gestao de transferencias). O scaffold esta pronto e ainda nao ha telas; a ordem de execucao esta em `docs/plano-de-desenvolvimento.md` (secao 8). A skill `scout-ui` (`.claude/skills/scout-ui/`) guia qualquer trabalho de interface; o proximo passo e a F9 Metricas. Playwright entra junto com os testes e2e, e Radix/React Aria e `@phosphor-icons/react` quando o primeiro componente precisar.
+Front-end do APIFootballScout (scouting de atletas e gestao de transferencias). O scaffold esta pronto e ainda nao ha telas. A ordem dos itens, o escopo de cada um e as perguntas para o grilling estao em `docs/planejamento-base.md`. A skill `scout-ui` (`.claude/skills/scout-ui/`) guia qualquer trabalho de interface; o proximo passo e o grilling do item 1, CI. Playwright entra junto com os testes e2e, e Radix/React Aria e `@phosphor-icons/react` quando o primeiro componente precisar.
 
 ## Comandos
 
@@ -70,4 +70,5 @@ Detalhes em `docs/design-system/README.md`; os pontos que mais se erram:
 - Sem comentarios no codigo; nos testes, so os marcadores Arrange/Act/Assert.
 - No `/tdd`, gere testes e stubs ate o red; o green e do usuario. Decida pelo doc de regras e pelo repo e declare a decisao, em vez de perguntar antes.
 - Commits curtos, so o titulo, em portugues com prefixo convencional (`feat:`, `test:`, `docs:`, `chore:`). Em cada ciclo de TDD, um commit `test:` e um `feat:` separados. Sem `Co-Authored-By` do Claude.
-- Specs por feature em `specs/<id-do-backend>-<nome>/` (`requisitos.md` em EARS, `design.md`, `tarefas.md`), com os mesmos identificadores do back-end (F9, F10...).
+- SDD com OpenSpec (`openspec/`, schema `spec-driven`). Cada change em `openspec/changes/<nome>/` tem `proposal.md`, specs delta em `specs/<capability>/spec.md` (requisitos com SHALL/MUST e cenarios WHEN/THEN), `design.md` e `tasks.md`. O nome da change leva o identificador do back-end (`f9-metricas-por-90`); a capability leva o termo do glossario (`metricas-por-90`, `recorte`). Contexto e regras por artefato ficam em `openspec/config.yaml`.
+- Fluxo de cada item do `docs/planejamento-base.md`: skill `grilling` para fechar as decisoes -> spec no OpenSpec (`/openspec-propose`, validada com `openspec validate <change> --strict`) -> TDD (testes ate o red, depois a implementacao) -> retrospectiva e `/openspec-archive-change`. Um item por vez; a change so e criada quando o item entra em execucao.
