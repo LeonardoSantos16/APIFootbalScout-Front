@@ -1,0 +1,72 @@
+schema: spec-driven
+
+context: |
+  Language: pt-BR
+  All artifacts must be written in pt-BR.
+  Keep OpenSpec structural headings and SHALL/MUST keywords in English.
+
+  Projeto: front-end (SPA) do APIFootballScout, ferramenta do olheiro para buscar jogadores,
+  ler metricas por 90, comparar dois jogadores, acompanhar mudancas e manter relatorios e
+  shortlists. O back-end .NET fica em ../APIFootbalScout e ja esta pronto.
+
+  Stack: React + Vite + TypeScript, TanStack Router (rotas por arquivo, search params
+  tipados), TanStack Query via openapi-react-query, openapi-fetch com middlewares, tipos
+  gerados do contrato em src/api/schema.d.ts, MSW tipado com openapi-msw, CSS Modules sobre
+  os tokens do design system Scout Vestiario (so tema escuro), Storybook, Vitest + Testing
+  Library, Playwright para e2e.
+
+  Fontes da verdade, nesta ordem de leitura:
+  - GLOSSARY.md: nomes do dominio e sinonimos a evitar.
+  - openapi/v1.json: rotas, payloads e enums. Nunca escrever tipos a mao.
+  - docs/README.md: valores do ScoutConfig que o front replica, tempo de vida dos tokens.
+  - docs/erros.md: tratamento por `code` do ProblemDetails.
+  - docs/fluxos-de-tela.md: jornadas e estados por feature.
+  - docs/adr/: decisoes do front (tokens, refresh com fila, recorte na URL, shortlist sem
+    otimismo, CSS Modules).
+  - docs/design-system/README.md e a skill scout-ui: regras de interface.
+  - ../APIFootbalScout/docs/regras-de-negocio.md e features.md: regras do back-end.
+
+  Identificadores das changes seguem o back-end (F1, F2, F5, F7, F9, F10) para manter a
+  rastreabilidade. Capabilities levam o nome do conceito do glossario, sem o identificador.
+
+  Regras que atravessam todas as features:
+  - Recorte = competicaoId + temporadaId + contexto (Clube/Selecao), derivado de `stats` do
+    perfil e guardado na URL.
+  - Recusa nao e erro: Recusada, Indisponivel, AmostraInsuficiente e TemporadaVirada chegam
+    com 200 OK e aparecem na tela com o motivo e os numeros, nunca o nome do enum.
+  - Erros: mensagem e comportamento saem do `code`; `detail` nao vai para a tela; todo 502
+    oferece "Tentar de novo"; recurso de outro olheiro responde 404.
+  - Texto da tela em pt-BR, so a primeira letra maiuscula, numeros no padrao brasileiro e
+    toda metrica com unidade.
+
+rules:
+  proposal:
+    - Citar o identificador do back-end (F1, F2, F5, F7, F9, F10) quando houver
+    - Listar as changes de que esta depende e as que ela desbloqueia
+    - Declarar o que fica fora do escopo
+  specs:
+    - Usar os termos do GLOSSARY.md nos nomes de requisitos e cenarios
+    - Cobrir em cenarios os quatro estados de tela - carregando, sucesso, vazio ou recusado, erro
+    - Ter um cenario por motivo de recusa e por `code` de erro que a tela trata de forma propria
+    - Escrever textos da tela entre aspas, exatamente como devem aparecer
+    - Nao citar componentes, hooks ou bibliotecas
+  design:
+    - Apontar o esboco aprovado em docs/esbocos/ quando o item tiver tela
+    - Listar endpoints consumidos com o caminho do contrato
+    - Listar rotas, search params, componentes e handlers MSW por estado
+    - Referenciar os ADRs aplicados; uma decisao que contraria um ADR exige ADR novo
+  tasks:
+    - Tarefas pequenas e verificaveis, de no maximo 2 horas
+    - Regras de dominio em ciclos de TDD - teste antes, com commits test e feat separados
+    - Toda tela nova ganha story por estado e handler MSW por estado
+    - Ultima tarefa da change - retrospectiva atualizando spec, skill scout-ui ou CLAUDE.md
+
+operations:
+  apply:
+    guidance:
+      - Seguir a skill scout-ui em qualquer trabalho de interface
+      - Rodar npm run lint, npm run typecheck e npm test antes de marcar uma tarefa como feita
+      - Sem comentarios no codigo; nos testes so os marcadores Arrange/Act/Assert
+  archive:
+    guidance:
+      - Conferir se as specs principais refletem o que foi implementado antes de arquivar

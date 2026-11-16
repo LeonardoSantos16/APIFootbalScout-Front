@@ -39,19 +39,23 @@ A estetica generica vem de shadcn sem customizacao, Inter em tudo, gradiente rox
 | Kiro (AWS) | IDE spec-driven nativa, requisitos em EARS |
 | BMAD Method | Papeis de PM, arquiteto e dev; pesado para um projeto deste tamanho |
 
-### Formato proprio (recomendado para comecar)
+### Escolha: OpenSpec
 
-Uma pasta por feature, com os mesmos identificadores do backend para manter a rastreabilidade:
+O formato proprio (uma pasta `specs/F9-metricas/` com `requisitos.md`, `design.md` e `tarefas.md`) foi trocado pelo OpenSpec antes da primeira feature. Ele tem a mesma divisao, valida o formato na linha de comando e separa a spec viva (`openspec/specs/`) da mudanca em andamento (`openspec/changes/`), o que serve as features que alteram capabilities criadas por outras (o perfil ganha acoes a cada feature).
 
 ```
-specs/
-  F9-metricas/
-    requisitos.md   # EARS: "Quando a metrica for Recusada por AmostraInsuficiente, o sistema deve exibir..."
-    design.md       # componentes, estados, rotas, endpoints consumidos
-    tarefas.md      # passos pequenos e verificaveis
+openspec/
+  config.yaml                 # contexto do projeto e regras por artefato
+  specs/<capability>/spec.md  # spec viva, preenchida ao arquivar cada change
+  changes/
+    f9-metricas-por-90/
+      proposal.md             # por que, o que muda, capabilities, impacto
+      specs/<capability>/spec.md  # delta: requisitos SHALL/MUST e cenarios WHEN/THEN
+      design.md               # endpoints, rotas, componentes, handlers MSW, ADRs
+      tasks.md                # passos de ate 2 h, ciclos de TDD, retrospectiva
 ```
 
-Depois de uma ou duas features no formato manual, adotar Spec Kit ou OpenSpec ja sabendo o que eles automatizam.
+A change leva o identificador do back-end (`f9-`, `f10-`) e a capability leva o termo do glossario. Nenhuma change e criada antes da hora: o [planejamento base](planejamento-base.md) lista os itens, e cada um passa por grilling -> esboco da tela -> spec -> TDD quando entra em execucao, ja com o aprendizado do anterior.
 
 ## 4. Skills
 
@@ -103,6 +107,7 @@ Depois de uma ou duas features no formato manual, adotar Spec Kit ou OpenSpec ja
 - Codigos de erro publicados como enum no OpenAPI, permitindo `Record<CodigoDeErro, string>` verificado pelo compilador.
 - Endpoint de perfis em lote, eliminando as 25 chamadas da shortlist.
 - `Players` e `Tournament` respondendo `ProblemDetails`.
+- Listar os acompanhamentos ativos do olheiro e encerrar um acompanhamento: o contrato so tem abrir e consultar por jogador, o que deixa sem fonte o consumo "7 de 10" e a lista de acompanhados da F1.
 
 ## 7. Aprender com a IA
 
@@ -118,8 +123,8 @@ Depois de uma ou duas features no formato manual, adotar Spec Kit ou OpenSpec ja
 3. ~~`CONTEXT.md` do front.~~ Concluido como [`GLOSSARY.md`](../GLOSSARY.md), o nome que as skills `domain-modeling`, `tdd` e `codebase-design` leem.
 4. ~~Scaffold.~~ Concluido: Vite, TanStack Router e Query, openapi-typescript + openapi-fetch + openapi-react-query, MSW com `openapi-msw`, Storybook, Vitest e CI. Playwright fica para os testes e2e.
 5. ~~Skill `scout-ui`.~~ Concluido: versao inicial em `.claude/skills/scout-ui/`, com o procedimento de dados, estados, erros, estilo, mocks e stories, e os textos por valor da API. Componentes, formatadores e dicionario de erros entram nela na retrospectiva da F9.
-6. F9 Metricas como primeira feature completa em SDD — pequena, somente leitura e rica em estados.
-7. Retrospectiva e demais features.
+6. ~~Planejamento base.~~ Concluido: [`planejamento-base.md`](planejamento-base.md) com a ordem dos itens, o escopo e as perguntas para o grilling de cada um; OpenSpec iniciado com `openspec/config.yaml`, sem nenhuma change ainda.
+7. Itens do planejamento base, um por vez: grilling -> esboco da tela -> spec no OpenSpec -> TDD -> retrospectiva, comecando pelo CI e depois a F9 Metricas.
 
 ## 9. Estimativa
 
