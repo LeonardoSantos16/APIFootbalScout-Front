@@ -1,5 +1,12 @@
-export const formatDecimal = (_valor: number, _casas: number): string => ''
+const LOCALE = 'pt-BR'
 
-export const formatPercent = (_valor: number): string => ''
+export const formatDecimal = (valor: number, casas: number): string =>
+  new Intl.NumberFormat(LOCALE, {
+    minimumFractionDigits: casas,
+    maximumFractionDigits: casas,
+  }).format(valor)
 
-export const formatMinutos = (_minutos: number): string => ''
+export const formatPercent = (valor: number): string => `${formatDecimal(valor, 1)}%`
+
+export const formatMinutos = (minutos: number): string =>
+  `${new Intl.NumberFormat(LOCALE, { maximumFractionDigits: 0 }).format(minutos)} min`

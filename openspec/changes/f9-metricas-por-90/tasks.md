@@ -10,7 +10,7 @@
 ## 2. Formatting and configuration
 
 - [x] 2.1 `src/config/scout.ts` with `AMOSTRA_MINIMA_DE_MINUTOS = 450` and a reference in `docs/README.md`; verify with `npm run typecheck`
-- [ ] 2.2 TDD of `src/format/numero.ts` (`2,10`, `7,12`, `86,4%`, `1.284 min`, rounding): `test:` commit on red and `feat:` on green; verify with `npx vitest run src/format`
+- [x] 2.2 TDD of `src/format/numero.ts` (`2,10`, `7,12`, `86,4%`, `1.284 min`, rounding): `test:` commit on red and `feat:` on green; verify with `npx vitest run src/format`
 
 ## 3. Recorte
 
