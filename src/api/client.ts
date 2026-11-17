@@ -1,18 +1,15 @@
 import createFetchClient, { type Middleware } from 'openapi-fetch'
 import createQueryClient from 'openapi-react-query'
+import type { SessionNotice } from '../interfaces/session'
+import { ApiError } from './apiError'
+import { createAuthMiddleware } from './auth'
+import { createRefresher } from './refresh'
 import type { paths } from './schema'
+import { clearSession, readSession, saveSession } from './session'
 
-export class ApiError extends Error {
-  readonly status: number
-  readonly body: unknown
+export { ApiError } from './apiError'
 
-  constructor(status: number, body: unknown) {
-    super(`HTTP ${status}`)
-    this.name = 'ApiError'
-    this.status = status
-    this.body = body
-  }
-}
+type SessionEndedHandler = (notice: SessionNotice) => void
 
 const readBody = async (response: Response): Promise<unknown> => {
   const text = await response.clone().text()
@@ -27,10 +24,38 @@ export const errorsMiddleware: Middleware = {
   },
 }
 
-export const fetchClient = createFetchClient<paths>({
-  baseUrl: import.meta.env.VITE_API_URL ?? '',
-  fetch: (request) => globalThis.fetch(request),
+const createClient = () => {
+  const client = createFetchClient<paths>({
+    baseUrl: import.meta.env.VITE_API_URL ?? '',
+    fetch: (request) => globalThis.fetch(request),
+  })
+  client.use(errorsMiddleware)
+  return client
+}
+
+let sessionEndedHandler: SessionEndedHandler = () => undefined
+
+export const onSessionEnded = (handler: SessionEndedHandler) => {
+  sessionEndedHandler = handler
+}
+
+const endSession: SessionEndedHandler = (notice) => sessionEndedHandler(notice)
+
+const refreshClient = createClient()
+
+const refresher = createRefresher({
+  readSession,
+  saveSession,
+  clearSession,
+  onSessionEnded: endSession,
+  requestRefresh: async (refreshToken) => {
+    const { data } = await refreshClient.POST('/api/Auth/refresh', { body: { refreshToken } })
+    if (!data) throw new ApiError(500, undefined)
+    return data
+  },
 })
-fetchClient.use(errorsMiddleware)
+
+export const fetchClient = createClient()
+fetchClient.use(createAuthMiddleware({ refresher, readSession, clearSession, onSessionEnded: endSession }))
 
 export const $api = createQueryClient(fetchClient)

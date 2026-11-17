@@ -25,7 +25,7 @@ const setup = (requestRefresh: (token: string) => Promise<AuthResponse> = async 
     onSessionEnded,
     lock: (_name, task) => task(),
   })
-  const client = createFetchClient<paths>({ baseUrl: '', fetch: (request) => globalThis.fetch(request) })
+  const client = createFetchClient<paths>({ baseUrl: import.meta.env.VITE_API_URL, fetch: (request) => globalThis.fetch(request) })
   client.use(errorsMiddleware)
   client.use(
     createAuthMiddleware({

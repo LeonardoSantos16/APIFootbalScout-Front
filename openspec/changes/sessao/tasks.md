@@ -17,10 +17,10 @@
 
 ## 3. Renewal queue and auth middleware
 
-- [ ] 3.1 TDD of `src/api/refresh.ts` with a fake `requestRefresh` and a fake lock: N concurrent `renew` calls make one request; another tab's pair inside the lock is used without a request; `refused` clears the session; `unavailable` keeps it; `test:` red for the group
-- [ ] 3.2 TDD of `src/api/auth.ts` against a real `fetchClient` with MSW: bearer on protected calls and none on `signin`/`signup`/`refresh`; renewal before sending with an expired access token; `401` renewed and repeated once with the body intact; second `401` ends the session; `401` on `signin` and `change-password` not renewed; `refused` calls `onSessionEnded` with the reason; `unavailable` returns the original error; same `test:` red
-- [ ] 3.3 Green of 3.1 and 3.2 in one `feat:` commit, registering the middleware on `fetchClient` before `errors`; verify with `npx vitest run src/api`
-- [ ] 3.4 Amend ADR 0002 with the renewal before sending (no timer) and verify the ADR still reads as accepted
+- [x] 3.1 TDD of `src/api/refresh.ts` with a fake `requestRefresh` and a fake lock: N concurrent `renew` calls make one request; another tab's pair inside the lock is used without a request; `refused` clears the session; `unavailable` keeps it; `test:` red for the group
+- [x] 3.2 TDD of `src/api/auth.ts` against a real `fetchClient` with MSW: bearer on protected calls and none on `signin`/`signup`/`refresh`; renewal before sending with an expired access token; `401` renewed and repeated once with the body intact; second `401` ends the session; `401` on `signin` and `change-password` not renewed; `refused` calls `onSessionEnded` with the reason; `unavailable` returns the original error; same `test:` red
+- [x] 3.3 Green of 3.1 and 3.2 in one `feat:` commit, registering the middleware on `fetchClient` before `errors`; verify with `npx vitest run src/api`
+- [x] 3.4 Amend ADR 0002 with the renewal before sending (no timer) and verify the ADR still reads as accepted
 
 ## 4. Mocks and test base
 

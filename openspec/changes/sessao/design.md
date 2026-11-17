@@ -41,25 +41,25 @@ ADRs applied: 0001 (tokens in `localStorage` behind a single module), 0002 (one 
 
 ### Renewal queue
 
-`src/api/refresh.ts` exports `createRefresher({ readSession, saveSession, requestRefresh, lock })`, returning `renew(staleAccessToken)`:
+`src/api/refresh.ts` exports `createRefresher({ readSession, saveSession, clearSession, requestRefresh, onSessionEnded, lock })`, returning `renew(staleAccessToken)`:
 
 - A renewal in flight is a single promise; every caller in the tab awaits the same one.
 - The renewal runs inside `lock('scout-refresh', fn)`. Inside the lock it reads the stored session again: if the access token differs from `staleAccessToken`, another tab already renewed and that pair is used without calling the API.
 - `requestRefresh` calls `POST /api/Auth/refresh` through a second client without the auth middleware, so a renewal never triggers another.
-- Outcomes: `renewed(session)`, `refused(code)` for a `401`, and `unavailable(error)` for anything else (network, 502, 500). `refused` clears the session; `unavailable` keeps it.
+- Outcomes: `renewed(session)`, `refused` for a `401` or when no pair is kept, and `unavailable(error)` for anything else (network, 502, 500). `refused` clears the session and calls `onSessionEnded` once per renewal, with the notice from the `code`; `unavailable` keeps the session.
 - `lock` is `navigator.locks.request` when it exists; otherwise a pass-through, leaving only the in-tab queue (Q17). Tests inject a fake lock.
 
 Rejected alternative: a counter of in-flight requests with a timer, as some interceptors do. It fails across tabs and does not handle the rotation.
 
 ### Auth middleware
 
-`src/api/auth.ts` exports `createAuthMiddleware({ refresher, readSession, onSessionEnded })`, registered on `fetchClient` so that its `onResponse` runs before the `errors` middleware:
+`src/api/auth.ts` exports `createAuthMiddleware({ refresher, readSession, clearSession, onSessionEnded })`, registered on `fetchClient` after the `errors` middleware, because `openapi-fetch` runs `onResponse` in reverse order and the `401` must reach it first:
 
-- `onRequest`: skips `signin`, `signup` and `refresh`. If the access token is expired, it awaits `renew` first. It sets `Authorization: Bearer <token>` and keeps a clone of the request for a possible repeat.
-- `onResponse` with `401` on a call other than `signin` and `change-password`: it awaits `renew(tokenUsed)`. On `renewed`, it repeats the clone once with the new token and returns that response; a second `401` ends the session. On `refused`, it calls `onSessionEnded({ reason })` and lets the `401` go on to the `errors` middleware. On `unavailable`, it lets the original response go on.
-- The repeat is marked so it is never renewed again.
+- `onRequest`: skips `signin`, `signup` and `refresh`. If the access token is expired, it awaits `renew` first; an `unavailable` renewal fails the call with the renewal's error. It sets `Authorization: Bearer <token>` and keeps a clone of the request for a possible repeat.
+- `onResponse` with `401` on a call other than `signin`, `signup`, `refresh` and `change-password`: it awaits `renew(tokenUsed)`. On `renewed`, it repeats the clone once with the new token and returns that response; a second `401` clears the session and ends it as expired. On `refused` (the refresher already ended the session), it lets the `401` go on to the `errors` middleware. On `unavailable`, the call fails with the renewal's error, so a 502 offers "Tentar de novo".
+- The repeat goes straight to `fetch`, outside the middleware chain, so it is never renewed again.
 
-`onSessionEnded` is wired in `src/main.tsx` (and in `renderRoute`): it clears the `QueryClient` and navigates to `/entrar` with `redirecionar` set to the current location and `aviso` set to the reason.
+`src/api/client.ts` builds the refresher (with its own client, without the auth middleware) and the middleware, and exposes `onSessionEnded(handler)`. The handler is registered in `src/main.tsx` (and in `renderRoute`): it clears the `QueryClient` and navigates to `/entrar` with `redirecionar` set to the current location and `aviso` set to the notice. `ApiError` moves to `src/api/apiError.ts`, re-exported by `client.ts`, so `refresh.ts` does not import the client.
 
 ### Routes and search params
 
