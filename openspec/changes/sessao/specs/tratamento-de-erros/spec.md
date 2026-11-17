@@ -3,7 +3,7 @@
 ## MODIFIED Requirements
 
 ### Requirement: Retry
-A 502 SHALL be retried automatically once, about 2 s later, before the screen shows the error. "Tentar de novo" SHALL appear on a 502 and on an unknown error and MUST NOT appear on 4xx responses, which are never retried. The only exception is a `401` outside the sign in and the password change, which is repeated once after the session renewal and never reaches the screen as an error.
+A 502 SHALL be retried automatically once, about 2 s later, before the screen shows the error. "Tentar de novo" SHALL appear on a 502 and on an unknown error and MUST NOT appear on 4xx responses, which are never retried. The only exception is a `401` outside creating an account, signing in, changing the password and signing out, which is repeated once after the session renewal and never reaches the screen as an error.
 
 #### Scenario: 502 that resolves itself
 - **WHEN** the first call responds 502 and the retry responds 200

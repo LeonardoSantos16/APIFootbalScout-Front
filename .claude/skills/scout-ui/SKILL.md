@@ -47,7 +47,8 @@ Os textos de cada motivo, rotulos e unidades estao em `references/textos.md`.
 - Toda falha vira texto com `describeError(error, { plainText })` de `src/api/errors.ts`, que devolve `{ message, canRetry }` e registra o `instance` do erro desconhecido no console. `plainText: true` so nos endpoints que respondem texto puro (`Players`, `Tournament`). Nunca leia `detail`, `title` ou o corpo em texto para a tela.
 - `MESSAGE_BY_CODE` ja tem a tabela inteira de `docs/erros.md`; mensagem nova entra la. Os textos por status estao em `references/textos.md`.
 - Mostre o erro com `InlineError` e passe `onRetry` so quando `canRetry` for verdadeiro. A repeticao automatica do `502` (uma vez, 2 s) ja esta no `createQueryClient` de `src/api/queryClient.ts`.
-- `401` nao e tratado na tela: o cliente renova a sessao ou leva ao login.
+- `401` nao e tratado na tela: o cliente renova a sessao ou leva ao login. As excecoes sao os formularios de conta (`signin`, `change-password`), onde o `401` e erro do campo.
+- Formulario usa `useFormSubmit` (`src/hooks/`): valida so depois do primeiro envio e revalida a cada mudanca; `fail(error)` poe o erro do servidor no campo pelo `fieldForCode` e o resto num `InlineError` acima do botao. Regras e mensagens em `src/utils/accountValidation.ts`; limites do contrato em `src/config/account.ts`. Durante o envio, campos e botoes desabilitados e o botao principal no gerundio ("Entrando…").
 - Validacao que o servidor faria (minimo de pontos do relatorio, moeda da shortlist, limite de acompanhamentos) e checada antes, no formulario. O `422` e rede de seguranca, nao o feedback.
 
 ## Estilo
@@ -57,7 +58,8 @@ Os textos de cada motivo, rotulos e unidades estao em `references/textos.md`.
 - Variantes viram classes combinadas. Valores so conhecidos em execucao, como a cor do clube, entram por custom property inline (`style={{ '--club': cor }}`).
 - As regras que mais se erram: `pitch` so como acento (aba, foco, ponto ativo); numeros com `tabular-nums` na familia display; rotulo **embaixo** do valor, sem caixa alta; cartoes sem sombra; sem animacao de entrada; foco com anel de 2px em `pitch`.
 - Icones so do Phosphor (`@phosphor-icons/react`, regular, `size={20}`, `currentColor`), importados com o sufixo `Icon` (`CaretDownIcon`, `SignOutIcon`), da lista em `docs/design-system/assets/Icons/`. Icone sozinho so em fechar e arrastar, com `aria-label`.
-- Componentes globais ja prontos em `src/components/`: `AppShell` (topo, no `__root`), `PageColumns` (corpo em duas colunas da pagina do jogador), `Card`, `ClubBand`, `Tabs`, `Select`, `Button`, `InlineError` e `Skeleton`. Reuse antes de criar.
+- Componentes globais ja prontos em `src/components/`: `AppShell` (topo das rotas protegidas, com o nome do olheiro e "Sair"), `AuthShell` (topo so com a marca e o cartao central de `/entrar` e `/criar-conta`), `PageColumns` (corpo em duas colunas da pagina do jogador), `Card`, `ClubBand`, `Tabs`, `Select`, `Button`, `TextField`, `PasswordField`, `Notice` (aviso neutro, `role="status"`), `Dialog` (Radix), `InlineError` e `Skeleton`. Reuse antes de criar.
+- A sessao se le com `useSession()`; nunca leia o `localStorage` direto. Sair passa por `useLeaveSession` na rota, que limpa o cache e navega.
 
 ## Texto e numeros
 
@@ -83,9 +85,9 @@ Todo identificador em ingles, inclusive os do dominio, com o nome de codigo da t
 
 - Handlers usam o `http` de `src/mocks/http.ts` (`openapi-msw`), tipado pelo contrato: rota, parametros e corpo errados nao compilam.
 - Cada handler representa um estado de negocio e tem um nome que o diz (`insufficientSampleMetrics`, `profileSourceDown`). Dado aleatorio nao exercita estado nenhum.
-- Handlers nomeados ficam em `src/mocks/handlers/<area>.ts`, fixtures em `src/mocks/fixtures/` (`buildFullProfile`, listas de atributos) e corpos de erro em `src/mocks/responses.ts` (`problem`, `plainText`). `src/mocks/handlers.ts` responde o `dev:mock` por `jogadorId` e tambem e o padrao dos testes.
+- Handlers nomeados ficam em `src/mocks/handlers/<area>.ts`, fixtures em `src/mocks/fixtures/` (`buildFullProfile`, listas de atributos) e corpos de erro em `src/mocks/responses.ts` (`problem`, `plainText`). `src/mocks/handlers.ts` responde o `dev:mock` por `jogadorId` e tambem e o padrao dos testes; os handlers padrao de dados protegidos passam por `withAuth` (`401` sem token valido). A sessao do mock fica em `src/mocks/authStore.ts`; no `dev:mock`, recarregar a pagina zera o que foi criado nela (contas novas, senha trocada).
 - Uma story por estado do componente, incluindo carregando, recusa e erro, usando os mesmos handlers aplicados com `beforeEach({ msw }) { msw.use(...) }` (o `parameters.msw` esta obsoleto no addon). A story nao tem handler padrao: declare todos os que a tela chama. Carregamento parado e um handler com `await delay('infinite')`. A story e a especificacao visual da tela.
-- Teste de tela vai pela rota: `renderRoute(url)` de `src/test/renderRoute.tsx` monta o roteador com historico em memoria e `retryDelay: 0`; confira a URL em `router.state.location.search` e o historico em `router.history.length`. Para fixar a data, `vi.useFakeTimers({ toFake: ['Date'] })`, que nao trava o MSW.
+- Teste de tela vai pela rota: `renderRoute(url)` de `src/test/renderRoute.tsx` monta o roteador com historico em memoria e `retryDelay: 0` e ja comeca logado (`{ session: 'signed-out' }` ou um par pronto mudam isso); espere o conteudo da pagina antes de pegar o topo, que troca o skeleton pelo cabecalho real; confira a URL em `router.state.location.search` e o historico em `router.history.length`. Para fixar a data, `vi.useFakeTimers({ toFake: ['Date'] })`, que nao trava o MSW.
 
 ## Antes de concluir
 

@@ -53,4 +53,4 @@ Pendencias conhecidas que o front contorna hoje e que precisam de correcao em ou
 
 - **Problema:** o `season.id` do SofaScore nao e cronologico entre competicoes. Com dados reais (Neymar, 124712), o Trophee des Champions 20/21 tem id 92399 e o Brasileirao 2026 tem 87678, entao a tela de metricas abre numa temporada de 2020. A lista `stats` da fonte ja vem da mais recente para a mais antiga.
 - **Origem:** regra da F9 (grilling Q2, emenda do ADR 0003), achada na conferencia da change `sessao` contra a API real.
-- **Correcao esperada:** ordenar pelo ano da temporada ou manter a ordem de `stats` da fonte, com nova emenda no ADR 0003.
+- **Correcao esperada:** ordenar pelo ano da temporada ou manter a ordem de `stats` da fonte, com nova emenda no ADR 0003. Fica para o item 4 (Busca e perfil), que ja revisa o seletor de recorte.

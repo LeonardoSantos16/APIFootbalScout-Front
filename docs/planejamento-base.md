@@ -83,6 +83,7 @@ O perfil e a porta de entrada de todas as acoes do olheiro, e a busca e o unico 
   - Quais campos do payload do SofaScore a tela le, e o que mostra quando um falta?
   - Por quanto tempo o perfil em cache vale? A shortlist reaproveita o mesmo cache.
   - O seletor de recorte passa a morar no perfil e as telas de analise o herdam?
+  - Recorte padrao: o maior `season.id` nao e o mais recente (achado na sessao, `divida-tecnica.md`). Ordenar pelo ano da temporada ou manter a ordem de `stats` da fonte?
 - **Fora do escopo:** busca de clubes e competicoes.
 
 ## 5. F10 Comparacao direta

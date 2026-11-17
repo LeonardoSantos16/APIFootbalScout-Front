@@ -53,7 +53,7 @@
 
 ## 9. Retrospective
 
-- [ ] 9.1 Retrospective: what the spec did not foresee goes back to the delta specs; adjust the `scout-ui` skill and `CLAUDE.md`; verify with `openspec validate sessao --strict`
+- [x] 9.1 Retrospective: what the spec did not foresee goes back to the delta specs; adjust the `scout-ui` skill and `CLAUDE.md`; verify with `openspec validate sessao --strict`
 
 ## Workflow follow-up
 

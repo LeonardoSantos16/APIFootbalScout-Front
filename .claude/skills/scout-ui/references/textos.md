@@ -90,3 +90,21 @@ Sem `code`, nos endpoints de texto puro (`Players`, `Tournament`), com `describe
 Erro desconhecido (sem `code` num endpoint de `ProblemDetails`, `code` interno ou desconhecido, falha de rede, resposta incompleta): "Não foi possível concluir agora."
 
 "Tentar de novo" aparece no `502` e no erro desconhecido, nunca num `4xx`.
+
+## Sessao e conta
+
+| Situacao | Texto |
+| --- | --- |
+| Aviso `sessao-expirada` (e `usuario.refresh_token_invalido`) | Sua sessão expirou. Entre novamente. |
+| Aviso `sessao-invalida` (`usuario.token_sem_identificacao`) | Sessão inválida. Entre novamente. |
+| Aviso `conta-excluida` | Conta excluída. |
+| Senha trocada | Senha alterada. As outras sessões encerram em até 15 minutos. |
+| Dica da senha nova | De 8 a 72 caracteres. |
+| E-mail invalido | Informe um e-mail válido. |
+| Senha vazia na entrada | Informe a senha. |
+| Senha atual vazia | Informe a senha atual. |
+| Nome fora do limite | O nome precisa ter de 2 a 120 caracteres. |
+| Senha fora do limite | A senha precisa ter de 8 a 72 caracteres. |
+| Confirmacao diferente | As senhas não conferem. |
+
+Erros de servidor com campo: `usuario.email_ja_cadastrado` no E-mail, `usuario.credenciais_invalidas` na Senha, `usuario.senha_atual_invalida` na Senha atual, `usuario.senha_igual_a_atual` na Nova senha. "Cadastro" nao aparece na tela: e "Criar conta".

@@ -176,11 +176,15 @@ When the renewal is refused, the system SHALL fail every waiting call together, 
 - **THEN** the same metrics screen opens
 
 ### Requirement: Renewal unavailable
-When the renewal fails for a reason other than a refusal (no network, 502, 500), the session SHALL be kept and the waiting calls SHALL fail with their usual error.
+When the renewal fails for a reason other than a refusal (no network, 502, 500), the session SHALL be kept and the waiting calls SHALL fail with the renewal's error, so a 502 offers "Tentar de novo".
 
 #### Scenario: API down during renewal
 - **WHEN** the renewal responds 502
 - **THEN** the scout stays on the screen with its error and the session is still kept
+
+#### Scenario: API down on boot
+- **WHEN** a scout with an expired access token opens `/` and the renewal responds 502
+- **THEN** the page shows "Não foi possível concluir agora." with "Tentar de novo" inside the top navigation, and the session is still kept
 
 ### Requirement: Session ended in another tab
 When the session is removed in another tab, the current tab SHALL go to "Entrar". When another tab signs in with a different account, the current tab SHALL reload.
@@ -190,7 +194,7 @@ When the session is removed in another tab, the current tab SHALL go to "Entrar"
 - **THEN** the current tab shows "Entrar"
 
 ### Requirement: Signing out
-"Sair" in the top navigation SHALL end the session of this device, sending its refresh token, and take the scout to "Entrar". The local session SHALL be removed and the data discarded even when the call fails.
+"Sair" in the top navigation SHALL end the session of this device, sending its refresh token, and take the scout to "Entrar". The local session SHALL be removed and the data discarded even when the call fails, and a `401` on the sign out MUST NOT renew the session.
 
 #### Scenario: Sair
 - **WHEN** the scout clicks "Sair"
@@ -239,6 +243,10 @@ The "Conta" page SHALL show the scout's name and e-mail and the cards "Alterar s
 #### Scenario: Account deleted
 - **WHEN** the scout types "ana.ribeiro@exemplo.com" and clicks "Excluir conta"
 - **THEN** the scout lands on "Entrar" with the notice "Conta excluída."
+
+#### Scenario: E-mail typed in another case
+- **WHEN** the scout types "Ana.Ribeiro@Exemplo.com " with other capitals and a trailing space
+- **THEN** the dialog's "Excluir conta" is enabled
 
 #### Scenario: Cancelling
 - **WHEN** the scout clicks "Cancelar" or the close button
