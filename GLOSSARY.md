@@ -30,6 +30,14 @@ _Evitar_: API externa, provedor
 O retrato atual de um jogador na fonte: dados cadastrais, clube, valor de mercado e os recortes em que ele tem estatísticas.
 _Evitar_: ficha, cadastro
 
+**Busca**:
+A procura de jogadores pelo nome na fonte. É o único caminho até um perfil.
+_Evitar_: pesquisa, consulta
+
+**Transferência**:
+A mudança de clube de um jogador como a fonte registra: data, clube de origem, clube de destino e valor ou tipo (livre, empréstimo).
+_Evitar_: negociação, venda, contratação
+
 **Posição**:
 A macroposição do jogador: goleiro, defesa, meio-campo ou ataque.
 _Evitar_: função
@@ -170,6 +178,9 @@ Os identificadores do código são em inglês. Um termo novo entra nesta tabela 
 | Jogador | `player` |
 | Fonte | `source` |
 | Perfil | `PlayerProfile` |
+| Busca | `search` |
+| Transferência | `transfer` |
+| Valor de mercado | `marketValue` |
 | Posição | `position` |
 | Recorte | `Slice` |
 | Contexto | `SliceContext`, `context` |

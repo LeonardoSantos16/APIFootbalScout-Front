@@ -74,7 +74,7 @@ Todo endpoint fora de `/api/Auth` exige token. A renovacao com rotacao e requisi
 
 ## 4. Busca e perfil
 
-O perfil e a porta de entrada de todas as acoes do olheiro, e a busca e o unico jeito de chegar a ele.
+O perfil e a porta de entrada de todas as acoes do olheiro, e a busca e o unico jeito de chegar a ele. Decisoes em [grilling/busca-e-perfil.md](grilling/busca-e-perfil.md).
 
 - **Escopo:** busca filtrada por `type === 'player'`; perfil com dados cadastrais, clube e faixa de `teamColors`, valor de mercado, recortes e transferencias; atalhos para as acoes, cada um habilitado quando a feature dele entrar; cache dos perfis por id.
 - **Endpoints:** `GET /api/Players/search`, `GET /api/Players/{id}/profile`.
