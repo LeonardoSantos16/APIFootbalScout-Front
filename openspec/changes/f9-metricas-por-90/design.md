@@ -84,7 +84,7 @@ Fixtures in `src/mocks/fixtures/`, handlers named by state in `src/mocks/handler
 | `metricsWithoutCode` | 500 without `code` |
 | `incompleteMetrics` | six attributes |
 
-`src/mocks/handlers.ts` exports the default handlers per `jogadorId` for `dev:mock`. Tests use `src/mocks/server.ts` (`msw/node`) wired in `src/test/setup.ts` with `onUnhandledRequest: 'error'`; stories use `msw-storybook-addon` (`mswLoader` from `msw-storybook-addon/csf3`) and apply handlers per story with `beforeEach({ msw }) { msw.use(...) }`; `parameters.msw` is deprecated in the addon.
+`src/mocks/handlers.ts` exports the default handlers per `jogadorId` for `dev:mock`: 1001 Rafael Montes (club and national team; the Copa do Brasil 2025 recorte, with 312 min, answers with insufficient sample), 1002 national team only, 1003 without `stats`, 1004 and any unknown id plain-text 404, 1005 full profile with metrics 502. Fixtures live in `src/mocks/fixtures/` (`buildFullProfile`, `buildNationalTeamOnlyProfile`, `buildProfileWithoutStats`, attribute lists) and the error bodies in `src/mocks/responses.ts`. Tests use `src/mocks/server.ts` (`msw/node`) wired in `src/test/setup.ts` with `onUnhandledRequest: 'error'`; stories use `msw-storybook-addon` (`mswLoader` from `msw-storybook-addon/csf3`) and apply handlers per story with `beforeEach({ msw }) { msw.use(...) }`; `parameters.msw` is deprecated in the addon.
 
 ### New dependencies
 
