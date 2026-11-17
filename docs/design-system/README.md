@@ -17,6 +17,7 @@ Scout Vestiário é a interface escura do APIFootballScout, uma ferramenta para 
 - Texto principal e valores em `ink`, valores secundários em `ink-soft`, rótulos e unidades em `ink-muted`.
 - `pitch` é o único acento: sublinhado da aba selecionada, anel de foco e pontos de estado ativo. Nunca como decoração, nunca como área grande.
 - Mudanças no acompanhamento usam `up` sobre `up-tint` e `down` sobre `down-tint`, sempre com sinal e uma palavra ("+12% valor de mercado"). Verde e vermelho sozinhos não carregam o significado.
+- `down` também marca o erro de um campo de formulário (borda e frase embaixo). A frase carrega o significado; a cor só reforça.
 - "Sem mudança relevante" fica neutro: texto `ink-soft` sobre `surface`, sem fundo colorido.
 
 ### A faixa do clube
@@ -35,6 +36,9 @@ Scout Vestiário é a interface escura do APIFootballScout, uma ferramenta para 
 | Sem mudança relevante | `ink-soft`, sem chip |
 | Carregando | blocos skeleton em `surface-strong` no formato do layout final; a fonte é lenta, então o layout não pode pular |
 | Erro (4xx/5xx) | mensagem no próprio cartão em `ink-soft` com uma pílula "Tentar de novo"; todo 502 oferece nova tentativa |
+| Erro de campo | borda do campo e frase embaixo dele em `down`, ligada por `aria-describedby`; aparece só depois do primeiro envio |
+| Aviso | `Notice`: frase em `ink-soft` sobre `surface-raised`, com `role="status"` ("Sua sessão expirou. Entre novamente.", "Senha alterada."); não é erro e não tem botão |
+| Enviando | campos e botões desabilitados; o botão principal troca o texto pelo gerúndio ("Entrando…") |
 
 ### Tipografia
 
@@ -53,6 +57,9 @@ Scout Vestiário é a interface escura do APIFootballScout, uma ferramenta para 
 ### Forma e controles
 
 - Botões, o campo de busca e o `Select` são pílulas (`radius-pill`). O `Select` é um `<select>` nativo em `surface-raised` com borda `line-strong` e a seta `caret-down`; a parte que diferencia as opções vem no começo do texto, porque o corte no celular come o fim. O botão principal é branco com texto `on-light`; os secundários são `surface-raised` com borda `line-strong`.
+- Campos de texto (`TextField`, `PasswordField`) têm 44px de altura, `surface-raised` com borda `line-strong` e `radius-md`, com o rótulo em `label`, `ink-muted`, em cima e a dica ou o erro embaixo. O campo de senha mostra e oculta com o texto "Mostrar"/"Ocultar", sem ícone.
+- Botão desabilitado: `surface-strong` com texto `ink-soft`, em qualquer variante; o `ghost` desabilitado fica só com o texto em `ink-subtle`. Não há variante destrutiva: a confirmação de uma ação irreversível fica num `Dialog` que só habilita o botão depois que o olheiro confirma.
+- Diálogos (`Dialog`) ficam centralizados sobre um fundo preto translúcido, em `surface` com borda `line` e `radius-lg`, com título em `section-title` e `x` para fechar. Os botões ficam à direita; abaixo de 480px, empilhados com a ação principal em cima.
 - Abas são texto, com sublinhado de 2px em `pitch` na selecionada; `ink` na selecionada, `ink-muted` nas demais.
 - Chips e etiquetas de posição usam `radius-sm`.
 - Foco: anel sólido de 2px em `pitch` com 2px de afastamento em todo elemento interativo.

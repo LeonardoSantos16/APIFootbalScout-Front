@@ -85,6 +85,30 @@ export interface SelectProps {
 }
 export declare function Select(props: SelectProps): React.ReactElement;
 
+export interface TextFieldProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'id'> {
+  label: string;
+  hint?: string;
+  error?: string;
+  trailing?: React.ReactNode;
+}
+export declare function TextField(props: TextFieldProps): React.ReactElement;
+
+export type PasswordFieldProps = Omit<TextFieldProps, 'type' | 'trailing'>;
+export declare function PasswordField(props: PasswordFieldProps): React.ReactElement;
+
+export interface NoticeProps { children: React.ReactNode }
+export declare function Notice(props: NoticeProps): React.ReactElement;
+
+export interface DialogProps {
+  open: boolean;
+  title: string;
+  description?: string;
+  onClose: () => void;
+  actions?: React.ReactNode;
+  children?: React.ReactNode;
+}
+export declare function Dialog(props: DialogProps): React.ReactElement | null;
+
 declare global {
   interface Window {
     ScoutVestiario: {
@@ -98,6 +122,10 @@ declare global {
       MeasurementCard: typeof MeasurementCard;
       InlineError: typeof InlineError;
       Select: typeof Select;
+      TextField: typeof TextField;
+      PasswordField: typeof PasswordField;
+      Notice: typeof Notice;
+      Dialog: typeof Dialog;
     };
   }
 }

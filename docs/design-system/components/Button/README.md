@@ -7,3 +7,4 @@ Botão em pílula para as ações da tela; `primary` é branco e aparece no máx
 - Use `secondary` para ações de apoio e `ghost` para cancelar ou voltar.
 - Desabilite em vez de deixar o servidor recusar: no limite de 10 acompanhamentos, "Acompanhar" fica `disabled` e o contador "10 de 10" aparece ao lado.
 - O texto é um verbo no infinitivo, com só a primeira letra maiúscula, sem seta.
+- Desabilitado fica em `surface-strong` com texto `ink-soft`, em qualquer variante (o `ghost` fica só com o texto em `ink-subtle`). Durante um envio, o botão principal desabilita e troca o texto pelo gerúndio ("Entrando…").

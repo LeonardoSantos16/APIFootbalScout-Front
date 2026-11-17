@@ -1,0 +1,16 @@
+<!-- @dsCard group="Formulários" height=340 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>PasswordField</title></head>
+<body style="margin:0;background:var(--ground)">
+<div id="root" class="sv-stage is-column"></div>
+<script>
+  var V = window.ScoutVestiario, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { style: { display: 'grid', gap: '20px', background: 'var(--surface)', padding: '24px', borderRadius: 'var(--radius-lg)', maxWidth: '400px' } },
+      h(V.PasswordField, { label: 'Senha', autoComplete: 'new-password', defaultValue: 'senhaboa123', hint: 'De 8 a 72 caracteres.' }),
+      h(V.PasswordField, { label: 'Senha', autoComplete: 'current-password', defaultValue: '12345678', error: 'E-mail ou senha incorretos.' }),
+      h(V.PasswordField, { label: 'Senha', defaultValue: 'senhaboa123', disabled: true })));
+</script>
+</body>
+</html>

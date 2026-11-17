@@ -75,3 +75,12 @@ Estados a desenhar, em desktop e em 375px:
 - `/conta`: troca de senha (vazio, atual errada, igual a atual, sucesso), sair de todos, `Dialog` de exclusao desabilitado e habilitado.
 - Boot com o header em skeleton.
 - `/` provisoria.
+
+Wireframe aprovado: https://claude.ai/artifact/S9FaAkGCFewhSz6seAnzwt. Decidido no desenho e aprovado junto:
+
+- Erro de campo em `down`, na borda e na frase embaixo do campo.
+- Aviso neutro novo, o `Notice` (`surface-raised`, `ink-soft`, `role="status"`), para sessao expirada, conta excluida e senha alterada.
+- "Sair de todos" tambem encerra esta sessao (o `signout-all` revoga o refresh desta tambem) e volta para `/entrar` sem aviso.
+- `Button` desabilitado em `surface-strong` com texto `ink-soft`; sem variante destrutiva.
+- "E-mail ou senha incorretos." embaixo do campo de senha; dica "De 8 a 72 caracteres." nas senhas novas; "Entrando..." e "Criando conta..." no botao durante o envio.
+- No design system entraram `TextField`, `PasswordField`, `Notice` e `Dialog`. O rotulo dos campos segue o do `Select` (`label`, `ink-muted`), e nao o `body-strong` do esboco.
