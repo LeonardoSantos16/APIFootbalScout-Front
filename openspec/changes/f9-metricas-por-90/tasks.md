@@ -27,8 +27,8 @@
 
 ## 5. Error handling
 
-- [ ] 5.1 TDD of `src/api/errors.ts`: message by `code` (whole table from `docs/erros.md` with accents), internal and unknown codes to the generic one, `podeRepetir` only on 502 and unknown; `test:` and `feat:` commits
-- [ ] 5.2 TDD of the plain-text status fallback (404 "Jogador não encontrado.", 502, others) and of logging the `instance` to the console; `test:` and `feat:` commits
+- [x] 5.1 TDD of `src/api/errors.ts`: message by `code` (whole table from `docs/erros.md` with accents), internal and unknown codes to the generic one, `podeRepetir` only on 502 and unknown; `test:` and `feat:` commits
+- [x] 5.2 TDD of the plain-text status fallback (404 "Jogador não encontrado.", 502, others) and of logging the `instance` to the console; `test:` and `feat:` commits
 
 ## 6. Interface components
 
