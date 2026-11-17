@@ -60,12 +60,12 @@ Primeira feature completa: pequena, somente leitura e rica em estados. Estreia o
 
 ## 3. Sessao
 
-Todo endpoint fora de `/api/Auth` exige token. A renovacao com rotacao e requisicoes concorrentes e um dos maiores riscos do plano e uma das partes a escrever a mao.
+Todo endpoint fora de `/api/Auth` exige token. A renovacao com rotacao e requisicoes concorrentes e um dos maiores riscos do plano. Decisoes em [grilling/sessao.md](grilling/sessao.md).
 
-- **Escopo:** cadastro e entrada; par de tokens no `localStorage` (ADR 0001); renovacao com fila unica, proativa e no primeiro `401` (ADR 0002); `me` no boot; rotas protegidas preservando o destino; sair e sair de todos; troca de senha; exclusao da conta.
+- **Escopo:** criar conta e entrar; par de tokens no `localStorage` (ADR 0001); renovacao com fila unica no primeiro `401`, ou antes de enviar quando o access token ja venceu, sem timer (ADR 0002); `me` no boot; rotas protegidas preservando o destino; sair e sair de todos; troca de senha; exclusao da conta.
 - **Endpoints:** todos de `/api/Auth`.
 - **Para o grilling:**
-  - Com que antecedencia renovar antes de `accessTokenExpiresAtUtc`?
+  - ~~Com que antecedencia renovar antes de `accessTokenExpiresAtUtc`?~~ Sem renovacao proativa por timer (ADR 0002).
   - Duas abas abertas: uma rotaciona o refresh token e a outra fica com o antigo. Sincronizar pelo evento `storage`?
   - Refresh falhou com requisicoes na fila: todas falham juntas e a sessao cai de uma vez?
   - Troca de senha derruba as outras sessoes; a sessao atual continua com o par novo?
@@ -83,6 +83,7 @@ O perfil e a porta de entrada de todas as acoes do olheiro, e a busca e o unico 
   - Quais campos do payload do SofaScore a tela le, e o que mostra quando um falta?
   - Por quanto tempo o perfil em cache vale? A shortlist reaproveita o mesmo cache.
   - O seletor de recorte passa a morar no perfil e as telas de analise o herdam?
+  - Recorte padrao: o maior `season.id` nao e o mais recente (achado na sessao, `divida-tecnica.md`). Ordenar pelo ano da temporada ou manter a ordem de `stats` da fonte?
 - **Fora do escopo:** busca de clubes e competicoes.
 
 ## 5. F10 Comparacao direta

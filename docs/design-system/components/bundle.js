@@ -1,4 +1,4 @@
-/* @ds-bundle: {"format":4,"namespace":"ScoutVestiario","components":[{"name":"Button"},{"name":"Tabs"},{"name":"ClubBand"},{"name":"Card"},{"name":"StatCell"},{"name":"MetricsGrid"},{"name":"ChangeChip"},{"name":"MeasurementCard"},{"name":"InlineError"},{"name":"Select"}]} */
+/* @ds-bundle: {"format":4,"namespace":"ScoutVestiario","components":[{"name":"Button"},{"name":"Tabs"},{"name":"ClubBand"},{"name":"Card"},{"name":"StatCell"},{"name":"MetricsGrid"},{"name":"ChangeChip"},{"name":"MeasurementCard"},{"name":"InlineError"},{"name":"Select"},{"name":"TextField"},{"name":"PasswordField"},{"name":"Notice"},{"name":"Dialog"}]} */
 (function () {
   var React = window.React;
   var h = React.createElement;
@@ -170,7 +170,65 @@
       field);
   }
 
+  function TextField(props) {
+    var id = React.useId();
+    var hintId = id + "-hint";
+    var errorId = id + "-error";
+    var described = props.error ? errorId : props.hint ? hintId : undefined;
+    var rest = Object.assign({}, props);
+    ["label", "hint", "error", "trailing", "className"].forEach(function (k) { delete rest[k]; });
+    var input = h("input", Object.assign({ type: "text" }, rest, {
+      id: id,
+      className: "sv-input",
+      "aria-invalid": props.error ? true : undefined,
+      "aria-describedby": described
+    }));
+    return h("div", { className: cx("sv-field", props.className) },
+      h("label", { className: "sv-field-label", htmlFor: id }, props.label),
+      h("div", { className: cx("sv-input-wrap", props.error && "is-invalid", props.disabled && "is-disabled") },
+        input,
+        props.trailing || null),
+      props.error ? h("span", { className: "sv-field-error", id: errorId }, props.error)
+        : props.hint ? h("span", { className: "sv-field-hint", id: hintId }, props.hint) : null);
+  }
+
+  function PasswordField(props) {
+    var s = React.useState(false);
+    var visible = s[0];
+    var toggle = h("button", {
+      type: "button",
+      className: "sv-input-toggle",
+      disabled: props.disabled,
+      "aria-pressed": visible,
+      onClick: function () { s[1](!visible); }
+    }, visible ? "Ocultar" : "Mostrar");
+    return h(TextField, Object.assign({}, props, { type: visible ? "text" : "password", trailing: toggle }));
+  }
+
+  function Notice(props) {
+    return h("p", { className: "sv-notice", role: "status" }, props.children);
+  }
+
+  function Dialog(props) {
+    var titleId = React.useId();
+    if (!props.open) return null;
+    return h("div", { className: "sv-dialog-backdrop" },
+      h("div", { className: "sv-dialog", role: "dialog", "aria-modal": true, "aria-labelledby": titleId },
+        h("div", { className: "sv-dialog-head" },
+          h("h2", { className: "sv-dialog-title", id: titleId }, props.title),
+          h("button", { type: "button", className: "sv-dialog-close", "aria-label": "Fechar", onClick: props.onClose },
+            h("svg", { viewBox: "0 0 256 256", width: 20, height: 20, fill: "currentColor", "aria-hidden": true },
+              h("path", { d: "M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z" })))),
+        props.description ? h("p", { className: "sv-dialog-desc" }, props.description) : null,
+        props.children,
+        props.actions ? h("div", { className: "sv-dialog-actions" }, props.actions) : null));
+  }
+
   window.ScoutVestiario = Object.assign(window.ScoutVestiario || {}, {
+    TextField: TextField,
+    PasswordField: PasswordField,
+    Notice: Notice,
+    Dialog: Dialog,
     Select: Select,
     Button: Button,
     Tabs: Tabs,

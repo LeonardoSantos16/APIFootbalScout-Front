@@ -1,18 +1,18 @@
 import { QueryClientProvider } from '@tanstack/react-query'
-import { RouterProvider, createRouter } from '@tanstack/react-router'
+import { RouterProvider } from '@tanstack/react-router'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { createQueryClient } from './api/queryClient'
-import { routeTree } from './routeTree.gen'
+import { bindSession, createAppRouter, type AppRouter } from './router'
 import './styles/global.css'
 
 const queryClient = createQueryClient()
 
-const router = createRouter({ routeTree, context: { queryClient } })
+const router = createAppRouter({ queryClient })
 
 declare module '@tanstack/react-router' {
   interface Register {
-    router: typeof router
+    router: AppRouter
   }
 }
 
@@ -23,6 +23,8 @@ const startMocks = async () => {
 }
 
 await startMocks()
+
+bindSession(router, queryClient)
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

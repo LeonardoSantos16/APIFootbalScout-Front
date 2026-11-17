@@ -19,6 +19,7 @@
   --down: #ff5a5a;
   --down-tint: rgba(255, 90, 90, 0.15);
   --on-light: #000000;
+  --backdrop: rgba(0, 0, 0, 0.8);
   --font-display: "Archivo", "Arial Narrow", sans-serif;
   --font-body: "Figtree", system-ui, sans-serif;
   --text-player-name: 800 30px/32px var(--font-display);

@@ -5,7 +5,8 @@
 
 .sv-btn { font-family: var(--font-body); font-size: 14px; line-height: 20px; font-weight: 600; border-radius: var(--radius-pill); padding: 8px var(--space-4); border: 1px solid transparent; cursor: pointer; }
 .sv-btn:focus-visible, .sv-tab:focus-visible { outline: 2px solid var(--pitch); outline-offset: 2px; }
-.sv-btn:disabled { cursor: not-allowed; opacity: 0.5; }
+.sv-btn:disabled { cursor: not-allowed; background: var(--surface-strong); color: var(--ink-soft); border-color: transparent; }
+.sv-btn-ghost:disabled { background: none; color: var(--ink-subtle); }
 .sv-btn-primary { background: var(--ink); color: var(--on-light); }
 .sv-btn-secondary { background: var(--surface-raised); color: var(--ink); border-color: var(--line-strong); }
 .sv-btn-secondary:hover:not(:disabled) { background: var(--surface-strong); }
@@ -78,3 +79,29 @@
 .sv-select:focus-visible { outline: 2px solid var(--pitch); outline-offset: 2px; }
 .sv-select-caret { position: absolute; right: var(--space-4); top: 50%; width: 20px; height: 20px; margin-top: -10px; color: var(--ink-muted); pointer-events: none; }
 .sv-select-skeleton { width: min(100%, 380px); height: 38px; border-radius: var(--radius-pill); }
+
+.sv-input-wrap { display: flex; align-items: center; min-height: 44px; box-sizing: border-box; background: var(--surface-raised); border: 1px solid var(--line-strong); border-radius: var(--radius-md); }
+.sv-input-wrap:focus-within { outline: 2px solid var(--pitch); outline-offset: 2px; }
+.sv-input-wrap.is-invalid { border-color: var(--down); }
+.sv-input-wrap.is-disabled { border-color: var(--line); }
+.sv-input { flex: 1 1 auto; min-width: 0; height: 42px; box-sizing: border-box; padding: 0 14px; background: transparent; border: 0; outline: 0; color: var(--ink); color-scheme: dark; font-family: var(--font-body); font-size: 14px; line-height: 20px; }
+.sv-input:disabled { color: var(--ink-muted); cursor: not-allowed; }
+.sv-input-toggle { height: 42px; padding: 0 14px; background: none; border: 0; border-radius: var(--radius-md); color: var(--ink-soft); font-family: var(--font-body); font-size: 13px; line-height: 18px; font-weight: 600; cursor: pointer; }
+.sv-input-toggle:hover:not(:disabled) { color: var(--ink); }
+.sv-input-toggle:focus-visible { outline: 2px solid var(--pitch); outline-offset: -2px; }
+.sv-input-toggle:disabled { color: var(--ink-subtle); cursor: not-allowed; }
+.sv-field-error { font-size: 13px; line-height: 18px; font-weight: 500; color: var(--down); }
+.sv-field-hint { font-size: 12px; line-height: 16px; color: var(--ink-muted); }
+
+.sv-notice { margin: 0; padding: var(--space-3) 14px; border-radius: var(--radius-md); background: var(--surface-raised); color: var(--ink-soft); font-family: var(--font-body); font-size: 14px; line-height: 20px; }
+
+.sv-dialog-backdrop { position: fixed; inset: 0; background: var(--backdrop); display: flex; align-items: center; justify-content: center; padding: var(--space-4); z-index: 10; }
+.sv-dialog { width: min(100%, 440px); box-sizing: border-box; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: var(--space-5); display: grid; gap: var(--space-4); font-family: var(--font-body); color: var(--ink); }
+.sv-dialog-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); }
+.sv-dialog-title { margin: 0; font-family: var(--font-display); font-size: 18px; line-height: 24px; font-weight: 700; }
+.sv-dialog-close { width: 44px; height: 44px; margin: -10px -10px -10px 0; display: flex; align-items: center; justify-content: center; background: none; border: 0; border-radius: var(--radius-pill); color: var(--ink-muted); cursor: pointer; }
+.sv-dialog-close:hover { color: var(--ink); }
+.sv-dialog-close:focus-visible { outline: 2px solid var(--pitch); outline-offset: 2px; }
+.sv-dialog-desc { margin: 0; color: var(--ink-soft); font-size: 14px; line-height: 20px; }
+.sv-dialog-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-2); }
+@media (max-width: 480px) { .sv-dialog-actions { flex-direction: column-reverse; } .sv-dialog-actions .sv-btn { width: 100%; } }

@@ -1,0 +1,41 @@
+.top {
+  padding: var(--space-3) var(--space-5);
+  border-bottom: 1px solid var(--line);
+  background: var(--ground);
+}
+
+.brand {
+  font: var(--text-section-title);
+  color: var(--ink);
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-6) var(--space-4);
+}
+
+.card {
+  width: min(100%, 400px);
+  box-sizing: border-box;
+  display: grid;
+  gap: var(--space-5);
+  padding: var(--space-5);
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  color: var(--ink);
+}
+
+@media (max-width: 719px) {
+  .top {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .main {
+    padding: var(--space-5) var(--space-4);
+  }
+
+  .card {
+    padding: var(--space-5) var(--space-4);
+  }
+}

@@ -59,8 +59,8 @@ Erros de validacao de modelo (`[Range]`, `[Required]`, `[EmailAddress]`) sao ger
 | --- | --- | --- |
 | `usuario.email_ja_cadastrado` | 409 | Este e-mail ja esta cadastrado. |
 | `usuario.credenciais_invalidas` | 401 | E-mail ou senha incorretos. |
-| `usuario.nao_encontrado` | 404 | Usuario nao encontrado. |
-| `usuario.senha_atual_invalida` | 401 | A senha atual esta incorreta. |
+| `usuario.nao_encontrado` | 401 | Usuario nao encontrado. |
+| `usuario.senha_atual_invalida` | 400 | A senha atual esta incorreta. |
 | `usuario.senha_igual_a_atual` | 422 | A nova senha precisa ser diferente da atual. |
 | `usuario.refresh_token_invalido` | 401 | Sua sessao expirou. Entre novamente. |
 | `usuario.token_sem_identificacao` | 401 | Sessao invalida. Entre novamente. |
