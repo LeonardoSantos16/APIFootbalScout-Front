@@ -13,3 +13,12 @@ export interface Session {
 }
 
 export type SessionNotice = 'sessao-expirada' | 'sessao-invalida' | 'conta-excluida'
+
+export interface SignInSearch {
+  redirecionar?: string
+  aviso?: SessionNotice
+}
+
+export interface SignUpSearch {
+  redirecionar?: string
+}

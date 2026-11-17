@@ -1,11 +1,12 @@
 import { QueryClientProvider } from '@tanstack/react-query'
-import { RouterProvider, createMemoryHistory, createRouter } from '@tanstack/react-router'
+import { RouterProvider, createMemoryHistory } from '@tanstack/react-router'
 import { render } from '@testing-library/react'
+import { onTestFinished } from 'vitest'
 import { createQueryClient } from '../api/queryClient'
 import { clearSession, saveSession } from '../api/session'
 import type { AuthResponse } from '../interfaces/session'
 import { seedSession } from '../mocks/authStore'
-import { routeTree } from '../routeTree.gen'
+import { bindSession, createAppRouter } from '../router'
 
 interface RenderRouteOptions {
   session?: 'signed-in' | 'signed-out' | AuthResponse
@@ -16,11 +17,8 @@ export const renderRoute = (url: string, { session = 'signed-in' }: RenderRouteO
   else saveSession(session === 'signed-in' ? seedSession() : session)
 
   const queryClient = createQueryClient({ retryDelay: 0 })
-  const router = createRouter({
-    routeTree,
-    history: createMemoryHistory({ initialEntries: [url] }),
-    context: { queryClient },
-  })
+  const router = createAppRouter({ queryClient, history: createMemoryHistory({ initialEntries: [url] }) })
+  onTestFinished(bindSession(router, queryClient))
 
   render(
     <QueryClientProvider client={queryClient}>

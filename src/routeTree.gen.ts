@@ -9,69 +9,191 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as JogadoresJogadorIdMetricasRouteImport } from './routes/jogadores/$jogadorId/metricas'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
+import { Route as PublicRouteImport } from './routes/_public'
+import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedContaRouteImport } from './routes/_authenticated/conta'
+import { Route as PublicCriarContaRouteImport } from './routes/_public/criar-conta'
+import { Route as PublicEntrarRouteImport } from './routes/_public/entrar'
+import { Route as AuthenticatedJogadoresJogadorIdMetricasRouteImport } from './routes/_authenticated/jogadores/$jogadorId/metricas'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
-const JogadoresJogadorIdMetricasRoute =
-  JogadoresJogadorIdMetricasRouteImport.update({
+const PublicRoute = PublicRouteImport.update({
+  id: '/_public',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedContaRoute = AuthenticatedContaRouteImport.update({
+  id: '/conta',
+  path: '/conta',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const PublicCriarContaRoute = PublicCriarContaRouteImport.update({
+  id: '/criar-conta',
+  path: '/criar-conta',
+  getParentRoute: () => PublicRoute,
+} as any)
+const PublicEntrarRoute = PublicEntrarRouteImport.update({
+  id: '/entrar',
+  path: '/entrar',
+  getParentRoute: () => PublicRoute,
+} as any)
+const AuthenticatedJogadoresJogadorIdMetricasRoute =
+  AuthenticatedJogadoresJogadorIdMetricasRouteImport.update({
     id: '/jogadores/$jogadorId/metricas',
     path: '/jogadores/$jogadorId/metricas',
-    getParentRoute: () => rootRouteImport,
+    getParentRoute: () => AuthenticatedRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/jogadores/$jogadorId/metricas': typeof JogadoresJogadorIdMetricasRoute
+  '/': typeof AuthenticatedIndexRoute
+  '/conta': typeof AuthenticatedContaRoute
+  '/criar-conta': typeof PublicCriarContaRoute
+  '/entrar': typeof PublicEntrarRoute
+  '/jogadores/$jogadorId/metricas': typeof AuthenticatedJogadoresJogadorIdMetricasRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/jogadores/$jogadorId/metricas': typeof JogadoresJogadorIdMetricasRoute
+  '/': typeof AuthenticatedIndexRoute
+  '/conta': typeof AuthenticatedContaRoute
+  '/criar-conta': typeof PublicCriarContaRoute
+  '/entrar': typeof PublicEntrarRoute
+  '/jogadores/$jogadorId/metricas': typeof AuthenticatedJogadoresJogadorIdMetricasRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/jogadores/$jogadorId/metricas': typeof JogadoresJogadorIdMetricasRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/_public': typeof PublicRouteWithChildren
+  '/_authenticated/conta': typeof AuthenticatedContaRoute
+  '/_public/criar-conta': typeof PublicCriarContaRoute
+  '/_public/entrar': typeof PublicEntrarRoute
+  '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/jogadores/$jogadorId/metricas': typeof AuthenticatedJogadoresJogadorIdMetricasRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/jogadores/$jogadorId/metricas'
+  fullPaths:
+    | '/'
+    | '/conta'
+    | '/criar-conta'
+    | '/entrar'
+    | '/jogadores/$jogadorId/metricas'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/jogadores/$jogadorId/metricas'
-  id: '__root__' | '/' | '/jogadores/$jogadorId/metricas'
+  to:
+    | '/'
+    | '/conta'
+    | '/criar-conta'
+    | '/entrar'
+    | '/jogadores/$jogadorId/metricas'
+  id:
+    | '__root__'
+    | '/_authenticated'
+    | '/_public'
+    | '/_authenticated/conta'
+    | '/_public/criar-conta'
+    | '/_public/entrar'
+    | '/_authenticated/'
+    | '/_authenticated/jogadores/$jogadorId/metricas'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  JogadoresJogadorIdMetricasRoute: typeof JogadoresJogadorIdMetricasRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
+  PublicRoute: typeof PublicRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+      preLoaderRoute: typeof AuthenticatedRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/jogadores/$jogadorId/metricas': {
-      id: '/jogadores/$jogadorId/metricas'
+    '/_public': {
+      id: '/_public'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof PublicRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/': {
+      id: '/_authenticated/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/conta': {
+      id: '/_authenticated/conta'
+      path: '/conta'
+      fullPath: '/conta'
+      preLoaderRoute: typeof AuthenticatedContaRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_public/criar-conta': {
+      id: '/_public/criar-conta'
+      path: '/criar-conta'
+      fullPath: '/criar-conta'
+      preLoaderRoute: typeof PublicCriarContaRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/entrar': {
+      id: '/_public/entrar'
+      path: '/entrar'
+      fullPath: '/entrar'
+      preLoaderRoute: typeof PublicEntrarRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_authenticated/jogadores/$jogadorId/metricas': {
+      id: '/_authenticated/jogadores/$jogadorId/metricas'
       path: '/jogadores/$jogadorId/metricas'
       fullPath: '/jogadores/$jogadorId/metricas'
-      preLoaderRoute: typeof JogadoresJogadorIdMetricasRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedJogadoresJogadorIdMetricasRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
   }
 }
 
+interface AuthenticatedRouteChildren {
+  AuthenticatedContaRoute: typeof AuthenticatedContaRoute
+  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+  AuthenticatedJogadoresJogadorIdMetricasRoute: typeof AuthenticatedJogadoresJogadorIdMetricasRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedContaRoute: AuthenticatedContaRoute,
+  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedJogadoresJogadorIdMetricasRoute:
+    AuthenticatedJogadoresJogadorIdMetricasRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
+interface PublicRouteChildren {
+  PublicCriarContaRoute: typeof PublicCriarContaRoute
+  PublicEntrarRoute: typeof PublicEntrarRoute
+}
+
+const PublicRouteChildren: PublicRouteChildren = {
+  PublicCriarContaRoute: PublicCriarContaRoute,
+  PublicEntrarRoute: PublicEntrarRoute,
+}
+
+const PublicRouteWithChildren =
+  PublicRoute._addFileChildren(PublicRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  JogadoresJogadorIdMetricasRoute: JogadoresJogadorIdMetricasRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
+  PublicRoute: PublicRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

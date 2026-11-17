@@ -69,12 +69,12 @@ Rejected alternative: a counter of in-flight requests with a timer, as some inte
 | `src/routes/_public.tsx` | — | pathless layout with the app name only; `beforeLoad` sends a usable session to `/` |
 | `src/routes/_public/entrar.tsx` | `/entrar?redirecionar=&aviso=` | `aviso` is `sessao-expirada`, `sessao-invalida` or `conta-excluida`; anything else is dropped |
 | `src/routes/_public/criar-conta.tsx` | `/criar-conta?redirecionar=` | |
-| `src/routes/_authenticated.tsx` | — | pathless layout with the `AppShell`; `beforeLoad` redirects without a usable session and runs `queryClient.ensureQueryData` for `me`; `pendingComponent` is the `AppShell` in skeleton with an empty body |
-| `src/routes/_authenticated/index.tsx` | `/` | provisional home page |
+| `src/routes/_authenticated.tsx` | — | pathless layout with the `AppShell`; `beforeLoad` redirects without a usable session and runs `queryClient.ensureQueryData` for `me`; `pendingComponent` is the `AppShell` in skeleton with an empty body (`pendingMs: 0`); `errorComponent` shows the error of `me` with "Tentar de novo" when allowed (renewal unavailable on boot) |
+| `src/routes/_authenticated/index.tsx` | `/` | provisional home page; the test players list (`TestPlayers`) only when `VITE_API_MOCK` is on |
 | `src/routes/_authenticated/conta.tsx` | `/conta` | |
 | `src/routes/_authenticated/jogadores/$jogadorId/metricas.tsx` | unchanged | moved from `src/routes/jogadores/` |
 
-The router context gains nothing new: session reads go through `session.ts`. `redirecionar` is validated by `safeRedirect(value)` in `src/utils/redirect.ts` (starts with `/`, not `//`, otherwise `/`). The `aviso` text comes from `noticeText(aviso)` in the same module as the field mapping.
+The router context gains nothing new: session reads go through `session.ts`. `src/router.ts` exports `createAppRouter` and `bindSession(router, queryClient)`, used by `src/main.tsx` and `renderRoute`. Shared form styles live in `src/styles/accountForm.module.css`. `redirecionar` is validated by `safeRedirect(value)` in `src/utils/redirect.ts` (starts with `/`, not `//`, otherwise `/`). The `aviso` text comes from `noticeText(aviso)` in the same module as the field mapping.
 
 Two tabs: `src/api/sessionSync.ts` listens to the `storage` event for `scout.session`. A removed entry navigates to `/entrar`; a different `userId` calls `location.reload()`. A rotated pair needs no event: the next request reads the storage.
 

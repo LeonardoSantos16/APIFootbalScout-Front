@@ -30,9 +30,9 @@
 
 ## 5. Routes, boot and protected layout
 
-- [ ] 5.1 Route tests (`test:` red for the group): opening a protected route signed out goes to `/entrar?redirecionar=` with path and query; refresh token expired goes to `/entrar` without API calls; boot shows the header skeleton while `me` is pending; signed-in scout opening `/entrar` lands on `/`; `/` shows "Olá, Ana."; reloading keeps the session; metrics `401` renewed and repeated without a message; refresh refused lands on `/entrar` with "Sua sessão expirou. Entre novamente."; `usuario.token_sem_identificacao` shows "Sessão inválida. Entre novamente."; refresh 502 keeps the screen and the session; `storage` event without the entry goes to `/entrar`
-- [ ] 5.2 Green in one `feat:` commit: `__root`, `_public`, `_authenticated` (with `beforeLoad`, `me` and `pendingComponent`), move of the metrics route, `/` home page with the mock players list, `sessionSync.ts`, `onSessionEnded` in `src/main.tsx`; verify with `npm test`, `src/routeTree.gen.ts` regenerated and committed
-- [ ] 5.3 Stories of the home page and of the boot skeleton; update `CLAUDE.md` (session in "Estado do repositorio", the session module in "Arquitetura" and the signed-in `dev:mock`); verify in Storybook
+- [x] 5.1 Route tests (`test:` red for the group): opening a protected route signed out goes to `/entrar?redirecionar=` with path and query; refresh token expired goes to `/entrar` without API calls; boot shows the header skeleton while `me` is pending; signed-in scout opening `/entrar` lands on `/`; `/` shows "Olá, Ana."; reloading keeps the session; metrics `401` renewed and repeated without a message; refresh refused lands on `/entrar` with "Sua sessão expirou. Entre novamente."; `usuario.token_sem_identificacao` shows "Sessão inválida. Entre novamente."; refresh 502 keeps the screen and the session; `storage` event without the entry goes to `/entrar`
+- [x] 5.2 Green in one `feat:` commit: `__root`, `_public`, `_authenticated` (with `beforeLoad`, `me` and `pendingComponent`), move of the metrics route, `/` home page with the mock players list, `sessionSync.ts`, `onSessionEnded` in `src/main.tsx`; verify with `npm test`, `src/routeTree.gen.ts` regenerated and committed
+- [x] 5.3 Stories of the home page and of the boot skeleton; update `CLAUDE.md` (session in "Estado do repositorio", the session module in "Arquitetura" and the signed-in `dev:mock`); verify in Storybook
 
 ## 6. Entrar and Criar conta
 

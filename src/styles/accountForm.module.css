@@ -1,0 +1,31 @@
+.title {
+  margin: 0;
+  font: var(--text-section-title);
+  color: var(--ink);
+}
+
+.form {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.submit {
+  min-height: 44px;
+}
+
+.alternative {
+  margin: 0;
+  font: var(--text-body);
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+.alternative a {
+  font: var(--text-body-strong);
+  color: var(--ink);
+}
+
+.alternative a:focus-visible {
+  outline: 2px solid var(--pitch);
+  outline-offset: 2px;
+}
