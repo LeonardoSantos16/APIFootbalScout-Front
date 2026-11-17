@@ -7,7 +7,7 @@ Defines how the screen turns an API failure into a message and a behavior for th
 ## ADDED Requirements
 
 ### Requirement: Message from the code
-The error message SHALL come from the `code` in the `ProblemDetails` body, following the table in `docs/erros.md` written in pt-BR with accents. The `detail`, the `title` and a plain-text body MUST NOT appear on screen.
+The error message SHALL come from the `code` in the `ProblemDetails` body, following the table in `docs/erros.md` written in pt-BR with accents and without the word "recorte", which never appears on screen. The `detail`, the `title` and a plain-text body MUST NOT appear on screen.
 
 #### Scenario: Source down on metrics
 - **WHEN** the metrics respond 502 with `code` "sofascore.estatisticas_do_jogador_indisponiveis"
@@ -19,7 +19,7 @@ The error message SHALL come from the `code` in the `ProblemDetails` body, follo
 
 #### Scenario: Statistics not found
 - **WHEN** the metrics respond 404 with `code` "jogador.estatisticas_nao_encontradas"
-- **THEN** the screen shows "Sem estatísticas para este recorte." without "Tentar de novo"
+- **THEN** the screen shows "Sem estatísticas para esta competição e temporada." without "Tentar de novo"
 
 #### Scenario: Profile not found in the recorte
 - **WHEN** the metrics respond 404 with `code` "jogador.perfil_nao_encontrado"
