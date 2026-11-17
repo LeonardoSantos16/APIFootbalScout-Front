@@ -52,7 +52,7 @@ Scout Vestiário é a interface escura do APIFootballScout, uma ferramenta para 
 
 ### Forma e controles
 
-- Botões e o campo de busca são pílulas (`radius-pill`). O botão principal é branco com texto `on-light`; os secundários são `surface-raised` com borda `line-strong`.
+- Botões, o campo de busca e o `Select` são pílulas (`radius-pill`). O `Select` é um `<select>` nativo em `surface-raised` com borda `line-strong` e a seta `caret-down`; a parte que diferencia as opções vem no começo do texto, porque o corte no celular come o fim. O botão principal é branco com texto `on-light`; os secundários são `surface-raised` com borda `line-strong`.
 - Abas são texto, com sublinhado de 2px em `pitch` na selecionada; `ink` na selecionada, `ink-muted` nas demais.
 - Chips e etiquetas de posição usam `radius-sm`.
 - Foco: anel sólido de 2px em `pitch` com 2px de afastamento em todo elemento interativo.

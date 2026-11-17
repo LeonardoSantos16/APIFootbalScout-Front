@@ -15,3 +15,4 @@
 | `sign-out` | Sair da conta |
 | `plus` | Adicionar à shortlist, novo relatório |
 | `check` | Finalizar relatório, confirmação |
+| `caret-down` | Abrir o seletor de competição e temporada |

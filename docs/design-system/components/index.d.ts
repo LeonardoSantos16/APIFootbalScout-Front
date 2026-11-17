@@ -42,6 +42,7 @@ export interface StatCellProps {
   state?: 'calculada' | 'recusada' | 'carregando';
   value?: string;
   reason?: string;
+  sample?: string;
 }
 export declare function StatCell(props: StatCellProps): React.ReactElement;
 
@@ -74,6 +75,16 @@ export interface InlineErrorProps {
 }
 export declare function InlineError(props: InlineErrorProps): React.ReactElement;
 
+export interface SelectOption { value: string; label: string }
+export interface SelectProps {
+  label: string;
+  options: SelectOption[];
+  value?: string;
+  onChange?: (value: string) => void;
+  loading?: boolean;
+}
+export declare function Select(props: SelectProps): React.ReactElement;
+
 declare global {
   interface Window {
     ScoutVestiario: {
@@ -86,6 +97,7 @@ declare global {
       ChangeChip: typeof ChangeChip;
       MeasurementCard: typeof MeasurementCard;
       InlineError: typeof InlineError;
+      Select: typeof Select;
     };
   }
 }

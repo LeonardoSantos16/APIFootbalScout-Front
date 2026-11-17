@@ -1,4 +1,4 @@
-/* @ds-bundle: {"format":4,"namespace":"ScoutVestiario","components":[{"name":"Button"},{"name":"Tabs"},{"name":"ClubBand"},{"name":"Card"},{"name":"StatCell"},{"name":"MetricsGrid"},{"name":"ChangeChip"},{"name":"MeasurementCard"},{"name":"InlineError"}]} */
+/* @ds-bundle: {"format":4,"namespace":"ScoutVestiario","components":[{"name":"Button"},{"name":"Tabs"},{"name":"ClubBand"},{"name":"Card"},{"name":"StatCell"},{"name":"MetricsGrid"},{"name":"ChangeChip"},{"name":"MeasurementCard"},{"name":"InlineError"},{"name":"Select"}]} */
 (function () {
   var React = window.React;
   var h = React.createElement;
@@ -101,7 +101,8 @@
     }
     return h("div", { className: cx("sv-stat", "is-" + state), "aria-busy": state === "carregando" || undefined },
       value,
-      h("span", { className: "sv-stat-label" }, label));
+      h("span", { className: "sv-stat-label" }, label),
+      state === "calculada" && props.sample ? h("span", { className: "sv-stat-sample" }, props.sample) : null);
   }
 
   function MetricsGrid(props) {
@@ -146,7 +147,31 @@
       props.onRetry ? h(Button, { variant: "secondary", onClick: props.onRetry }, props.retryLabel || "Tentar de novo") : null);
   }
 
+  function Select(props) {
+    var id = React.useId();
+    var field;
+    if (props.loading) {
+      field = h("span", { className: "sv-skeleton sv-select-skeleton", "aria-hidden": true });
+    } else {
+      field = h("div", { className: "sv-select-wrap" },
+        h("select", {
+          id: id,
+          className: "sv-select",
+          value: props.value,
+          onChange: function (e) { if (props.onChange) props.onChange(e.target.value); }
+        }, props.options.map(function (o) {
+          return h("option", { key: o.value, value: o.value }, o.label);
+        })),
+        h("svg", { className: "sv-select-caret", viewBox: "0 0 256 256", fill: "currentColor", "aria-hidden": true },
+          h("path", { d: "M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z" })));
+    }
+    return h("div", { className: "sv-field", "aria-busy": props.loading || undefined },
+      h("label", { className: "sv-field-label", htmlFor: id }, props.label),
+      field);
+  }
+
   window.ScoutVestiario = Object.assign(window.ScoutVestiario || {}, {
+    Select: Select,
     Button: Button,
     Tabs: Tabs,
     ClubBand: ClubBand,
