@@ -33,7 +33,7 @@
 ## 6. Interface components
 
 - [x] 6.1 `Button`, `Card`, `Skeleton` and `InlineError` with CSS Modules over the tokens; a story per variant and state; verify in Storybook and with `npm run lint`
-- [ ] 6.2 `Select` (native, label, `caret-down`, skeleton) and `Tabs`; a story per state; label accessibility test with Testing Library
+- [x] 6.2 `Select` (native, label, `caret-down`, skeleton) and `Tabs`; a story per state; label accessibility test with Testing Library
 - [ ] 6.3 `ClubBand` on the `club` fallback; story; verify that no literal color enters the CSS
 - [ ] 6.4 `MetricCell` and `MetricsGrid` (calculated, refused, loading, `sample`, footer); a story per state; test that the seven rows appear with everything refused
 - [ ] 6.5 `AppShell` with the top bar, "Sair", "Menu" button below 720px and a two-column body; desktop and phone stories

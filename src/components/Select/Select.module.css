@@ -1,0 +1,47 @@
+.field {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.label {
+  font: var(--text-label);
+  color: var(--ink-muted);
+}
+
+.wrap {
+  position: relative;
+  width: min(100%, 380px);
+}
+
+.select {
+  appearance: none;
+  width: 100%;
+  color-scheme: dark;
+  font: var(--text-body-strong);
+  color: var(--ink);
+  background: var(--surface-raised);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  padding: var(--space-2) var(--space-6) var(--space-2) var(--space-4);
+  cursor: pointer;
+  text-overflow: ellipsis;
+}
+
+.select:hover {
+  background: var(--surface-strong);
+}
+
+.caret {
+  position: absolute;
+  right: var(--space-4);
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--ink-muted);
+  pointer-events: none;
+}
+
+.skeleton {
+  width: min(100%, 380px);
+  height: 38px;
+  border-radius: var(--radius-pill);
+}
