@@ -36,9 +36,9 @@
 
 ## 6. Entrar and Criar conta
 
-- [ ] 6.1 Route tests (`test:` red for the group): sign in with a destination; external destination ignored; wrong credentials under "Senha"; validation only after the first submit and cleared while typing; sending state "Entrando…"; unknown error above the button; create account lands on `/` with the name in the header; e-mail already used under "E-mail"; "Criando conta…"; links between the two pages; notices "Sua sessão expirou. Entre novamente." and "Conta excluída." from `aviso`; page titles
-- [ ] 6.2 Green in one `feat:` commit: `src/hooks/useFormSubmit.ts`, `SignInPage`, `SignUpPage`; verify with `npm test`
-- [ ] 6.3 Stories per state of each page (empty, validation errors, server field error, sending, notices); verify in Storybook at desktop and 375px
+- [x] 6.1 Route tests (`test:` red for the group): sign in with a destination; external destination ignored; wrong credentials under "Senha"; validation only after the first submit and cleared while typing; sending state "Entrando…"; unknown error above the button; create account lands on `/` with the name in the header; e-mail already used under "E-mail"; "Criando conta…"; links between the two pages; notices "Sua sessão expirou. Entre novamente." and "Conta excluída." from `aviso`; page titles
+- [x] 6.2 Green in one `feat:` commit: `src/hooks/useFormSubmit.ts`, `SignInPage`, `SignUpPage`; verify with `npm test`
+- [x] 6.3 Stories per state of each page (empty, validation errors, server field error, sending, notices); verify in Storybook at desktop and 375px
 
 ## 7. Conta and signing out
 

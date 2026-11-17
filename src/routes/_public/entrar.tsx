@@ -1,7 +1,8 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute, useRouter } from '@tanstack/react-router'
 import type { SignInSearch } from '../../interfaces/session'
 import { SignInPage } from '../../pages/sign-in/SignInPage'
 import { parseNotice } from '../../utils/accountErrors'
+import { safeRedirect } from '../../utils/redirect'
 
 export const Route = createFileRoute('/_public/entrar')({
   validateSearch: (search: Record<string, unknown>): SignInSearch => ({
@@ -12,6 +13,18 @@ export const Route = createFileRoute('/_public/entrar')({
 })
 
 function SignInRoute() {
-  const { aviso } = Route.useSearch()
-  return <SignInPage notice={aviso} />
+  const { aviso, redirecionar } = Route.useSearch()
+  const router = useRouter()
+
+  return (
+    <SignInPage
+      notice={aviso}
+      onSignedIn={() => router.history.push(safeRedirect(redirecionar))}
+      signUpLink={
+        <Link to="/criar-conta" search={{ redirecionar }}>
+          Criar conta
+        </Link>
+      }
+    />
+  )
 }
