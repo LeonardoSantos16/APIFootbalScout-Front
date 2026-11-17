@@ -31,10 +31,12 @@ Todo componente que mostra dado da API trata quatro situacoes, e as duas do meio
 
 | Situacao | Como chega | Tela |
 | --- | --- | --- |
-| Carregando | `isPending` | Skeleton em `surface-strong` no formato final; o layout nao pode pular quando o dado chega |
+| Carregando | sem `data`, ou `isError && isFetching` (nova tentativa em voo) | Skeleton em `surface-strong` no formato final; o layout nao pode pular quando o dado chega |
 | Recusa ou indisponivel | `200 OK` com `resultado: 'Recusada'` ou `'Indisponivel'` e um `motivo` | O motivo, com os numeros, no lugar do valor; o rotulo continua. Nunca esconda a linha |
 | Sucesso | `200 OK` | Valor formatado em pt-BR, com unidade |
 | Erro | `ApiError` com `status` e `body` | Mensagem no proprio cartao com "Tentar de novo"; todo `502` oferece nova tentativa |
+
+Resposta que nao fecha com a regra da tela (atributo faltando, calculada sem `valor`) e montada no `select` do `useQuery` e lanca um erro proprio (`IncompleteResponseError`): a consulta cai no estado de erro e a tela mostra o erro generico com "Tentar de novo".
 
 Recusa e resultado de negocio, nao falha: nunca a renderize com o componente de erro e nunca a filtre da lista. A grade de metricas tem sete linhas fixas mesmo quando todas sao recusadas.
 
@@ -42,9 +44,9 @@ Os textos de cada motivo, rotulos e unidades estao em `references/textos.md`.
 
 ### Erros
 
-- A mensagem sai do `code` do corpo `ProblemDetails`, nunca do `detail`, que e diagnostico com ingles e portugues misturados. O contrato ainda nao publica `code`, entao leia `(error.body as { code?: string })?.code`.
-- Sem `code`, ou com corpo em texto puro (`Players`, `Tournament`), use a mensagem generica por status de `references/textos.md`.
-- O dicionario `code -> mensagem` mora num modulo so, `src/api/errors.ts`. Se ainda nao existir, crie-o a partir da tabela de `docs/erros.md`, com as entradas que a feature usa.
+- Toda falha vira texto com `describeError(error, { plainText })` de `src/api/errors.ts`, que devolve `{ message, canRetry }` e registra o `instance` do erro desconhecido no console. `plainText: true` so nos endpoints que respondem texto puro (`Players`, `Tournament`). Nunca leia `detail`, `title` ou o corpo em texto para a tela.
+- `MESSAGE_BY_CODE` ja tem a tabela inteira de `docs/erros.md`; mensagem nova entra la. Os textos por status estao em `references/textos.md`.
+- Mostre o erro com `InlineError` e passe `onRetry` so quando `canRetry` for verdadeiro. A repeticao automatica do `502` (uma vez, 2 s) ja esta no `createQueryClient` de `src/api/queryClient.ts`.
 - `401` nao e tratado na tela: o cliente renova a sessao ou leva ao login.
 - Validacao que o servidor faria (minimo de pontos do relatorio, moeda da shortlist, limite de acompanhamentos) e checada antes, no formulario. O `422` e rede de seguranca, nao o feedback.
 
@@ -54,7 +56,8 @@ Os textos de cada motivo, rotulos e unidades estao em `references/textos.md`.
 - A referencia visual de cada componente esta em `docs/design-system/components/<Nome>/` e em `bundle.css`. Porte o CSS e o comportamento; nao copie o `React.createElement` do `bundle.js`.
 - Variantes viram classes combinadas. Valores so conhecidos em execucao, como a cor do clube, entram por custom property inline (`style={{ '--club': cor }}`).
 - As regras que mais se erram: `pitch` so como acento (aba, foco, ponto ativo); numeros com `tabular-nums` na familia display; rotulo **embaixo** do valor, sem caixa alta; cartoes sem sombra; sem animacao de entrada; foco com anel de 2px em `pitch`.
-- Icones so do Phosphor (`@phosphor-icons/react`, regular, 20px, `currentColor`), da lista em `docs/design-system/assets/Icons/`. Icone sozinho so em fechar e arrastar, com `aria-label`.
+- Icones so do Phosphor (`@phosphor-icons/react`, regular, `size={20}`, `currentColor`), importados com o sufixo `Icon` (`CaretDownIcon`, `SignOutIcon`), da lista em `docs/design-system/assets/Icons/`. Icone sozinho so em fechar e arrastar, com `aria-label`.
+- Componentes globais ja prontos em `src/components/`: `AppShell` (topo, no `__root`), `PageColumns` (corpo em duas colunas da pagina do jogador), `Card`, `ClubBand`, `Tabs`, `Select`, `Button`, `InlineError` e `Skeleton`. Reuse antes de criar.
 
 ## Texto e numeros
 
@@ -67,7 +70,8 @@ Os textos de cada motivo, rotulos e unidades estao em `references/textos.md`.
 
 - Usado por mais de uma tela: `src/components/`, `src/hooks/`, `src/utils/` (funcoes puras) e `src/interfaces/` (tipos).
 - Usado por uma tela so: `src/pages/<tela>/components/`, `hooks/`, `utils/` e `interfaces/`, com a pagina na raiz da pasta (`src/pages/metrics/MetricsPage.tsx`).
-- O arquivo em `src/routes/` so declara a rota e renderiza a pagina.
+- O arquivo em `src/routes/` so declara a rota (`validateSearch`) e renderiza a pagina, passando por props o que vem do roteador (`playerId`, `search`, `onSliceChange`). A pagina nao importa a rota, entao as stories da tela rodam sem roteador.
+- `new Date()` e outras funcoes impuras nao rodam durante a renderizacao (o lint acusa): fixe com `useState(() => new Date())` e passe a data para as funcoes puras.
 - Quando uma segunda tela precisar de algo que esta na pasta de outra, mova para a pasta global em vez de importar de `pages/<outra-tela>/`.
 - Tipo de objeto e `interface`; uniao e apelido do contrato (`components['schemas'][...]`) sao `type`.
 
@@ -79,7 +83,9 @@ Todo identificador em ingles, inclusive os do dominio, com o nome de codigo da t
 
 - Handlers usam o `http` de `src/mocks/http.ts` (`openapi-msw`), tipado pelo contrato: rota, parametros e corpo errados nao compilam.
 - Cada handler representa um estado de negocio e tem um nome que o diz (`insufficientSampleMetrics`, `profileSourceDown`). Dado aleatorio nao exercita estado nenhum.
-- Uma story por estado do componente, incluindo carregando, recusa e erro, usando os mesmos handlers. A story e a especificacao visual da tela.
+- Handlers nomeados ficam em `src/mocks/handlers/<area>.ts`, fixtures em `src/mocks/fixtures/` (`buildFullProfile`, listas de atributos) e corpos de erro em `src/mocks/responses.ts` (`problem`, `plainText`). `src/mocks/handlers.ts` responde o `dev:mock` por `jogadorId` e tambem e o padrao dos testes.
+- Uma story por estado do componente, incluindo carregando, recusa e erro, usando os mesmos handlers aplicados com `beforeEach({ msw }) { msw.use(...) }` (o `parameters.msw` esta obsoleto no addon). A story nao tem handler padrao: declare todos os que a tela chama. Carregamento parado e um handler com `await delay('infinite')`. A story e a especificacao visual da tela.
+- Teste de tela vai pela rota: `renderRoute(url)` de `src/test/renderRoute.tsx` monta o roteador com historico em memoria e `retryDelay: 0`; confira a URL em `router.state.location.search` e o historico em `router.history.length`. Para fixar a data, `vi.useFakeTimers({ toFake: ['Date'] })`, que nao trava o MSW.
 
 ## Antes de concluir
 

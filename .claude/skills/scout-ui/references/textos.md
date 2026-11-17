@@ -11,19 +11,31 @@ Valores dos enums do contrato (`src/api/schema.d.ts`) e o texto que o olheiro le
 | `PassesDecisivos` | Passes decisivos | por 90 |
 | `Desarmes` | Desarmes | por 90 |
 | `Interceptacoes` | Interceptações | por 90 |
-| `Rating` | Rating | média |
+| `Rating` | Nota | média |
 | `PrecisaoDePasse` | Precisão de passe | % (anexado ao valor) |
 
-Rotulo com unidade: "Desarmes, por 90", "Rating, média". O `%` vai no valor: "86,4%".
+Rotulo com unidade: "Desarmes, por 90", "Nota, média". O `%` vai no valor: "86,4%". Contagens e Nota com duas casas ("2,10", "7,12"); Precisão de passe com uma ("86,4%"). A grade tem sempre as sete linhas, nesta ordem.
+
+## Amostra da grade
+
+- Rodape, com a amostra mais comum entre os atributos: "Amostra: 1.284 min jogados. Contagens por 90 minutos; métricas com menos de 450 min ficam sem valor."
+- Enquanto carrega, ou sem amostra: so "Contagens por 90 minutos; métricas com menos de 450 min ficam sem valor."
+- A linha calculada so mostra a propria amostra quando ela difere do rodape: "1.190 min jogados".
 
 ## Recusa de metrica (`MotivoDaRecusaDto`)
 
 | Valor | Texto |
 | --- | --- |
 | `AmostraInsuficiente` | Amostra insuficiente: `<amostraEmMinutos>` de 450 min |
+| `AmostraInsuficiente` sem amostra | Amostra insuficiente: mínimo de 450 min |
 | `FonteNaoAtribuiu` | Não publicado pela fonte |
 
-Metrica calculada: o valor, com `amostraEmMinutos` como contexto ("Calculado sobre 1.284 min jogados").
+## Tela de metricas por 90
+
+- Seletor: rotulo "Competição e temporada"; opcoes "Brasileirão Série A · 2025", ou "Clube · Brasileirão Série A · 2025" e "Seleção · Eliminatórias Sul-Americanas · 2025" quando o jogador tem algum recorte de seleção. A palavra "recorte" nunca aparece na tela.
+- Linha de apoio do cabecalho: "Meio-campo, 27 anos, Atlético Serrano" (posicao pela letra da fonte: G Goleiro, D Defesa, M Meio-campo, F Ataque).
+- Perfil sem `stats`: "Sem estatísticas publicadas para este jogador."
+- Titulo da aba: "Métricas por 90 · <nome>"; so "Métricas por 90" enquanto carrega ou quando falha.
 
 ## Afericao do acompanhamento (`ResultadoDaAfericaoDto`, `MotivoDeIndisponibilidadeDto`)
 
@@ -63,12 +75,18 @@ Parecer: `Contratar` → Contratar · `Monitorar` → Monitorar · `Reavaliar` �
 
 `Clube` → Clube · `Selecao` → Seleção
 
-## Erros sem `code`
+## Erros
 
-A mensagem por `code` esta em `docs/erros.md`. Sem `code`, ou com corpo em texto puro:
+O texto final de cada `code` esta em `MESSAGE_BY_CODE` (`src/api/errors.ts`): a tabela de `docs/erros.md` em pt-BR com acentos e sem a palavra "recorte". Quando os dois divergem, vale o modulo.
+
+Sem `code`, nos endpoints de texto puro (`Players`, `Tournament`), com `describeError(error, { plainText: true })`:
 
 | Status | Texto |
 | --- | --- |
-| `502` | Não foi possível falar com a fonte de dados agora. Tente de novo. |
-| `404` | Não encontramos o que você procurava. |
-| outros | Algo deu errado. Tente de novo. |
+| `404` | Jogador não encontrado. |
+| `502` | Não foi possível carregar o perfil agora. |
+| outros | Não foi possível concluir agora. |
+
+Erro desconhecido (sem `code` num endpoint de `ProblemDetails`, `code` interno ou desconhecido, falha de rede, resposta incompleta): "Não foi possível concluir agora."
+
+"Tentar de novo" aparece no `502` e no erro desconhecido, nunca num `4xx`.

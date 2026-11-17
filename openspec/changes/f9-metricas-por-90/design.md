@@ -33,7 +33,7 @@ ADRs applied: 0003 (recorte in the URL, with the amendment on order, tie-break a
 
 - `src/routes/__root.tsx` renders the page skeleton (`AppShell`) around the `Outlet`.
 - `src/routes/jogadores/$jogadorId/metricas.tsx` only declares the route and renders `MetricsPage` from `src/pages/metrics/`. Its `validateSearch` accepts `competicao` and `temporada` as positive integers and `contexto` as `Clube` or `Selecao`; any other value becomes `undefined` (missing recorte). Search params in Portuguese, as in ADR 0003; the translation to `CompeticaoId`/`TemporadaId`/`Contexto` happens only in the API call.
-- The recorte correction happens in the component: once the profile is loaded, if the URL recorte is not in the derived list, the screen renders `<Navigate replace search={first} />`. Rejected alternative: a `redirect` in the loader, which would require moving the profile into the loader and swapping the skeleton for a `pendingComponent` too early.
+- The recorte correction happens in the page: once the profile is loaded, if the URL recorte is not in the derived list, an effect (with `useEffectEvent`) calls `onSliceChange(first, { replace: true })`, which the route turns into `navigate({ search, replace: true })`. The page gets `playerId`, `search` and `onSliceChange` as props and never imports the route, so the screen stories run without a router. Rejected alternative: a `redirect` in the loader, which would require moving the profile into the loader and swapping the skeleton for a `pendingComponent` too early.
 - Changing via the selector uses `navigate({ search })` without `replace`.
 
 ### Folder layout
@@ -96,7 +96,7 @@ Fixtures in `src/mocks/fixtures/`, handlers named by state in `src/mocks/handler
 - [The `contexto` rule was never checked against real SofaScore data] → isolated in `deriveSlices` and tested; the check is the first task of item 3, and the fix, if needed, is exposing `contexto` in the back end (`docs/divida-tecnica.md`).
 - [`season.id` may not grow over time in every competition] → the order lives in a single place in `slice.ts`; if the item 3 check shows otherwise, the criterion changes without touching the screen.
 - [`msw-storybook-addon` may not keep up with Storybook 10] → alternative: a custom decorator that starts the `worker` and applies `worker.use(...)` per story.
-- [Correcting the recorte in the component renders once with the wrong recorte before the `Navigate`] → the screen shows a skeleton while the recorte is invalid, so nothing wrong is ever shown.
+- [Correcting the recorte in the page renders once with the wrong recorte before the navigation] → the screen shows a skeleton while the recorte is invalid, so nothing wrong is ever shown.
 - [Top links without a destination may look broken] → they render as non-interactive items until item 9.
 
 ## Open Questions

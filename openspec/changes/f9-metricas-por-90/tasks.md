@@ -54,8 +54,8 @@
 
 ## 9. Integration
 
-- [ ] 9.1 Run `npm run lint`, `npm run typecheck`, `npm test` and `npm run build` without failures and walk the five players in `npm run dev:mock` on desktop and at 375px
-- [ ] 9.2 Retrospective: update the `scout-ui` skill ("Nota" texts and the footer sample in `references/textos.md`), `CLAUDE.md` and the specs with what the implementation revealed; verify with `openspec validate f9-metricas-por-90 --strict`
+- [x] 9.1 Run `npm run lint`, `npm run typecheck`, `npm test` and `npm run build` without failures and walk the five players in `npm run dev:mock` on desktop and at 375px
+- [x] 9.2 Retrospective: update the `scout-ui` skill ("Nota" texts and the footer sample in `references/textos.md`), `CLAUDE.md` and the specs with what the implementation revealed; verify with `openspec validate f9-metricas-por-90 --strict`
 
 ## Workflow follow-up
 
