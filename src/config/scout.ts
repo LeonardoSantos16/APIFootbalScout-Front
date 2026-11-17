@@ -1,0 +1,1 @@
+export const AMOSTRA_MINIMA_DE_MINUTOS = 450
