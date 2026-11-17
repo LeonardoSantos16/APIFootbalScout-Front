@@ -1,6 +1,6 @@
 # Grilling: F9 Metricas por 90
 
-Decisoes fechadas no grilling do item 2 de [planejamento-base.md](../planejamento-base.md). Sao a entrada do esboco (`docs/esbocos/f9-metricas-por-90.html`) e da change `f9-metricas-por-90` no OpenSpec. Pendencias da API em [divida-tecnica.md](../divida-tecnica.md).
+Decisoes fechadas no grilling do item 2 de [planejamento-base.md](../planejamento-base.md). Sao a entrada do wireframe e da change `f9-metricas-por-90` no OpenSpec. Pendencias da API em [divida-tecnica.md](../divida-tecnica.md).
 
 ## Recorte
 
@@ -44,6 +44,6 @@ Decisoes fechadas no grilling do item 2 de [planejamento-base.md](../planejament
 - **Q17. Mocks:** fixtures em `src/mocks/fixtures/`, com handlers por `jogadorId`: completo (clube e selecao, linhas calculadas e os dois motivos de recusa), so selecao, sem `stats`, perfil 404, metricas 502.
 - **Q18. Testes:** unitarios para formatadores, derivacao dos recortes, recorte padrao, validacao do recorte da URL e mapa de `code`; testes da rota com RTL e MSW para abertura com `replace`, troca de recorte, linha recusada, sem `stats`, 404 e 502 com "Tentar de novo"; stories por componente e estado e uma da tela por cenario.
 
-## Esboco
+## Wireframe
 
-- **Q25:** `docs/esbocos/f9-metricas-por-90.html` com nove estados, em desktop e em 375px: abertura carregando, sucesso com clube e selecao, troca de recorte carregando, so selecao, sem `stats`, perfil 404, perfil 502, metricas 502 e erro generico. O seletor aparece tambem isolado, para aprovar antes de entrar no design system.
+- **Q25:** wireframe da tela com nove estados, em desktop e em 375px: abertura carregando, sucesso com clube e selecao, troca de recorte carregando, so selecao, sem `stats`, perfil 404, perfil 502, metricas 502 e erro generico. O `Select` e a `sample` da `StatCell` ja entraram no design system, a partir de um esboco anterior (as revisoes marcadas como "revisto no esboco").

@@ -7,13 +7,13 @@ O que o front vai entregar, em que ordem e por qual fluxo. Este documento so pla
 | Etapa | Ferramenta | Entrada | Saida |
 | --- | --- | --- | --- |
 | 1. Grilling | skill `grilling` (ou `grill-with-docs`) | o item deste documento e as perguntas dele | decisoes fechadas; termos novos no `GLOSSARY.md`, decisoes de arquitetura em `docs/adr/` |
-| 2. Esboco da tela | HTML com os componentes de referencia e o `bundle.css` de `docs/design-system/components/`, skill `frontend-design` | as decisoes do grilling e os estados de `fluxos-de-tela.md` | `docs/esbocos/<item>.html` com a tela em cada estado (carregando, sucesso, vazio ou recusado, erro), aprovado antes da spec; componente novo que o esboco pedir entra no design system primeiro |
-| 3. Spec | OpenSpec (`/openspec-propose`) | as decisoes do grilling e o esboco aprovado | change em `openspec/changes/<nome>/` com `proposal.md`, specs delta, `design.md` (que aponta para o esboco) e `tasks.md`, valida em `openspec validate <nome> --strict` |
+| 2. Wireframe | artefato no claude.ai, um por tela, nao versionado | as decisoes do grilling e os estados de `fluxos-de-tela.md` | wireframe de baixa fidelidade com a tela em cada estado (carregando, sucesso, vazio ou recusado, erro), aprovado antes da spec; componente novo que o wireframe pedir entra no design system primeiro |
+| 3. Spec | OpenSpec (`/openspec-propose`) | as decisoes do grilling e o wireframe aprovado | change em `openspec/changes/<nome>/` com `proposal.md`, specs delta, `design.md` (com o link do wireframe) e `tasks.md`, valida em `openspec validate <nome> --strict` |
 | 4. TDD | skill `tdd` e `/openspec-apply-change` | `tasks.md` | testes e stubs ate o red (commit `test:`), depois a implementacao ate o green (commit `feat:`) |
 
 Ao fim de cada item: retrospectiva (o que a spec nao previu, ajustes na skill `scout-ui` ou no `CLAUDE.md`) e `/openspec-archive-change`, que leva as specs para `openspec/specs/`.
 
-Itens sem tela (CI, testes e2e, deploy) pulam o esboco.
+Itens sem tela (CI, testes e2e, deploy) pulam o wireframe.
 
 O contexto e as regras por artefato do OpenSpec ficam em `openspec/config.yaml`.
 
@@ -39,7 +39,7 @@ Nome da change no OpenSpec: identificador do back-end + nome (`f9-metricas-por-9
 
 ## 1. CI
 
-O workflow `.github/workflows/ci.yml` ja existe desde o scaffold: em push na `main` e em pull request, roda `gen:api` e `gen:tokens` com `git diff --exit-code`, `lint`, `typecheck`, `test`, `build` e `build-storybook`. Este item completa o que falta para ele servir de rede de seguranca do fluxo grilling -> esboco -> spec -> TDD.
+O workflow `.github/workflows/ci.yml` ja existe desde o scaffold: em push na `main` e em pull request, roda `gen:api` e `gen:tokens` com `git diff --exit-code`, `lint`, `typecheck`, `test`, `build` e `build-storybook`. Este item completa o que falta para ele servir de rede de seguranca do fluxo grilling -> wireframe -> spec -> TDD.
 
 ## 2. F9 Metricas por 90
 
