@@ -2,11 +2,11 @@
 
 ## 1. Dependencies and interface components
 
-- [ ] 1.1 Install `@radix-ui/react-dialog` and verify with `npm run typecheck` and `npm run build-storybook`
-- [ ] 1.2 `TextField` and `PasswordField` (label above, hint or error below linked by `aria-describedby`, `aria-invalid`, disabled, "Mostrar"/"Ocultar" with `aria-pressed`); stories per state; Testing Library test for the label, the error description and the toggle
-- [ ] 1.3 `Notice` (`role="status"`) and `Dialog` on Radix (title, description, close button "Fechar", actions stacked below 480px); stories per state; test that `Esc` and "Fechar" call `onClose`
-- [ ] 1.4 `Button` disabled state from the design system; story per variant disabled; verify no literal color enters the CSS
-- [ ] 1.5 `AppShell` with the scout's name as a link, "Sair" as a ghost `Button` and a `loading` prop with skeleton blocks; `AuthShell` with only the app name; desktop, loading and phone stories
+- [x] 1.1 Install `@radix-ui/react-dialog` and verify with `npm run typecheck` and `npm run build-storybook`
+- [x] 1.2 `TextField` and `PasswordField` (label above, hint or error below linked by `aria-describedby`, `aria-invalid`, disabled, "Mostrar"/"Ocultar" with `aria-pressed`); stories per state; Testing Library test for the label, the error description and the toggle
+- [x] 1.3 `Notice` (`role="status"`) and `Dialog` on Radix (title, description, close button "Fechar", actions stacked below 480px); stories per state; test that `Esc` and "Fechar" call `onClose`
+- [x] 1.4 `Button` disabled state from the design system; story per variant disabled; verify no literal color enters the CSS
+- [x] 1.5 `AppShell` with the scout's name as a link, "Sair" as a ghost `Button` and a `loading` prop with skeleton blocks; `AuthShell` with only the app name; desktop, loading and phone stories
 
 ## 2. Session rules
 

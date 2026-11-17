@@ -95,7 +95,7 @@
 
 .sv-notice { margin: 0; padding: var(--space-3) 14px; border-radius: var(--radius-md); background: var(--surface-raised); color: var(--ink-soft); font-family: var(--font-body); font-size: 14px; line-height: 20px; }
 
-.sv-dialog-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.8); display: flex; align-items: center; justify-content: center; padding: var(--space-4); z-index: 10; }
+.sv-dialog-backdrop { position: fixed; inset: 0; background: var(--backdrop); display: flex; align-items: center; justify-content: center; padding: var(--space-4); z-index: 10; }
 .sv-dialog { width: min(100%, 440px); box-sizing: border-box; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: var(--space-5); display: grid; gap: var(--space-4); font-family: var(--font-body); color: var(--ink); }
 .sv-dialog-head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); }
 .sv-dialog-title { margin: 0; font-family: var(--font-display); font-size: 18px; line-height: 24px; font-weight: 700; }
