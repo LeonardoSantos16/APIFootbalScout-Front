@@ -1,0 +1,36 @@
+.button {
+  font: var(--text-body-strong);
+  border-radius: var(--radius-pill);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.primary {
+  background: var(--ink);
+  color: var(--on-light);
+}
+
+.secondary {
+  background: var(--surface-raised);
+  color: var(--ink);
+  border-color: var(--line-strong);
+}
+
+.secondary:hover:not(:disabled) {
+  background: var(--surface-strong);
+}
+
+.ghost {
+  background: none;
+  color: var(--ink-soft);
+}
+
+.ghost:hover:not(:disabled) {
+  color: var(--ink);
+}

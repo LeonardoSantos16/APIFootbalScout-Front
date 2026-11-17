@@ -1,0 +1,23 @@
+<!-- @dsCard group="Formulários" height=200 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Select</title></head>
+<body style="margin:0;background:var(--ground)">
+<div id="root" class="sv-stage is-column"></div>
+<script>
+  var V = window.ScoutVestiario, h = React.createElement;
+  var opcoes = [
+    { value: '325-58766-Clube', label: 'Clube · Brasileirão Série A · 2025' },
+    { value: '13475-60212-Selecao', label: 'Seleção · Eliminatórias Sul-Americanas · 2025' },
+    { value: '373-59011-Clube', label: 'Clube · Copa do Brasil · 2025' }
+  ];
+  function Demo() {
+    var s = React.useState(opcoes[0].value);
+    return h('div', { style: { display: 'grid', gap: '16px', background: 'var(--surface)', padding: '20px 24px', borderRadius: 'var(--radius-lg)', maxWidth: '420px' } },
+      h(V.Select, { label: 'Competição e temporada', options: opcoes, value: s[0], onChange: s[1] }),
+      h(V.Select, { label: 'Competição e temporada', options: [], loading: true }));
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

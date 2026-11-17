@@ -21,7 +21,7 @@ Scout Vestiário é a interface escura do APIFootballScout, uma ferramenta para 
 
 ### A faixa do clube
 
-- O cartão de perfil abre com uma faixa na cor do clube do jogador, com o nome em `player-name` e posição e idade em `on-club-soft`. A cor vem de `team.teamColors` no perfil: use a primária, troque pela secundária quando a primária for quase branca ou quase preta, e use `club` quando nenhuma servir. A regra está na `ClubBand`.
+- O cartão de perfil abre com uma faixa na cor do clube do jogador, com o nome em `player-name` e posição e idade em `on-club-soft`. A cor vem de `team.teamColors` no perfil: use a primária, troque pela secundária quando a primária for quase branca ou quase preta, e use `club` quando nenhuma servir. A regra está na `ClubBand`. O contrato da API ainda não expõe `teamColors`; até expor, a faixa usa sempre `club`.
 - Escolha `on-club` (branco) ou `on-light` (preto) pela luminância da cor do clube. A faixa leva no máximo a linha do nome, a linha de apoio e um botão pílula branco.
 
 ### Estados
@@ -52,7 +52,7 @@ Scout Vestiário é a interface escura do APIFootballScout, uma ferramenta para 
 
 ### Forma e controles
 
-- Botões e o campo de busca são pílulas (`radius-pill`). O botão principal é branco com texto `on-light`; os secundários são `surface-raised` com borda `line-strong`.
+- Botões, o campo de busca e o `Select` são pílulas (`radius-pill`). O `Select` é um `<select>` nativo em `surface-raised` com borda `line-strong` e a seta `caret-down`; a parte que diferencia as opções vem no começo do texto, porque o corte no celular come o fim. O botão principal é branco com texto `on-light`; os secundários são `surface-raised` com borda `line-strong`.
 - Abas são texto, com sublinhado de 2px em `pitch` na selecionada; `ink` na selecionada, `ink-muted` nas demais.
 - Chips e etiquetas de posição usam `radius-sm`.
 - Foco: anel sólido de 2px em `pitch` com 2px de afastamento em todo elemento interativo.

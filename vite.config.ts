@@ -22,6 +22,7 @@ export default defineConfig(({ mode }) => {
       setupFiles: ['./src/test/setup.ts'],
       include: ['src/**/*.test.{ts,tsx}'],
       passWithNoTests: true,
+      env: { VITE_API_URL: 'http://localhost' },
     },
   }
 })

@@ -4,16 +4,19 @@ O que o front vai entregar, em que ordem e por qual fluxo. Este documento so pla
 
 ## Fluxo de cada item
 
+Cada item comeca numa branch propria a partir de `develop`, com o nome da change (`feat/f9-metricas-por-90`).
+
 | Etapa | Ferramenta | Entrada | Saida |
 | --- | --- | --- | --- |
-| 1. Grilling | skill `grilling` (ou `grill-with-docs`) | o item deste documento e as perguntas dele | decisoes fechadas; termos novos no `GLOSSARY.md`, decisoes de arquitetura em `docs/adr/` |
-| 2. Esboco da tela | HTML com os componentes de referencia e o `bundle.css` de `docs/design-system/components/`, skill `frontend-design` | as decisoes do grilling e os estados de `fluxos-de-tela.md` | `docs/esbocos/<item>.html` com a tela em cada estado (carregando, sucesso, vazio ou recusado, erro), aprovado antes da spec; componente novo que o esboco pedir entra no design system primeiro |
-| 3. Spec | OpenSpec (`/openspec-propose`) | as decisoes do grilling e o esboco aprovado | change em `openspec/changes/<nome>/` com `proposal.md`, specs delta, `design.md` (que aponta para o esboco) e `tasks.md`, valida em `openspec validate <nome> --strict` |
-| 4. TDD | skill `tdd` e `/openspec-apply-change` | `tasks.md` | testes e stubs ate o red (commit `test:`), depois a implementacao ate o green (commit `feat:`) |
+| 1. Grilling | skill `grilling` (ou `grill-with-docs`) | o item deste documento e as perguntas dele | decisoes fechadas em `docs/grilling/<change>.md` (uma secao por pergunta, com a resposta); termos novos no `GLOSSARY.md`, decisoes de arquitetura em `docs/adr/`, pendencias do back-end em `docs/divida-tecnica.md` |
+| 2. Wireframe | artefato no claude.ai, um por tela, nao versionado | as decisoes do grilling e os estados de `fluxos-de-tela.md` | wireframe de baixa fidelidade com a tela em cada estado (carregando, sucesso, vazio ou recusado, erro), aprovado antes da spec; componente novo que o wireframe pedir entra no design system primeiro |
+| 3. Spec | OpenSpec (`/openspec-propose`) | as decisoes do grilling e o wireframe aprovado | change em `openspec/changes/<nome>/` com `proposal.md`, specs delta, `design.md` (com o link do wireframe) e `tasks.md`, valida em `openspec validate <nome> --strict` |
+| 4. TDD | `/openspec-apply-change` | `tasks.md` | um grupo do `tasks.md` por vez: o red de todas as subtarefas do grupo (commit `test:`), depois o green do grupo inteiro (commit `feat:`). Grupos sem regra de dominio (componentes, mocks, dependencias) vao direto em `feat:` ou `chore:` por subtarefa, com os testes junto. O green da tela so e commitado depois da conferencia no navegador |
+| 5. Conferencia | `npm run dev:mock` e `npm run storybook` | as stories por estado e os jogadores do mock | cada estado da tela bate com o wireframe, em desktop e em 375px, sem erro no console; `lint`, `typecheck`, `test` e `build` passam |
 
-Ao fim de cada item: retrospectiva (o que a spec nao previu, ajustes na skill `scout-ui` ou no `CLAUDE.md`) e `/openspec-archive-change`, que leva as specs para `openspec/specs/`.
+Ao fim de cada item: retrospectiva (o que a spec nao previu, ajustes na skill `scout-ui`, no `CLAUDE.md` e nas specs delta) e `/openspec-archive-change`, que cria ou atualiza as specs principais em `openspec/specs/` a partir das deltas e move a change para `openspec/changes/archive/<data>-<change>/`. A decisao que muda durante a implementacao volta para a spec delta antes do archive.
 
-Itens sem tela (CI, testes e2e, deploy) pulam o esboco.
+Itens sem tela (CI, testes e2e, deploy) pulam o wireframe.
 
 O contexto e as regras por artefato do OpenSpec ficam em `openspec/config.yaml`.
 
@@ -39,13 +42,13 @@ Nome da change no OpenSpec: identificador do back-end + nome (`f9-metricas-por-9
 
 ## 1. CI
 
-O workflow `.github/workflows/ci.yml` ja existe desde o scaffold: em push na `main` e em pull request, roda `gen:api` e `gen:tokens` com `git diff --exit-code`, `lint`, `typecheck`, `test`, `build` e `build-storybook`. Este item completa o que falta para ele servir de rede de seguranca do fluxo grilling -> esboco -> spec -> TDD.
+O workflow `.github/workflows/ci.yml` ja existe desde o scaffold: em push na `main` e em pull request, roda `gen:api` e `gen:tokens` com `git diff --exit-code`, `lint`, `typecheck`, `test`, `build` e `build-storybook`. Este item completa o que falta para ele servir de rede de seguranca do fluxo grilling -> wireframe -> spec -> TDD.
 
 ## 2. F9 Metricas por 90
 
 Primeira feature completa: pequena, somente leitura e rica em estados. Estreia o recorte, a regra "recusa nao e erro" e o tratamento de erro por `code`.
 
-- **Escopo:** as sete linhas fixas (`Gols`, `Assistencias`, `PassesDecisivos`, `Desarmes`, `Interceptacoes`, `Rating`, `PrecisaoDePasse`), nunca filtradas. Calculada mostra valor, unidade e amostra; recusada fica visivel com o motivo e os numeros. Seletor de recorte derivado de `stats` do perfil, na URL (ADR 0003). Cabecalho minimo do jogador. Erro generico por `code`, "Tentar de novo" no 502. Primeiros componentes de producao e formatadores pt-BR.
+- **Escopo:** as sete linhas fixas (`Gols`, `Assistencias`, `PassesDecisivos`, `Desarmes`, `Interceptacoes`, `Rating`, `PrecisaoDePasse`), nunca filtradas. Calculada mostra valor, unidade e amostra; recusada fica visivel com o motivo e os numeros. Seletor de recorte derivado de `stats` do perfil, na URL (ADR 0003). Cabecalho minimo do jogador. Esqueleto da pagina com a navegacao no topo (busca e links ainda sem destino) e a coluna de apoio vazia. Erro generico por `code`, "Tentar de novo" no 502. Primeiros componentes de producao e formatadores pt-BR.
 - **Endpoints:** `GET /api/Players/{id}/profile`, `GET /api/Analise/{jogadorId}/metricas-por-90`.
 - **Para o grilling:**
   - Qual recorte vem selecionado quando a URL nao traz nenhum? O mais recente? O de mais minutos?
@@ -134,7 +137,7 @@ Lista ordenada de alvos com prioridade `1..n` contigua. A tela reflete sempre a 
 
 ## 9. Navegacao e acessibilidade
 
-Consolida o que cada feature entregou com navegacao minima.
+Consolida o que cada feature entregou com navegacao minima. O header no topo entra na F9 como esqueleto; aqui ele ganha destinos, estado ativo e o menu do celular.
 
 - **Escopo:** layout geral com navegacao entre busca, acompanhamentos, shortlists e conta; pagina inicial; rota inexistente; responsivo basico; revisao com `web-design-guidelines`.
 - **Para o grilling:** o que a pagina inicial mostra; se a navegacao entra antes, junto da sessao.

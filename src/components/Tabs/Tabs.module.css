@@ -1,0 +1,32 @@
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+}
+
+.tab {
+  font: var(--text-body-strong);
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  padding: var(--space-1) 0 var(--space-3);
+  color: var(--ink-muted);
+  cursor: pointer;
+}
+
+.tab:hover {
+  color: var(--ink-soft);
+}
+
+.selected {
+  color: var(--ink);
+  border-bottom-color: var(--pitch);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .tab {
+    transition:
+      color 150ms,
+      border-color 150ms;
+  }
+}

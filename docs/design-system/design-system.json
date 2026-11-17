@@ -38,7 +38,8 @@
         "arrow-clockwise.svg",
         "sign-out.svg",
         "plus.svg",
-        "check.svg"
+        "check.svg",
+        "caret-down.svg"
       ],
       "files": {
         "magnifying-glass.svg": {
@@ -118,6 +119,12 @@
           "blob": "be11ea177ff9646cc13b63f250021ca7",
           "size": 239,
           "type": "image/svg+xml"
+        },
+        "caret-down.svg": {
+          "name": "caret-down.svg",
+          "blob": "40a1b482eb3bc54d07447d09fd8a4799",
+          "size": 238,
+          "type": "image/svg+xml"
         }
       }
     }
@@ -129,8 +136,8 @@
   },
   "lastChange": {
     "by": "Leonardo Santos",
-    "at": "2026-10-06T20:42:13Z",
+    "at": "2026-11-17T01:24:18.788Z",
     "via": "Claude Code",
-    "note": "ClubBand usa teamColors com fallback para a secundária e para o token club"
+    "note": "Select com caret-down, amostra opcional na StatCell e ClubBand sem teamColors"
   }
 }

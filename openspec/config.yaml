@@ -1,8 +1,9 @@
 schema: spec-driven
 
 context: |
-  Language: pt-BR
-  All artifacts must be written in pt-BR.
+  Language: English
+  All artifacts must be written in English. Screen texts stay in pt-BR, quoted exactly as they
+  must appear; domain terms keep the GLOSSARY.md name (recorte, contexto, Nota).
   Keep OpenSpec structural headings and SHALL/MUST keywords in English.
 
   Projeto: front-end (SPA) do APIFootballScout, ferramenta do olheiro para buscar jogadores,
@@ -51,7 +52,7 @@ rules:
     - Escrever textos da tela entre aspas, exatamente como devem aparecer
     - Nao citar componentes, hooks ou bibliotecas
   design:
-    - Apontar o esboco aprovado em docs/esbocos/ quando o item tiver tela
+    - Apontar o link do wireframe aprovado (artefato no claude.ai) quando o item tiver tela
     - Listar endpoints consumidos com o caminho do contrato
     - Listar rotas, search params, componentes e handlers MSW por estado
     - Referenciar os ADRs aplicados; uma decisao que contraria um ADR exige ADR novo
@@ -59,6 +60,8 @@ rules:
     - Tarefas pequenas e verificaveis, de no maximo 2 horas
     - Regras de dominio em ciclos de TDD - teste antes, com commits test e feat separados
     - Toda tela nova ganha story por estado e handler MSW por estado
+    - Tarefas agrupadas por camada; o TDD vai por grupo - red do grupo inteiro, depois o green
+    - Penultima tarefa - lint, typecheck, test e build, e percorrer as telas no dev:mock em desktop e 375px
     - Ultima tarefa da change - retrospectiva atualizando spec, skill scout-ui ou CLAUDE.md
 
 operations:
