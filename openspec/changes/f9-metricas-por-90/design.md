@@ -78,7 +78,7 @@ Fixtures in `src/mocks/fixtures/`, handlers named by state in `src/mocks/handler
 | `metricasSemCode` | 500 without `code` |
 | `metricasIncompletas` | six attributes |
 
-`src/mocks/handlers.ts` exports the default handlers per `jogadorId` for `dev:mock`. Tests use `src/mocks/server.ts` (`msw/node`) wired in `src/test/setup.ts` with `onUnhandledRequest: 'error'`; stories use `msw-storybook-addon` with `parameters.msw.handlers`.
+`src/mocks/handlers.ts` exports the default handlers per `jogadorId` for `dev:mock`. Tests use `src/mocks/server.ts` (`msw/node`) wired in `src/test/setup.ts` with `onUnhandledRequest: 'error'`; stories use `msw-storybook-addon` (`mswLoader` from `msw-storybook-addon/csf3`) and apply handlers per story with `beforeEach({ msw }) { msw.use(...) }`; `parameters.msw` is deprecated in the addon.
 
 ### New dependencies
 
