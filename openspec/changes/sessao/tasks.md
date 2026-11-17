@@ -10,10 +10,10 @@
 
 ## 2. Session rules
 
-- [ ] 2.1 TDD of `src/api/session.ts`: save from an `AuthResponseDto`, read, clear, malformed entry as no session, `isAccessTokenExpired` and `isRefreshTokenExpired` with `now` as a parameter, `subscribe` notified on save and clear; `test:` red for the group
-- [ ] 2.2 TDD of `safeRedirect` (internal path kept, `//` and absolute URL and empty to `/`) and of `noticeText` per `aviso`; same `test:` red
-- [ ] 2.3 TDD of `src/utils/accountValidation.ts` with every message of the spec (e-mail without "@", empty password, name and password limits, confirmation differs, delete confirmation) and of `fieldForCode`; same `test:` red
-- [ ] 2.4 Green of 2.1 to 2.3 in one `feat:` commit; verify with `npx vitest run src/api/session src/utils`
+- [x] 2.1 TDD of `src/api/session.ts`: save from an `AuthResponseDto`, read, clear, malformed entry as no session, `isAccessTokenExpired` and `isRefreshTokenExpired` with `now` as a parameter, `subscribe` notified on save and clear; `test:` red for the group
+- [x] 2.2 TDD of `safeRedirect` (internal path kept, `//` and absolute URL and empty to `/`) and of `noticeText` per `aviso`; same `test:` red
+- [x] 2.3 TDD of `src/utils/accountValidation.ts` with every message of the spec (e-mail without "@", empty password, name and password limits, confirmation differs, delete confirmation) and of `fieldForCode`; same `test:` red
+- [x] 2.4 Green of 2.1 to 2.3 in one `feat:` commit; verify with `npx vitest run src/api/session src/utils`
 
 ## 3. Renewal queue and auth middleware
 
