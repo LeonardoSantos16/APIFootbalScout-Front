@@ -14,9 +14,9 @@
 
 ## 3. Recorte
 
-- [ ] 3.1 TDD of `derivarRecortes`: one recorte per `stats` item, contexto `Selecao` by the `nationalTeamStats` rule, all `Clube` without `nationalTeamStats`; `test:` and `feat:` commits
-- [ ] 3.2 TDD of the order (`season.id` descending, tie-break by minutes) and of `rotuloDoRecorte` (with and without the contexto prefix); `test:` and `feat:` commits
-- [ ] 3.3 TDD of `encontrarRecorte` and of the search params validation (missing, malformed, not in `stats`); `test:` and `feat:` commits
+- [x] 3.1 TDD of `derivarRecortes`: one recorte per `stats` item, contexto `Selecao` by the `nationalTeamStats` rule, all `Clube` without `nationalTeamStats`; `test:` and `feat:` commits
+- [x] 3.2 TDD of the order (`season.id` descending, tie-break by minutes) and of `rotuloDoRecorte` (with and without the contexto prefix); `test:` and `feat:` commits
+- [x] 3.3 TDD of `encontrarRecorte` and of the search params validation (missing, malformed, not in `stats`); `test:` and `feat:` commits
 
 ## 4. Metrics and player
 
