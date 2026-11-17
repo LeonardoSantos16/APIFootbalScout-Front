@@ -14,7 +14,12 @@ export interface AuthMiddlewareOptions {
 
 const PUBLIC_PATHS = new Set(['/api/Auth/signin', '/api/Auth/signup', '/api/Auth/refresh'])
 
-const NOT_RENEWED_PATHS = new Set([...PUBLIC_PATHS, '/api/Auth/change-password'])
+const NOT_RENEWED_PATHS = new Set([
+  ...PUBLIC_PATHS,
+  '/api/Auth/change-password',
+  '/api/Auth/signout',
+  '/api/Auth/signout-all',
+])
 
 const bearer = (token: string) => `Bearer ${token}`
 

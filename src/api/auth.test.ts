@@ -194,6 +194,25 @@ describe('createAuthMiddleware', () => {
     expect(readSession()).toMatchObject({ accessToken: 'access-1' })
   })
 
+  it.each([
+    ['saida', '/api/Auth/signout' as const],
+    ['saida de todos', '/api/Auth/signout-all' as const],
+  ])('nao renova o 401 da %s', async (_case, path) => {
+    // Arrange
+    saveSession(authResponse(1))
+    const { client, requestRefresh, onSessionEnded } = setup()
+    server.use(http.post(path, ({ response }) => response.untyped(problem(401))))
+
+    // Act
+    const call =
+      path === '/api/Auth/signout' ? client.POST(path, { body: { refreshToken: 'refresh-1' } }) : client.POST(path)
+
+    // Assert
+    await expect(call).rejects.toMatchObject({ status: 401 })
+    expect(requestRefresh).not.toHaveBeenCalled()
+    expect(onSessionEnded).not.toHaveBeenCalled()
+  })
+
   it('deixa o 401 chegar como erro quando a renovacao e recusada', async () => {
     // Arrange
     saveSession(authResponse(1))

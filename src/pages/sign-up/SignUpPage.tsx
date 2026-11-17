@@ -5,14 +5,11 @@ import { Button } from '../../components/Button/Button'
 import { InlineError } from '../../components/InlineError/InlineError'
 import { PasswordField } from '../../components/PasswordField/PasswordField'
 import { TextField } from '../../components/TextField/TextField'
-import { PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH } from '../../config/account'
 import { useFormSubmit } from '../../hooks/useFormSubmit'
 import styles from '../../styles/accountForm.module.css'
-import { validateSignUp } from '../../utils/accountValidation'
+import { PASSWORD_HINT, validateSignUp } from '../../utils/accountValidation'
 
 const PAGE_TITLE = 'Criar conta'
-
-export const PASSWORD_HINT = `De ${PASSWORD_MIN_LENGTH} a ${PASSWORD_MAX_LENGTH} caracteres.`
 
 interface SignUpPageProps {
   onSignedUp: () => void

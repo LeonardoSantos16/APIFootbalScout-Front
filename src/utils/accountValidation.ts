@@ -25,6 +25,8 @@ export interface PasswordChangeValues {
   confirmation: string
 }
 
+export const PASSWORD_HINT = `De ${PASSWORD_MIN_LENGTH} a ${PASSWORD_MAX_LENGTH} caracteres.`
+
 const INVALID_EMAIL = 'Informe um e-mail válido.'
 const INVALID_NAME = `O nome precisa ter de ${NAME_MIN_LENGTH} a ${NAME_MAX_LENGTH} caracteres.`
 const INVALID_PASSWORD = `A senha precisa ter de ${PASSWORD_MIN_LENGTH} a ${PASSWORD_MAX_LENGTH} caracteres.`

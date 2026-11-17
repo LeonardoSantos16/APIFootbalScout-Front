@@ -4,6 +4,7 @@ import { describeError } from '../api/errors'
 import { clearSession, isRefreshTokenExpired, readSession } from '../api/session'
 import { AppShell } from '../components/AppShell/AppShell'
 import { InlineError } from '../components/InlineError/InlineError'
+import { useLeaveSession } from '../hooks/useLeaveSession'
 import { useSession } from '../hooks/useSession'
 
 const meQuery = $api.queryOptions('get', '/api/Auth/me')
@@ -30,8 +31,9 @@ const AccountLink = () => {
 }
 
 function AuthenticatedLayout() {
+  const { signOut } = useLeaveSession()
   return (
-    <AppShell accountLink={<AccountLink />}>
+    <AppShell accountLink={<AccountLink />} onSignOut={() => signOut('device')}>
       <Outlet />
     </AppShell>
   )
@@ -40,9 +42,10 @@ function AuthenticatedLayout() {
 function AuthenticatedError({ error }: ErrorComponentProps) {
   const router = useRouter()
   const { message, canRetry } = describeError(error)
+  const { signOut } = useLeaveSession()
 
   return (
-    <AppShell accountLink={<AccountLink />}>
+    <AppShell accountLink={<AccountLink />} onSignOut={() => signOut('device')}>
       <InlineError message={message} onRetry={canRetry ? () => void router.invalidate() : undefined} />
     </AppShell>
   )

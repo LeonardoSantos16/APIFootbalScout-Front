@@ -42,9 +42,9 @@
 
 ## 7. Conta and signing out
 
-- [ ] 7.1 Route tests (`test:` red for the group): "Sair" in the header lands on `/entrar` and reload does not restore the session, also when the call fails; name in the header opens "Conta" with name and e-mail; password changed with the notice, empty fields and the next call using the new pair; wrong current password; same password; confirmation differs without calling the API; "Alterando senha…"; "Sair de todos os dispositivos" lands on `/entrar` without a notice, also when the call fails; delete dialog disabled until the e-mail matches, "Cancelar" and "Fechar" send nothing, deletion lands on `/entrar` with "Conta excluída."
-- [ ] 7.2 Green in one `feat:` commit: sign out in the `AppShell`, `AccountPage` with `ChangePasswordCard`, `SessionsCard` and `DeleteAccountCard`; verify with `npm test`
-- [ ] 7.3 Stories per state of the account page and of the delete dialog (disabled and enabled); verify in Storybook at desktop and 375px
+- [x] 7.1 Route tests (`test:` red for the group): "Sair" in the header lands on `/entrar` and reload does not restore the session, also when the call fails; name in the header opens "Conta" with name and e-mail; password changed with the notice, empty fields and the next call using the new pair; wrong current password; same password; confirmation differs without calling the API; "Alterando senha…"; "Sair de todos os dispositivos" lands on `/entrar` without a notice, also when the call fails; delete dialog disabled until the e-mail matches, "Cancelar" and "Fechar" send nothing, deletion lands on `/entrar` with "Conta excluída."
+- [x] 7.2 Green in one `feat:` commit: sign out in the `AppShell`, `AccountPage` with `ChangePasswordCard`, `SessionsCard` and `DeleteAccountCard`; verify with `npm test`
+- [x] 7.3 Stories per state of the account page and of the delete dialog (disabled and enabled); verify in Storybook at desktop and 375px
 
 ## 8. Verification
 

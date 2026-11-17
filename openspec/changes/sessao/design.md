@@ -56,7 +56,7 @@ Rejected alternative: a counter of in-flight requests with a timer, as some inte
 `src/api/auth.ts` exports `createAuthMiddleware({ refresher, readSession, clearSession, onSessionEnded })`, registered on `fetchClient` after the `errors` middleware, because `openapi-fetch` runs `onResponse` in reverse order and the `401` must reach it first:
 
 - `onRequest`: skips `signin`, `signup` and `refresh`. If the access token is expired, it awaits `renew` first; an `unavailable` renewal fails the call with the renewal's error. It sets `Authorization: Bearer <token>` and keeps a clone of the request for a possible repeat.
-- `onResponse` with `401` on a call other than `signin`, `signup`, `refresh` and `change-password`: it awaits `renew(tokenUsed)`. On `renewed`, it repeats the clone once with the new token and returns that response; a second `401` clears the session and ends it as expired. On `refused` (the refresher already ended the session), it lets the `401` go on to the `errors` middleware. On `unavailable`, the call fails with the renewal's error, so a 502 offers "Tentar de novo".
+- `onResponse` with `401` on a call other than `signin`, `signup`, `refresh`, `change-password`, `signout` and `signout-all`: it awaits `renew(tokenUsed)`. On `renewed`, it repeats the clone once with the new token and returns that response; a second `401` clears the session and ends it as expired. On `refused` (the refresher already ended the session), it lets the `401` go on to the `errors` middleware. On `unavailable`, the call fails with the renewal's error, so a 502 offers "Tentar de novo".
 - The repeat goes straight to `fetch`, outside the middleware chain, so it is never renewed again.
 
 `src/api/client.ts` builds the refresher (with its own client, without the auth middleware) and the middleware, and exposes `onSessionEnded(handler)`. The handler is registered in `src/main.tsx` (and in `renderRoute`): it clears the `QueryClient` and navigates to `/entrar` with `redirecionar` set to the current location and `aviso` set to the notice. `ApiError` moves to `src/api/apiError.ts`, re-exported by `client.ts`, so `refresh.ts` does not import the client.
@@ -82,13 +82,15 @@ Two tabs: `src/api/sessionSync.ts` listens to the `storage` event for `scout.ses
 
 | Module | Responsibility |
 | --- | --- |
-| `src/utils/accountValidation.ts` | `validateSignIn`, `validateSignUp`, `validatePasswordChange`, `validateDeleteConfirmation`, each returning the message per field with the texts of the spec; limits from `src/config/account.ts` (mirror of the contract) |
+| `src/utils/accountValidation.ts` | `validateSignIn`, `validateSignUp`, `validatePasswordChange`, `isDeleteConfirmed` (trimmed, case-insensitive) and `PASSWORD_HINT`, each returning the message per field with the texts of the spec; limits from `src/config/account.ts` (mirror of the contract) |
 | `src/utils/accountErrors.ts` | `fieldForCode` (`usuario.email_ja_cadastrado` → `email`, `usuario.credenciais_invalidas` → `password`, `usuario.senha_atual_invalida` → `currentPassword`, `usuario.senha_igual_a_atual` → `newPassword`) and `noticeText(aviso)` |
 | `src/utils/redirect.ts` | `safeRedirect` |
 | `src/hooks/useFormSubmit.ts` | the "validate on submit, then on every change of a failed field" state, shared by the three forms |
 | `src/pages/sign-in/SignInPage.tsx` | form, notice from `aviso`, `$api.useMutation('post', '/api/Auth/signin')` |
 | `src/pages/sign-up/SignUpPage.tsx` | form, `$api.useMutation('post', '/api/Auth/signup')` |
-| `src/pages/account/AccountPage.tsx` | `components/ChangePasswordCard`, `SessionsCard`, `DeleteAccountCard` (with the `Dialog`) |
+| `src/pages/account/AccountPage.tsx` | `components/ChangePasswordCard`, `SessionsCard`, `DeleteAccountCard` (with the `Dialog`); gets `onSignOutAll` and `onAccountDeleted` from the route |
+| `src/api/signOut.ts` | `signOut(scope)`: sends `signout` or `signout-all` with the token captured before clearing, ignores the result and clears the session at once |
+| `src/hooks/useLeaveSession.ts` | clears the `QueryClient` and navigates to `/entrar` (with an `aviso` when given); used by the protected layout ("Sair") and by the `/conta` route |
 | `src/pages/home/HomePage.tsx` | greeting and, when `VITE_API_MOCK` is on, the test players list |
 
 Mutations do not use the 502 retry of the queries. A form error without a field goes through `describeError` into an `InlineError` above the main button.

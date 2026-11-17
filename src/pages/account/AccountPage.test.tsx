@@ -12,7 +12,7 @@ const authRequests = () => {
   const calls: string[] = []
   server.events.on('request:start', ({ request }) => {
     const { pathname } = new URL(request.url)
-    if (pathname.startsWith('/api/Auth/') && pathname !== '/api/Auth/me') calls.push(`${request.method} ${pathname}`)
+    if (pathname.startsWith('/api/Auth/') && !(request.method === 'GET' && pathname === '/api/Auth/me')) calls.push(`${request.method} ${pathname}`)
   })
   return calls
 }
@@ -37,7 +37,8 @@ describe('sair', () => {
     // Arrange
     const calls = authRequests()
     const { router } = renderRoute('/')
-    const banner = await screen.findByRole('banner')
+    await screen.findByRole('heading', { name: 'Olá, Ana.' })
+    const banner = screen.getByRole('banner')
 
     // Act
     await userEvent.click(await within(banner).findByRole('button', { name: 'Sair' }))
@@ -52,7 +53,8 @@ describe('sair', () => {
     // Arrange
     server.use(...signOutFailing)
     const { router } = renderRoute('/')
-    const banner = await screen.findByRole('banner')
+    await screen.findByRole('heading', { name: 'Olá, Ana.' })
+    const banner = screen.getByRole('banner')
 
     // Act
     await userEvent.click(await within(banner).findByRole('button', { name: 'Sair' }))
@@ -67,7 +69,8 @@ describe('conta', () => {
   it('abre pelo nome no topo com nome e e-mail', async () => {
     // Arrange
     const { router } = renderRoute('/')
-    const banner = await screen.findByRole('banner')
+    await screen.findByRole('heading', { name: 'Olá, Ana.' })
+    const banner = screen.getByRole('banner')
 
     // Act
     await userEvent.click(await within(banner).findByRole('link', { name: 'Ana Ribeiro' }))

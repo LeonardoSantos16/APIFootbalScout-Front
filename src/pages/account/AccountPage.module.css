@@ -1,0 +1,46 @@
+.page {
+  display: grid;
+  gap: var(--space-3);
+  width: min(100%, 640px);
+  margin: 0 auto;
+}
+
+.header {
+  display: grid;
+  gap: var(--space-1);
+  margin-bottom: var(--space-3);
+}
+
+.title {
+  margin: 0;
+  font: var(--text-section-title);
+  color: var(--ink);
+}
+
+.identity {
+  margin: 0;
+  font: var(--text-body);
+  color: var(--ink-soft);
+}
+
+.form,
+.section {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.text {
+  margin: 0;
+  font: var(--text-body);
+  color: var(--ink-soft);
+}
+
+.action {
+  min-height: 44px;
+}
+
+@media (max-width: 719px) {
+  .action {
+    width: 100%;
+  }
+}
