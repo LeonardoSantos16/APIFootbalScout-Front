@@ -68,6 +68,20 @@ Conferidos antes do grilling, mudam as respostas abaixo:
 
 - **Q27.** Alem das capabilities novas, a change leva deltas de `recorte` (padrao pela ordem da fonte), `metricas-por-90` (cabecalho e carregamento passam ao layout do jogador) e `navegacao` (a busca do header ganha destino).
 
+## Decisoes do wireframe
+
+Fechadas na aprovacao do wireframe (link no `design.md` da change):
+
+- **W1.** Termo curto: "Digite pelo menos 2 letras do nome."
+- **W2.** 404 do perfil: sem faixa nem abas, com o botao "Buscar jogador", que leva para `/busca`.
+- **W3.** A linha de recorte so comeca com "Clube"/"Seleção" quando o jogador tem algum recorte de selecao (a regra do `sliceLabel` da F9).
+- **W4.** Posicoes detalhadas no rotulo, como a fonte manda ("Posição · MC, ME").
+- **W5.** Nascimento como "14/03/2001 (24 anos)". O valor de mercado leva o rotulo "Estimativa da fonte".
+- **W6.** A faixa carregando fica em `surface`, sem a cor do clube.
+- **W7.** Perfil sem `stats`: o cartao de recortes e a aba Metricas mostram "Sem estatísticas publicadas para este jogador.", a frase da F9.
+- **W8.** No celular, cada recorte vira duas linhas ("24 jogos · 1.920 min · 4 gols · 3 assist. · nota 7,12") e os dados passam a duas colunas. No desktop, os recortes sao uma tabela com cabecalho (Jogos, Minutos, Gols, Assist., Nota).
+- **W9.** Abaixo de 720px, o header mostra o link de texto "Buscar" antes de "Menu", exceto em `/busca`. O campo usa fonte de 16px no celular, para o iOS nao dar zoom.
+
 ## Mocks e testes
 
 - **Q23. Mocks:** a busca do mock filtra os jogadores 1001 a 1005 pelo nome, sem acento e sem diferenciar maiuscula, e sempre inclui um resultado `type: 'team'` para exercitar o filtro. No `dev:mock`, os termos "erro" e "vazio" forcam 502 e lista vazia. Os perfis ganham transferencias, selecao e o caso sem valor de mercado. Stories por estado com handlers nomeados.
