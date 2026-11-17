@@ -7,7 +7,7 @@ Decisoes fechadas no grilling do item 2 de [planejamento-base.md](../planejament
 - **Q1, Q16. Contexto:** `Selecao` quando `stats[i].team.id` aparece em `nationalTeamStats[].team.id`; nos outros casos, `Clube`. Sem `nationalTeamStats`, tudo e `Clube`. Funcao pura e testada. A regra nao foi conferida com dados reais: a conferencia e a primeira tarefa do item 3, e a suposicao vai para o `design.md` da change.
 - **Q2. Recorte padrao:** maior `season.id`; na mesma temporada, mais `statistics.minutesPlayed` (emenda no ADR 0003).
 - **Q15. Historico:** correcao automatica com `replace`; troca pelo olheiro com `push`. Search params malformados contam como recorte ausente.
-- **Q4, Q10, Q22. Seletor:** um `<select>` nativo, com tokens e `color-scheme: dark`, que entra antes no design system. Rotulo "Competicao e temporada". Cada opcao e `uniqueTournament.name` + `year` ("Brasileirao Serie A · 2024"), na ordem da Q2. Quando o jogador tem recortes de selecao, todas as opcoes ganham " · Clube" ou " · Selecao". O termo "recorte" nao aparece na tela.
+- **Q4, Q10, Q22. Seletor:** um `<select>` nativo, com tokens e `color-scheme: dark`, que entra antes no design system. Rotulo "Competicao e temporada". Cada opcao e `uniqueTournament.name` + `year` ("Brasileirao Serie A · 2024"), na ordem da Q2. Quando o jogador tem recortes de selecao, todas as opcoes comecam pelo contexto ("Selecao · Eliminatorias Sul-Americanas · 2025"), para o corte do select no celular cair no fim do nome da competicao (revisto no esboco). A seta e o `caret-down` do Phosphor, que entra na lista de icones. O termo "recorte" nao aparece na tela.
 - Nomes de competicao e temporada saem de `stats`, sem `GET /api/Tournament/tournament`.
 
 ## Tela
@@ -23,9 +23,10 @@ Decisoes fechadas no grilling do item 2 de [planejamento-base.md](../planejament
   | Nota | 2 | media | `7,12` |
   | Precisao de passe | 1 | % | `84,3%` |
 
-  A amostra fica embaixo do valor: "1.234 min jogados".
+  A amostra mais comum entre os atributos vai uma vez no rodape; a linha so mostra a propria amostra ("1.190 min jogados") quando ela difere da do rodape (revisto no esboco).
+- **Posicao:** `details.position` do SofaScore vira texto: `G` Goleiro, `D` Defesa, `M` Meio-campo, `F` Ataque. Letra desconhecida nao aparece.
 - **Q6. Recusa:** `AmostraInsuficiente` com amostra mostra "Amostra insuficiente: 312 de 450 min"; sem amostra, "Amostra insuficiente: minimo de 450 min". `FonteNaoAtribuiu` mostra "Nao publicado pela fonte". O 450 e uma constante unica do `ScoutConfig` (`AmostraMinimaDeMinutos`, `docs/README.md`).
-- **Q23. Rodape da grade:** "Contagens por 90 minutos jogados. Metricas com menos de 450 min ficam sem valor."
+- **Q23. Rodape da grade:** "Amostra: 1.284 min jogados. Contagens por 90 minutos; metricas com menos de 450 min ficam sem valor." Sem amostra (carregando), so a segunda frase.
 - **Q24. Titulo da aba:** "Metricas por 90 · {nome}"; so "Metricas por 90" enquanto o perfil carrega ou se ele falhar.
 - **Q12. Carregamento:** na abertura, skeleton do cabecalho, do seletor e das sete `StatCell` em `carregando`. Na troca de recorte, so a grade volta ao skeleton, sem manter numeros do recorte anterior.
 - **Q9. Sem `stats`:** cabecalho e "Sem estatisticas publicadas para este jogador", sem seletor e sem grade.
