@@ -5,7 +5,7 @@ import {
   calculatedAttributes,
   insufficientSampleAttributes,
   metricsResponse,
-} from './MetricsGrid.fixtures'
+} from '../../../../mocks/fixtures/metrics'
 
 const meta = { component: MetricsGrid } satisfies Meta<typeof MetricsGrid>
 

@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import { buildRows, footerSample, footerText } from '../../utils/metrics'
 import { MetricsGrid } from './MetricsGrid'
-import { insufficientSampleAttributes, metricsResponse } from './MetricsGrid.fixtures'
+import { insufficientSampleAttributes, metricsResponse } from '../../../../mocks/fixtures/metrics'
 
 describe('MetricsGrid', () => {
   it('mostra as sete linhas com o motivo quando tudo e recusado', () => {

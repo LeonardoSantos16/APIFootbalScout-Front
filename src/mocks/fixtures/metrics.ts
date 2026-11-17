@@ -1,11 +1,16 @@
-import type { Attribute, MetricsPer90 } from '../../interfaces/metrics'
-import { ATTRIBUTE_ORDER } from '../../utils/metrics'
+import type { components } from '../../api/schema'
+import type { Attribute, MetricsPer90 } from '../../pages/metrics/interfaces/metrics'
+import { ATTRIBUTE_ORDER } from '../../pages/metrics/utils/metrics'
 
-export const metricsResponse = (attributes: Attribute[]): MetricsPer90 => ({
-  jogadorId: 1001,
-  recorte: { competicaoId: 325, temporadaId: 72034, contexto: 'Clube' },
-  atributos: attributes,
-})
+type Recorte = components['schemas']['RecorteDto']
+
+const DEFAULT_RECORTE: Recorte = { competicaoId: 325, temporadaId: 72034, contexto: 'Clube' }
+
+export const metricsResponse = (
+  attributes: Attribute[],
+  jogadorId = 1001,
+  recorte: Recorte = DEFAULT_RECORTE,
+): MetricsPer90 => ({ jogadorId, recorte, atributos: attributes })
 
 export const calculatedAttributes: Attribute[] = [
   { tipo: 'Gols', resultado: 'Calculada', valor: 0.35, amostraEmMinutos: 1284 },
@@ -23,3 +28,5 @@ export const insufficientSampleAttributes: Attribute[] = ATTRIBUTE_ORDER.map((ty
   motivo: 'AmostraInsuficiente',
   amostraEmMinutos: 312,
 }))
+
+export const incompleteAttributes: Attribute[] = calculatedAttributes.filter((a) => a.tipo !== 'Desarmes')

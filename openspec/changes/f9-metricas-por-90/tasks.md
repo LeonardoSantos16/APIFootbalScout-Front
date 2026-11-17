@@ -40,7 +40,7 @@
 
 ## 7. Mocks per state
 
-- [ ] 7.1 Profile fixtures (complete, national team only, without `stats`) and metrics fixtures (calculated, insufficient sample, incomplete) typed by the contract; verify with `npm run typecheck`
+- [x] 7.1 Profile fixtures (complete, national team only, without `stats`) and metrics fixtures (calculated, insufficient sample, incomplete) typed by the contract; verify with `npm run typecheck`
 - [ ] 7.2 Handlers named after the `design.md` table and default handlers per `jogadorId` in `src/mocks/handlers.ts`; verify by opening each player in `npm run dev:mock`
 
 ## 8. Per-90 metrics screen
