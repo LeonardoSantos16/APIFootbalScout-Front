@@ -62,7 +62,8 @@ The `QueryClient` moves from `src/main.tsx` to `src/api/queryClient.ts` (`create
 Port of `docs/design-system/components/` to React with CSS Modules over `tokens.css`, without copying the bundle's `React.createElement`.
 
 - `src/components/`: `Button`, `Card`, `Select`, `InlineError`, `Tabs` (display only in this change), `Skeleton`, `ClubBand` (always on the `club` fallback).
-- `src/components/AppShell`: top bar with the app name, "Buscar jogador" field, links and "Sair" (Phosphor icons); "Menu" button below 720px; two-column body with an empty support column.
+- `src/components/AppShell`: top bar with the app name, "Buscar jogador" field, links and "Sair" (Phosphor icons); "Menu" button below 720px; the page content goes in a `<main>` below it. The top items are not interactive until item 9.
+- `src/components/PageColumns`: the two-column body (main card at about two thirds, support column on the right, one column below 720px). It is separate from `AppShell` because `AppShell` wraps every route in `__root.tsx`, while the two columns belong to the player page.
 - `src/hooks/usePlayerProfile.ts`: the profile query, reused by item 4 and F10.
 - `src/pages/metrics/`: `MetricsPage.tsx` (orchestrates profile, recorte, metrics and errors); `hooks/useMetricsPer90.ts` (the metrics query for the recorte); `components/` with `MetricCell` (calculated, refused and loading states, optional `sample`), `MetricsGrid` (seven rows and footer) and `SliceSelect` (the `Select` with the options from `slice.ts`).
 
