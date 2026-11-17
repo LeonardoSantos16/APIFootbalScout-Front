@@ -1,7 +1,6 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, useNavigate } from '@tanstack/react-router'
 import { useSession } from '../../hooks/useSession'
 import { HomePage } from '../../pages/home/HomePage'
-import { TestPlayers } from '../../pages/home/TestPlayers'
 
 export const Route = createFileRoute('/_authenticated/')({
   component: HomeRoute,
@@ -9,6 +8,8 @@ export const Route = createFileRoute('/_authenticated/')({
 
 function HomeRoute() {
   const session = useSession()
-  const showTestPlayers = import.meta.env.VITE_API_MOCK === 'true'
-  return <HomePage name={session?.name ?? ''} testPlayers={showTestPlayers ? <TestPlayers /> : undefined} />
+  const navigate = useNavigate()
+  return (
+    <HomePage name={session?.name ?? ''} onSearch={(termo) => void navigate({ to: '/busca', search: { termo } })} />
+  )
 }

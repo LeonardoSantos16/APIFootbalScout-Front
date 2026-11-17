@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { delay } from 'msw'
 import { useState } from 'react'
-import { AppShell } from '../../components/AppShell/AppShell'
 import type { SliceSearch } from '../../interfaces/slice'
 import { calculatedAttributes, metricsResponse } from '../../mocks/fixtures/metrics'
 import { buildFullProfile } from '../../mocks/fixtures/profiles'
@@ -20,6 +19,7 @@ import {
   profileWithoutStats,
 } from '../../mocks/handlers/profile'
 import { http } from '../../mocks/http'
+import { PlayerStoryShell } from '../../test/StoryShell'
 import { sliceToSearch } from '../../utils/slice'
 import { MetricsPage } from './MetricsPage'
 
@@ -31,13 +31,13 @@ interface ScreenProps {
 const Screen = ({ playerId, initialSearch = {} }: ScreenProps) => {
   const [search, setSearch] = useState<SliceSearch>(initialSearch)
   return (
-    <AppShell>
+    <PlayerStoryShell playerId={playerId} tab="metrics">
       <MetricsPage
         playerId={playerId}
         search={search}
         onSliceChange={(slice) => setSearch(sliceToSearch(slice))}
       />
-    </AppShell>
+    </PlayerStoryShell>
   )
 }
 

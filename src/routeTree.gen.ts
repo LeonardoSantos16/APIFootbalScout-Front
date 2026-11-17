@@ -12,9 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as PublicRouteImport } from './routes/_public'
 import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
+import { Route as AuthenticatedBuscaRouteImport } from './routes/_authenticated/busca'
 import { Route as AuthenticatedContaRouteImport } from './routes/_authenticated/conta'
 import { Route as PublicCriarContaRouteImport } from './routes/_public/criar-conta'
 import { Route as PublicEntrarRouteImport } from './routes/_public/entrar'
+import { Route as AuthenticatedJogadoresJogadorIdRouteImport } from './routes/_authenticated/jogadores/$jogadorId'
+import { Route as AuthenticatedJogadoresJogadorIdIndexRouteImport } from './routes/_authenticated/jogadores/$jogadorId/index'
 import { Route as AuthenticatedJogadoresJogadorIdMetricasRouteImport } from './routes/_authenticated/jogadores/$jogadorId/metricas'
 
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
@@ -28,6 +31,11 @@ const PublicRoute = PublicRouteImport.update({
 const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedBuscaRoute = AuthenticatedBuscaRouteImport.update({
+  id: '/busca',
+  path: '/busca',
   getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthenticatedContaRoute = AuthenticatedContaRouteImport.update({
@@ -45,61 +53,89 @@ const PublicEntrarRoute = PublicEntrarRouteImport.update({
   path: '/entrar',
   getParentRoute: () => PublicRoute,
 } as any)
+const AuthenticatedJogadoresJogadorIdRoute =
+  AuthenticatedJogadoresJogadorIdRouteImport.update({
+    id: '/jogadores/$jogadorId',
+    path: '/jogadores/$jogadorId',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedJogadoresJogadorIdIndexRoute =
+  AuthenticatedJogadoresJogadorIdIndexRouteImport.update({
+    id: '/',
+    path: '/',
+    getParentRoute: () => AuthenticatedJogadoresJogadorIdRoute,
+  } as any)
 const AuthenticatedJogadoresJogadorIdMetricasRoute =
   AuthenticatedJogadoresJogadorIdMetricasRouteImport.update({
-    id: '/jogadores/$jogadorId/metricas',
-    path: '/jogadores/$jogadorId/metricas',
-    getParentRoute: () => AuthenticatedRoute,
+    id: '/metricas',
+    path: '/metricas',
+    getParentRoute: () => AuthenticatedJogadoresJogadorIdRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
+  '/busca': typeof AuthenticatedBuscaRoute
   '/conta': typeof AuthenticatedContaRoute
   '/criar-conta': typeof PublicCriarContaRoute
   '/entrar': typeof PublicEntrarRoute
+  '/jogadores/$jogadorId': typeof AuthenticatedJogadoresJogadorIdRouteWithChildren
   '/jogadores/$jogadorId/metricas': typeof AuthenticatedJogadoresJogadorIdMetricasRoute
+  '/jogadores/$jogadorId/': typeof AuthenticatedJogadoresJogadorIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof AuthenticatedIndexRoute
+  '/busca': typeof AuthenticatedBuscaRoute
   '/conta': typeof AuthenticatedContaRoute
   '/criar-conta': typeof PublicCriarContaRoute
   '/entrar': typeof PublicEntrarRoute
   '/jogadores/$jogadorId/metricas': typeof AuthenticatedJogadoresJogadorIdMetricasRoute
+  '/jogadores/$jogadorId': typeof AuthenticatedJogadoresJogadorIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/_public': typeof PublicRouteWithChildren
+  '/_authenticated/busca': typeof AuthenticatedBuscaRoute
   '/_authenticated/conta': typeof AuthenticatedContaRoute
   '/_public/criar-conta': typeof PublicCriarContaRoute
   '/_public/entrar': typeof PublicEntrarRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/jogadores/$jogadorId': typeof AuthenticatedJogadoresJogadorIdRouteWithChildren
   '/_authenticated/jogadores/$jogadorId/metricas': typeof AuthenticatedJogadoresJogadorIdMetricasRoute
+  '/_authenticated/jogadores/$jogadorId/': typeof AuthenticatedJogadoresJogadorIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/busca'
     | '/conta'
     | '/criar-conta'
     | '/entrar'
+    | '/jogadores/$jogadorId'
     | '/jogadores/$jogadorId/metricas'
+    | '/jogadores/$jogadorId/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/busca'
     | '/conta'
     | '/criar-conta'
     | '/entrar'
     | '/jogadores/$jogadorId/metricas'
+    | '/jogadores/$jogadorId'
   id:
     | '__root__'
     | '/_authenticated'
     | '/_public'
+    | '/_authenticated/busca'
     | '/_authenticated/conta'
     | '/_public/criar-conta'
     | '/_public/entrar'
     | '/_authenticated/'
+    | '/_authenticated/jogadores/$jogadorId'
     | '/_authenticated/jogadores/$jogadorId/metricas'
+    | '/_authenticated/jogadores/$jogadorId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -130,6 +166,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedIndexRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/busca': {
+      id: '/_authenticated/busca'
+      path: '/busca'
+      fullPath: '/busca'
+      preLoaderRoute: typeof AuthenticatedBuscaRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_authenticated/conta': {
       id: '/_authenticated/conta'
       path: '/conta'
@@ -151,27 +194,61 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicEntrarRouteImport
       parentRoute: typeof PublicRoute
     }
+    '/_authenticated/jogadores/$jogadorId': {
+      id: '/_authenticated/jogadores/$jogadorId'
+      path: '/jogadores/$jogadorId'
+      fullPath: '/jogadores/$jogadorId'
+      preLoaderRoute: typeof AuthenticatedJogadoresJogadorIdRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/jogadores/$jogadorId/': {
+      id: '/_authenticated/jogadores/$jogadorId/'
+      path: '/'
+      fullPath: '/jogadores/$jogadorId/'
+      preLoaderRoute: typeof AuthenticatedJogadoresJogadorIdIndexRouteImport
+      parentRoute: typeof AuthenticatedJogadoresJogadorIdRoute
+    }
     '/_authenticated/jogadores/$jogadorId/metricas': {
       id: '/_authenticated/jogadores/$jogadorId/metricas'
-      path: '/jogadores/$jogadorId/metricas'
+      path: '/metricas'
       fullPath: '/jogadores/$jogadorId/metricas'
       preLoaderRoute: typeof AuthenticatedJogadoresJogadorIdMetricasRouteImport
-      parentRoute: typeof AuthenticatedRoute
+      parentRoute: typeof AuthenticatedJogadoresJogadorIdRoute
     }
   }
 }
 
+interface AuthenticatedJogadoresJogadorIdRouteChildren {
+  AuthenticatedJogadoresJogadorIdMetricasRoute: typeof AuthenticatedJogadoresJogadorIdMetricasRoute
+  AuthenticatedJogadoresJogadorIdIndexRoute: typeof AuthenticatedJogadoresJogadorIdIndexRoute
+}
+
+const AuthenticatedJogadoresJogadorIdRouteChildren: AuthenticatedJogadoresJogadorIdRouteChildren =
+  {
+    AuthenticatedJogadoresJogadorIdMetricasRoute:
+      AuthenticatedJogadoresJogadorIdMetricasRoute,
+    AuthenticatedJogadoresJogadorIdIndexRoute:
+      AuthenticatedJogadoresJogadorIdIndexRoute,
+  }
+
+const AuthenticatedJogadoresJogadorIdRouteWithChildren =
+  AuthenticatedJogadoresJogadorIdRoute._addFileChildren(
+    AuthenticatedJogadoresJogadorIdRouteChildren,
+  )
+
 interface AuthenticatedRouteChildren {
+  AuthenticatedBuscaRoute: typeof AuthenticatedBuscaRoute
   AuthenticatedContaRoute: typeof AuthenticatedContaRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
-  AuthenticatedJogadoresJogadorIdMetricasRoute: typeof AuthenticatedJogadoresJogadorIdMetricasRoute
+  AuthenticatedJogadoresJogadorIdRoute: typeof AuthenticatedJogadoresJogadorIdRouteWithChildren
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedBuscaRoute: AuthenticatedBuscaRoute,
   AuthenticatedContaRoute: AuthenticatedContaRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
-  AuthenticatedJogadoresJogadorIdMetricasRoute:
-    AuthenticatedJogadoresJogadorIdMetricasRoute,
+  AuthenticatedJogadoresJogadorIdRoute:
+    AuthenticatedJogadoresJogadorIdRouteWithChildren,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(

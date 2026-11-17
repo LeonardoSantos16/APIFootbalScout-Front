@@ -1,9 +1,8 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { MetricsPage } from '../../../../pages/metrics/MetricsPage'
-import { sliceToSearch, validateSliceSearch } from '../../../../utils/slice'
+import { sliceToSearch } from '../../../../utils/slice'
 
 export const Route = createFileRoute('/_authenticated/jogadores/$jogadorId/metricas')({
-  validateSearch: validateSliceSearch,
   component: MetricsRoute,
 })
 
