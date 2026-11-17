@@ -10,33 +10,44 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as JogadoresJogadorIdMetricasRouteImport } from './routes/jogadores/$jogadorId/metricas'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const JogadoresJogadorIdMetricasRoute =
+  JogadoresJogadorIdMetricasRouteImport.update({
+    id: '/jogadores/$jogadorId/metricas',
+    path: '/jogadores/$jogadorId/metricas',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/jogadores/$jogadorId/metricas': typeof JogadoresJogadorIdMetricasRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/jogadores/$jogadorId/metricas': typeof JogadoresJogadorIdMetricasRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/jogadores/$jogadorId/metricas': typeof JogadoresJogadorIdMetricasRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/jogadores/$jogadorId/metricas'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/jogadores/$jogadorId/metricas'
+  id: '__root__' | '/' | '/jogadores/$jogadorId/metricas'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  JogadoresJogadorIdMetricasRoute: typeof JogadoresJogadorIdMetricasRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +59,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/jogadores/$jogadorId/metricas': {
+      id: '/jogadores/$jogadorId/metricas'
+      path: '/jogadores/$jogadorId/metricas'
+      fullPath: '/jogadores/$jogadorId/metricas'
+      preLoaderRoute: typeof JogadoresJogadorIdMetricasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  JogadoresJogadorIdMetricasRoute: JogadoresJogadorIdMetricasRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
