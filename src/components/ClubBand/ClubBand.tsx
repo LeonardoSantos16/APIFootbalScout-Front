@@ -5,12 +5,14 @@ import styles from './ClubBand.module.css'
 interface ClubBandProps {
   name?: string
   subtitle?: string
+  photo?: ReactNode
   action?: ReactNode
   loading?: boolean
 }
 
-export const ClubBand = ({ name, subtitle, action, loading }: ClubBandProps) => (
-  <header className={styles.band} aria-busy={loading || undefined}>
+export const ClubBand = ({ name, subtitle, photo, action, loading }: ClubBandProps) => (
+  <header className={[styles.band, loading && styles.loading].filter(Boolean).join(' ')} aria-busy={loading || undefined}>
+    {loading ? <Skeleton className={styles.photoSkeleton} /> : photo}
     <div className={styles.text}>
       {loading ? (
         <>

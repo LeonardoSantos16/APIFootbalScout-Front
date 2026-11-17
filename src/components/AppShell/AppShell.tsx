@@ -1,4 +1,4 @@
-import { MagnifyingGlassIcon, SignOutIcon } from '@phosphor-icons/react'
+import { SignOutIcon } from '@phosphor-icons/react'
 import type { ReactNode } from 'react'
 import { Button } from '../Button/Button'
 import { Skeleton } from '../Skeleton/Skeleton'
@@ -13,9 +13,11 @@ interface AppShellProps {
   accountLink?: ReactNode
   onSignOut?: () => void
   loading?: boolean
+  search?: ReactNode
+  searchLink?: ReactNode
 }
 
-export const AppShell = ({ children, accountLink, onSignOut, loading }: AppShellProps) => (
+export const AppShell = ({ children, accountLink, onSignOut, loading, search, searchLink }: AppShellProps) => (
   <>
     <header className={styles.top} aria-busy={loading || undefined}>
       <span className={styles.brand}>{APP_NAME}</span>
@@ -34,10 +36,7 @@ export const AppShell = ({ children, accountLink, onSignOut, loading }: AppShell
         </>
       ) : (
         <>
-          <div className={styles.search} role="search">
-            <MagnifyingGlassIcon size={20} aria-hidden />
-            <span>Buscar jogador</span>
-          </div>
+          {search && <div className={styles.search}>{search}</div>}
           <nav aria-label="Principal">
             <ul className={styles.links}>
               {LINKS.map((link) => (
@@ -56,9 +55,10 @@ export const AppShell = ({ children, accountLink, onSignOut, loading }: AppShell
           </div>
         </>
       )}
-      <Button variant="ghost" className={styles.menu}>
-        Menu
-      </Button>
+      <div className={styles.phone}>
+        {!loading && searchLink && <span className={styles.searchLink}>{searchLink}</span>}
+        <Button variant="ghost">Menu</Button>
+      </div>
     </header>
     <main className={styles.main}>{children}</main>
   </>
