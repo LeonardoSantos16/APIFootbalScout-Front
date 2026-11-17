@@ -22,3 +22,29 @@ Pendencias conhecidas que o front contorna hoje e que precisam de correcao em ou
 - **Problema:** o design system manda a `ClubBand` usar `team.teamColors` do perfil, mas o campo nao existe no contrato nem no back-end.
 - **Contorno no front:** a `ClubBand` usa sempre o fallback `club` (grilling da F9, Q5).
 - **Correcao esperada:** expor as cores do time em `details.team`; reavaliar no item 4 (Busca e perfil).
+
+### `name` ausente em `GET /api/Auth/me`
+
+- **Problema:** `UsuarioAutenticadoDto` traz `userId`, `email` e `roles`, sem o nome, que o header mostra. O nome so chega no `AuthResponseDto`.
+- **Contorno no front:** `name` e `email` ficam guardados junto do par de tokens e sao atualizados a cada `AuthResponseDto` (grilling da Sessao, Q5).
+- **Correcao esperada:** incluir `name` em `UsuarioAutenticadoDto` (claim no token ou leitura do usuario).
+
+### `sec_stamp` do access token nao e conferido
+
+- **Problema:** `change-password` e `signout-all` trocam o `SecurityStamp` e revogam os refresh tokens, mas a validacao do JWT nao compara o `sec_stamp`. As outras sessoes seguem com acesso ate o access token vencer (ate 15 min).
+- **Contorno no front:** os avisos dizem "As outras sessões encerram em até 15 minutos." (grilling da Sessao, Q10 e Q11).
+- **Correcao esperada:** conferir o `sec_stamp` no `OnTokenValidated`; depois disso, o aviso pode dizer que as outras sessoes ja foram encerradas.
+
+### Status de `usuario.*` divergente em `docs/frontend/erros.md`
+
+- **Problema:** o doc do back-end diz que `usuario.senha_atual_invalida` responde 401 e `usuario.nao_encontrado` 404. O codigo responde 400 (`ValorInvalidoException`) e, em `change-password`, 401 (`NaoAutenticadoException`).
+- **Contorno no front:** a copia local de `erros.md` ja traz os status reais.
+- **Correcao esperada:** corrigir a tabela em `docs/frontend/erros.md` do back-end.
+
+## Front
+
+### Pagina inicial provisoria
+
+- **Problema:** a busca so chega no item 4 e a pagina inicial no item 9, mas o olheiro precisa cair em algum lugar depois de entrar.
+- **Contorno:** `/` mostra "Olá, {nome}." e, no `dev:mock`, links para as metricas dos jogadores 1001 a 1005 (grilling da Sessao, Q16).
+- **Correcao esperada:** substituir no item 9 (Navegacao e acessibilidade).

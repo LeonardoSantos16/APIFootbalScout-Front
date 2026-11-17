@@ -10,6 +10,14 @@ Ferramenta do olheiro para buscar jogadores, ler métricas por 90, comparar dois
 Quem usa a ferramenta e é dono de tudo o que cria nela: acompanhamentos, relatórios e shortlists.
 _Evitar_: usuário, scout, analista
 
+**Conta**:
+O acesso do olheiro à ferramenta: nome, e-mail e senha. Excluir a conta apaga tudo o que o olheiro criou.
+_Evitar_: cadastro, usuário, perfil
+
+**Sessão**:
+O acesso aberto de um olheiro num dispositivo, que dura enquanto a renovação funcionar. Sair encerra a sessão deste dispositivo; sair de todos encerra as demais.
+_Evitar_: login
+
 **Jogador**:
 O atleta como a fonte o publica, identificado pelo id da fonte.
 _Evitar_: atleta, player
@@ -157,6 +165,8 @@ Os identificadores do código são em inglês. Um termo novo entra nesta tabela 
 | Termo | No código |
 | --- | --- |
 | Olheiro | `scout` |
+| Conta | `account` |
+| Sessão | `session` |
 | Jogador | `player` |
 | Fonte | `source` |
 | Perfil | `PlayerProfile` |
