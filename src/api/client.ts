@@ -21,7 +21,7 @@ const readBody = async (response: Response): Promise<unknown> => {
   return JSON.parse(text)
 }
 
-const errors: Middleware = {
+export const errorsMiddleware: Middleware = {
   async onResponse({ response }) {
     if (!response.ok) throw new ApiError(response.status, await readBody(response))
   },
@@ -31,6 +31,6 @@ export const fetchClient = createFetchClient<paths>({
   baseUrl: import.meta.env.VITE_API_URL ?? '',
   fetch: (request) => globalThis.fetch(request),
 })
-fetchClient.use(errors)
+fetchClient.use(errorsMiddleware)
 
 export const $api = createQueryClient(fetchClient)
