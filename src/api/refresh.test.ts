@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { authResponse } from '../test/sessionFixtures'
+import { authResponse } from '../mocks/fixtures/session'
 import { ApiError } from './client'
 import { REFRESH_LOCK, createRefresher, type Lock } from './refresh'
 import { clearSession, readSession, saveSession } from './session'

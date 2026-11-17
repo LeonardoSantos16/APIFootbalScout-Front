@@ -102,26 +102,27 @@ Mutations do not use the 502 retry of the queries. A form error without a field 
 
 ### MSW per state
 
-`src/mocks/handlers/auth.ts` keeps an in-memory store (`createAuthStore()`, reset in `src/test/setup.ts`) with one user ("Ana Ribeiro", `ana.ribeiro@exemplo.com`, password `senhaboa123`) and opaque tokens (`mock-access-1`, `mock-refresh-1`...). Every successful auth response rotates both. In `dev:mock` an access token expires after 20 uses, to exercise the renewal by hand.
+`src/mocks/authStore.ts` keeps an in-memory store (`resetAuthStore()`, called in `src/test/setup.ts`) with one user ("Ana Ribeiro", `ana.ribeiro@exemplo.com`, password `senhaboa123`, in `src/mocks/fixtures/session.ts`). Tokens carry a version and the e-mail (`mock-access:3:ana.ribeiro@exemplo.com`), so a pair kept in `localStorage` still works after a reload of `dev:mock`, which resets the store; the store only remembers used refresh tokens, revocations and expired access tokens. Every successful auth response rotates both. In `dev:mock` an access token expires after 20 uses, to exercise the renewal by hand; tests expire one with `expireAccessToken(token)`. `src/mocks/handlers/auth.ts` has the default handlers and the named states.
 
-The profile and metrics handlers are wrapped by `withAuth`, which answers `401` without a valid bearer.
+The default profile and metrics resolvers are wrapped by `withAuth`, which answers `401` without a valid bearer. A catch-all handler was rejected: one that falls through makes MSW pass the request to the network instead of failing on an unhandled request. Named handlers used by tests and stories stay unwrapped.
 
 | Handler | State |
 | --- | --- |
 | `authHandlers` | the default flow: signup, signin, refresh, signout, signout-all, change-password, me, delete |
 | `signInWrongCredentials` | 401 `usuario.credenciais_invalidas` |
 | `signUpEmailTaken` | 409 `usuario.email_ja_cadastrado` |
-| `signInPending` / `signUpPending` | never resolves, for the sending state |
-| `accessTokenExpiredOnce` | the next protected call answers 401, then the default |
+| `signInPending` / `signUpPending` / `changePasswordPending` | never resolves, for the sending state |
+| `signInUnknownError` | 500 without `code` |
 | `refreshRefused` | 401 `usuario.refresh_token_invalido` |
 | `refreshWithoutIdentification` | 401 `usuario.token_sem_identificacao` |
 | `refreshUnavailable` | 502 |
+| `mePending` | never resolves, for the boot skeleton |
 | `meUnauthorized` | 401 on `me` |
 | `changePasswordWrongCurrent` | 400 `usuario.senha_atual_invalida` |
 | `changePasswordSameAsCurrent` | 422 `usuario.senha_igual_a_atual` |
 | `signOutFailing` | network error on `signout` and `signout-all` |
 
-`dev:mock` starts signed in: `src/mocks/browser.ts` seeds `scout.session` with the mock user when the entry is missing. `renderRoute(url, { session })` seeds or clears the entry before creating the router; the default is signed in. Stories of the public pages run without a session; stories of the protected pages get a seeded session in a decorator.
+`dev:mock` starts signed in: `src/mocks/browser.ts` resets the store with 20 uses per access token and seeds `scout.session` with the mock user when the entry is missing. `renderRoute(url, { session })` seeds or clears the entry before creating the router; the default is signed in. Stories get a seeded session from a loader in `.storybook/preview.tsx`; the public pages set `parameters.session: 'signed-out'`. The `onSessionEnded` handler is wired in `renderRoute` with the routes of group 5.
 
 ## Risks / Trade-offs
 

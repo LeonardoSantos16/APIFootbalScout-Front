@@ -8,6 +8,7 @@ import {
   buildNationalTeamOnlyProfile,
   buildProfileWithoutStats,
 } from './fixtures/profiles'
+import { authHandlers, withAuth } from './handlers/auth'
 import { http } from './http'
 import { plainText, problem } from './responses'
 
@@ -22,32 +23,38 @@ const PROFILES: Record<number, (id: number) => PlayerProfile> = {
 
 const METRICS_SOURCE_DOWN = new Set([1005])
 
-const profileById = http.get('/api/Players/{id}/profile', ({ params, response }) => {
-  const id = Number(params.id)
-  const build = PROFILES[id]
-  return build
-    ? response(200).json(build(id))
-    : response.untyped(plainText(404, `Player with ID ${id} not found`))
-})
+const profileById = http.get(
+  '/api/Players/{id}/profile',
+  withAuth(({ params, response }) => {
+    const id = Number(params.id)
+    const build = PROFILES[id]
+    return build
+      ? response(200).json(build(id))
+      : response.untyped(plainText(404, `Player with ID ${id} not found`))
+  }),
+)
 
-const metricsById = http.get('/api/Analise/{jogadorId}/metricas-por-90', ({ params, query, response }) => {
-  const jogadorId = Number(params.jogadorId)
-  const instance = `GET /api/Analise/${jogadorId}/metricas-por-90`
+const metricsById = http.get(
+  '/api/Analise/{jogadorId}/metricas-por-90',
+  withAuth(({ params, query, response }) => {
+    const jogadorId = Number(params.jogadorId)
+    const instance = `GET /api/Analise/${jogadorId}/metricas-por-90`
 
-  if (METRICS_SOURCE_DOWN.has(jogadorId)) {
-    return response.untyped(problem(502, 'sofascore.estatisticas_do_jogador_indisponiveis', instance))
-  }
+    if (METRICS_SOURCE_DOWN.has(jogadorId)) {
+      return response.untyped(problem(502, 'sofascore.estatisticas_do_jogador_indisponiveis', instance))
+    }
 
-  const competicaoId = Number(query.get('CompeticaoId'))
-  const attributes = competicaoId === COPA_DO_BRASIL.id ? insufficientSampleAttributes : calculatedAttributes
+    const competicaoId = Number(query.get('CompeticaoId'))
+    const attributes = competicaoId === COPA_DO_BRASIL.id ? insufficientSampleAttributes : calculatedAttributes
 
-  return response(200).json(
-    metricsResponse(attributes, jogadorId, {
-      competicaoId,
-      temporadaId: Number(query.get('TemporadaId')),
-      contexto: (query.get('Contexto') ?? 'Clube') as Contexto,
-    }),
-  )
-})
+    return response(200).json(
+      metricsResponse(attributes, jogadorId, {
+        competicaoId,
+        temporadaId: Number(query.get('TemporadaId')),
+        contexto: (query.get('Contexto') ?? 'Clube') as Contexto,
+      }),
+    )
+  }),
+)
 
-export const handlers: RequestHandler[] = [profileById, metricsById]
+export const handlers: RequestHandler[] = [...authHandlers, profileById, metricsById]

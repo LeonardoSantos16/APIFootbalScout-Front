@@ -24,9 +24,9 @@
 
 ## 4. Mocks and test base
 
-- [ ] 4.1 `src/mocks/handlers/auth.ts` with the in-memory store, token rotation and the named handlers of the `design.md` table, typed by the contract; reset in `src/test/setup.ts`; verify with `npm run typecheck`
-- [ ] 4.2 `withAuth` around the profile and metrics handlers (401 without a valid bearer) and access token expiring after 20 uses in `dev:mock`; verify the existing F9 route tests still pass after 4.3
-- [ ] 4.3 `renderRoute(url, { session })` seeding or clearing `scout.session` (signed in by default) and wiring `onSessionEnded`; seed in `src/mocks/browser.ts`; Storybook decorator with a seeded session; verify with `npm test` and by opening `npm run dev:mock` already signed in
+- [x] 4.1 `src/mocks/handlers/auth.ts` with the in-memory store, token rotation and the named handlers of the `design.md` table, typed by the contract; reset in `src/test/setup.ts`; verify with `npm run typecheck`
+- [x] 4.2 `withAuth` around the profile and metrics handlers (401 without a valid bearer) and access token expiring after 20 uses in `dev:mock`; verify the existing F9 route tests still pass after 4.3
+- [x] 4.3 `renderRoute(url, { session })` seeding or clearing `scout.session` (signed in by default) and wiring `onSessionEnded`; seed in `src/mocks/browser.ts`; Storybook decorator with a seeded session; verify with `npm test` and by opening `npm run dev:mock` already signed in
 
 ## 5. Routes, boot and protected layout
 

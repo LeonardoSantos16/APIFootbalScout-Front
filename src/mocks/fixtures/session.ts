@@ -1,4 +1,4 @@
-import type { AuthResponse } from '../interfaces/session'
+import type { AuthResponse } from '../../interfaces/session'
 
 export const SCOUT = {
   userId: '6f1c2a10-0000-4000-8000-000000000001',
