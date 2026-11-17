@@ -132,6 +132,7 @@ The default profile and metrics resolvers are wrapped by `withAuth`, which answe
 - [`StrictMode` and the boot running `me` twice] → `ensureQueryData` dedups by key; the renewal is a single promise.
 - [jsdom has no `navigator.locks`] → the lock is injected; the cross-tab case is covered by the fake lock, and checked by hand with two tabs in `dev:mock`.
 - [Signing out on phones is unreachable until item 9] → accepted; recorded in the proposal.
+- [In `dev:mock`, an account created or a password changed is lost on reload, because the store is in memory and only the seeded scout is recreated; the kept pair then fails and the app shows the expired session] → accepted for a mock; navigate inside the app to exercise those flows.
 - [Other sessions keep access for up to 15 minutes after "Sair de todos" or a password change] → the texts say so; the back-end fix is in `docs/divida-tecnica.md`.
 - [`usuario.nao_encontrado` on `change-password` comes as 401] → it is a `401` on a call that is never renewed, so it shows as a form error ("Usuário não encontrado."), which only happens for an account deleted in another device.
 
