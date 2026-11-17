@@ -141,12 +141,12 @@ describe('deriveSlices', () => {
 })
 
 describe('ordem dos recortes', () => {
-  it('ordena da temporada mais recente para a mais antiga', () => {
+  it('mantem a ordem da fonte mesmo com season.id fora da ordem cronologica', () => {
     // Arrange
     const profile: PlayerProfile = {
       stats: [
-        statsItem({ competition: BRASILEIRAO, seasonId: 48982, year: '2023', teamId: ATLETICO_SERRANO }),
-        statsItem({ competition: BRASILEIRAO, seasonId: 72034, year: '2025', teamId: ATLETICO_SERRANO }),
+        statsItem({ competition: BRASILEIRAO, seasonId: 87678, year: '2026', teamId: ATLETICO_SERRANO }),
+        statsItem({ competition: { id: 341, name: 'Trophée des Champions' }, seasonId: 92399, year: '20/21', teamId: ATLETICO_SERRANO }),
         statsItem({ competition: BRASILEIRAO, seasonId: 58766, year: '2024', teamId: ATLETICO_SERRANO }),
       ],
     }
@@ -155,10 +155,10 @@ describe('ordem dos recortes', () => {
     const slices = deriveSlices(profile)
 
     // Assert
-    expect(slices.map((s) => s.seasonId)).toEqual([72034, 58766, 48982])
+    expect(slices.map((s) => s.seasonId)).toEqual([87678, 92399, 58766])
   })
 
-  it('desempata a mesma temporada pelos minutos jogados', () => {
+  it('nao reordena a mesma temporada pelos minutos jogados', () => {
     // Arrange
     const profile: PlayerProfile = {
       stats: [
@@ -172,7 +172,7 @@ describe('ordem dos recortes', () => {
     const slices = deriveSlices(profile)
 
     // Assert
-    expect(slices.map((s) => s.minutesPlayed)).toEqual([1284, 312])
+    expect(slices.map((s) => s.minutesPlayed)).toEqual([312, 1284])
   })
 })
 

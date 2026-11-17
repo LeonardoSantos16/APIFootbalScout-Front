@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { formatDecimal, formatMinutes, formatPercent } from './number'
+import { formatDecimal, formatMinutes, formatMoney, formatPercent } from './number'
 
 describe('formatDecimal', () => {
   it.each([
@@ -40,6 +40,27 @@ describe('formatMinutos', () => {
   ])('formata %d como %s', (minutes, expected) => {
     // Act
     const text = formatMinutes(minutes)
+
+    // Assert
+    expect(text).toBe(expected)
+  })
+})
+
+describe('formatMoney', () => {
+  it.each([
+    [12_500_000, 'EUR', '€12,5M'],
+    [12_000_000, 'EUR', '€12M'],
+    [1_250_000, 'EUR', '€1,3M'],
+    [850_000, 'EUR', '€850 mil'],
+    [1_500, 'EUR', '€2 mil'],
+    [900, 'EUR', '€900'],
+    [3_200_000, 'BRL', 'R$3,2M'],
+    [3_200_000, 'USD', 'US$3,2M'],
+    [3_200_000, 'GBP', '£3,2M'],
+    [3_200_000, 'CHF', 'CHF 3,2M'],
+  ])('formata %d %s como %s', (value, currency, expected) => {
+    // Act
+    const text = formatMoney(value, currency)
 
     // Assert
     expect(text).toBe(expected)
