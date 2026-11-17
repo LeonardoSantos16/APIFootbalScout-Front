@@ -3,16 +3,17 @@ import { RouterProvider, createMemoryHistory, createRouter } from '@tanstack/rea
 import { render } from '@testing-library/react'
 import { createQueryClient } from '../api/queryClient'
 import { clearSession, saveSession } from '../api/session'
+import type { AuthResponse } from '../interfaces/session'
 import { seedSession } from '../mocks/authStore'
 import { routeTree } from '../routeTree.gen'
 
 interface RenderRouteOptions {
-  session?: 'signed-in' | 'signed-out'
+  session?: 'signed-in' | 'signed-out' | AuthResponse
 }
 
 export const renderRoute = (url: string, { session = 'signed-in' }: RenderRouteOptions = {}) => {
-  if (session === 'signed-in') saveSession(seedSession())
-  else clearSession()
+  if (session === 'signed-out') clearSession()
+  else saveSession(session === 'signed-in' ? seedSession() : session)
 
   const queryClient = createQueryClient({ retryDelay: 0 })
   const router = createRouter({
