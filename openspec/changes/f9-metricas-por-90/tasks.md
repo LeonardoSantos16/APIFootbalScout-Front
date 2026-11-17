@@ -45,12 +45,12 @@
 
 ## 8. Per-90 metrics screen
 
-- [ ] 8.1 Route `src/routes/jogadores/$jogadorId/metricas.tsx` with `validateSearch` rendering `src/pages/metrics/MetricsPage.tsx` (with `src/hooks/usePlayerProfile.ts` and `hooks/useMetricsPer90.ts`) and `AppShell` in `__root.tsx`; `test:` route test for opening without a recorte (URL corrected with `replace`) and `feat:` commit
-- [ ] 8.2 `test:` and `feat:` route test for the recorte change (`push`, Back returns the previous one, only the grid goes back to the skeleton)
-- [ ] 8.3 `test:` and `feat:` route test for visible refused rows, the whole grid refused without an error message and the profile without `stats`
-- [ ] 8.4 `test:` and `feat:` route test for the errors: profile 404 without button, profile 502, metrics 502 with "Tentar de novo" repeating the call, metrics without `code`, incomplete response
-- [ ] 8.5 Tab title ("Métricas por 90 · <nome>" and just "Métricas por 90"); `test:` and `feat:` route test
-- [ ] 8.6 Screen story per scenario in the `design.md` table; verify in Storybook that each state matches the wireframe
+- [x] 8.1 Route `src/routes/jogadores/$jogadorId/metricas.tsx` with `validateSearch` rendering `src/pages/metrics/MetricsPage.tsx` (with `src/hooks/usePlayerProfile.ts` and `hooks/useMetricsPer90.ts`) and `AppShell` in `__root.tsx`; `test:` route test for opening without a recorte (URL corrected with `replace`) and `feat:` commit
+- [x] 8.2 `test:` and `feat:` route test for the recorte change (`push`, Back returns the previous one, only the grid goes back to the skeleton)
+- [x] 8.3 `test:` and `feat:` route test for visible refused rows, the whole grid refused without an error message and the profile without `stats`
+- [x] 8.4 `test:` and `feat:` route test for the errors: profile 404 without button, profile 502, metrics 502 with "Tentar de novo" repeating the call, metrics without `code`, incomplete response
+- [x] 8.5 Tab title ("Métricas por 90 · <nome>" and just "Métricas por 90"); `test:` and `feat:` route test
+- [x] 8.6 Screen story per scenario in the `design.md` table; verify in Storybook that each state matches the wireframe
 
 ## 9. Integration
 
