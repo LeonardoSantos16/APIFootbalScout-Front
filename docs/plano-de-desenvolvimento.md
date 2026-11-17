@@ -124,7 +124,7 @@ A change leva o identificador do back-end (`f9-`, `f10-`) e a capability leva o 
 4. ~~Scaffold.~~ Concluido: Vite, TanStack Router e Query, openapi-typescript + openapi-fetch + openapi-react-query, MSW com `openapi-msw`, Storybook, Vitest e CI. Playwright fica para os testes e2e.
 5. ~~Skill `scout-ui`.~~ Concluido: versao inicial em `.claude/skills/scout-ui/`, com o procedimento de dados, estados, erros, estilo, mocks e stories, e os textos por valor da API. Componentes, formatadores e dicionario de erros entram nela na retrospectiva da F9.
 6. ~~Planejamento base.~~ Concluido: [`planejamento-base.md`](planejamento-base.md) com a ordem dos itens, o escopo e as perguntas para o grilling de cada um; OpenSpec iniciado com `openspec/config.yaml`, sem nenhuma change ainda.
-7. Itens do planejamento base, um por vez: grilling -> wireframe -> spec no OpenSpec -> TDD -> retrospectiva, comecando pelo CI e depois a F9 Metricas.
+7. Itens do planejamento base, um por vez: grilling -> wireframe -> spec no OpenSpec -> TDD -> conferencia -> retrospectiva. A F9 Metricas (item 2) foi a primeira concluida e arquivada (`openspec/changes/archive/2026-11-17-f9-metricas-por-90/`); o CI (item 1) ainda nao teve grilling.
 
 ## 9. Estimativa
 

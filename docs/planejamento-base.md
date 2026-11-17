@@ -4,14 +4,17 @@ O que o front vai entregar, em que ordem e por qual fluxo. Este documento so pla
 
 ## Fluxo de cada item
 
+Cada item comeca numa branch propria a partir de `develop`, com o nome da change (`feat/f9-metricas-por-90`).
+
 | Etapa | Ferramenta | Entrada | Saida |
 | --- | --- | --- | --- |
-| 1. Grilling | skill `grilling` (ou `grill-with-docs`) | o item deste documento e as perguntas dele | decisoes fechadas; termos novos no `GLOSSARY.md`, decisoes de arquitetura em `docs/adr/` |
+| 1. Grilling | skill `grilling` (ou `grill-with-docs`) | o item deste documento e as perguntas dele | decisoes fechadas em `docs/grilling/<change>.md` (uma secao por pergunta, com a resposta); termos novos no `GLOSSARY.md`, decisoes de arquitetura em `docs/adr/`, pendencias do back-end em `docs/divida-tecnica.md` |
 | 2. Wireframe | artefato no claude.ai, um por tela, nao versionado | as decisoes do grilling e os estados de `fluxos-de-tela.md` | wireframe de baixa fidelidade com a tela em cada estado (carregando, sucesso, vazio ou recusado, erro), aprovado antes da spec; componente novo que o wireframe pedir entra no design system primeiro |
 | 3. Spec | OpenSpec (`/openspec-propose`) | as decisoes do grilling e o wireframe aprovado | change em `openspec/changes/<nome>/` com `proposal.md`, specs delta, `design.md` (com o link do wireframe) e `tasks.md`, valida em `openspec validate <nome> --strict` |
-| 4. TDD | skill `tdd` e `/openspec-apply-change` | `tasks.md` | testes e stubs ate o red (commit `test:`), depois a implementacao ate o green (commit `feat:`) |
+| 4. TDD | `/openspec-apply-change` | `tasks.md` | um grupo do `tasks.md` por vez: o red de todas as subtarefas do grupo (commit `test:`), depois o green do grupo inteiro (commit `feat:`). Grupos sem regra de dominio (componentes, mocks, dependencias) vao direto em `feat:` ou `chore:` por subtarefa, com os testes junto. O green da tela so e commitado depois da conferencia no navegador |
+| 5. Conferencia | `npm run dev:mock` e `npm run storybook` | as stories por estado e os jogadores do mock | cada estado da tela bate com o wireframe, em desktop e em 375px, sem erro no console; `lint`, `typecheck`, `test` e `build` passam |
 
-Ao fim de cada item: retrospectiva (o que a spec nao previu, ajustes na skill `scout-ui` ou no `CLAUDE.md`) e `/openspec-archive-change`, que leva as specs para `openspec/specs/`.
+Ao fim de cada item: retrospectiva (o que a spec nao previu, ajustes na skill `scout-ui`, no `CLAUDE.md` e nas specs delta) e `/openspec-archive-change`, que cria ou atualiza as specs principais em `openspec/specs/` a partir das deltas e move a change para `openspec/changes/archive/<data>-<change>/`. A decisao que muda durante a implementacao volta para a spec delta antes do archive.
 
 Itens sem tela (CI, testes e2e, deploy) pulam o wireframe.
 

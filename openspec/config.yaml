@@ -60,6 +60,8 @@ rules:
     - Tarefas pequenas e verificaveis, de no maximo 2 horas
     - Regras de dominio em ciclos de TDD - teste antes, com commits test e feat separados
     - Toda tela nova ganha story por estado e handler MSW por estado
+    - Tarefas agrupadas por camada; o TDD vai por grupo - red do grupo inteiro, depois o green
+    - Penultima tarefa - lint, typecheck, test e build, e percorrer as telas no dev:mock em desktop e 375px
     - Ultima tarefa da change - retrospectiva atualizando spec, skill scout-ui ou CLAUDE.md
 
 operations:
