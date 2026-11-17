@@ -44,6 +44,10 @@ _Evitar_: minutagem (quando o assunto é a base do cálculo)
 Um atributo do jogador no recorte, normalizado por 90 minutos quando é contagem, ou informado como está quando é média ou percentual. É sempre calculada ou recusada.
 _Evitar_: estatística, stat, indicador
 
+**Nota**:
+A média das notas que a fonte dá ao jogador por partida no recorte. É uma das métricas por 90, informada como média, sem normalização.
+_Evitar_: rating, avaliação
+
 **Recusa**:
 O resultado de uma métrica ou de uma comparação que não pode ser calculada, acompanhado do motivo. É resposta, não falha.
 _Evitar_: erro, falha, dado faltante

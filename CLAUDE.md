@@ -62,7 +62,7 @@ Detalhes em `docs/design-system/README.md`; os pontos que mais se erram:
 - Archivo para nomes, titulos e numeros (`tabular-nums`); Figtree para o resto. Rotulo embaixo do valor, sem caixa alta.
 - Cartoes sem sombra; carregamento com skeleton no formato final; sem animacao de entrada.
 - Icones so do Phosphor (`@phosphor-icons/react`, regular, 20px), da lista aprovada em `assets/Icons/`.
-- A faixa do clube usa `team.teamColors` do perfil, com a regra de fallback da `ClubBand`.
+- A faixa do clube usaria `team.teamColors` do perfil, mas o contrato ainda nao expoe o campo: ate la a `ClubBand` usa o token `club` (`docs/divida-tecnica.md`).
 
 ## Convencoes de trabalho
 
