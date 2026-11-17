@@ -7,9 +7,9 @@ import {
   recorteParaParams,
   rotuloDoRecorte,
   validarBuscaDoRecorte,
-  type Perfil,
-  type Recorte,
 } from './recorte'
+import type { Perfil } from '../interfaces/jogador'
+import type { Recorte } from '../interfaces/recorte'
 
 type Schemas = components['schemas']
 

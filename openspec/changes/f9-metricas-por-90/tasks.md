@@ -10,7 +10,7 @@
 ## 2. Formatting and configuration
 
 - [x] 2.1 `src/config/scout.ts` with `AMOSTRA_MINIMA_DE_MINUTOS = 450` and a reference in `docs/README.md`; verify with `npm run typecheck`
-- [x] 2.2 TDD of `src/format/numero.ts` (`2,10`, `7,12`, `86,4%`, `1.284 min`, rounding): `test:` commit on red and `feat:` on green; verify with `npx vitest run src/format`
+- [x] 2.2 TDD of `src/utils/numero.ts` (`2,10`, `7,12`, `86,4%`, `1.284 min`, rounding): `test:` commit on red and `feat:` on green; verify with `npx vitest run src/utils/numero`
 
 ## 3. Recorte
 
@@ -20,10 +20,10 @@
 
 ## 4. Metrics and player
 
-- [ ] 4.1 TDD of `montarLinhas`: fixed order, labels with units, fails on a missing attribute, ignores an unknown type; `test:` and `feat:` commits
+- [ ] 4.1 TDD of `montarLinhas` in `src/pages/metricas/utils/metricas.ts`: fixed order, labels with units, fails on a missing attribute, ignores an unknown type; `test:` and `feat:` commits
 - [ ] 4.2 TDD of the footer sample (mode) and of the per-row sample only when it differs; `test:` and `feat:` commits
 - [ ] 4.3 TDD of the refusal text (`AmostraInsuficiente` with and without sample, `FonteNaoAtribuiu`); `test:` and `feat:` commits
-- [ ] 4.4 TDD of `src/domain/jogador.ts` (position from the letter, age, support line without an unknown position); `test:` and `feat:` commits
+- [ ] 4.4 TDD of `src/utils/jogador.ts` (position from the letter, age, support line without an unknown position); `test:` and `feat:` commits
 
 ## 5. Error handling
 
@@ -45,7 +45,7 @@
 
 ## 8. Per-90 metrics screen
 
-- [ ] 8.1 Route `src/routes/jogadores/$jogadorId/metricas.tsx` with `validateSearch` and `AppShell` in `__root.tsx`; `test:` route test for opening without a recorte (URL corrected with `replace`) and `feat:` commit
+- [ ] 8.1 Route `src/routes/jogadores/$jogadorId/metricas.tsx` with `validateSearch` rendering `src/pages/metricas/MetricasPage.tsx` (with `src/hooks/usePerfil.ts` and `hooks/useMetricasPor90.ts`) and `AppShell` in `__root.tsx`; `test:` route test for opening without a recorte (URL corrected with `replace`) and `feat:` commit
 - [ ] 8.2 `test:` and `feat:` route test for the recorte change (`push`, Back returns the previous one, only the grid goes back to the skeleton)
 - [ ] 8.3 `test:` and `feat:` route test for visible refused rows, the whole grid refused without an error message and the profile without `stats`
 - [ ] 8.4 `test:` and `feat:` route test for the errors: profile 404 without button, profile 502, metrics 502 with "Tentar de novo" repeating the call, metrics without `code`, incomplete response

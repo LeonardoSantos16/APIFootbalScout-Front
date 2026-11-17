@@ -1,19 +1,5 @@
-import type { components } from '../api/schema'
-
-type Schemas = components['schemas']
-
-type Contexto = Schemas['ContextoDeRecorteDto']
-
-export type Perfil = Schemas['PlayerFullProfileDto']
-
-export type Recorte = {
-  competicaoId: number
-  temporadaId: number
-  contexto: Contexto
-  competicao: string
-  temporada: string
-  minutosJogados: number
-}
+import type { Perfil } from '../interfaces/jogador'
+import type { BuscaDoRecorte, Contexto, Recorte } from '../interfaces/recorte'
 
 const NOME_DO_CONTEXTO: Record<Contexto, string> = {
   Clube: 'Clube',
@@ -42,12 +28,6 @@ export const derivarRecortes = (perfil: Perfil): Recorte[] => {
       }),
     )
     .sort(daMaisRecente)
-}
-
-export type BuscaDoRecorte = {
-  competicao?: number
-  temporada?: number
-  contexto?: Contexto
 }
 
 export const rotuloDoRecorte = (recorte: Recorte, lista: Recorte[]): string => {

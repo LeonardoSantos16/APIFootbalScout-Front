@@ -63,6 +63,14 @@ Os textos de cada motivo, rotulos e unidades estao em `references/textos.md`.
 - Botoes dizem a acao ("Acompanhar", "Finalizar relatorio"), sem seta.
 - Estado vazio: uma frase do que vai aparecer ali e o botao que preenche a tela, dentro do cartao. Os textos aprovados estao no README do design system.
 
+## Onde cada coisa fica
+
+- Usado por mais de uma tela: `src/components/`, `src/hooks/`, `src/utils/` (funcoes puras) e `src/interfaces/` (tipos).
+- Usado por uma tela so: `src/pages/<tela>/components/`, `hooks/`, `utils/` e `interfaces/`, com a pagina na raiz da pasta (`src/pages/metricas/MetricasPage.tsx`).
+- O arquivo em `src/routes/` so declara a rota e renderiza a pagina.
+- Quando uma segunda tela precisar de algo que esta na pasta de outra, mova para a pasta global em vez de importar de `pages/<outra-tela>/`.
+- Tipo de objeto e `interface`; uniao e apelido do contrato (`components['schemas'][...]`) sao `type`.
+
 ## Nomes
 
 Identificadores tecnicos em ingles, conceitos do dominio em portugues com o termo do glossario: `AfericaoCard`, `useRecorte`, `isRecusada`, `formatMoney`. Campos da API mantem o nome do contrato. Os nomes dos componentes de referencia (`MeasurementCard`, `ClubBand`) nao sao o padrao: ao implementar, use o termo de dominio.
