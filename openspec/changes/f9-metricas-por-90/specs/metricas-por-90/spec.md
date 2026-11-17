@@ -21,6 +21,10 @@ The grid SHALL always have seven rows, in this order: Gols, Assistências, Passe
 - **WHEN** the response has fewer than seven attributes
 - **THEN** the grid gives way to the error "Não foi possível concluir agora." with "Tentar de novo"
 
+#### Scenario: Calculated attribute without a value
+- **WHEN** an attribute arrives as `Calculada` without `valor`
+- **THEN** the grid gives way to the error "Não foi possível concluir agora." with "Tentar de novo"
+
 #### Scenario: Attribute of an unknown type
 - **WHEN** the response has the seven attributes plus one of a type the screen does not know
 - **THEN** the grid shows the seven rows and ignores the unknown attribute

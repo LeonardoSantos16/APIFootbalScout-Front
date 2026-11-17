@@ -20,10 +20,10 @@
 
 ## 4. Metrics and player
 
-- [ ] 4.1 TDD of `montarLinhas` in `src/pages/metricas/utils/metricas.ts`: fixed order, labels with units, fails on a missing attribute, ignores an unknown type; `test:` and `feat:` commits
-- [ ] 4.2 TDD of the footer sample (mode) and of the per-row sample only when it differs; `test:` and `feat:` commits
-- [ ] 4.3 TDD of the refusal text (`AmostraInsuficiente` with and without sample, `FonteNaoAtribuiu`); `test:` and `feat:` commits
-- [ ] 4.4 TDD of `src/utils/jogador.ts` (position from the letter, age, support line without an unknown position); `test:` and `feat:` commits
+- [x] 4.1 TDD of `montarLinhas` in `src/pages/metricas/utils/metricas.ts`: fixed order, labels with units, fails on a missing attribute, ignores an unknown type; `test:` and `feat:` commits
+- [x] 4.2 TDD of the footer sample (mode) and of the per-row sample only when it differs; `test:` and `feat:` commits
+- [x] 4.3 TDD of the refusal text (`AmostraInsuficiente` with and without sample, `FonteNaoAtribuiu`); `test:` and `feat:` commits
+- [x] 4.4 TDD of `src/utils/jogador.ts` (position from the letter, age, support line without an unknown position); `test:` and `feat:` commits
 
 ## 5. Error handling
 
