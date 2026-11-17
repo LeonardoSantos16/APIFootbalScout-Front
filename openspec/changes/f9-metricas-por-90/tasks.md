@@ -4,7 +4,7 @@
 
 - [x] 1.1 Install `@phosphor-icons/react` and `msw-storybook-addon` and verify with `npm run typecheck` and `npm run build-storybook`
 - [x] 1.2 Create `src/mocks/server.ts` (`msw/node`) and wire it in `src/test/setup.ts` with `onUnhandledRequest: 'error'`; verify with a test that fails when calling a route without a handler
-- [ ] 1.3 Extract `createQueryClient()` to `src/api/queryClient.ts` (retries only 502, once, 2000 ms; configurable `retryDelay`) and use it in `src/main.tsx`; verify with a `test:` commit for the policy (502 retries once, 404 does not) and a separate `feat:` commit
+- [x] 1.3 Extract `createQueryClient()` to `src/api/queryClient.ts` (retries only 502, once, 2000 ms; configurable `retryDelay`) and use it in `src/main.tsx`; verify with a `test:` commit for the policy (502 retries once, 404 does not) and a separate `feat:` commit
 - [ ] 1.4 Wire `msw-storybook-addon` in `.storybook/preview.ts` with the `QueryClient` in a decorator; verify with a story that reads a handler
 
 ## 2. Formatting and configuration
