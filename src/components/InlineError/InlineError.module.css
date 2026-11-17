@@ -1,0 +1,15 @@
+.error {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4) 0;
+}
+
+.message {
+  margin: 0;
+  flex: 1 1 220px;
+  font: var(--text-body);
+  color: var(--ink-soft);
+}
