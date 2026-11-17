@@ -49,7 +49,7 @@
 ## 8. Verification
 
 - [x] 8.1 `npm run lint`, `npm run typecheck`, `npm test` and `npm run build` pass; walk every state of the wireframe in `npm run dev:mock` at desktop and 375px with no console errors, including two tabs (sign out in one, renewal after 20 uses)
-- [ ] 8.2 Against the real API (`npm run dev` with the back-end running): create an account, sign in, open the metrics of a real player, change the password, sign out of all and delete the account; check the recorte `contexto` rule with real data and update `docs/divida-tecnica.md` with the result
+- [x] 8.2 Against the real API (`npm run dev` with the back-end running): create an account, sign in, open the metrics of a real player, change the password, sign out of all and delete the account; check the recorte `contexto` rule with real data and update `docs/divida-tecnica.md` with the result
 
 ## 9. Retrospective
 
