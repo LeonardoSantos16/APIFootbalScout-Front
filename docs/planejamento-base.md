@@ -45,7 +45,7 @@ O workflow `.github/workflows/ci.yml` ja existe desde o scaffold: em push na `ma
 
 Primeira feature completa: pequena, somente leitura e rica em estados. Estreia o recorte, a regra "recusa nao e erro" e o tratamento de erro por `code`.
 
-- **Escopo:** as sete linhas fixas (`Gols`, `Assistencias`, `PassesDecisivos`, `Desarmes`, `Interceptacoes`, `Rating`, `PrecisaoDePasse`), nunca filtradas. Calculada mostra valor, unidade e amostra; recusada fica visivel com o motivo e os numeros. Seletor de recorte derivado de `stats` do perfil, na URL (ADR 0003). Cabecalho minimo do jogador. Erro generico por `code`, "Tentar de novo" no 502. Primeiros componentes de producao e formatadores pt-BR.
+- **Escopo:** as sete linhas fixas (`Gols`, `Assistencias`, `PassesDecisivos`, `Desarmes`, `Interceptacoes`, `Rating`, `PrecisaoDePasse`), nunca filtradas. Calculada mostra valor, unidade e amostra; recusada fica visivel com o motivo e os numeros. Seletor de recorte derivado de `stats` do perfil, na URL (ADR 0003). Cabecalho minimo do jogador. Esqueleto da pagina com a navegacao no topo (busca e links ainda sem destino) e a coluna de apoio vazia. Erro generico por `code`, "Tentar de novo" no 502. Primeiros componentes de producao e formatadores pt-BR.
 - **Endpoints:** `GET /api/Players/{id}/profile`, `GET /api/Analise/{jogadorId}/metricas-por-90`.
 - **Para o grilling:**
   - Qual recorte vem selecionado quando a URL nao traz nenhum? O mais recente? O de mais minutos?
@@ -134,7 +134,7 @@ Lista ordenada de alvos com prioridade `1..n` contigua. A tela reflete sempre a 
 
 ## 9. Navegacao e acessibilidade
 
-Consolida o que cada feature entregou com navegacao minima.
+Consolida o que cada feature entregou com navegacao minima. O header no topo entra na F9 como esqueleto; aqui ele ganha destinos, estado ativo e o menu do celular.
 
 - **Escopo:** layout geral com navegacao entre busca, acompanhamentos, shortlists e conta; pagina inicial; rota inexistente; responsivo basico; revisao com `web-design-guidelines`.
 - **Para o grilling:** o que a pagina inicial mostra; se a navegacao entra antes, junto da sessao.

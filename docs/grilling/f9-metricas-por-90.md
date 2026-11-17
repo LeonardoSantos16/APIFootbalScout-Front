@@ -10,6 +10,14 @@ Decisoes fechadas no grilling do item 2 de [planejamento-base.md](../planejament
 - **Q4, Q10, Q22. Seletor:** um `<select>` nativo, com tokens e `color-scheme: dark`, que entra antes no design system. Rotulo "Competicao e temporada". Cada opcao e `uniqueTournament.name` + `year` ("Brasileirao Serie A · 2024"), na ordem da Q2. Quando o jogador tem recortes de selecao, todas as opcoes comecam pelo contexto ("Selecao · Eliminatorias Sul-Americanas · 2025"), para o corte do select no celular cair no fim do nome da competicao (revisto no esboco). A seta e o `caret-down` do Phosphor, que entra na lista de icones. O termo "recorte" nao aparece na tela.
 - Nomes de competicao e temporada saem de `stats`, sem `GET /api/Tournament/tournament`.
 
+## Pagina
+
+- **Navegacao no topo** (decidido no wireframe): barra com o nome do app, campo "Buscar jogador", links para Acompanhamentos, Shortlists e Relatorios (icones `magnifying-glass`, `eye`, `list-numbers`, `note-pencil`) e, a direita, o nome do olheiro com "Sair" (`sign-out`). O menu lateral foi descartado: o app tem tres secoes e a busca, e o topo deixa mais largura para a grade.
+- **Esqueleto minimo na F9:** o header entra ja nesta feature, com a busca e os links sem destino ainda. A navegacao de verdade e a acessibilidade continuam no item 9.
+- **Corpo:** cartao do jogador em cerca de 2/3 da largura e uma coluna de apoio a direita, vazia na F9 (acompanhamento, shortlist e relatorios do jogador, itens 6 a 8). Abaixo de 720px, uma coluna, com o apoio embaixo do cartao.
+- **Abas do jogador** dentro do cartao, abaixo da `ClubBand`: Perfil, Metricas por 90 e Relatorios. Na F9 so Metricas por 90 aparece; as outras entram com os itens 4 e 7.
+- **Celular:** barra com o nome do app e um botao de texto "Menu" (sem icone de menu; icone sozinho so em fechar e arrastar), que abre a busca e os links.
+
 ## Tela
 
 - **Q3. Rota:** `/jogadores/$jogadorId/metricas?competicao=&temporada=&contexto=`, aberta pela URL direta ate o item 4, quando `/jogadores/$jogadorId` vira o pai.
@@ -46,4 +54,5 @@ Decisoes fechadas no grilling do item 2 de [planejamento-base.md](../planejament
 
 ## Wireframe
 
-- **Q25:** wireframe da tela com nove estados, em desktop e em 375px: abertura carregando, sucesso com clube e selecao, troca de recorte carregando, so selecao, sem `stats`, perfil 404, perfil 502, metricas 502 e erro generico. O `Select` e a `sample` da `StatCell` ja entraram no design system, a partir de um esboco anterior (as revisoes marcadas como "revisto no esboco").
+- Wireframe aprovado: https://claude.ai/artifact/SfHiMqyk6vuFgr79WqHnkD (pagina inteira com a navegacao no topo e o celular; estados do cartao numa segunda pagina).
+- **Q25:** estados do cartao, em desktop e em 375px: abertura carregando, sucesso com clube e selecao, troca de recorte carregando, so selecao, sem `stats`, perfil 404, perfil 502, metricas 502 e erro generico. O `Select` e a `sample` da `StatCell` ja entraram no design system, a partir de um esboco anterior (as revisoes marcadas como "revisto no esboco").
