@@ -1,0 +1,12 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  column-gap: var(--space-5);
+}
+
+.footnote {
+  margin: var(--space-3) 0 0;
+  font: var(--text-caption);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-muted);
+}

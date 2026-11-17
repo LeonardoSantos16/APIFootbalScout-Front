@@ -1,0 +1,40 @@
+.cell {
+  display: grid;
+  gap: var(--space-1);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--line);
+  min-width: 0;
+}
+
+.value {
+  font: var(--text-stat-value);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.reason {
+  font: var(--text-body);
+  font-weight: 500;
+  color: var(--ink-subtle);
+  padding-block: var(--space-1);
+}
+
+.label {
+  font: var(--text-label);
+  color: var(--ink-muted);
+}
+
+.refused .label {
+  color: var(--ink-subtle);
+}
+
+.sample {
+  font: var(--text-caption);
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-subtle);
+}
+
+.skeleton {
+  width: 56px;
+  height: 28px;
+}
