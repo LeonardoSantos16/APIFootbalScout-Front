@@ -1,8 +1,9 @@
 schema: spec-driven
 
 context: |
-  Language: pt-BR
-  All artifacts must be written in pt-BR.
+  Language: English
+  All artifacts must be written in English. Screen texts stay in pt-BR, quoted exactly as they
+  must appear; domain terms keep the GLOSSARY.md name (recorte, contexto, Nota).
   Keep OpenSpec structural headings and SHALL/MUST keywords in English.
 
   Projeto: front-end (SPA) do APIFootballScout, ferramenta do olheiro para buscar jogadores,

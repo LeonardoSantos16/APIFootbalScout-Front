@@ -66,7 +66,7 @@ Detalhes em `docs/design-system/README.md`; os pontos que mais se erram:
 
 ## Convencoes de trabalho
 
-- Identificadores tecnicos em ingles (`readBody`, `useQuery`, `Card`, `Button`); conceitos do dominio em portugues, com o termo do `GLOSSARY.md` (`recorte`, `AfericaoCard`, `useShortlist`, `isRecusada`). Campos da API mantem o nome do contrato. Textos da tela, docs e commits em portugues.
+- Identificadores tecnicos em ingles (`readBody`, `useQuery`, `Card`, `Button`); conceitos do dominio em portugues, com o termo do `GLOSSARY.md` (`recorte`, `AfericaoCard`, `useShortlist`, `isRecusada`). Campos da API mantem o nome do contrato. Textos da tela, docs e commits em portugues; os artefatos do OpenSpec (proposal, specs, design, tasks) em ingles, com os textos da tela em pt-BR entre aspas.
 - Sem comentarios no codigo; nos testes, so os marcadores Arrange/Act/Assert.
 - No `/tdd`, gere testes e stubs ate o red; o green e do usuario. Decida pelo doc de regras e pelo repo e declare a decisao, em vez de perguntar antes.
 - Commits curtos, so o titulo, em portugues com prefixo convencional (`feat:`, `test:`, `docs:`, `chore:`). Em cada ciclo de TDD, um commit `test:` e um `feat:` separados. Sem `Co-Authored-By` do Claude.
