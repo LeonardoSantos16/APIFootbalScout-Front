@@ -1,0 +1,15 @@
+<!-- @dsCard group="Perfil" height=120 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>PlayerPhoto</title></head>
+<body style="margin:0;background:var(--ground)">
+<div id="root" class="sv-stage"></div>
+<script>
+  var V = window.ScoutVestiario, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+    h(V.PlayerPhoto, { name: 'Rafael Silva' }),
+    h(V.PlayerPhoto, { name: 'Rafael Silva', src: 'imagem-que-nao-existe.png' }),
+    h(V.PlayerPhoto, { name: 'Caio Ventura', size: 'small' })));
+</script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-/* @ds-bundle: {"format":4,"namespace":"ScoutVestiario","components":[{"name":"Button"},{"name":"Tabs"},{"name":"ClubBand"},{"name":"Card"},{"name":"StatCell"},{"name":"MetricsGrid"},{"name":"ChangeChip"},{"name":"MeasurementCard"},{"name":"InlineError"},{"name":"Select"},{"name":"TextField"},{"name":"PasswordField"},{"name":"Notice"},{"name":"Dialog"}]} */
+/* @ds-bundle: {"format":4,"namespace":"ScoutVestiario","components":[{"name":"Button"},{"name":"Tabs"},{"name":"ClubBand"},{"name":"Card"},{"name":"StatCell"},{"name":"MetricsGrid"},{"name":"ChangeChip"},{"name":"MeasurementCard"},{"name":"InlineError"},{"name":"Select"},{"name":"TextField"},{"name":"PasswordField"},{"name":"Notice"},{"name":"Dialog"},{"name":"SearchField"},{"name":"PlayerPhoto"},{"name":"RowList"}]} */
 (function () {
   var React = window.React;
   var h = React.createElement;
@@ -32,6 +32,25 @@
   }
 
   function Tabs(props) {
+    var linked = props.items.some(function (item) { return item.href; });
+    function content(item) {
+      return [item.label, item.count != null ? h("span", { key: "count", className: "sv-tab-count" }, item.count) : null];
+    }
+    if (linked) {
+      return h("nav", { className: "sv-tabs", "aria-label": props.ariaLabel },
+        props.items.map(function (item) {
+          var selected = item.id === props.value;
+          if (props.disabled) {
+            return h("span", { key: item.id, className: "sv-tab is-disabled", "aria-disabled": true }, content(item));
+          }
+          return h("a", {
+            key: item.id,
+            href: item.href,
+            "aria-current": selected ? "page" : undefined,
+            className: cx("sv-tab", selected && "is-selected")
+          }, content(item));
+        }));
+    }
     return h("div", { className: "sv-tabs", role: "tablist", "aria-label": props.ariaLabel },
       props.items.map(function (item) {
         var selected = item.id === props.value;
@@ -40,9 +59,10 @@
           type: "button",
           role: "tab",
           "aria-selected": selected,
+          disabled: props.disabled,
           className: cx("sv-tab", selected && "is-selected"),
           onClick: function () { if (props.onChange) props.onChange(item.id); }
-        }, item.label, item.count != null ? h("span", { className: "sv-tab-count" }, item.count) : null);
+        }, content(item));
       }));
   }
 
@@ -63,12 +83,20 @@
   }
 
   function ClubBand(props) {
+    if (props.loading) {
+      return h("header", { className: "sv-band is-loading", "aria-busy": true },
+        h("span", { className: "sv-skeleton sv-photo sv-photo-band", "aria-hidden": true }),
+        h("div", { className: "sv-band-text", "aria-hidden": true },
+          h("span", { className: "sv-skeleton sv-band-skeleton-name" }),
+          h("span", { className: "sv-skeleton sv-band-skeleton-sub" })));
+    }
     var color = bandColor(props.color, props.secondaryColor);
     var light = color ? luminance(color) > 0.4 : false;
     return h("header", {
       className: cx("sv-band", light && "is-light"),
       style: color ? { background: color } : undefined
     },
+      props.photo || null,
       props.crest ? h("img", { className: "sv-band-crest", src: props.crest, alt: "" }) : null,
       h("div", { className: "sv-band-text" },
         h("h2", { className: "sv-band-name" }, props.name),
@@ -224,7 +252,88 @@
         props.actions ? h("div", { className: "sv-dialog-actions" }, props.actions) : null));
   }
 
+  var SEARCH_PATH = "M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z";
+
+  function SearchField(props) {
+    var id = React.useId();
+    var errorId = id + "-error";
+    var compact = props.size === "compact";
+    return h("form", {
+      role: "search",
+      className: cx("sv-search", compact && "is-compact", props.className),
+      noValidate: true,
+      onSubmit: function (e) { e.preventDefault(); if (props.onSubmit) props.onSubmit(props.value); }
+    },
+      h("label", { className: "sv-visually-hidden", htmlFor: id }, props.label),
+      h("div", { className: cx("sv-search-wrap", props.error && "is-invalid") },
+        h("svg", { className: "sv-search-icon", viewBox: "0 0 256 256", fill: "currentColor", "aria-hidden": true }, h("path", { d: SEARCH_PATH })),
+        h("input", {
+          id: id,
+          type: "search",
+          className: "sv-search-input",
+          value: props.value,
+          placeholder: props.placeholder,
+          disabled: props.disabled,
+          "aria-invalid": props.error ? true : undefined,
+          "aria-describedby": props.error ? errorId : undefined,
+          onChange: function (e) { if (props.onChange) props.onChange(e.target.value); }
+        }),
+        compact ? null : h("button", { type: "submit", className: "sv-btn sv-btn-primary sv-search-submit", disabled: props.disabled }, props.submitLabel || "Buscar")),
+      props.error ? h("span", { className: "sv-field-error sv-search-error", id: errorId }, props.error) : null);
+  }
+
+  function initials(name) {
+    var parts = String(name || "").trim().split(/\s+/).filter(Boolean);
+    if (!parts.length) return "";
+    var first = parts[0].charAt(0);
+    var last = parts.length > 1 ? parts[parts.length - 1].charAt(0) : "";
+    return (first + last).toUpperCase();
+  }
+
+  function PlayerPhoto(props) {
+    var s = React.useState(false);
+    var failed = s[0];
+    var size = props.size === "small" ? "sv-photo-small" : "sv-photo-band";
+    if (!props.src || failed) {
+      return h("span", { className: cx("sv-photo", size, "is-initials"), role: "img", "aria-label": props.name }, initials(props.name));
+    }
+    return h("img", { className: cx("sv-photo", size), src: props.src, alt: props.name, onError: function () { s[1](true); } });
+  }
+
+  function RowList(props) {
+    var columns = props.columns || [];
+    function cells(row) {
+      return (row.cells || []).map(function (cell, i) {
+        return h("span", { key: i, className: "sv-row-cell" }, cell.value,
+          cell.label ? h("span", { className: "sv-row-cell-label" }, " " + cell.label) : null);
+      });
+    }
+    function body(row) {
+      return [
+        h("span", { key: "main", className: "sv-row-main" },
+          h("span", { className: "sv-row-title" }, row.title),
+          row.detail ? h("span", { className: "sv-row-detail" }, row.detail) : null),
+        columns.length ? h("span", { key: "cells", className: "sv-row-cells" }, cells(row)) : null,
+        row.aside ? h("span", { key: "aside", className: "sv-row-aside" }, row.aside) : null
+      ];
+    }
+    var style = columns.length ? { "--sv-row-columns": columns.length } : undefined;
+    return h("div", { className: cx("sv-rows", columns.length && "has-columns", props.className), style: style },
+      columns.length ? h("div", { className: "sv-row sv-row-head", "aria-hidden": true },
+        h("span", { className: "sv-row-main" }, props.titleLabel || ""),
+        h("span", { className: "sv-row-cells" }, columns.map(function (c) { return h("span", { key: c, className: "sv-row-cell" }, c); }))) : null,
+      h("ul", { className: "sv-rows-list", "aria-label": props.ariaLabel },
+        props.rows.map(function (row) {
+          return h("li", { key: row.id, className: "sv-rows-item" },
+            row.href ? h("a", { className: "sv-row is-link", href: row.href }, body(row)) : h("div", { className: "sv-row" }, body(row)));
+        })),
+      props.footer ? h("div", { className: "sv-rows-foot" }, props.footer) : null);
+  }
+
   window.ScoutVestiario = Object.assign(window.ScoutVestiario || {}, {
+    SearchField: SearchField,
+    PlayerPhoto: PlayerPhoto,
+    RowList: RowList,
     TextField: TextField,
     PasswordField: PasswordField,
     Notice: Notice,

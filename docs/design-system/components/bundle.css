@@ -105,3 +105,53 @@
 .sv-dialog-desc { margin: 0; color: var(--ink-soft); font-size: 14px; line-height: 20px; }
 .sv-dialog-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-2); }
 @media (max-width: 480px) { .sv-dialog-actions { flex-direction: column-reverse; } .sv-dialog-actions .sv-btn { width: 100%; } }
+
+.sv-visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+a.sv-tab { text-decoration: none; }
+.sv-tab:disabled, .sv-tab.is-disabled { color: var(--ink-subtle); cursor: default; }
+
+.sv-band.is-loading { background: var(--surface); }
+.sv-band-skeleton-name { width: min(100%, 260px); height: 28px; margin-block: 2px; }
+.sv-band-skeleton-sub { width: min(100%, 200px); height: 14px; margin-top: var(--space-2); }
+
+.sv-photo { flex: none; display: inline-flex; align-items: center; justify-content: center; border-radius: var(--radius-pill); background: var(--surface-strong); object-fit: cover; color: var(--ink); font-family: var(--font-display); font-weight: 700; font-variant-numeric: tabular-nums; }
+.sv-photo-band { width: 72px; height: 72px; font-size: 24px; line-height: 28px; }
+.sv-photo-small { width: 40px; height: 40px; font-size: 14px; line-height: 20px; }
+@media (max-width: 720px) { .sv-photo-band { width: 56px; height: 56px; font-size: 20px; line-height: 24px; } }
+
+.sv-search { display: grid; gap: var(--space-1); min-width: 0; }
+.sv-search-wrap { display: flex; align-items: center; gap: var(--space-2); height: 48px; box-sizing: border-box; padding: 0 4px 0 var(--space-4); background: var(--surface-raised); border: 1px solid var(--line-strong); border-radius: var(--radius-pill); }
+.sv-search-wrap:focus-within { outline: 2px solid var(--pitch); outline-offset: 2px; }
+.sv-search-wrap.is-invalid { border-color: var(--down); }
+.sv-search-icon { flex: none; width: 20px; height: 20px; color: var(--ink-muted); }
+.sv-search-input { flex: 1 1 auto; min-width: 0; height: 40px; padding: 0; background: transparent; border: 0; outline: 0; color: var(--ink); color-scheme: dark; font-family: var(--font-body); font-size: 14px; line-height: 20px; }
+.sv-search-input::placeholder { color: var(--ink-muted); }
+.sv-search-input::-webkit-search-cancel-button { display: none; }
+.sv-search-submit { flex: none; height: 38px; padding: 0 var(--space-4); }
+.sv-search-error { padding-left: var(--space-4); }
+.sv-search.is-compact .sv-search-wrap { height: 36px; padding-right: var(--space-4); }
+@media (max-width: 720px) { .sv-search-input { font-size: 16px; } }
+
+.sv-rows { min-width: 0; }
+.sv-rows-list { list-style: none; margin: 0; padding: 0; }
+.sv-rows-item + .sv-rows-item { border-top: 1px solid var(--line); }
+.sv-row { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-3) 0; color: var(--ink); text-decoration: none; min-width: 0; }
+.sv-row.is-link:hover .sv-row-title { text-decoration: underline; text-underline-offset: 3px; }
+.sv-row.is-link:focus-visible { outline: 2px solid var(--pitch); outline-offset: 2px; border-radius: var(--radius-sm); }
+.sv-row-main { flex: 1 1 auto; min-width: 0; display: grid; gap: 2px; }
+.sv-row-title { font-size: 14px; line-height: 20px; font-weight: 600; }
+.sv-row-detail { font-size: 13px; line-height: 18px; font-weight: 500; color: var(--ink-soft); }
+.sv-row-aside { flex: none; color: var(--ink-muted); font-size: 13px; line-height: 18px; }
+.sv-row-cells { flex: none; display: grid; grid-template-columns: repeat(var(--sv-row-columns), 64px); gap: var(--space-3); text-align: right; font-size: 14px; line-height: 20px; font-variant-numeric: tabular-nums; }
+.sv-row-cell-label { display: none; }
+.sv-row-head { padding: var(--space-2) 0; border-bottom: 1px solid var(--line); color: var(--ink-muted); font-size: 13px; line-height: 18px; font-weight: 500; }
+.sv-row-head .sv-row-cells { font-size: 13px; line-height: 18px; }
+.sv-rows-foot { padding-top: var(--space-4); }
+@media (max-width: 720px) {
+  .sv-rows.has-columns .sv-row { flex-direction: column; align-items: stretch; gap: 2px; }
+  .sv-rows.has-columns .sv-row-head { display: none; }
+  .sv-rows.has-columns .sv-row-cells { display: flex; flex-wrap: wrap; gap: 0; text-align: left; font-size: 13px; line-height: 18px; font-weight: 500; color: var(--ink-soft); }
+  .sv-rows.has-columns .sv-row-cell + .sv-row-cell::before { content: " · "; white-space: pre; }
+  .sv-rows.has-columns .sv-row-cell-label { display: inline; }
+}

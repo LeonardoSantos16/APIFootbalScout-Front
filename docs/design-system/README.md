@@ -23,7 +23,7 @@ Scout Vestiário é a interface escura do APIFootballScout, uma ferramenta para 
 ### A faixa do clube
 
 - O cartão de perfil abre com uma faixa na cor do clube do jogador, com o nome em `player-name` e posição e idade em `on-club-soft`. A cor vem de `team.teamColors` no perfil: use a primária, troque pela secundária quando a primária for quase branca ou quase preta, e use `club` quando nenhuma servir. A regra está na `ClubBand`. O contrato da API ainda não expõe `teamColors`; até expor, a faixa usa sempre `club`.
-- Escolha `on-club` (branco) ou `on-light` (preto) pela luminância da cor do clube. A faixa leva no máximo a linha do nome, a linha de apoio e um botão pílula branco.
+- Escolha `on-club` (branco) ou `on-light` (preto) pela luminância da cor do clube. A faixa leva no máximo a foto do jogador (`PlayerPhoto`, com as iniciais quando a imagem falha), a linha do nome, a linha de apoio e um botão pílula branco. Carregando, a faixa fica em `surface`, sem a cor do clube.
 
 ### Estados
 
@@ -51,7 +51,7 @@ Scout Vestiário é a interface escura do APIFootballScout, uma ferramenta para 
 - No desktop, página em duas colunas: o cartão principal à esquerda (cerca de dois terços) e os de apoio à direita. Uma coluna abaixo de 720px.
 - Cartões: `radius-lg`, padding interno `space-5`, espaço entre cartões `space-3`. Sem sombra; a elevação é o degrau de `ground` para `surface`.
 - As métricas formam uma grade de pares rótulo/valor separados por linhas `line`, com `space-4` de padding vertical por par. Sete linhas fixas, nunca filtradas.
-- Listas de linhas (carreira, alvos da shortlist, relatórios) usam `line` entre as linhas e `space-3` de padding vertical.
+- Listas de linhas (resultados da busca, recortes, transferências, alvos da shortlist, relatórios) usam a `RowList`: `line` entre as linhas e `space-3` de padding vertical. Uma linha com destino é um link inteiro. Números em colunas viram uma linha de apoio abaixo de 720px.
 - Margem lateral da página de pelo menos `space-4`; espaço entre regiões `space-6`.
 
 ### Forma e controles
@@ -60,7 +60,8 @@ Scout Vestiário é a interface escura do APIFootballScout, uma ferramenta para 
 - Campos de texto (`TextField`, `PasswordField`) têm 44px de altura, `surface-raised` com borda `line-strong` e `radius-md`, com o rótulo em `label`, `ink-muted`, em cima e a dica ou o erro embaixo. O campo de senha mostra e oculta com o texto "Mostrar"/"Ocultar", sem ícone.
 - Botão desabilitado: `surface-strong` com texto `ink-soft`, em qualquer variante; o `ghost` desabilitado fica só com o texto em `ink-subtle`. Não há variante destrutiva: a confirmação de uma ação irreversível fica num `Dialog` que só habilita o botão depois que o olheiro confirma.
 - Diálogos (`Dialog`) ficam centralizados sobre um fundo preto translúcido, em `surface` com borda `line` e `radius-lg`, com título em `section-title` e `x` para fechar. Os botões ficam à direita; abaixo de 480px, empilhados com a ação principal em cima.
-- Abas são texto, com sublinhado de 2px em `pitch` na selecionada; `ink` na selecionada, `ink-muted` nas demais.
+- O campo de busca (`SearchField`) é uma pílula em `surface-raised` com a lupa e o botão principal "Buscar"; no header, a versão compacta envia com Enter. Busca só no envio.
+- Abas são texto, com sublinhado de 2px em `pitch` na selecionada; `ink` na selecionada, `ink-muted` nas demais. Quando cada aba é uma rota (Perfil, Métricas), as abas são links.
 - Chips e etiquetas de posição usam `radius-sm`.
 - Foco: anel sólido de 2px em `pitch` com 2px de afastamento em todo elemento interativo.
 
