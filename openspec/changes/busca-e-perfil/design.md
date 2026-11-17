@@ -128,4 +128,4 @@ URLs of the metrics screen do not change. `/jogadores/$jogadorId`, which did not
 
 ## Open Questions
 
-- Which `transferFeeDescription` texts the source really sends, and whether `playerImage` loads outside the source's site. Both are checked against the real API in the conference and only adjust the description map or add a debt item.
+None left. The conference against the real API answered the two that were open: `playerImage` loads outside the source's site (no proxy needed), and the transfer descriptions seen were "Free", "-" and fee texts such as "90M €", which `transferFeeRaw` already covers; "Loan" did not show up in the sample and stays in the map. It also found country names in English and the "No team" club text from the source, recorded in `docs/divida-tecnica.md`.

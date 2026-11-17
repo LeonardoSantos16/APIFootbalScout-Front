@@ -122,6 +122,10 @@ The "Recortes" card SHALL list one row per `stats` item, in source order, with t
 - **WHEN** the profile is opened at 375px wide
 - **THEN** each row shows the recorte and, below it, "24 jogos · 1.920 min · 4 gols · 3 assist. · nota 7,12"
 
+#### Scenario: Screen reader on a recorte row
+- **WHEN** focus reaches a recorte row on desktop, where the columns have a header
+- **THEN** the row is announced with each number and its unit ("24 jogos", "1.920 min", "nota 7,12"), not the bare numbers
+
 ### Requirement: Recorte row opens the metrics
 Each row of the "Recortes" card SHALL be a link to the per-90 metrics of the player in that recorte.
 
