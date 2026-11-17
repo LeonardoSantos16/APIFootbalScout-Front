@@ -1,6 +1,6 @@
 # APIFootballScout
 
-Ferramenta do olheiro para buscar jogadores, ler métricas por 90, comparar dois jogadores, acompanhar mudanças e manter relatórios e shortlists. Este glossário fixa as palavras que a interface e o código usam para cada conceito, alinhadas ao back-end.
+Ferramenta do olheiro para buscar jogadores, ler métricas por 90, comparar dois jogadores, acompanhar mudanças e manter relatórios e shortlists. Este glossário fixa as palavras que a interface usa para cada conceito, alinhadas ao back-end, e o nome em inglês que o código usa para cada uma (seção "Nomes no código").
 
 ## Linguagem
 
@@ -149,3 +149,24 @@ _Evitar_: preço, custo
 **Moeda da lista**:
 A moeda definida pelo primeiro alvo, que todos os outros custos da shortlist precisam usar.
 _Evitar_: câmbio
+
+## Nomes no código
+
+Os identificadores do código são em inglês. Um termo novo entra nesta tabela antes do primeiro uso no código. Campos e enums do contrato mantêm o nome que a API publica.
+
+| Termo | No código |
+| --- | --- |
+| Olheiro | `scout` |
+| Jogador | `player` |
+| Fonte | `source` |
+| Perfil | `PlayerProfile` |
+| Posição | `position` |
+| Recorte | `Slice` |
+| Contexto | `SliceContext`, `context` |
+| Competição | `competition` |
+| Temporada | `season` |
+| Amostra | `sample` |
+| Métricas por 90 | `MetricsPer90` |
+| Atributo | `Attribute` |
+| Recusa, recusado | `refusal`, `refused` |
+| Nota | `rating` |

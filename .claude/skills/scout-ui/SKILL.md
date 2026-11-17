@@ -66,19 +66,19 @@ Os textos de cada motivo, rotulos e unidades estao em `references/textos.md`.
 ## Onde cada coisa fica
 
 - Usado por mais de uma tela: `src/components/`, `src/hooks/`, `src/utils/` (funcoes puras) e `src/interfaces/` (tipos).
-- Usado por uma tela so: `src/pages/<tela>/components/`, `hooks/`, `utils/` e `interfaces/`, com a pagina na raiz da pasta (`src/pages/metricas/MetricasPage.tsx`).
+- Usado por uma tela so: `src/pages/<tela>/components/`, `hooks/`, `utils/` e `interfaces/`, com a pagina na raiz da pasta (`src/pages/metrics/MetricsPage.tsx`).
 - O arquivo em `src/routes/` so declara a rota e renderiza a pagina.
 - Quando uma segunda tela precisar de algo que esta na pasta de outra, mova para a pasta global em vez de importar de `pages/<outra-tela>/`.
 - Tipo de objeto e `interface`; uniao e apelido do contrato (`components['schemas'][...]`) sao `type`.
 
 ## Nomes
 
-Identificadores tecnicos em ingles, conceitos do dominio em portugues com o termo do glossario: `AfericaoCard`, `useRecorte`, `isRecusada`, `formatMoney`. Campos da API mantem o nome do contrato. Os nomes dos componentes de referencia (`MeasurementCard`, `ClubBand`) nao sao o padrao: ao implementar, use o termo de dominio.
+Todo identificador em ingles, inclusive os do dominio, com o nome de codigo da tabela "Nomes no codigo" do `GLOSSARY.md`: `Slice` (recorte), `SliceSelect`, `MetricsGrid`, `isRefused`, `formatMoney`. Termo novo entra primeiro na tabela do glossario. Ficam em portugues os campos e enums do contrato (`amostraEmMinutos`, `FonteNaoAtribuiu`), os caminhos e search params da URL e os textos da tela.
 
 ## Mocks e stories
 
 - Handlers usam o `http` de `src/mocks/http.ts` (`openapi-msw`), tipado pelo contrato: rota, parametros e corpo errados nao compilam.
-- Cada handler representa um estado de negocio e tem um nome que o diz (`metricasComAmostraInsuficiente`, `perfilComFonteForaDoAr`). Dado aleatorio nao exercita estado nenhum.
+- Cada handler representa um estado de negocio e tem um nome que o diz (`insufficientSampleMetrics`, `profileSourceDown`). Dado aleatorio nao exercita estado nenhum.
 - Uma story por estado do componente, incluindo carregando, recusa e erro, usando os mesmos handlers. A story e a especificacao visual da tela.
 
 ## Antes de concluir

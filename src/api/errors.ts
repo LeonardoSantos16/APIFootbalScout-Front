@@ -1,8 +1,8 @@
 import { ApiError } from './client'
 
-export const MENSAGEM_GENERICA = 'Não foi possível concluir agora.'
+export const GENERIC_MESSAGE = 'Não foi possível concluir agora.'
 
-export const MENSAGEM_POR_CODE: Record<string, string> = {
+export const MESSAGE_BY_CODE: Record<string, string> = {
   'usuario.email_ja_cadastrado': 'Este e-mail já está cadastrado.',
   'usuario.credenciais_invalidas': 'E-mail ou senha incorretos.',
   'usuario.nao_encontrado': 'Usuário não encontrado.',
@@ -58,51 +58,51 @@ export const MENSAGEM_POR_CODE: Record<string, string> = {
   'sofascore.temporadas_do_torneio_indisponiveis': 'Temporadas do torneio indisponíveis.',
 }
 
-const MENSAGEM_POR_STATUS_EM_TEXTO_PURO: Record<number, string> = {
+const PLAIN_TEXT_MESSAGE_BY_STATUS: Record<number, string> = {
   404: 'Jogador não encontrado.',
   502: 'Não foi possível carregar o perfil agora.',
 }
 
-export interface ErroDescrito {
-  mensagem: string
-  podeRepetir: boolean
+export interface DescribedError {
+  message: string
+  canRetry: boolean
 }
 
-export interface OpcoesDeDescricao {
-  textoPuro?: boolean
+export interface DescribeOptions {
+  plainText?: boolean
 }
 
-interface CorpoDoProblema {
+interface ProblemBody {
   code?: unknown
   instance?: unknown
 }
 
-const lerCorpo = (body: unknown): CorpoDoProblema =>
-  typeof body === 'object' && body !== null ? (body as CorpoDoProblema) : {}
+const readProblem = (body: unknown): ProblemBody =>
+  typeof body === 'object' && body !== null ? (body as ProblemBody) : {}
 
-const ehErroDoCliente = (status: number) => status >= 400 && status < 500
+const isClientError = (status: number) => status >= 400 && status < 500
 
-const desconhecido = (error: unknown): ErroDescrito => {
+const unknownError = (error: unknown): DescribedError => {
   const status = error instanceof ApiError ? error.status : undefined
-  const { instance } = error instanceof ApiError ? lerCorpo(error.body) : {}
+  const { instance } = error instanceof ApiError ? readProblem(error.body) : {}
   console.error('Erro desconhecido', typeof instance === 'string' ? instance : error)
   return {
-    mensagem: MENSAGEM_GENERICA,
-    podeRepetir: status === undefined || !ehErroDoCliente(status),
+    message: GENERIC_MESSAGE,
+    canRetry: status === undefined || !isClientError(status),
   }
 }
 
-export const describeError = (error: unknown, opcoes: OpcoesDeDescricao = {}): ErroDescrito => {
-  if (!(error instanceof ApiError)) return desconhecido(error)
+export const describeError = (error: unknown, options: DescribeOptions = {}): DescribedError => {
+  if (!(error instanceof ApiError)) return unknownError(error)
 
-  const podeRepetir = error.status === 502
-  const { code } = lerCorpo(error.body)
+  const canRetry = error.status === 502
+  const { code } = readProblem(error.body)
 
   if (typeof code === 'string') {
-    const mensagem = MENSAGEM_POR_CODE[code]
-    return mensagem ? { mensagem, podeRepetir } : desconhecido(error)
+    const message = MESSAGE_BY_CODE[code]
+    return message ? { message, canRetry } : unknownError(error)
   }
 
-  const mensagemPorStatus = opcoes.textoPuro ? MENSAGEM_POR_STATUS_EM_TEXTO_PURO[error.status] : undefined
-  return mensagemPorStatus ? { mensagem: mensagemPorStatus, podeRepetir } : desconhecido(error)
+  const messageByStatus = options.plainText ? PLAIN_TEXT_MESSAGE_BY_STATUS[error.status] : undefined
+  return messageByStatus ? { message: messageByStatus, canRetry } : unknownError(error)
 }

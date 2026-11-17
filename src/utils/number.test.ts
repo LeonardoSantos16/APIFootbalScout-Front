@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { formatDecimal, formatMinutos, formatPercent } from './numero'
+import { formatDecimal, formatMinutes, formatPercent } from './number'
 
 describe('formatDecimal', () => {
   it.each([
@@ -8,12 +8,12 @@ describe('formatDecimal', () => {
     [0, 2, '0,00'],
     [7.125, 2, '7,13'],
     [1284.5, 1, '1.284,5'],
-  ])('formata %d com %d casas como %s', (valor, casas, esperado) => {
+  ])('formata %d com %d casas como %s', (value, digits, expected) => {
     // Act
-    const texto = formatDecimal(valor, casas)
+    const text = formatDecimal(value, digits)
 
     // Assert
-    expect(texto).toBe(esperado)
+    expect(text).toBe(expected)
   })
 })
 
@@ -23,12 +23,12 @@ describe('formatPercent', () => {
     [86.45, '86,5%'],
     [100, '100,0%'],
     [0, '0,0%'],
-  ])('formata %d como %s', (valor, esperado) => {
+  ])('formata %d como %s', (value, expected) => {
     // Act
-    const texto = formatPercent(valor)
+    const text = formatPercent(value)
 
     // Assert
-    expect(texto).toBe(esperado)
+    expect(text).toBe(expected)
   })
 })
 
@@ -37,11 +37,11 @@ describe('formatMinutos', () => {
     [1284, '1.284 min'],
     [450, '450 min'],
     [312, '312 min'],
-  ])('formata %d como %s', (minutos, esperado) => {
+  ])('formata %d como %s', (minutes, expected) => {
     // Act
-    const texto = formatMinutos(minutos)
+    const text = formatMinutes(minutes)
 
     // Assert
-    expect(texto).toBe(esperado)
+    expect(text).toBe(expected)
   })
 })

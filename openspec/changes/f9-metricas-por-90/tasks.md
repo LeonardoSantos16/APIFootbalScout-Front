@@ -9,25 +9,25 @@
 
 ## 2. Formatting and configuration
 
-- [x] 2.1 `src/config/scout.ts` with `AMOSTRA_MINIMA_DE_MINUTOS = 450` and a reference in `docs/README.md`; verify with `npm run typecheck`
-- [x] 2.2 TDD of `src/utils/numero.ts` (`2,10`, `7,12`, `86,4%`, `1.284 min`, rounding): `test:` commit on red and `feat:` on green; verify with `npx vitest run src/utils/numero`
+- [x] 2.1 `src/config/scout.ts` with `MIN_SAMPLE_MINUTES = 450` and a reference in `docs/README.md`; verify with `npm run typecheck`
+- [x] 2.2 TDD of `src/utils/number.ts` (`2,10`, `7,12`, `86,4%`, `1.284 min`, rounding): `test:` commit on red and `feat:` on green; verify with `npx vitest run src/utils/number`
 
 ## 3. Recorte
 
-- [x] 3.1 TDD of `derivarRecortes`: one recorte per `stats` item, contexto `Selecao` by the `nationalTeamStats` rule, all `Clube` without `nationalTeamStats`; `test:` and `feat:` commits
-- [x] 3.2 TDD of the order (`season.id` descending, tie-break by minutes) and of `rotuloDoRecorte` (with and without the contexto prefix); `test:` and `feat:` commits
-- [x] 3.3 TDD of `encontrarRecorte` and of the search params validation (missing, malformed, not in `stats`); `test:` and `feat:` commits
+- [x] 3.1 TDD of `deriveSlices`: one recorte per `stats` item, contexto `Selecao` by the `nationalTeamStats` rule, all `Clube` without `nationalTeamStats`; `test:` and `feat:` commits
+- [x] 3.2 TDD of the order (`season.id` descending, tie-break by minutes) and of `sliceLabel` (with and without the contexto prefix); `test:` and `feat:` commits
+- [x] 3.3 TDD of `findSlice` and of the search params validation (missing, malformed, not in `stats`); `test:` and `feat:` commits
 
 ## 4. Metrics and player
 
-- [x] 4.1 TDD of `montarLinhas` in `src/pages/metricas/utils/metricas.ts`: fixed order, labels with units, fails on a missing attribute, ignores an unknown type; `test:` and `feat:` commits
+- [x] 4.1 TDD of `buildRows` in `src/pages/metrics/utils/metrics.ts`: fixed order, labels with units, fails on a missing attribute, ignores an unknown type; `test:` and `feat:` commits
 - [x] 4.2 TDD of the footer sample (mode) and of the per-row sample only when it differs; `test:` and `feat:` commits
 - [x] 4.3 TDD of the refusal text (`AmostraInsuficiente` with and without sample, `FonteNaoAtribuiu`); `test:` and `feat:` commits
-- [x] 4.4 TDD of `src/utils/jogador.ts` (position from the letter, age, support line without an unknown position); `test:` and `feat:` commits
+- [x] 4.4 TDD of `src/utils/player.ts` (position from the letter, age, support line without an unknown position); `test:` and `feat:` commits
 
 ## 5. Error handling
 
-- [x] 5.1 TDD of `src/api/errors.ts`: message by `code` (whole table from `docs/erros.md` with accents), internal and unknown codes to the generic one, `podeRepetir` only on 502 and unknown; `test:` and `feat:` commits
+- [x] 5.1 TDD of `src/api/errors.ts`: message by `code` (whole table from `docs/erros.md` with accents), internal and unknown codes to the generic one, `canRetry` only on 502 and unknown; `test:` and `feat:` commits
 - [x] 5.2 TDD of the plain-text status fallback (404 "Jogador não encontrado.", 502, others) and of logging the `instance` to the console; `test:` and `feat:` commits
 
 ## 6. Interface components
@@ -35,7 +35,7 @@
 - [ ] 6.1 `Button`, `Card`, `Skeleton` and `InlineError` with CSS Modules over the tokens; a story per variant and state; verify in Storybook and with `npm run lint`
 - [ ] 6.2 `Select` (native, label, `caret-down`, skeleton) and `Tabs`; a story per state; label accessibility test with Testing Library
 - [ ] 6.3 `ClubBand` on the `club` fallback; story; verify that no literal color enters the CSS
-- [ ] 6.4 `MetricaCell` and `MetricasGrid` (calculated, refused, loading, `sample`, footer); a story per state; test that the seven rows appear with everything refused
+- [ ] 6.4 `MetricCell` and `MetricsGrid` (calculated, refused, loading, `sample`, footer); a story per state; test that the seven rows appear with everything refused
 - [ ] 6.5 `AppShell` with the top bar, "Sair", "Menu" button below 720px and a two-column body; desktop and phone stories
 
 ## 7. Mocks per state
@@ -45,7 +45,7 @@
 
 ## 8. Per-90 metrics screen
 
-- [ ] 8.1 Route `src/routes/jogadores/$jogadorId/metricas.tsx` with `validateSearch` rendering `src/pages/metricas/MetricasPage.tsx` (with `src/hooks/usePerfil.ts` and `hooks/useMetricasPor90.ts`) and `AppShell` in `__root.tsx`; `test:` route test for opening without a recorte (URL corrected with `replace`) and `feat:` commit
+- [ ] 8.1 Route `src/routes/jogadores/$jogadorId/metricas.tsx` with `validateSearch` rendering `src/pages/metrics/MetricsPage.tsx` (with `src/hooks/usePlayerProfile.ts` and `hooks/useMetricsPer90.ts`) and `AppShell` in `__root.tsx`; `test:` route test for opening without a recorte (URL corrected with `replace`) and `feat:` commit
 - [ ] 8.2 `test:` and `feat:` route test for the recorte change (`push`, Back returns the previous one, only the grid goes back to the skeleton)
 - [ ] 8.3 `test:` and `feat:` route test for visible refused rows, the whole grid refused without an error message and the profile without `stats`
 - [ ] 8.4 `test:` and `feat:` route test for the errors: profile 404 without button, profile 502, metrics 502 with "Tentar de novo" repeating the call, metrics without `code`, incomplete response

@@ -1,1 +1,1 @@
-export const AMOSTRA_MINIMA_DE_MINUTOS = 450
+export const MIN_SAMPLE_MINUTES = 450

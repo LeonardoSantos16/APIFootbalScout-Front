@@ -1,16 +1,16 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { ApiError } from './client'
-import { MENSAGEM_GENERICA, MENSAGEM_POR_CODE, describeError } from './errors'
-import { RespostaIncompletaError } from '../pages/metricas/utils/metricas'
+import { GENERIC_MESSAGE, MESSAGE_BY_CODE, describeError } from './errors'
+import { IncompleteResponseError } from '../pages/metrics/utils/metrics'
 
-const problema = (status: number, campos: Record<string, unknown> = {}) =>
+const problem = (status: number, fields: Record<string, unknown> = {}) =>
   new ApiError(status, {
     type: 'https://tools.ietf.org/html/rfc9110',
     title: 'Some title',
     status,
     detail: 'Detail in english, nao vai para a tela',
     instance: 'GET /api/Analise/1001/metricas-por-90',
-    ...campos,
+    ...fields,
   })
 
 afterEach(() => {
@@ -30,17 +30,17 @@ describe('describeError pelo code', () => {
     ],
     [422, 'shortlist.jogador_ja_na_lista', 'Este jogador já está na shortlist.', false],
     [409, 'acompanhamento.jogador_ja_acompanhado', 'Você já acompanha este jogador.', false],
-  ])('%d %s mostra "%s"', (status, code, mensagem, podeRepetir) => {
+  ])('%d %s mostra "%s"', (status, code, message, canRetry) => {
     // Act
-    const erro = describeError(problema(status, { code }))
+    const described = describeError(problem(status, { code }))
 
     // Assert
-    expect(erro).toEqual({ mensagem, podeRepetir })
+    expect(described).toEqual({ message, canRetry })
   })
 
   it('cobre a tabela inteira de docs/erros.md', () => {
     // Act
-    const codes = Object.keys(MENSAGEM_POR_CODE)
+    const codes = Object.keys(MESSAGE_BY_CODE)
 
     // Assert
     expect(codes).toHaveLength(47)
@@ -48,11 +48,11 @@ describe('describeError pelo code', () => {
 
   it('escreve todas as mensagens com ponto final e sem a palavra recorte', () => {
     // Act
-    const mensagens = Object.values(MENSAGEM_POR_CODE)
+    const messages = Object.values(MESSAGE_BY_CODE)
 
     // Assert
-    expect(mensagens.filter((m) => !m.endsWith('.'))).toEqual([])
-    expect(mensagens.filter((m) => /recorte/i.test(m))).toEqual([])
+    expect(messages.filter((m) => !m.endsWith('.'))).toEqual([])
+    expect(messages.filter((m) => /recorte/i.test(m))).toEqual([])
   })
 
   it.each([
@@ -66,10 +66,10 @@ describe('describeError pelo code', () => {
     vi.spyOn(console, 'error').mockImplementation(() => {})
 
     // Act
-    const erro = describeError(problema(500, { code }))
+    const described = describeError(problem(500, { code }))
 
     // Assert
-    expect(erro).toEqual({ mensagem: MENSAGEM_GENERICA, podeRepetir: true })
+    expect(described).toEqual({ message: GENERIC_MESSAGE, canRetry: true })
   })
 
   it('trata um code desconhecido como erro generico', () => {
@@ -77,10 +77,10 @@ describe('describeError pelo code', () => {
     vi.spyOn(console, 'error').mockImplementation(() => {})
 
     // Act
-    const erro = describeError(problema(500, { code: 'novo.code_da_api' }))
+    const described = describeError(problem(500, { code: 'novo.code_da_api' }))
 
     // Assert
-    expect(erro).toEqual({ mensagem: MENSAGEM_GENERICA, podeRepetir: true })
+    expect(described).toEqual({ message: GENERIC_MESSAGE, canRetry: true })
   })
 
   it('nunca oferece nova tentativa num 4xx, nem com code desconhecido', () => {
@@ -88,10 +88,10 @@ describe('describeError pelo code', () => {
     vi.spyOn(console, 'error').mockImplementation(() => {})
 
     // Act
-    const erro = describeError(problema(404, { code: 'novo.code_da_api' }))
+    const described = describeError(problem(404, { code: 'novo.code_da_api' }))
 
     // Assert
-    expect(erro).toEqual({ mensagem: MENSAGEM_GENERICA, podeRepetir: false })
+    expect(described).toEqual({ message: GENERIC_MESSAGE, canRetry: false })
   })
 
   it('nao mostra o detail nem o title', () => {
@@ -99,11 +99,11 @@ describe('describeError pelo code', () => {
     vi.spyOn(console, 'error').mockImplementation(() => {})
 
     // Act
-    const erro = describeError(problema(500))
+    const described = describeError(problem(500))
 
     // Assert
-    expect(erro.mensagem).not.toContain('Detail')
-    expect(erro.mensagem).not.toContain('title')
+    expect(described.message).not.toContain('Detail')
+    expect(described.message).not.toContain('title')
   })
 })
 
@@ -113,109 +113,109 @@ describe('describeError sem code', () => {
     vi.spyOn(console, 'error').mockImplementation(() => {})
 
     // Act
-    const erro = describeError(problema(500))
+    const described = describeError(problem(500))
 
     // Assert
-    expect(erro).toEqual({ mensagem: MENSAGEM_GENERICA, podeRepetir: true })
+    expect(described).toEqual({ message: GENERIC_MESSAGE, canRetry: true })
   })
 
   it('mostra "Jogador não encontrado." no 404 em texto puro', () => {
     // Act
-    const erro = describeError(new ApiError(404, 'Player with ID 12 not found'), { textoPuro: true })
+    const described = describeError(new ApiError(404, 'Player with ID 12 not found'), { plainText: true })
 
     // Assert
-    expect(erro).toEqual({ mensagem: 'Jogador não encontrado.', podeRepetir: false })
+    expect(described).toEqual({ message: 'Jogador não encontrado.', canRetry: false })
   })
 
   it('mostra a falha do perfil no 502 em texto puro', () => {
     // Act
-    const erro = describeError(new ApiError(502, undefined), { textoPuro: true })
+    const described = describeError(new ApiError(502, undefined), { plainText: true })
 
     // Assert
-    expect(erro).toEqual({ mensagem: 'Não foi possível carregar o perfil agora.', podeRepetir: true })
+    expect(described).toEqual({ message: 'Não foi possível carregar o perfil agora.', canRetry: true })
   })
 
   it('prefere o code ao status num endpoint de texto puro', () => {
     // Act
-    const erro = describeError(problema(502, { code: 'sofascore.detalhes_do_jogador_indisponiveis' }), {
-      textoPuro: true,
+    const described = describeError(problem(502, { code: 'sofascore.detalhes_do_jogador_indisponiveis' }), {
+      plainText: true,
     })
 
     // Assert
-    expect(erro).toEqual({ mensagem: 'Dados do jogador indisponíveis no momento.', podeRepetir: true })
+    expect(described).toEqual({ message: 'Dados do jogador indisponíveis no momento.', canRetry: true })
   })
 
   it.each([
     [400, false],
     [500, true],
-  ])('mostra o erro generico nos demais status em texto puro (%d)', (status, podeRepetir) => {
+  ])('mostra o erro generico nos demais status em texto puro (%d)', (status, canRetry) => {
     // Arrange
     vi.spyOn(console, 'error').mockImplementation(() => {})
 
     // Act
-    const erro = describeError(new ApiError(status, 'Name is required'), { textoPuro: true })
+    const described = describeError(new ApiError(status, 'Name is required'), { plainText: true })
 
     // Assert
-    expect(erro).toEqual({ mensagem: MENSAGEM_GENERICA, podeRepetir })
+    expect(described).toEqual({ message: GENERIC_MESSAGE, canRetry })
   })
 
   it('nao mostra o texto puro do corpo', () => {
     // Act
-    const erro = describeError(new ApiError(404, 'Player with ID 12 not found'), { textoPuro: true })
+    const described = describeError(new ApiError(404, 'Player with ID 12 not found'), { plainText: true })
 
     // Assert
-    expect(erro.mensagem).not.toContain('Player')
+    expect(described.message).not.toContain('Player')
   })
 })
 
 describe('describeError fora da API', () => {
   it.each([
-    ['resposta incompleta', new RespostaIncompletaError('Gols')],
+    ['resposta incompleta', new IncompleteResponseError('Gols')],
     ['falha de rede', new TypeError('Failed to fetch')],
-  ])('trata %s como erro generico com nova tentativa', (_caso, error) => {
+  ])('trata %s como erro generico com nova tentativa', (_case, error) => {
     // Arrange
     vi.spyOn(console, 'error').mockImplementation(() => {})
 
     // Act
-    const erro = describeError(error)
+    const described = describeError(error)
 
     // Assert
-    expect(erro).toEqual({ mensagem: MENSAGEM_GENERICA, podeRepetir: true })
+    expect(described).toEqual({ message: GENERIC_MESSAGE, canRetry: true })
   })
 })
 
 describe('registro do erro desconhecido', () => {
   it('registra o instance no console', () => {
     // Arrange
-    const log = vi.spyOn(console, 'error').mockImplementation(() => {})
+    const logSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
 
     // Act
-    describeError(problema(500))
+    describeError(problem(500))
 
     // Assert
-    expect(log).toHaveBeenCalledWith(expect.any(String), 'GET /api/Analise/1001/metricas-por-90')
+    expect(logSpy).toHaveBeenCalledWith(expect.any(String), 'GET /api/Analise/1001/metricas-por-90')
   })
 
   it('nao registra um erro conhecido', () => {
     // Arrange
-    const log = vi.spyOn(console, 'error').mockImplementation(() => {})
+    const logSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
 
     // Act
-    describeError(problema(502, { code: 'sofascore.estatisticas_do_jogador_indisponiveis' }))
+    describeError(problem(502, { code: 'sofascore.estatisticas_do_jogador_indisponiveis' }))
 
     // Assert
-    expect(log).not.toHaveBeenCalled()
+    expect(logSpy).not.toHaveBeenCalled()
   })
 
   it('registra o erro desconhecido mesmo sem instance', () => {
     // Arrange
-    const log = vi.spyOn(console, 'error').mockImplementation(() => {})
+    const logSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
     const error = new TypeError('Failed to fetch')
 
     // Act
     describeError(error)
 
     // Assert
-    expect(log).toHaveBeenCalledWith(expect.any(String), error)
+    expect(logSpy).toHaveBeenCalledWith(expect.any(String), error)
   })
 })

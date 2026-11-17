@@ -35,7 +35,7 @@ Para testar na mao (Postman, Insomnia, Bruno), importe o mesmo documento em vez 
 
 **Payload do SofaScore.** `Players` e `Tournament` devolvem o payload da fonte sem traducao, e o formato muda conforme a fonte. Use os tipos gerados so para os campos que a tela usa. `entity.position` na busca e o codigo curto da fonte (`"M"`, `"F"`, `"D"`, `"G"`) e nao e o mesmo enum `Posicao` usado nos endpoints de analise.
 
-**Valores de configuracao.** Vem de `appsettings.json`, secao `ScoutConfig`. Nenhum endpoint os expoe, entao se mudarem no backend a validacao do front precisa acompanhar. O front espelha os que usa em `src/config/scout.ts` (`AMOSTRA_MINIMA_DE_MINUTOS`); mude la quando o backend mudar.
+**Valores de configuracao.** Vem de `appsettings.json`, secao `ScoutConfig`. Nenhum endpoint os expoe, entao se mudarem no backend a validacao do front precisa acompanhar. O front espelha os que usa em `src/config/scout.ts` (`MIN_SAMPLE_MINUTES`); mude la quando o backend mudar.
 
 | Chave | Valor | Efeito na tela |
 | --- | --- | --- |

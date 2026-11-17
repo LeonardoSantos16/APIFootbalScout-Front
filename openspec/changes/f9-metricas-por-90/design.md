@@ -32,7 +32,7 @@ ADRs applied: 0003 (recorte in the URL, with the amendment on order, tie-break a
 ### Routes and search params
 
 - `src/routes/__root.tsx` renders the page skeleton (`AppShell`) around the `Outlet`.
-- `src/routes/jogadores/$jogadorId/metricas.tsx` only declares the route and renders `MetricasPage` from `src/pages/metricas/`. Its `validateSearch` accepts `competicao` and `temporada` as positive integers and `contexto` as `Clube` or `Selecao`; any other value becomes `undefined` (missing recorte). Search params in Portuguese, as in ADR 0003; the translation to `CompeticaoId`/`TemporadaId`/`Contexto` happens only in the API call.
+- `src/routes/jogadores/$jogadorId/metricas.tsx` only declares the route and renders `MetricsPage` from `src/pages/metrics/`. Its `validateSearch` accepts `competicao` and `temporada` as positive integers and `contexto` as `Clube` or `Selecao`; any other value becomes `undefined` (missing recorte). Search params in Portuguese, as in ADR 0003; the translation to `CompeticaoId`/`TemporadaId`/`Contexto` happens only in the API call.
 - The recorte correction happens in the component: once the profile is loaded, if the URL recorte is not in the derived list, the screen renders `<Navigate replace search={first} />`. Rejected alternative: a `redirect` in the loader, which would require moving the profile into the loader and swapping the skeleton for a `pendingComponent` too early.
 - Changing via the selector uses `navigate({ search })` without `replace`.
 
@@ -44,14 +44,14 @@ The project convention: shared code lives in global folders under `src/` (`compo
 
 | Module | Responsibility |
 | --- | --- |
-| `src/utils/recorte.ts` (types in `src/interfaces/recorte.ts`) | `derivarRecortes(perfil)` (contexto by the `nationalTeamStats` rule, order by `season.id` and minutes), `rotuloDoRecorte`, `encontrarRecorte(lista, search)`, `recorteParaParams` |
-| `src/pages/metricas/utils/metricas.ts` (types in `src/pages/metricas/interfaces/metricas.ts`) | fixed order and labels of the seven `TipoDeAtributoDto`, `montarLinhas(resposta)` (fails on a missing attribute, ignores unknown ones), footer sample (mode), refusal text per reason |
-| `src/utils/jogador.ts` (`Perfil` in `src/interfaces/jogador.ts`) | position from the source letter, age from `dateOfBirth`, header support line |
-| `src/utils/numero.ts` | `formatDecimal(valor, casas)`, `formatPercent`, `formatMinutos`, on top of `Intl.NumberFormat('pt-BR')` |
-| `src/config/scout.ts` | `AMOSTRA_MINIMA_DE_MINUTOS = 450`, mirror of `ScoutConfig` (`docs/README.md`) |
-| `src/api/errors.ts` | `code -> message` dictionary with the whole table from `docs/erros.md`, `describeError(error, { textoPuro })` returning `{ mensagem, podeRepetir }` and logging the `instance` |
+| `src/utils/slice.ts` (types in `src/interfaces/slice.ts`) | `deriveSlices(profile)` (context by the `nationalTeamStats` rule, order by `season.id` and minutes), `sliceLabel`, `validateSliceSearch`, `findSlice(slices, search)`, `sliceToSearch`, `sliceToQuery` |
+| `src/pages/metrics/utils/metrics.ts` (types in `src/pages/metrics/interfaces/metrics.ts`) | fixed order and labels of the seven `TipoDeAtributoDto`, `buildRows(response)` (fails on a missing attribute, ignores unknown ones), `footerSample` (mode), `footerText`, `refusalText` per reason |
+| `src/utils/player.ts` (`PlayerProfile` and `PlayerDetails` in `src/interfaces/player.ts`) | `positionFromLetter`, `age` from `dateOfBirth`, `playerSummary` (header support line) |
+| `src/utils/number.ts` | `formatDecimal(value, digits)`, `formatPercent`, `formatMinutes`, on top of `Intl.NumberFormat('pt-BR')` |
+| `src/config/scout.ts` | `MIN_SAMPLE_MINUTES = 450`, mirror of `ScoutConfig` (`docs/README.md`) |
+| `src/api/errors.ts` | `code -> message` dictionary with the whole table from `docs/erros.md`, `describeError(error, { plainText })` returning `{ message, canRetry }` and logging the `instance` |
 
-Recorte, jogador and number formatting are global because item 4 and F10 reuse them; the metrics rows belong to this screen. Object types are `interface`; unions and contract aliases are `type`. The unit under test is the domain rule; the feature flow is tested at the route.
+Slice, player and number formatting are global because item 4 and F10 reuse them; the metrics rows belong to this screen. Object types are `interface`; unions and contract aliases are `type`. Every identifier is in English (`Slice` is the code name of recorte); contract fields, enum values, URL paths and search params keep their Portuguese names. The unit under test is the domain rule; the feature flow is tested at the route.
 
 ### Retry policy
 
@@ -63,8 +63,8 @@ Port of `docs/design-system/components/` to React with CSS Modules over `tokens.
 
 - `src/components/`: `Button`, `Card`, `Select`, `InlineError`, `Tabs` (display only in this change), `Skeleton`, `ClubBand` (always on the `club` fallback).
 - `src/components/AppShell`: top bar with the app name, "Buscar jogador" field, links and "Sair" (Phosphor icons); "Menu" button below 720px; two-column body with an empty support column.
-- `src/hooks/usePerfil.ts`: the profile query, reused by item 4 and F10.
-- `src/pages/metricas/`: `MetricasPage.tsx` (orchestrates profile, recorte, metrics and errors); `hooks/useMetricasPor90.ts` (the metrics query for the recorte); `components/` with `MetricaCell` (calculated, refused and loading states, optional `sample`), `MetricasGrid` (seven rows and footer) and `RecorteSelect` (the `Select` with the options from `recorte.ts`).
+- `src/hooks/usePlayerProfile.ts`: the profile query, reused by item 4 and F10.
+- `src/pages/metrics/`: `MetricsPage.tsx` (orchestrates profile, recorte, metrics and errors); `hooks/useMetricsPer90.ts` (the metrics query for the recorte); `components/` with `MetricCell` (calculated, refused and loading states, optional `sample`), `MetricsGrid` (seven rows and footer) and `SliceSelect` (the `Select` with the options from `slice.ts`).
 
 ### MSW per state
 
@@ -72,16 +72,16 @@ Fixtures in `src/mocks/fixtures/`, handlers named by state in `src/mocks/handler
 
 | Handler | State |
 | --- | --- |
-| `perfilCompleto` (player 1001) | club and national team, several seasons |
-| `perfilSoSelecao` (1002) | every `stats` item with a national team |
-| `perfilSemEstatisticas` (1003) | empty `stats` |
-| `perfilNaoEncontrado` (1004) | plain-text 404 |
-| `perfilComFonteForaDoAr` | 502 with `code` |
-| `metricasCalculadas` | six calculated, Interceptacoes refused with `FonteNaoAtribuiu`, Precisao with its own sample |
-| `metricasComAmostraInsuficiente` | seven refused, 312 min |
-| `metricasComFonteForaDoAr` (1005) | 502 with `code` |
-| `metricasSemCode` | 500 without `code` |
-| `metricasIncompletas` | six attributes |
+| `completeProfile` (player 1001) | club and national team, several seasons |
+| `nationalTeamOnlyProfile` (1002) | every `stats` item with a national team |
+| `profileWithoutStats` (1003) | empty `stats` |
+| `profileNotFound` (1004) | plain-text 404 |
+| `profileSourceDown` | 502 with `code` |
+| `calculatedMetrics` | six calculated, Interceptacoes refused with `FonteNaoAtribuiu`, Precisao with its own sample |
+| `insufficientSampleMetrics` | seven refused, 312 min |
+| `metricsSourceDown` (1005) | 502 with `code` |
+| `metricsWithoutCode` | 500 without `code` |
+| `incompleteMetrics` | six attributes |
 
 `src/mocks/handlers.ts` exports the default handlers per `jogadorId` for `dev:mock`. Tests use `src/mocks/server.ts` (`msw/node`) wired in `src/test/setup.ts` with `onUnhandledRequest: 'error'`; stories use `msw-storybook-addon` (`mswLoader` from `msw-storybook-addon/csf3`) and apply handlers per story with `beforeEach({ msw }) { msw.use(...) }`; `parameters.msw` is deprecated in the addon.
 
@@ -92,8 +92,8 @@ Fixtures in `src/mocks/fixtures/`, handlers named by state in `src/mocks/handler
 
 ## Risks / Trade-offs
 
-- [The `contexto` rule was never checked against real SofaScore data] → isolated in `derivarRecortes` and tested; the check is the first task of item 3, and the fix, if needed, is exposing `contexto` in the back end (`docs/divida-tecnica.md`).
-- [`season.id` may not grow over time in every competition] → the order lives in a single place in `recorte.ts`; if the item 3 check shows otherwise, the criterion changes without touching the screen.
+- [The `contexto` rule was never checked against real SofaScore data] → isolated in `deriveSlices` and tested; the check is the first task of item 3, and the fix, if needed, is exposing `contexto` in the back end (`docs/divida-tecnica.md`).
+- [`season.id` may not grow over time in every competition] → the order lives in a single place in `slice.ts`; if the item 3 check shows otherwise, the criterion changes without touching the screen.
 - [`msw-storybook-addon` may not keep up with Storybook 10] → alternative: a custom decorator that starts the `worker` and applies `worker.use(...)` per story.
 - [Correcting the recorte in the component renders once with the wrong recorte before the `Navigate`] → the screen shows a skeleton while the recorte is invalid, so nothing wrong is ever shown.
 - [Top links without a destination may look broken] → they render as non-interactive items until item 9.
