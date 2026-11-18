@@ -83,7 +83,7 @@ The three tabs keep linking with `search: (prev) => prev`, so `com` survives a t
 
 In `src/pages/comparison/components/`, each with a CSS Module over the tokens and stories per state:
 
-- `ComparisonTable`: a real `<table>` with `scope` headers; tones map to `--text`/strong weight, `--text-muted`, medium weight and the refused style of `MetricCell`; loading renders the same grid with `Skeleton` blocks; below 720px the selector goes full width and names wrap (W6).
+- `ComparisonTable`: a real `<table>` with `scope` headers; tones map to `--ink` at 700 (strong), `--ink-muted` at 500 (muted), `--ink-soft` at 500 (neutral) and the refused style of `MetricCell`; loading renders the same grid with `Skeleton` blocks; below 720px the selector goes full width and names wrap (W6).
 - `ComparisonRefusal`: the two players in a two-column grid, the reason and the action.
 
 ### MSW per state

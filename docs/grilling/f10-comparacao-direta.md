@@ -69,7 +69,7 @@ Conferidos antes do grilling, mudam as respostas abaixo:
 Aprovado em https://claude.ai/artifact/F34DYWNWTip2ERRdorhcLq. Decisoes que sairam dele:
 
 - **W1.** Acima da busca do segundo jogador: "Escolha com quem comparar <Nome A> nesta competição e temporada."
-- **W2.** Empate e valor calculado ao lado de celula recusada: os dois em `text`, peso intermediario, sem `text-muted`.
+- **W2.** Empate e valor calculado ao lado de celula recusada: os dois em `ink-soft`, peso 500, sem `ink-muted`. Mudou na implementacao: em `ink` com peso 500 o empate parecia destaque, porque o Archivo carregado vai de 500 a 800.
 - **W3.** Jogador sem posicao no cabecalho da recusa: "Posição não informada". Sem posicao nos dois: "A fonte não informou a posição dos dois jogadores."
 - **W4.** O 502 tem "Tentar de novo" e "Trocar jogador".
 - **W5.** `RecorteDivergente` fica em teste de unidade e story, fora do `dev:mock`.

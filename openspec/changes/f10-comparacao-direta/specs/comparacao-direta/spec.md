@@ -133,8 +133,8 @@ In each row where both values are calculated and differ, the higher value SHALL 
 An attribute refused for one player inside a "Realizada" comparison SHALL show that player's reason in the cell, muted, with the per-90 metrics refusal text ("Não publicado pela fonte"), and the row SHALL have no highlight: the other player's value is shown without highlight or mute.
 
 #### Scenario: Pass accuracy not published for Bruno
-- **WHEN** "PrecisaoDePasse" arrives refused with "FonteNaoAtribuiu" for Bruno Lacerda and calculated as 87 for Rafael Montes
-- **THEN** Bruno's cell shows "Não publicado pela fonte" and "87%" is neither highlighted nor muted
+- **WHEN** "PrecisaoDePasse" arrives refused with "FonteNaoAtribuiu" for Bruno Lacerda and calculated as 87.4 for Rafael Montes
+- **THEN** Bruno's cell shows "Não publicado pela fonte" and "87,4%" is neither highlighted nor muted
 
 ### Requirement: Refused comparison
 A "Recusada" comparison SHALL show, instead of the table, both players side by side with name and position ("Posição não informada" when the position is missing), the text of the reason and "Escolher outro jogador". The enum name MUST NOT appear on screen, and the case MUST NOT be treated as an error.

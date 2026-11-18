@@ -19,6 +19,7 @@ Scout Vestiário é a interface escura do APIFootballScout, uma ferramenta para 
 - Mudanças no acompanhamento usam `up` sobre `up-tint` e `down` sobre `down-tint`, sempre com sinal e uma palavra ("+12% valor de mercado"). Verde e vermelho sozinhos não carregam o significado.
 - `down` também marca o erro de um campo de formulário (borda e frase embaixo). A frase carrega o significado; a cor só reforça.
 - "Sem mudança relevante" fica neutro: texto `ink-soft` sobre `surface`, sem fundo colorido.
+- Numa comparação lado a lado, o maior valor da linha fica em `ink` e peso 700, e o menor em `ink-muted` e peso 500. Empate (valores iguais como aparecem na tela) e valor ao lado de uma célula recusada não têm vencedor: os dois em `ink-soft`, peso 500. Nunca `pitch`, `up` ou `down` para marcar o melhor.
 
 ### A faixa do clube
 
@@ -31,6 +32,7 @@ Scout Vestiário é a interface escura do APIFootballScout, uma ferramenta para 
 | --- | --- |
 | Métrica calculada | valor em `stat-value`, `ink`; rótulo em `label`, `ink-muted` |
 | Métrica recusada | o motivo substitui o valor, em `body` peso 500, `ink-subtle`; o rótulo continua. Nunca esconda a linha |
+| Comparação recusada | os dois jogadores lado a lado com nome e posição, a frase do motivo em `ink-soft` e "Escolher outro jogador"; não é erro |
 | Aferição indisponível | igual à recusada, com frase própria (moeda mudou, temporada virou) |
 | Com mudança | valor em `up` ou `down`, com o chip colorido e `anterior → atual` |
 | Sem mudança relevante | `ink-soft`, sem chip |
@@ -61,7 +63,7 @@ Scout Vestiário é a interface escura do APIFootballScout, uma ferramenta para 
 - Botão desabilitado: `surface-strong` com texto `ink-soft`, em qualquer variante; o `ghost` desabilitado fica só com o texto em `ink-subtle`. Não há variante destrutiva: a confirmação de uma ação irreversível fica num `Dialog` que só habilita o botão depois que o olheiro confirma.
 - Diálogos (`Dialog`) ficam centralizados sobre um fundo preto translúcido, em `surface` com borda `line` e `radius-lg`, com título em `section-title` e `x` para fechar. Os botões ficam à direita; abaixo de 480px, empilhados com a ação principal em cima.
 - O campo de busca (`SearchField`) é uma pílula em `surface-raised` com a lupa e o botão principal "Buscar"; no header, a versão compacta envia com Enter. Busca só no envio.
-- Abas são texto, com sublinhado de 2px em `pitch` na selecionada; `ink` na selecionada, `ink-muted` nas demais. Quando cada aba é uma rota (Perfil, Métricas), as abas são links.
+- Abas são texto, com sublinhado de 2px em `pitch` na selecionada; `ink` na selecionada, `ink-muted` nas demais. Quando cada aba é uma rota (Perfil, Métricas, Comparação), as abas são links.
 - Chips e etiquetas de posição usam `radius-sm`.
 - Foco: anel sólido de 2px em `pitch` com 2px de afastamento em todo elemento interativo.
 
