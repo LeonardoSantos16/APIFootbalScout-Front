@@ -71,6 +71,18 @@ Pendencias conhecidas que o front contorna hoje e que precisam de correcao em ou
 - **Contorno no front:** a tabela fica em skeleton no formato final enquanto isso; a comparacao fica 5 min no cache do front.
 - **Correcao esperada:** cache das leituras da fonte no back-end, ou leituras em paralelo no `ComparacaoDiretaUseCase`.
 
+### Acompanhamentos sem lista, sem consumo do limite e sem encerramento
+
+- **Problema:** o `AcompanhamentoController` so abre e le. Nao ha endpoint que liste os acompanhamentos ativos, devolva o consumo do limite ("7 de 10") ou encerre um acompanhamento, embora o dominio tenha `Dossie.Encerrar` e o contador de ativos.
+- **Contorno no front:** a change `f1-f2-acompanhamento` entrega so abrir e ler. O limite aparece quando o `POST` responde `422 acompanhamento.limite_atingido` ("Limite de 10 acompanhamentos atingido.", sem sugerir encerrar), em vez de o botao ser desabilitado antes, como pede o `fluxos-de-tela.md` (grilling da F1/F2, Q3 e Q11).
+- **Correcao esperada:** `GET /api/Acompanhamento` com os ativos e o consumo do limite, e um endpoint de encerramento. Entram no item 6b do planejamento.
+
+### Leitura do acompanhamento sem o recorte
+
+- **Problema:** `POST /api/Acompanhamento` recebe o recorte, mas `GET /api/Acompanhamento/{jogadorId}` nao o devolve. O painel nao consegue dizer de qual competicao e temporada e a minutagem.
+- **Contorno no front:** a aba acompanhada nao mostra recorte nem seletor (grilling da F1/F2, Q5).
+- **Correcao esperada:** devolver `recorte` em `ConsultarMudancaAcompanhamentoResponseDto`.
+
 ## Front
 
 ### Pagina inicial provisoria

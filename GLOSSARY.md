@@ -192,4 +192,11 @@ Os identificadores do código são em inglês. Um termo novo entra nesta tabela 
 | Recusa, recusado | `refusal`, `refused` |
 | Comparação | `Comparison`, `ComparisonPage` |
 | Posições compatíveis | `compatiblePositions` |
+| Acompanhamento | `Tracking`, `TrackingPage` |
+| Linha de base | `baseline` |
+| Leitura | `reading` |
+| Janela | `TrackingWindow` |
+| Aferição | `Measurement` |
+| Mudança relevante | `relevantChange` |
+| Indisponível | `unavailable` |
 | Nota | `rating` |
