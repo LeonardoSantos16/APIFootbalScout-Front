@@ -1,5 +1,5 @@
 import type { PlayerProfile } from '../interfaces/player'
-import type { Slice, SliceContext, SliceSearch } from '../interfaces/slice'
+import type { PlayerSearch, Slice, SliceContext, SliceSearch } from '../interfaces/slice'
 
 const CONTEXT_LABEL: Record<SliceContext, string> = {
   Clube: 'Clube',
@@ -43,6 +43,13 @@ export const validateSliceSearch = (search: Record<string, unknown>): SliceSearc
   temporada: positiveInteger(search.temporada),
   contexto: parseContext(search.contexto),
 })
+
+export const validatePlayerSearch = (search: Record<string, unknown>): PlayerSearch => ({
+  ...validateSliceSearch(search),
+  com: positiveInteger(search.com),
+})
+
+export const sliceText = (slice: Slice): string => [slice.competition, slice.season].join(SEPARATOR)
 
 export const findSlice = (slices: Slice[], search: SliceSearch): Slice | undefined =>
   slices.find(

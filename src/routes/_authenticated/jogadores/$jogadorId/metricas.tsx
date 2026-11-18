@@ -15,7 +15,7 @@ function MetricsRoute() {
     <MetricsPage
       playerId={Number(jogadorId)}
       search={search}
-      onSliceChange={(slice, options) => navigate({ search: sliceToSearch(slice), replace: options?.replace })}
+      onSliceChange={(slice, options) => navigate({ search: (prev) => ({ ...prev, ...sliceToSearch(slice) }), replace: options?.replace })}
     />
   )
 }

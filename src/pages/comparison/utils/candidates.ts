@@ -1,17 +1,27 @@
+import { compatiblePositions, positionFromLetter } from '../../../utils/player'
 import type { SearchPlayer } from '../../../utils/searchResults'
 
 export const comparableResults = (
-  _players: SearchPlayer[],
-  _pagePlayerId: number,
-  _pageLetter?: string | null,
+  players: SearchPlayer[],
+  pagePlayerId: number,
+  pageLetter?: string | null,
 ): SearchPlayer[] => {
-  throw new Error('not implemented')
+  const compatible = compatiblePositions(pageLetter)
+  return players.filter(
+    (player) => player.id !== pagePlayerId && player.position != null && compatible.includes(player.position),
+  )
 }
 
-export const filterNote = (_pageLetter?: string | null): string => {
-  throw new Error('not implemented')
+const lowerPosition = (letter?: string | null) => positionFromLetter(letter)?.toLowerCase()
+
+export const filterNote = (pageLetter?: string | null): string => {
+  const position = lowerPosition(pageLetter)
+  return position ? `Mostrando só jogadores comparáveis com ${position}.` : 'Mostrando só jogadores comparáveis.'
 }
 
-export const noComparableText = (_pageLetter: string | null | undefined, _term: string): string => {
-  throw new Error('not implemented')
+export const noComparableText = (pageLetter: string | null | undefined, term: string): string => {
+  const position = lowerPosition(pageLetter)
+  return position
+    ? `Nenhum jogador comparável com ${position} para "${term}".`
+    : `Nenhum jogador comparável para "${term}".`
 }

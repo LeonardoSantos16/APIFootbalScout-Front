@@ -34,6 +34,8 @@ export const formatAttributeValue = (type: AttributeType, value: number) =>
 
 export const MINIMUM_SAMPLE_TEXT = formatMinutes(MIN_SAMPLE_MINUTES)
 
+export const MINIMUM_RULE_TEXT = `Contagens por 90 minutos; métricas com menos de ${MINIMUM_SAMPLE_TEXT} ficam sem valor.`
+
 type RefusableValue = Pick<Attribute, 'motivo' | 'amostraEmMinutos'>
 
 export const refusalText = (value: RefusableValue): string => {

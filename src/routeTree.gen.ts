@@ -18,6 +18,7 @@ import { Route as PublicCriarContaRouteImport } from './routes/_public/criar-con
 import { Route as PublicEntrarRouteImport } from './routes/_public/entrar'
 import { Route as AuthenticatedJogadoresJogadorIdRouteImport } from './routes/_authenticated/jogadores/$jogadorId'
 import { Route as AuthenticatedJogadoresJogadorIdIndexRouteImport } from './routes/_authenticated/jogadores/$jogadorId/index'
+import { Route as AuthenticatedJogadoresJogadorIdComparacaoRouteImport } from './routes/_authenticated/jogadores/$jogadorId/comparacao'
 import { Route as AuthenticatedJogadoresJogadorIdMetricasRouteImport } from './routes/_authenticated/jogadores/$jogadorId/metricas'
 
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
@@ -65,6 +66,12 @@ const AuthenticatedJogadoresJogadorIdIndexRoute =
     path: '/',
     getParentRoute: () => AuthenticatedJogadoresJogadorIdRoute,
   } as any)
+const AuthenticatedJogadoresJogadorIdComparacaoRoute =
+  AuthenticatedJogadoresJogadorIdComparacaoRouteImport.update({
+    id: '/comparacao',
+    path: '/comparacao',
+    getParentRoute: () => AuthenticatedJogadoresJogadorIdRoute,
+  } as any)
 const AuthenticatedJogadoresJogadorIdMetricasRoute =
   AuthenticatedJogadoresJogadorIdMetricasRouteImport.update({
     id: '/metricas',
@@ -79,6 +86,7 @@ export interface FileRoutesByFullPath {
   '/criar-conta': typeof PublicCriarContaRoute
   '/entrar': typeof PublicEntrarRoute
   '/jogadores/$jogadorId': typeof AuthenticatedJogadoresJogadorIdRouteWithChildren
+  '/jogadores/$jogadorId/comparacao': typeof AuthenticatedJogadoresJogadorIdComparacaoRoute
   '/jogadores/$jogadorId/metricas': typeof AuthenticatedJogadoresJogadorIdMetricasRoute
   '/jogadores/$jogadorId/': typeof AuthenticatedJogadoresJogadorIdIndexRoute
 }
@@ -88,6 +96,7 @@ export interface FileRoutesByTo {
   '/conta': typeof AuthenticatedContaRoute
   '/criar-conta': typeof PublicCriarContaRoute
   '/entrar': typeof PublicEntrarRoute
+  '/jogadores/$jogadorId/comparacao': typeof AuthenticatedJogadoresJogadorIdComparacaoRoute
   '/jogadores/$jogadorId/metricas': typeof AuthenticatedJogadoresJogadorIdMetricasRoute
   '/jogadores/$jogadorId': typeof AuthenticatedJogadoresJogadorIdIndexRoute
 }
@@ -101,6 +110,7 @@ export interface FileRoutesById {
   '/_public/entrar': typeof PublicEntrarRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/_authenticated/jogadores/$jogadorId': typeof AuthenticatedJogadoresJogadorIdRouteWithChildren
+  '/_authenticated/jogadores/$jogadorId/comparacao': typeof AuthenticatedJogadoresJogadorIdComparacaoRoute
   '/_authenticated/jogadores/$jogadorId/metricas': typeof AuthenticatedJogadoresJogadorIdMetricasRoute
   '/_authenticated/jogadores/$jogadorId/': typeof AuthenticatedJogadoresJogadorIdIndexRoute
 }
@@ -113,6 +123,7 @@ export interface FileRouteTypes {
     | '/criar-conta'
     | '/entrar'
     | '/jogadores/$jogadorId'
+    | '/jogadores/$jogadorId/comparacao'
     | '/jogadores/$jogadorId/metricas'
     | '/jogadores/$jogadorId/'
   fileRoutesByTo: FileRoutesByTo
@@ -122,6 +133,7 @@ export interface FileRouteTypes {
     | '/conta'
     | '/criar-conta'
     | '/entrar'
+    | '/jogadores/$jogadorId/comparacao'
     | '/jogadores/$jogadorId/metricas'
     | '/jogadores/$jogadorId'
   id:
@@ -134,6 +146,7 @@ export interface FileRouteTypes {
     | '/_public/entrar'
     | '/_authenticated/'
     | '/_authenticated/jogadores/$jogadorId'
+    | '/_authenticated/jogadores/$jogadorId/comparacao'
     | '/_authenticated/jogadores/$jogadorId/metricas'
     | '/_authenticated/jogadores/$jogadorId/'
   fileRoutesById: FileRoutesById
@@ -208,6 +221,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedJogadoresJogadorIdIndexRouteImport
       parentRoute: typeof AuthenticatedJogadoresJogadorIdRoute
     }
+    '/_authenticated/jogadores/$jogadorId/comparacao': {
+      id: '/_authenticated/jogadores/$jogadorId/comparacao'
+      path: '/comparacao'
+      fullPath: '/jogadores/$jogadorId/comparacao'
+      preLoaderRoute: typeof AuthenticatedJogadoresJogadorIdComparacaoRouteImport
+      parentRoute: typeof AuthenticatedJogadoresJogadorIdRoute
+    }
     '/_authenticated/jogadores/$jogadorId/metricas': {
       id: '/_authenticated/jogadores/$jogadorId/metricas'
       path: '/metricas'
@@ -219,12 +239,15 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedJogadoresJogadorIdRouteChildren {
+  AuthenticatedJogadoresJogadorIdComparacaoRoute: typeof AuthenticatedJogadoresJogadorIdComparacaoRoute
   AuthenticatedJogadoresJogadorIdMetricasRoute: typeof AuthenticatedJogadoresJogadorIdMetricasRoute
   AuthenticatedJogadoresJogadorIdIndexRoute: typeof AuthenticatedJogadoresJogadorIdIndexRoute
 }
 
 const AuthenticatedJogadoresJogadorIdRouteChildren: AuthenticatedJogadoresJogadorIdRouteChildren =
   {
+    AuthenticatedJogadoresJogadorIdComparacaoRoute:
+      AuthenticatedJogadoresJogadorIdComparacaoRoute,
     AuthenticatedJogadoresJogadorIdMetricasRoute:
       AuthenticatedJogadoresJogadorIdMetricasRoute,
     AuthenticatedJogadoresJogadorIdIndexRoute:

@@ -4,17 +4,15 @@ import {
   ATTRIBUTE_LABEL,
   ATTRIBUTE_ORDER,
   IncompleteResponseError,
-  MINIMUM_SAMPLE_TEXT,
+  MINIMUM_RULE_TEXT,
   commonSample,
   formatAttributeValue,
   refusalText,
 } from '../../../utils/attributes'
 import type { MetricRow, MetricsPer90 } from '../interfaces/metrics'
 
-const MINIMUM_RULE = `Contagens por 90 minutos; métricas com menos de ${MINIMUM_SAMPLE_TEXT} ficam sem valor.`
-
 export const footerText = (sample?: number): string =>
-  sample == null ? MINIMUM_RULE : `Amostra: ${formatMinutes(sample)} jogados. ${MINIMUM_RULE}`
+  sample == null ? MINIMUM_RULE_TEXT : `Amostra: ${formatMinutes(sample)} jogados. ${MINIMUM_RULE_TEXT}`
 
 const buildRow = (attribute: Attribute, sharedSample: number | undefined): MetricRow => {
   const type = attribute.tipo

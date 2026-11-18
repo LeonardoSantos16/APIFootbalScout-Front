@@ -36,10 +36,22 @@ export const initials = (name: string): string => {
   return `${first}${last}`.toUpperCase()
 }
 
-export const compatiblePositions = (_letter?: string | null): string[] => {
-  throw new Error('not implemented')
+const COMPATIBLE_LETTERS: Record<string, string[]> = {
+  G: ['G'],
+  D: ['D', 'M'],
+  M: ['M', 'D', 'F'],
+  F: ['F', 'M'],
 }
 
-export const positionLabel = (_position?: Position | null): string | undefined => {
-  throw new Error('not implemented')
+export const compatiblePositions = (letter?: string | null): string[] =>
+  (letter && COMPATIBLE_LETTERS[letter]) || []
+
+const POSITION_LABEL: Record<Position, string> = {
+  Goleiro: 'Goleiro',
+  Defesa: 'Defesa',
+  MeioCampo: 'Meio-campo',
+  Ataque: 'Ataque',
 }
+
+export const positionLabel = (position?: Position | null): string | undefined =>
+  position ? POSITION_LABEL[position] : undefined

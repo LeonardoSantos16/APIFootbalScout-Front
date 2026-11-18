@@ -21,7 +21,7 @@ const PAGE_VALUES: Record<AttributeType, ComparedValue> = {
   Desarmes: calculated(2.1),
   Interceptacoes: calculated(0.94),
   Rating: calculated(7.12),
-  PrecisaoDePasse: calculated(87),
+  PrecisaoDePasse: calculated(87.4),
 }
 
 const OTHER_VALUES: Record<AttributeType, ComparedValue> = {
@@ -31,7 +31,7 @@ const OTHER_VALUES: Record<AttributeType, ComparedValue> = {
   Desarmes: calculated(0.73, 2340),
   Interceptacoes: calculated(0.94, 2340),
   Rating: calculated(7.05, 2340),
-  PrecisaoDePasse: calculated(74, 2340),
+  PrecisaoDePasse: calculated(74.1, 2340),
 }
 
 const response = (
@@ -72,7 +72,7 @@ describe('colunas', () => {
 
   it('usa a amostra mais comum do jogador', () => {
     // Arrange
-    const other = { ...OTHER_VALUES, PrecisaoDePasse: calculated(74, 2100) }
+    const other = { ...OTHER_VALUES, PrecisaoDePasse: calculated(74.1, 2100) }
 
     // Act
     const table = buildComparison(response(PAGE_VALUES, other), PLAYERS)
@@ -117,7 +117,7 @@ describe('linhas', () => {
 
     // Assert
     const precision = table.rows[6]
-    expect(precision.cells.map((cell) => cell.text)).toEqual(['87%', '74%'])
+    expect(precision.cells.map((cell) => cell.text)).toEqual(['87,4%', '74,1%'])
     expect(table.rows[3].cells.map((cell) => cell.text)).toEqual(['2,10', '0,73'])
   })
 
@@ -158,7 +158,7 @@ describe('linhas', () => {
 
     // Assert
     expect(table.rows[6].cells).toEqual([
-      { text: '87%', tone: 'neutral' },
+      { text: '87,4%', tone: 'neutral' },
       { text: 'Não publicado pela fonte', tone: 'refused' },
     ])
   })

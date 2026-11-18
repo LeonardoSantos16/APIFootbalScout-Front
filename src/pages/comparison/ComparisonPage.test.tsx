@@ -31,6 +31,12 @@ const searchFor = async (term: string) => {
   await userEvent.type(field, `${term}{Enter}`)
 }
 
+const findLoadedTable = async () => {
+  const table = await screen.findByRole('table')
+  await waitFor(() => expect(screen.queryByRole('status', { name: 'Carregando comparação' })).not.toBeInTheDocument())
+  return screen.getByRole('table') ?? table
+}
+
 const tableRow = (label: string) => screen.getByRole('row', { name: new RegExp(label) })
 
 beforeEach(() => {
@@ -162,7 +168,7 @@ describe('comparacao realizada', () => {
 
     // Assert
     await waitFor(() => expect(router.state.location.search).toMatchObject({ com: 1006 }))
-    const table = await screen.findByRole('table')
+    const table = await findLoadedTable()
     const headers = within(table).getAllByRole('columnheader').map((header) => header.textContent)
     expect(headers[1]).toContain('Rafael Montes')
     expect(headers[2]).toContain('Diego Albuquerque')
@@ -173,7 +179,7 @@ describe('comparacao realizada', () => {
     renderRoute(`${TAB}&com=1006`)
 
     // Assert
-    await screen.findByRole('table')
+    await findLoadedTable()
     const goals = within(tableRow('Gols, por 90')).getAllByRole('cell')
     expect(goals.map((cell) => cell.textContent)).toEqual(['0,19', '0,46'])
     expect(goals[1]).toHaveAttribute('data-tone', 'strong')
@@ -188,7 +194,7 @@ describe('comparacao realizada', () => {
     const { router } = renderRoute(TAB)
     await searchFor('diego')
     await userEvent.click(await screen.findByRole('link', { name: /Diego Albuquerque/ }))
-    await screen.findByRole('table')
+    await findLoadedTable()
 
     // Act
     router.history.back()
@@ -203,16 +209,16 @@ describe('comparacao realizada', () => {
     renderRoute(`${TAB}&com=1005`)
 
     // Assert
-    await screen.findByRole('table')
+    await findLoadedTable()
     const precision = within(tableRow('Precisão de passe')).getAllByRole('cell')
-    expect(precision.map((cell) => cell.textContent)).toEqual(['87%', 'Não publicado pela fonte'])
+    expect(precision.map((cell) => cell.textContent)).toEqual(['87,4%', 'Não publicado pela fonte'])
     expect(precision[0]).toHaveAttribute('data-tone', 'neutral')
   })
 
   it('troca o jogador e volta para a busca', async () => {
     // Arrange
     const { router } = renderRoute(`${TAB}&com=1006`)
-    await screen.findByRole('table')
+    await findLoadedTable()
 
     // Act
     await userEvent.click(screen.getByRole('button', { name: 'Trocar jogador' }))
@@ -226,7 +232,7 @@ describe('comparacao realizada', () => {
     // Arrange
     const comparisons = requests('comparacao')
     const { router } = renderRoute(`${TAB}&com=1006`)
-    await screen.findByRole('table')
+    await findLoadedTable()
 
     // Act
     await userEvent.selectOptions(screen.getByLabelText('Competição e temporada'), COPA_DO_BRASIL_LABEL)
@@ -257,7 +263,7 @@ describe('comparacao realizada', () => {
     // Arrange
     const comparisons = requests('comparacao')
     renderRoute(`${TAB}&com=1006`)
-    await screen.findByRole('table')
+    await findLoadedTable()
 
     // Act
     await userEvent.click(screen.getByRole('link', { name: 'Métricas' }))
@@ -265,7 +271,7 @@ describe('comparacao realizada', () => {
     await userEvent.click(screen.getByRole('link', { name: 'Comparação' }))
 
     // Assert
-    await screen.findByRole('table')
+    await findLoadedTable()
     expect(comparisons).toHaveLength(1)
   })
 })
@@ -404,14 +410,14 @@ describe('falhas', () => {
     )
     renderRoute(`${TAB}&com=1006`)
     const retry = await screen.findByRole('button', { name: 'Tentar de novo' })
+    expect(screen.getByText('Não foi possível comparar agora.')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Trocar jogador' })).toBeInTheDocument()
+    expect(screen.getByLabelText('Competição e temporada')).toBeInTheDocument()
 
     // Act
     await userEvent.click(retry)
 
     // Assert
-    expect(screen.getByText('Não foi possível comparar agora.')).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: 'Trocar jogador' })).toBeInTheDocument()
-    expect(screen.getByLabelText('Competição e temporada')).toBeInTheDocument()
     await waitFor(() => expect(comparisons.length).toBeGreaterThan(2))
   })
 
@@ -436,7 +442,7 @@ describe('troca de aba', () => {
   it('mantem o recorte e o segundo jogador ao ir para as metricas e voltar', async () => {
     // Arrange
     const { router } = renderRoute(`${TAB}&com=1006`)
-    await screen.findByRole('table')
+    await findLoadedTable()
 
     // Act
     await userEvent.click(screen.getByRole('link', { name: 'Métricas' }))
@@ -444,7 +450,7 @@ describe('troca de aba', () => {
     await userEvent.click(screen.getByRole('link', { name: 'Comparação' }))
 
     // Assert
-    await screen.findByRole('table')
+    await findLoadedTable()
     expect(router.state.location.search).toEqual({ competicao: 325, temporada: 72034, contexto: 'Clube', com: 1006 })
   })
 })
