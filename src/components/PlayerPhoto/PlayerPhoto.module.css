@@ -1,0 +1,35 @@
+.photo {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+  background: var(--surface-strong);
+  object-fit: cover;
+}
+
+.initials {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.band {
+  width: 72px;
+  height: 72px;
+  font: var(--text-stat-value);
+}
+
+.small {
+  width: 40px;
+  height: 40px;
+  font: var(--text-body-strong);
+}
+
+@media (max-width: 719px) {
+  .band {
+    width: 56px;
+    height: 56px;
+  }
+}

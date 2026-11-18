@@ -5,12 +5,13 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 }
 export declare function Button(props: ButtonProps): React.ReactElement;
 
-export interface TabItem { id: string; label: string; count?: number | string }
+export interface TabItem { id: string; label: string; count?: number | string; href?: string }
 export interface TabsProps {
   items: TabItem[];
   value: string;
   onChange?: (id: string) => void;
   ariaLabel?: string;
+  disabled?: boolean;
 }
 export declare function Tabs(props: TabsProps): React.ReactElement;
 
@@ -20,7 +21,9 @@ export interface ClubBandProps {
   color?: string;
   secondaryColor?: string;
   crest?: string;
+  photo?: React.ReactNode;
   action?: React.ReactNode;
+  loading?: boolean;
 }
 export declare function ClubBand(props: ClubBandProps): React.ReactElement;
 
@@ -109,6 +112,46 @@ export interface DialogProps {
 }
 export declare function Dialog(props: DialogProps): React.ReactElement | null;
 
+export interface SearchFieldProps {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  onSubmit: (value: string) => void;
+  placeholder?: string;
+  error?: string;
+  size?: 'default' | 'compact';
+  submitLabel?: string;
+  disabled?: boolean;
+  className?: string;
+}
+export declare function SearchField(props: SearchFieldProps): React.ReactElement;
+
+export interface PlayerPhotoProps {
+  name: string;
+  src?: string | null;
+  size?: 'band' | 'small';
+}
+export declare function PlayerPhoto(props: PlayerPhotoProps): React.ReactElement;
+
+export interface RowCell { value: React.ReactNode; label?: string }
+export interface Row {
+  id: string;
+  title: React.ReactNode;
+  detail?: React.ReactNode;
+  href?: string;
+  cells?: RowCell[];
+  aside?: React.ReactNode;
+}
+export interface RowListProps {
+  rows: Row[];
+  columns?: string[];
+  titleLabel?: string;
+  ariaLabel?: string;
+  footer?: React.ReactNode;
+  className?: string;
+}
+export declare function RowList(props: RowListProps): React.ReactElement;
+
 declare global {
   interface Window {
     ScoutVestiario: {
@@ -126,6 +169,9 @@ declare global {
       PasswordField: typeof PasswordField;
       Notice: typeof Notice;
       Dialog: typeof Dialog;
+      SearchField: typeof SearchField;
+      PlayerPhoto: typeof PlayerPhoto;
+      RowList: typeof RowList;
     };
   }
 }

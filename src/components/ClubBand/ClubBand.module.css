@@ -26,17 +26,31 @@
   color: var(--on-club-soft);
 }
 
+.loading {
+  background: var(--surface);
+}
+
+.photoSkeleton {
+  flex: none;
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius-pill);
+}
+
 .nameSkeleton {
   width: min(100%, 280px);
   height: 32px;
-  background: var(--on-club-soft);
-  opacity: 0.25;
 }
 
 .subtitleSkeleton {
   width: min(100%, 220px);
   height: 20px;
   margin-top: var(--space-1);
-  background: var(--on-club-soft);
-  opacity: 0.25;
+}
+
+@media (max-width: 719px) {
+  .photoSkeleton {
+    width: 56px;
+    height: 56px;
+  }
 }

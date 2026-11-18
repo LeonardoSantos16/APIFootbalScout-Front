@@ -5,8 +5,11 @@ const meta = {
   component: Tabs,
   args: {
     ariaLabel: 'Abas do jogador',
-    value: 'metrics',
-    items: [{ id: 'metrics', label: 'Métricas por 90' }],
+    value: 'profile',
+    items: [
+      { id: 'profile', label: 'Perfil' },
+      { id: 'metrics', label: 'Métricas' },
+    ],
   },
 } satisfies Meta<typeof Tabs>
 
@@ -14,14 +17,20 @@ export default meta
 
 type Story = StoryObj<typeof meta>
 
-export const SingleTab: Story = {}
+export const Links: Story = {
+  args: { renderLink: (item, props) => <a href={`#${item.id}`} {...props} /> },
+}
 
-export const SeveralTabs: Story = {
+export const LinksDisabled: Story = {
+  args: { ...Links.args, disabled: true },
+}
+
+export const Buttons: Story = {
   args: {
+    value: 'drafts',
     items: [
-      { id: 'metrics', label: 'Métricas por 90' },
-      { id: 'compare', label: 'Comparar' },
-      { id: 'reports', label: 'Relatórios' },
+      { id: 'drafts', label: 'Rascunhos' },
+      { id: 'final', label: 'Finalizados' },
     ],
   },
 }

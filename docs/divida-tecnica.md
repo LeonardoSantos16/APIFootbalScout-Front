@@ -17,11 +17,23 @@ Pendencias conhecidas que o front contorna hoje e que precisam de correcao em ou
 - **Contorno no front:** o recorte e `Selecao` quando `stats[i].team.id` aparece em `nationalTeamStats[].team.id`; nos outros casos, `Clube` (grilling da F9, Q1 e Q16). Conferida com dados reais na change `sessao` (Neymar, 124712): os itens com o `team.id` da selecao (4748) sao exatamente Copa do Mundo, Eliminatorias, Copa America e amistosos.
 - **Correcao esperada:** expor `contexto` em cada item de `stats`; enquanto isso, o contorno vale.
 
+### Busca devolve lista vazia quando a fonte falha
+
+- **Problema:** `SofascorePlayerReader.SearchPlayersAsync` devolve `response.Content ?? new SofaSearchResponse([])`. Quando o SofaScore falha, `GET /api/Players/search` responde `200` com `results` vazio, e o olheiro ve "Nenhum jogador encontrado…" em vez de um erro com nova tentativa.
+- **Contorno no front:** nenhum possivel, porque a resposta e igual a uma busca sem resultado. A tela ja trata o `502` ("Não foi possível buscar agora." com "Tentar de novo") para quando o back-end for corrigido (grilling da Busca e perfil, Q5).
+- **Correcao esperada:** conferir `IsSuccessStatusCode` da resposta e lancar `FonteExternaIndisponivelException`, que o `ExceptionHandlerGlobal` ja converte em `502` com `code`; acrescentar o codigo em `docs/frontend/erros.md`.
+
+### Textos da fonte em ingles na busca e no perfil
+
+- **Problema:** o SofaScore manda o nome do pais em ingles ("Brazil", "Colombia") na busca e em `nationalTeamStats`, e usa o texto "No team" como clube de jogador sem clube. Achado na conferencia da change `busca-e-perfil` contra a API real.
+- **Contorno no front:** nenhum; os textos aparecem como a fonte manda ("Ataque, No team, Colombia", "Brazil, 130 jogos, 80 gols").
+- **Correcao esperada:** decidir se o front traduz os paises (tabela por `alpha2`) e esconde "No team", ou se o back-end entrega os nomes ja traduzidos.
+
 ### Cores do clube ausentes no perfil
 
 - **Problema:** o design system manda a `ClubBand` usar `team.teamColors` do perfil, mas o campo nao existe no contrato nem no back-end.
 - **Contorno no front:** a `ClubBand` usa sempre o fallback `club` (grilling da F9, Q5).
-- **Correcao esperada:** expor as cores do time em `details.team`; reavaliar no item 4 (Busca e perfil).
+- **Correcao esperada:** expor as cores do time em `details.team`. Reavaliado no item 4 (Busca e perfil, Q9): o contorno continua.
 
 ### `name` ausente em `GET /api/Auth/me`
 
@@ -45,12 +57,6 @@ Pendencias conhecidas que o front contorna hoje e que precisam de correcao em ou
 
 ### Pagina inicial provisoria
 
-- **Problema:** a busca so chega no item 4 e a pagina inicial no item 9, mas o olheiro precisa cair em algum lugar depois de entrar.
-- **Contorno:** `/` mostra "Olá, {nome}." e, no `dev:mock`, links para as metricas dos jogadores 1001 a 1005 (grilling da Sessao, Q16).
+- **Problema:** a pagina inicial de verdade so chega no item 9, mas o olheiro precisa cair em algum lugar depois de entrar.
+- **Contorno:** `/` mostra "Olá, {nome}." e o campo de busca (grilling da Busca e perfil, Q13). No `dev:mock`, os jogadores de teste sao achados pelo nome na busca.
 - **Correcao esperada:** substituir no item 9 (Navegacao e acessibilidade).
-
-### Recorte padrao pelo maior `season.id`
-
-- **Problema:** o `season.id` do SofaScore nao e cronologico entre competicoes. Com dados reais (Neymar, 124712), o Trophee des Champions 20/21 tem id 92399 e o Brasileirao 2026 tem 87678, entao a tela de metricas abre numa temporada de 2020. A lista `stats` da fonte ja vem da mais recente para a mais antiga.
-- **Origem:** regra da F9 (grilling Q2, emenda do ADR 0003), achada na conferencia da change `sessao` contra a API real.
-- **Correcao esperada:** ordenar pelo ano da temporada ou manter a ordem de `stats` da fonte, com nova emenda no ADR 0003. Fica para o item 4 (Busca e perfil), que ja revisa o seletor de recorte.

@@ -1,5 +1,8 @@
+import { delay } from 'msw'
 import {
   buildFullProfile,
+  buildManyRecortesProfile,
+  buildSparseProfile,
   buildNationalTeamOnlyProfile,
   buildProfileWithoutStats,
 } from '../fixtures/profiles'
@@ -29,3 +32,16 @@ export const profileSourceDown = http.get(PROFILE, ({ params, response }) =>
     problem(502, 'sofascore.perfil_do_jogador_indisponivel', `GET /api/Players/${params.id}/profile`),
   ),
 )
+
+export const manyRecortesProfile = http.get(PROFILE, ({ params, response }) =>
+  response(200).json(buildManyRecortesProfile(Number(params.id))),
+)
+
+export const sparseProfile = http.get(PROFILE, ({ params, response }) =>
+  response(200).json(buildSparseProfile(Number(params.id))),
+)
+
+export const profilePending = http.get(PROFILE, async ({ params, response }) => {
+  await delay('infinite')
+  return response(200).json(buildFullProfile(Number(params.id)))
+})

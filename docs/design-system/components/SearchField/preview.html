@@ -1,0 +1,22 @@
+<!-- @dsCard group="Formulários" height=260 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>SearchField</title></head>
+<body style="margin:0;background:var(--ground)">
+<div id="root" class="sv-stage is-column"></div>
+<script>
+  var V = window.ScoutVestiario, h = React.createElement;
+  function Demo() {
+    var a = React.useState('silva');
+    var b = React.useState('s');
+    var c = React.useState('');
+    return h('div', { style: { display: 'grid', gap: '20px', maxWidth: '560px' } },
+      h(V.SearchField, { label: 'Nome do jogador', placeholder: 'Nome do jogador', value: a[0], onChange: a[1], onSubmit: function () {} }),
+      h(V.SearchField, { label: 'Nome do jogador', value: b[0], onChange: b[1], onSubmit: function () {}, error: 'Digite pelo menos 2 letras do nome.' }),
+      h('div', { style: { maxWidth: '320px' } },
+        h(V.SearchField, { label: 'Buscar jogador', placeholder: 'Buscar jogador', size: 'compact', value: c[0], onChange: c[1], onSubmit: function () {} })));
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

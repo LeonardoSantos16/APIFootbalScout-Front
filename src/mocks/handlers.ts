@@ -5,9 +5,12 @@ import { calculatedAttributes, insufficientSampleAttributes, metricsResponse } f
 import {
   COPA_DO_BRASIL,
   buildFullProfile,
+  buildManyRecortesProfile,
   buildNationalTeamOnlyProfile,
   buildProfileWithoutStats,
+  buildSparseProfile,
 } from './fixtures/profiles'
+import { searchPlayers } from './fixtures/search'
 import { authHandlers, withAuth } from './handlers/auth'
 import { http } from './http'
 import { plainText, problem } from './responses'
@@ -19,6 +22,8 @@ const PROFILES: Record<number, (id: number) => PlayerProfile> = {
   1002: (id) => buildNationalTeamOnlyProfile(id),
   1003: (id) => buildProfileWithoutStats(id),
   1005: (id) => buildFullProfile(id, 'Bruno Lacerda'),
+  1006: (id) => buildManyRecortesProfile(id),
+  1007: (id) => buildSparseProfile(id),
 }
 
 const METRICS_SOURCE_DOWN = new Set([1005])
@@ -57,4 +62,18 @@ const metricsById = http.get(
   }),
 )
 
-export const handlers: RequestHandler[] = [...authHandlers, profileById, metricsById]
+const SEARCH_SOURCE_DOWN_TERM = 'erro'
+const SEARCH_EMPTY_TERM = 'vazio'
+
+const searchByTerm = http.get(
+  '/api/Players/search',
+  withAuth(({ query, response }) => {
+    const term = (query.get('q') ?? '').trim().toLowerCase()
+    if (term === '') return response.untyped(plainText(400, 'Name is required'))
+    if (term === SEARCH_SOURCE_DOWN_TERM) return response.untyped(plainText(502, 'Bad Gateway'))
+    if (term === SEARCH_EMPTY_TERM) return response(200).json({ results: [] })
+    return response(200).json(searchPlayers(term))
+  }),
+)
+
+export const handlers: RequestHandler[] = [...authHandlers, profileById, metricsById, searchByTerm]

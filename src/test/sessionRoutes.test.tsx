@@ -1,5 +1,4 @@
 import { act, screen, waitFor } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { SESSION_KEY, readSession } from '../api/session'
 import { expireAccessToken, seedSession } from '../mocks/authStore'
@@ -88,7 +87,7 @@ describe('confirmacao da sessao na abertura', () => {
 
     // Assert
     expect(await screen.findByRole('heading', { name: 'Olá, Ana.' })).toBeInTheDocument()
-    expect(screen.getByText('A busca de jogadores chega em breve.')).toBeInTheDocument()
+    expect(screen.getByRole('searchbox', { name: 'Nome do jogador' })).toBeInTheDocument()
     expect(document.title).toBe('APIFootballScout')
   })
 
@@ -104,29 +103,6 @@ describe('confirmacao da sessao na abertura', () => {
     expect(screen.getByRole('button', { name: 'Tentar de novo' })).toBeInTheDocument()
     expect(router.state.location.pathname).toBe('/')
     expect(readSession()).not.toBeNull()
-  })
-})
-
-describe('inicio provisorio', () => {
-  it('lista os jogadores de teste quando a API e o mock', async () => {
-    // Arrange
-    vi.stubEnv('VITE_API_MOCK', 'true')
-    const { router } = renderRoute('/')
-
-    // Act
-    await userEvent.click(await screen.findByRole('link', { name: /1001/ }))
-
-    // Assert
-    await waitFor(() => expect(router.state.location.pathname).toBe('/jogadores/1001/metricas'))
-  })
-
-  it('nao lista os jogadores de teste contra a API real', async () => {
-    // Act
-    renderRoute('/')
-
-    // Assert
-    await screen.findByRole('heading', { name: 'Olá, Ana.' })
-    expect(screen.queryByRole('link', { name: /1001/ })).not.toBeInTheDocument()
   })
 })
 

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { PlayerPhoto } from '../PlayerPhoto/PlayerPhoto'
 import { ClubBand } from './ClubBand'
 
 const meta = {
@@ -11,6 +12,8 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 export const Default: Story = {}
+
+export const WithPhoto: Story = { args: { photo: <PlayerPhoto name="Rafael Montes" /> } }
 
 export const WithoutSubtitle: Story = { args: { subtitle: undefined } }
 

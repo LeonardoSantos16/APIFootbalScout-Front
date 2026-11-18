@@ -108,3 +108,18 @@ Erro desconhecido (sem `code` num endpoint de `ProblemDetails`, `code` interno o
 | Confirmacao diferente | As senhas não conferem. |
 
 Erros de servidor com campo: `usuario.email_ja_cadastrado` no E-mail, `usuario.credenciais_invalidas` na Senha, `usuario.senha_atual_invalida` na Senha atual, `usuario.senha_igual_a_atual` na Nova senha. "Cadastro" nao aparece na tela: e "Criar conta".
+
+## Busca e perfil
+
+| Situacao | Texto |
+| --- | --- |
+| Termo com menos de 2 letras, depois do envio | Digite pelo menos 2 letras do nome. |
+| Busca sem jogador | Nenhum jogador encontrado para "<termo>". Confira a grafia ou busque pelo sobrenome. |
+| Busca com a fonte fora (`502`) | Não foi possível buscar agora. |
+| Perfil `404` | Jogador não encontrado. (com o link "Buscar jogador") |
+| Perfil sem `stats` | Sem estatísticas publicadas para este jogador. |
+| Pe preferido `Right` / `Left` / `Both` | Direito / Esquerdo / Ambos |
+| Transferencia "Free", "Free transfer" / "Loan" / "End of loan" | Livre / Empréstimo / Fim de empréstimo |
+| Rotulo do valor de mercado | Estimativa da fonte |
+
+Linha de resultado: posicao pela letra, clube e pais separados por virgula, o que faltar sai. Recorte no celular: "24 jogos · 1.920 min · 4 gols · 3 assist. · nota 7,12". Dinheiro com `formatMoney`: "€12,5M", "€850 mil". Mes e ano: "jan. 2024". Os paises e o "No team" vem em ingles da fonte (`docs/divida-tecnica.md`).

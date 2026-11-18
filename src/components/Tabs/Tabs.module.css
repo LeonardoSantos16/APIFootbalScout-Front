@@ -30,3 +30,19 @@
       border-color 150ms;
   }
 }
+
+a.tab {
+  display: inline-block;
+  text-decoration: none;
+}
+
+.tab:focus-visible {
+  outline: 2px solid var(--pitch);
+  outline-offset: 2px;
+}
+
+.disabled,
+.disabled:hover {
+  color: var(--ink-subtle);
+  cursor: default;
+}

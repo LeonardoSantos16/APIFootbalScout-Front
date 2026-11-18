@@ -1,0 +1,44 @@
+<!-- @dsCard group="Perfil" height=560 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>RowList</title></head>
+<body style="margin:0;background:var(--ground)">
+<div id="root" class="sv-stage is-column"></div>
+<script>
+  var V = window.ScoutVestiario, h = React.createElement;
+  function cells(jogos, minutos, gols, assist, nota) {
+    return [
+      { value: jogos, label: 'jogos' },
+      { value: minutos, label: 'min' },
+      { value: gols, label: 'gols' },
+      { value: assist, label: 'assist.' },
+      { value: nota, label: 'nota' }
+    ];
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(React.Fragment, null,
+    h(V.Card, { title: 'Resultados' },
+      h(V.RowList, { ariaLabel: 'Resultados', rows: [
+        { id: '1', title: 'Rafael Silva', detail: 'Meio-campo, Atlético Serrano, Brasil', href: '#' },
+        { id: '2', title: 'Thiago Silva', detail: 'Defesa, Fluminense, Brasil', href: '#' },
+        { id: '3', title: 'João Silva', detail: 'Goleiro', href: '#' }
+      ] })),
+    h(V.Card, { title: 'Recortes' },
+      h(V.RowList, {
+        ariaLabel: 'Recortes',
+        titleLabel: 'Recorte',
+        columns: ['Jogos', 'Minutos', 'Gols', 'Assist.', 'Nota'],
+        rows: [
+          { id: 'a', title: 'Clube · Brasileirão Série A · 2025', href: '#', cells: cells(24, '1.920', 4, 3, '7,12') },
+          { id: 'b', title: 'Clube · Copa do Brasil · 2025', href: '#', cells: cells(6, '480', 1, 0, '6,94') },
+          { id: 'c', title: 'Seleção · Eliminatórias Sul-Americanas · 2024', href: '#', cells: cells(4, '312', 0, 1, '6,88') }
+        ],
+        footer: h(V.Button, null, 'Mostrar todos os recortes (14)')
+      })),
+    h(V.Card, { title: 'Transferências' },
+      h(V.RowList, { ariaLabel: 'Transferências', rows: [
+        { id: 't1', title: 'Serra Azul → Atlético Serrano', detail: 'jan. 2024 · €3,2M' },
+        { id: 't2', title: 'Atlético Serrano → Serra Azul', detail: 'jul. 2022 · Empréstimo' }
+      ] }))));
+</script>
+</body>
+</html>

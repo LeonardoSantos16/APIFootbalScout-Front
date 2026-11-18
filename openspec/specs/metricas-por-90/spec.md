@@ -81,26 +81,15 @@ An attribute refused with `FonteNaoAtribuiu` SHALL show "Não publicado pela fon
 - **THEN** the row shows "Não publicado pela fonte" above "Interceptações, por 90"
 
 ### Requirement: Metrics loading
-While the recorte's metrics load, the grid SHALL show the seven rows with the label and a block in place of the value, in the final layout, and the footer with only the minimum rule. When the recorte changes, the previous recorte's numbers MUST NOT stay on screen.
+While the profile loads, the metrics tab SHALL show the selector and the seven rows as placeholders below the player layout's placeholders. While the recorte's metrics load, the grid SHALL show the seven rows with the label and a block in place of the value, in the final layout, and the footer with only the minimum rule. When the recorte changes, the previous recorte's numbers MUST NOT stay on screen.
 
 #### Scenario: Screen opening
 - **WHEN** the profile and the metrics have not arrived yet
-- **THEN** the screen shows blocks in place of the header, the selector and the seven values
+- **THEN** the screen shows blocks in place of the band, the selector and the seven values
 
 #### Scenario: Recorte change
 - **WHEN** the scout picks another recorte
-- **THEN** the header and the selector stay visible and only the seven values turn back into blocks until the new response
-
-### Requirement: Player header
-The card SHALL open with the player's name and a line with position, age and current club ("Meio-campo, 27 anos, Atlético Serrano"). The position comes from the source's letter: `G` Goleiro, `D` Defesa, `M` Meio-campo, `F` Ataque; an unknown letter is left out.
-
-#### Scenario: Midfielder
-- **WHEN** the profile has `position` "M", 27 full years and the club "Atlético Serrano"
-- **THEN** the support line is "Meio-campo, 27 anos, Atlético Serrano"
-
-#### Scenario: Unknown position
-- **WHEN** the profile has `position` "X"
-- **THEN** the support line shows only the age and the club
+- **THEN** the band, the tabs and the selector stay visible and only the seven values turn back into blocks until the new response
 
 ### Requirement: Browser tab title
 The tab title SHALL be "Métricas por 90 · <player name>" once the profile loads, and "Métricas por 90" while it loads or when it fails.
@@ -108,10 +97,3 @@ The tab title SHALL be "Métricas por 90 · <player name>" once the profile load
 #### Scenario: Profile loaded
 - **WHEN** Rafael Montes's profile arrives
 - **THEN** the tab title is "Métricas por 90 · Rafael Montes"
-
-### Requirement: Player tabs
-The card SHALL have the player tabs below the header, with "Métricas por 90" selected. In F9 that is the only tab.
-
-#### Scenario: Selected tab
-- **WHEN** the screen is shown
-- **THEN** the "Métricas por 90" tab appears selected

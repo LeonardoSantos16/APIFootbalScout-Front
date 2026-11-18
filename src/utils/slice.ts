@@ -10,9 +10,6 @@ const CONTEXTS = Object.keys(CONTEXT_LABEL) as SliceContext[]
 
 const SEPARATOR = ' · '
 
-const byMostRecent = (a: Slice, b: Slice) =>
-  b.seasonId - a.seasonId || b.minutesPlayed - a.minutesPlayed
-
 export const deriveSlices = (profile: PlayerProfile): Slice[] => {
   const nationalTeams = new Set((profile.nationalTeamStats ?? []).map((item) => item.team.id))
 
@@ -27,7 +24,6 @@ export const deriveSlices = (profile: PlayerProfile): Slice[] => {
         minutesPlayed: item.statistics.minutesPlayed,
       }),
     )
-    .sort(byMostRecent)
 }
 
 export const sliceLabel = (slice: Slice, slices: Slice[]): string => {

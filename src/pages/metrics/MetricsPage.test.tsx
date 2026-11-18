@@ -133,14 +133,16 @@ describe('abertura da tela', () => {
     ).toBeInTheDocument()
   })
 
-  it('abre com o nome, a linha de apoio e a aba de metricas selecionada', async () => {
+  it('abre com a faixa do jogador e a aba Metricas selecionada', async () => {
     // Act
     renderRoute(`/jogadores/1001/metricas${BRASILEIRAO_2025}`)
 
     // Assert
     expect(await screen.findByRole('heading', { level: 1, name: 'Rafael Montes' })).toBeInTheDocument()
     expect(screen.getByText('Meio-campo, 27 anos, Atlético Serrano')).toBeInTheDocument()
-    expect(screen.getByRole('tab', { name: 'Métricas por 90' })).toHaveAttribute('aria-selected', 'true')
+    expect(screen.getByRole('link', { name: 'Métricas' })).toHaveAttribute('aria-current', 'page')
+    expect(screen.getByRole('link', { name: 'Perfil' })).not.toHaveAttribute('aria-current')
+    expect(screen.getByRole('heading', { name: 'Métricas por 90' })).toBeInTheDocument()
   })
 
   it('mostra a navegacao no topo', async () => {
@@ -148,7 +150,7 @@ describe('abertura da tela', () => {
     renderRoute(`/jogadores/1001/metricas${BRASILEIRAO_2025}`)
 
     // Assert
-    expect(await screen.findByText('Buscar jogador')).toBeInTheDocument()
+    expect(await screen.findByRole('searchbox', { name: 'Buscar jogador' })).toBeInTheDocument()
     for (const item of ['Acompanhamentos', 'Shortlists', 'Relatórios', 'Sair']) {
       expect(screen.getByText(item)).toBeInTheDocument()
     }
@@ -257,14 +259,16 @@ describe('erros', () => {
     vi.spyOn(console, 'error').mockImplementation(() => {})
   })
 
-  it('mostra so o titulo e a mensagem quando o perfil nao existe', async () => {
+  it('mostra so a mensagem e o caminho para a busca quando o perfil nao existe', async () => {
     // Act
     renderRoute('/jogadores/1004/metricas')
 
     // Assert
     const alert = await screen.findByRole('alert')
     expect(alert).toHaveTextContent('Jogador não encontrado.')
-    expect(screen.getByRole('heading', { name: 'Métricas por 90' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Buscar jogador' })).toHaveAttribute('href', '/busca')
+    expect(screen.queryByRole('heading', { level: 1 })).not.toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: 'Métricas' })).not.toBeInTheDocument()
     expect(screen.queryByRole('button', { name: 'Tentar de novo' })).not.toBeInTheDocument()
     expect(screen.queryByRole('combobox')).not.toBeInTheDocument()
     expect(screen.queryByText('Gols, por 90')).not.toBeInTheDocument()
@@ -273,6 +277,7 @@ describe('erros', () => {
   it('oferece nova tentativa quando a fonte do perfil esta fora do ar', async () => {
     // Arrange
     server.use(profileSourceDown)
+    const requests = metricsRequests()
 
     // Act
     renderRoute('/jogadores/1001/metricas')
@@ -280,6 +285,8 @@ describe('erros', () => {
     // Assert
     expect(await screen.findByRole('alert')).toHaveTextContent('Não foi possível carregar o perfil agora.')
     expect(screen.getByRole('button', { name: 'Tentar de novo' })).toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: 'Métricas' })).not.toBeInTheDocument()
+    expect(requests).toHaveLength(0)
   })
 
   it('mantem nome e seletor e oferece nova tentativa quando as metricas falham', async () => {
@@ -359,12 +366,13 @@ describe('titulo da aba', () => {
     await waitFor(() => expect(document.title).toBe('Métricas por 90 · Rafael Montes'))
   })
 
-  it('fica so com o nome da tela quando o perfil falha', async () => {
+  it('fica so com o nome da tela quando a fonte do perfil esta fora', async () => {
     // Arrange
     document.title = ''
+    server.use(profileSourceDown)
 
     // Act
-    renderRoute('/jogadores/1004/metricas')
+    renderRoute('/jogadores/1001/metricas')
 
     // Assert
     await screen.findByRole('alert')

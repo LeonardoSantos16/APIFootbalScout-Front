@@ -30,11 +30,15 @@ The error message SHALL come from the `code` in the `ProblemDetails` body, follo
 - **THEN** the screen shows the generic error
 
 ### Requirement: Error without a code
-On the endpoints that respond plain text (`Players` and `Tournament`), without a `code` the system SHALL decide by status: 404 shows "Jogador não encontrado.", 502 shows "Não foi possível carregar o perfil agora.", any other the generic error. On `ProblemDetails` endpoints, a missing `code` SHALL be treated as an unknown error.
+On the profile, which may respond plain text, without a `code` the system SHALL decide by status: 404 shows "Jogador não encontrado.", 502 shows "Não foi possível carregar o perfil agora.", any other the generic error. The search SHALL show "Não foi possível buscar agora." on a 502, with or without a `code`, and the generic error otherwise. On `ProblemDetails` endpoints, a missing `code` SHALL be treated as an unknown error.
 
 #### Scenario: Nonexistent profile
 - **WHEN** the profile responds 404 with the text "Player with ID 12 not found"
 - **THEN** the screen shows "Jogador não encontrado." without "Tentar de novo"
+
+#### Scenario: Search without a code
+- **WHEN** the search responds 502 with a plain-text body, twice in a row
+- **THEN** the screen shows "Não foi possível buscar agora." with "Tentar de novo"
 
 #### Scenario: Metrics without a code
 - **WHEN** the metrics respond 500 with a `ProblemDetails` without `code`
@@ -71,15 +75,19 @@ A 502 SHALL be retried automatically once, about 2 s later, before the screen sh
 - **THEN** no renewal is made and the error appears on the form
 
 ### Requirement: Where the error appears
-A profile failure SHALL take the whole card, without the header or the selector. A metrics failure SHALL appear in place of the grid, with the header and the selector visible.
+A profile failure SHALL replace the player layout on every player tab, without the band, the tabs or the selector. A metrics failure SHALL appear in place of the grid, with the band, the tabs and the selector visible. A search failure SHALL appear in place of the results, with the field visible.
 
 #### Scenario: Profile failure
-- **WHEN** the profile fails
-- **THEN** the card shows only the title "Métricas por 90" and the message
+- **WHEN** the profile fails on the metrics tab
+- **THEN** the page shows only the message, without the band or the tabs
 
 #### Scenario: Metrics failure
 - **WHEN** the metrics fail
-- **THEN** the player's name and the selector stay on screen, with the message in place of the grid
+- **THEN** the band, the tabs and the selector stay on screen, with the message in place of the grid
+
+#### Scenario: Search failure
+- **WHEN** the search fails
+- **THEN** the field keeps the term and the message takes the place of the results
 
 ### Requirement: A refusal is not an error
 A refused attribute that arrives with 200 OK MUST NOT be shown as an error: it stays in the grid with its reason.
