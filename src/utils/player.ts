@@ -1,4 +1,4 @@
-import type { PlayerDetails } from '../interfaces/player'
+import type { PlayerDetails, Position } from '../interfaces/player'
 
 const POSITION_BY_LETTER: Record<string, string> = {
   G: 'Goleiro',
@@ -34,4 +34,12 @@ export const initials = (name: string): string => {
   const first = parts[0].charAt(0)
   const last = parts.length > 1 ? parts[parts.length - 1].charAt(0) : ''
   return `${first}${last}`.toUpperCase()
+}
+
+export const compatiblePositions = (_letter?: string | null): string[] => {
+  throw new Error('not implemented')
+}
+
+export const positionLabel = (_position?: Position | null): string | undefined => {
+  throw new Error('not implemented')
 }
