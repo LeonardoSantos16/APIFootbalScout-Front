@@ -16,3 +16,11 @@ export interface SliceSearch {
   temporada?: number
   contexto?: SliceContext
 }
+
+export interface PlayerSearch extends SliceSearch {
+  com?: number
+}
+
+export interface SliceChangeOptions {
+  replace?: boolean
+}

@@ -1,12 +1,7 @@
 import type { components } from '../../../api/schema'
+import type { AttributeType } from '../../../interfaces/attribute'
 
-type Schemas = components['schemas']
-
-export type MetricsPer90 = Schemas['MetricasPor90ResponseDto']
-
-export type Attribute = Schemas['AtributoDto']
-
-export type AttributeType = Schemas['TipoDeAtributoDto']
+export type MetricsPer90 = components['schemas']['MetricasPor90ResponseDto']
 
 export interface MetricRow {
   type: AttributeType

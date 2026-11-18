@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { ApiError } from './client'
 import { GENERIC_MESSAGE, MESSAGE_BY_CODE, describeError } from './errors'
-import { IncompleteResponseError } from '../pages/metrics/utils/metrics'
+import { IncompleteResponseError } from '../utils/attributes'
 
 const problem = (status: number, fields: Record<string, unknown> = {}) =>
   new ApiError(status, {

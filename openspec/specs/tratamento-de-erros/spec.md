@@ -75,7 +75,7 @@ A 502 SHALL be retried automatically once, about 2 s later, before the screen sh
 - **THEN** no renewal is made and the error appears on the form
 
 ### Requirement: Where the error appears
-A profile failure SHALL replace the player layout on every player tab, without the band, the tabs or the selector. A metrics failure SHALL appear in place of the grid, with the band, the tabs and the selector visible. A search failure SHALL appear in place of the results, with the field visible.
+A profile failure SHALL replace the player layout on every player tab, without the band, the tabs or the selector. A metrics failure SHALL appear in place of the grid, with the band, the tabs and the selector visible. A comparison failure SHALL appear in place of the table, with the band, the tabs and the selector visible. A search failure SHALL appear in place of the results, with the field visible.
 
 #### Scenario: Profile failure
 - **WHEN** the profile fails on the metrics tab
@@ -84,6 +84,10 @@ A profile failure SHALL replace the player layout on every player tab, without t
 #### Scenario: Metrics failure
 - **WHEN** the metrics fail
 - **THEN** the band, the tabs and the selector stay on screen, with the message in place of the grid
+
+#### Scenario: Comparison failure
+- **WHEN** the comparison fails
+- **THEN** the band, the tabs and the selector stay on screen, with the message in place of the table
 
 #### Scenario: Search failure
 - **WHEN** the search fails

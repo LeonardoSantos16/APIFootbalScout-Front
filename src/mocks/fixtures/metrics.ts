@@ -1,6 +1,7 @@
 import type { components } from '../../api/schema'
-import type { Attribute, MetricsPer90 } from '../../pages/metrics/interfaces/metrics'
-import { ATTRIBUTE_ORDER } from '../../pages/metrics/utils/metrics'
+import type { Attribute } from '../../interfaces/attribute'
+import type { MetricsPer90 } from '../../pages/metrics/interfaces/metrics'
+import { ATTRIBUTE_ORDER } from '../../utils/attributes'
 
 type Recorte = components['schemas']['RecorteDto']
 

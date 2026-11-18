@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import type { PlayerDetails } from '../interfaces/player'
-import { age, playerSummary, positionFromLetter } from './player'
+import { age, compatiblePositions, playerSummary, positionFromLetter, positionLabel } from './player'
 
 const TODAY = new Date('2026-11-17T12:00:00Z')
 
@@ -92,5 +92,51 @@ describe('playerSummary', () => {
 
     // Assert
     expect(summary).toBe('Meio-campo')
+  })
+})
+
+describe('compatiblePositions', () => {
+  it.each([
+    ['G', ['G']],
+    ['D', ['D', 'M']],
+    ['M', ['M', 'D', 'F']],
+    ['F', ['F', 'M']],
+  ])('compara %s com %j', (letter, expected) => {
+    // Act
+    const positions = compatiblePositions(letter)
+
+    // Assert
+    expect([...positions].sort()).toEqual([...expected].sort())
+  })
+
+  it.each([[undefined], [null], ['X']])('nao compara a letra %s com nada', (letter) => {
+    // Act
+    const positions = compatiblePositions(letter)
+
+    // Assert
+    expect(positions).toEqual([])
+  })
+})
+
+describe('positionLabel', () => {
+  it.each([
+    ['Goleiro', 'Goleiro'],
+    ['Defesa', 'Defesa'],
+    ['MeioCampo', 'Meio-campo'],
+    ['Ataque', 'Ataque'],
+  ] as const)('traduz %s para %s', (position, expected) => {
+    // Act
+    const label = positionLabel(position)
+
+    // Assert
+    expect(label).toBe(expected)
+  })
+
+  it('nao traduz posicao ausente', () => {
+    // Act
+    const label = positionLabel(undefined)
+
+    // Assert
+    expect(label).toBeUndefined()
   })
 })

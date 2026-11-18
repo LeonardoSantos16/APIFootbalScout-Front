@@ -1,4 +1,4 @@
-import type { PlayerDetails } from '../interfaces/player'
+import type { PlayerDetails, Position } from '../interfaces/player'
 
 const POSITION_BY_LETTER: Record<string, string> = {
   G: 'Goleiro',
@@ -35,3 +35,23 @@ export const initials = (name: string): string => {
   const last = parts.length > 1 ? parts[parts.length - 1].charAt(0) : ''
   return `${first}${last}`.toUpperCase()
 }
+
+const COMPATIBLE_LETTERS: Record<string, string[]> = {
+  G: ['G'],
+  D: ['D', 'M'],
+  M: ['M', 'D', 'F'],
+  F: ['F', 'M'],
+}
+
+export const compatiblePositions = (letter?: string | null): string[] =>
+  (letter && COMPATIBLE_LETTERS[letter]) || []
+
+const POSITION_LABEL: Record<Position, string> = {
+  Goleiro: 'Goleiro',
+  Defesa: 'Defesa',
+  MeioCampo: 'Meio-campo',
+  Ataque: 'Ataque',
+}
+
+export const positionLabel = (position?: Position | null): string | undefined =>
+  position ? POSITION_LABEL[position] : undefined

@@ -1,6 +1,7 @@
 import type { RequestHandler } from 'msw'
 import type { components } from '../api/schema'
 import type { PlayerProfile } from '../interfaces/player'
+import { realizedComparison, refusedComparison } from './fixtures/comparison'
 import { calculatedAttributes, insufficientSampleAttributes, metricsResponse } from './fixtures/metrics'
 import {
   COPA_DO_BRASIL,
@@ -76,4 +77,32 @@ const searchByTerm = http.get(
   }),
 )
 
-export const handlers: RequestHandler[] = [...authHandlers, profileById, metricsById, searchByTerm]
+const COMPARISON_INSTANCE = 'GET /api/Analise/comparacao'
+
+const comparisonByPair = http.get(
+  '/api/Analise/comparacao',
+  withAuth(({ query, response }) => {
+    const pageId = Number(query.get('JogadorA'))
+    const otherId = Number(query.get('JogadorB'))
+    if (pageId === otherId) {
+      return response.untyped(problem(400, 'comparacao.jogador_consigo_mesmo', COMPARISON_INSTANCE))
+    }
+    if (otherId === 1002) {
+      return response.untyped(problem(404, 'jogador.estatisticas_nao_encontradas', COMPARISON_INSTANCE))
+    }
+    if (Number(query.get('CompeticaoId')) === COPA_DO_BRASIL.id || otherId === 1003) {
+      return response(200).json(refusedComparison('AmostraInsuficiente', pageId, otherId))
+    }
+    if (otherId === 1004) return response(200).json(refusedComparison('PosicoesIncompativeis', pageId, otherId))
+    if (otherId === 1007) return response(200).json(refusedComparison('PosicaoDesconhecida', pageId, otherId))
+    return response(200).json(
+      realizedComparison(pageId, otherId, {
+        competicaoId: Number(query.get('CompeticaoId')),
+        temporadaId: Number(query.get('TemporadaId')),
+        contexto: (query.get('Contexto') ?? 'Clube') as Contexto,
+      }),
+    )
+  }),
+)
+
+export const handlers: RequestHandler[] = [...authHandlers, profileById, metricsById, searchByTerm, comparisonByPair]

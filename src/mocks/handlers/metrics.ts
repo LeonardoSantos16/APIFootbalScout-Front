@@ -1,5 +1,5 @@
 import type { components } from '../../api/schema'
-import type { Attribute } from '../../pages/metrics/interfaces/metrics'
+import type { Attribute } from '../../interfaces/attribute'
 import {
   calculatedAttributes,
   incompleteAttributes,

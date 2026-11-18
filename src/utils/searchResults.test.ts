@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import type { components } from '../../../api/schema'
-import { playerResults, resultSummary } from './results'
+import type { components } from '../api/schema'
+import { playerResults, resultSummary } from './searchResults'
 
 type Schemas = components['schemas']
 

@@ -1,5 +1,5 @@
 import type { MetricRow } from '../../interfaces/metrics'
-import { ATTRIBUTE_LABEL, ATTRIBUTE_ORDER } from '../../utils/metrics'
+import { ATTRIBUTE_LABEL, ATTRIBUTE_ORDER } from '../../../../utils/attributes'
 import { MetricCell, type MetricCellProps } from '../MetricCell/MetricCell'
 import styles from './MetricsGrid.module.css'
 

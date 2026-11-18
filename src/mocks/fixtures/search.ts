@@ -74,7 +74,7 @@ const fold = (text: string) =>
 
 export const searchPlayers = (term: string): Schemas['SofaSearchResponse'] => {
   const query = fold(term.trim())
-  const players = PLAYERS.filter((player) => fold(player.name).includes(query)).map(playerResult)
+  const players = PLAYERS.filter((player) => fold(player.name).includes(query) || fold(player.club ?? '').includes(query)).map(playerResult)
   return { results: [...players, teamResult()] }
 }
 

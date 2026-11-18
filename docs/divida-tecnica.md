@@ -53,6 +53,24 @@ Pendencias conhecidas que o front contorna hoje e que precisam de correcao em ou
 - **Contorno no front:** a copia local de `erros.md` ja traz os status reais.
 - **Correcao esperada:** corrigir a tabela em `docs/frontend/erros.md` do back-end.
 
+### Recusa da comparacao por amostra nao diz de quem e a falta
+
+- **Problema:** `GET /api/Analise/comparacao` recusada por `AmostraInsuficiente` traz em `jogadores` so nome e posicao, sem os minutos. O front nao sabe qual dos dois jogadores ficou abaixo de 450 min nem quantos minutos ele tem.
+- **Contorno no front:** os minutos do jogador da pagina vem de `stats[].statistics.minutesPlayed` do perfil, no recorte. Abaixo de 450, a falta e dele ("<Nome A> tem 312 de 450 min…"); senao, e do outro, sem o numero (grilling da F10, Q6).
+- **Correcao esperada:** expor `amostraEmMinutos` por jogador em `JogadorNaComparacaoDto`; o texto passa a ter os minutos dos dois.
+
+### Jogador fora do recorte responde 500 em vez de 404
+
+- **Problema:** `GET /api/Analise/comparacao` e `GET /api/Analise/{jogadorId}/metricas-por-90` com um jogador que nao jogou a competicao e temporada pedidas respondem `500` sem `code` ("An unexpected error occurred while processing the request."), e nao o `404` `jogador.estatisticas_nao_encontradas` que o `ComparacaoDiretaUseCase` e o `FonteDeDadosSofascore` preveem. Achado na conferencia da change `f10-comparacao-direta` contra a API real: Bruno Guimaraes (866469) contra Neymar (124712) na Premier League 25/26 (`CompeticaoId=17`, `TemporadaId=76986`). A fonte provavelmente responde algo diferente de `404` para o jogador fora do torneio, e a excecao nao e mapeada.
+- **Contorno no front:** nenhum; a tela mostra o erro generico ("Não foi possível concluir agora.") com "Tentar de novo" e "Trocar jogador". O estado "<Nome> não tem estatísticas em <competição> · <temporada>." ja existe e passa a aparecer quando o back-end devolver o `404` (grilling da F10, Q4).
+- **Correcao esperada:** tratar a resposta da fonte para jogador fora do torneio como `null` em `ObterEstatisticas` e `ObterPerfilDoJogador`, para que o use case lance `RecursoNaoEncontradoException` com `jogador.estatisticas_nao_encontradas`.
+
+### Comparacao lenta na primeira chamada
+
+- **Problema:** contra a API real, a primeira comparacao de um par leva cerca de um minuto (dois perfis e duas leituras de estatisticas no SofaScore), e a busca de jogadores de 20 a 40 s.
+- **Contorno no front:** a tabela fica em skeleton no formato final enquanto isso; a comparacao fica 5 min no cache do front.
+- **Correcao esperada:** cache das leituras da fonte no back-end, ou leituras em paralelo no `ComparacaoDiretaUseCase`.
+
 ## Front
 
 ### Pagina inicial provisoria
