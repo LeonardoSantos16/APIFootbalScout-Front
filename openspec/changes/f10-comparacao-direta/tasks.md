@@ -35,7 +35,7 @@
 ## 7. Verification
 
 - [x] 7.1 `npm run lint`, `npm run typecheck`, `npm test` and `npm run build` pass; walk every state of the wireframe in `npm run dev:mock` (1001 against 1006, 1005, 1003, 1002; `com=1004`, `com=1007`, `com=1001`; Copa do Brasil; searches "atlético", "pedro", "erro", "vazio", "s") at desktop and 375px with no console errors
-- [ ] 7.2 Against the real API (`npm run dev` with the back-end running): compare two real midfielders, a midfielder and a goalkeeper by URL, and a player without minutes in the recorte; record the findings in `docs/divida-tecnica.md` and the delta specs
+- [x] 7.2 Against the real API (`npm run dev` with the back-end running): compare two real midfielders, a midfielder and a goalkeeper by URL, and a player without minutes in the recorte; record the findings in `docs/divida-tecnica.md` and the delta specs
 
 ## 8. Retrospective
 
