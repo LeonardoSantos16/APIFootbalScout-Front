@@ -64,6 +64,18 @@ Conferidos antes do grilling, mudam as respostas abaixo:
   - 1002 Caio (F): 404 `jogador.estatisticas_nao_encontradas`.
   - Outros pares: `Realizada` generica. A busca da aba reaproveita o handler de busca, com "erro" e "vazio".
 
+## Wireframe
+
+Aprovado em https://claude.ai/artifact/F34DYWNWTip2ERRdorhcLq. Decisoes que sairam dele:
+
+- **W1.** Acima da busca do segundo jogador: "Escolha com quem comparar <Nome A> nesta competição e temporada."
+- **W2.** Empate e valor calculado ao lado de celula recusada: os dois em `text`, peso intermediario, sem `text-muted`.
+- **W3.** Jogador sem posicao no cabecalho da recusa: "Posição não informada". Sem posicao nos dois: "A fonte não informou a posição dos dois jogadores."
+- **W4.** O 502 tem "Tentar de novo" e "Trocar jogador".
+- **W5.** `RecorteDivergente` fica em teste de unidade e story, fora do `dev:mock`.
+- **W6.** Abaixo de 720px o seletor de recorte desce para baixo do titulo e ocupa a largura toda; a tabela mantem as tres colunas, com os nomes quebrando linha.
+- **W7.** Perfil sem recortes reaproveita o texto do estado vazio das Metricas.
+
 ## Glossario e divida tecnica
 
 - **Q18.** "Comparação" (`Comparison`, `ComparisonPage`) e "Posições compatíveis" (`compatiblePositions`) entram em "Nomes no código". A recusa por amostra sem o lado da falta entra na divida tecnica.
