@@ -190,4 +190,6 @@ Os identificadores do código são em inglês. Um termo novo entra nesta tabela 
 | Métricas por 90 | `MetricsPer90` |
 | Atributo | `Attribute` |
 | Recusa, recusado | `refusal`, `refused` |
+| Comparação | `Comparison`, `ComparisonPage` |
+| Posições compatíveis | `compatiblePositions` |
 | Nota | `rating` |

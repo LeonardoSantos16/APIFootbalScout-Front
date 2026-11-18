@@ -53,6 +53,12 @@ Pendencias conhecidas que o front contorna hoje e que precisam de correcao em ou
 - **Contorno no front:** a copia local de `erros.md` ja traz os status reais.
 - **Correcao esperada:** corrigir a tabela em `docs/frontend/erros.md` do back-end.
 
+### Recusa da comparacao por amostra nao diz de quem e a falta
+
+- **Problema:** `GET /api/Analise/comparacao` recusada por `AmostraInsuficiente` traz em `jogadores` so nome e posicao, sem os minutos. O front nao sabe qual dos dois jogadores ficou abaixo de 450 min nem quantos minutos ele tem.
+- **Contorno no front:** os minutos do jogador da pagina vem de `stats[].statistics.minutesPlayed` do perfil, no recorte. Abaixo de 450, a falta e dele ("<Nome A> tem 312 de 450 min…"); senao, e do outro, sem o numero (grilling da F10, Q6).
+- **Correcao esperada:** expor `amostraEmMinutos` por jogador em `JogadorNaComparacaoDto`; o texto passa a ter os minutos dos dois.
+
 ## Front
 
 ### Pagina inicial provisoria

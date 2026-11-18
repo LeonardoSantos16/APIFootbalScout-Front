@@ -88,7 +88,7 @@ O perfil e a porta de entrada de todas as acoes do olheiro, e a busca e o unico 
 
 ## 5. F10 Comparacao direta
 
-Head-to-head entre dois jogadores no mesmo recorte. A recusa inteira e a recusa de um atributo para um lado so sao resultados, nao falhas.
+Head-to-head entre dois jogadores no mesmo recorte. A recusa inteira e a recusa de um atributo para um lado so sao resultados, nao falhas. Decisoes em [grilling/f10-comparacao-direta.md](grilling/f10-comparacao-direta.md).
 
 - **Escopo:** segundo jogador escolhido pela busca, ja filtrado por posicoes compativeis; tabela lado a lado na `Realizada`, sem vencedor em atributo recusado; estado proprio na `Recusada`, com o motivo e os dois jogadores; comparacao na URL.
 - **Endpoints:** `GET /api/Analise/comparacao`.
