@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
-import { buildRows, footerSample, footerText } from '../../utils/metrics'
+import { commonSample } from '../../../../utils/attributes'
+import { buildRows, footerText } from '../../utils/metrics'
 import { MetricsGrid } from './MetricsGrid'
 import { insufficientSampleAttributes, metricsResponse } from '../../../../mocks/fixtures/metrics'
 
@@ -10,7 +11,7 @@ describe('MetricsGrid', () => {
     const rows = buildRows(metricsResponse(insufficientSampleAttributes))
 
     // Act
-    render(<MetricsGrid rows={rows} footnote={footerText(footerSample(insufficientSampleAttributes))} />)
+    render(<MetricsGrid rows={rows} footnote={footerText(commonSample(insufficientSampleAttributes))} />)
 
     // Assert
     expect(screen.getAllByText('Amostra insuficiente: 312 de 450 min')).toHaveLength(7)

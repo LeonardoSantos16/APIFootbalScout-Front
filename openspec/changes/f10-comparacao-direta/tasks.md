@@ -2,7 +2,7 @@
 
 ## 1. Shared modules
 
-- [ ] 1.1 Move `ATTRIBUTE_ORDER`, `ATTRIBUTE_LABEL`, the value format, `refusalText` and `footerSample` (as `commonSample`) to `src/utils/attributes.ts`, `Attribute` and `AttributeType` to `src/interfaces/attribute.ts`, `useSearchPlayers` to `src/hooks/` and `playerResults`, `resultSummary` and `describeSearchError` to `src/utils/searchResults.ts`, with their tests; one `refactor:` commit; verify with `npm test` and `npm run typecheck` green and no behavior change in F9 and the search
+- [x] 1.1 Move `ATTRIBUTE_ORDER`, `ATTRIBUTE_LABEL`, the value format, `refusalText` and `footerSample` (as `commonSample`) to `src/utils/attributes.ts`, `Attribute` and `AttributeType` to `src/interfaces/attribute.ts`, `useSearchPlayers` to `src/hooks/` and `playerResults`, `resultSummary` and `describeSearchError` to `src/utils/searchResults.ts`, with their tests; one `refactor:` commit; verify with `npm test` and `npm run typecheck` green and no behavior change in F9 and the search
 
 ## 2. Comparison rules
 

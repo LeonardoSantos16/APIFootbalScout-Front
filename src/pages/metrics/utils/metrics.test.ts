@@ -1,14 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import type { Attribute, AttributeType, MetricsPer90 } from '../interfaces/metrics'
-import {
-  ATTRIBUTE_LABEL,
-  ATTRIBUTE_ORDER,
-  IncompleteResponseError,
-  buildRows,
-  footerSample,
-  footerText,
-  refusalText,
-} from './metrics'
+import type { Attribute, AttributeType } from '../../../interfaces/attribute'
+import { ATTRIBUTE_LABEL, ATTRIBUTE_ORDER, IncompleteResponseError, commonSample } from '../../../utils/attributes'
+import type { MetricsPer90 } from '../interfaces/metrics'
+import { buildRows, footerText } from './metrics'
 
 const calculated = (type: AttributeType, value: number, sample = 1284): Attribute => ({
   tipo: type,
@@ -157,7 +151,7 @@ describe('amostra', () => {
     const attributes = withSample(allCalculated(), 'PrecisaoDePasse', 1190)
 
     // Act
-    const sample = footerSample(attributes)
+    const sample = commonSample(attributes)
 
     // Assert
     expect(sample).toBe(1284)
@@ -172,7 +166,7 @@ describe('amostra', () => {
     ]
 
     // Act
-    const sample = footerSample(attributes)
+    const sample = commonSample(attributes)
 
     // Assert
     expect(sample).toBe(312)
@@ -183,7 +177,7 @@ describe('amostra', () => {
     const attributes = [calculated('Gols', 0.35, 900), calculated('Assistencias', 0.21, 1284)]
 
     // Act
-    const sample = footerSample(attributes)
+    const sample = commonSample(attributes)
 
     // Assert
     expect(sample).toBe(1284)
@@ -194,7 +188,7 @@ describe('amostra', () => {
     const attributes = [refused('Interceptacoes', 'FonteNaoAtribuiu')]
 
     // Act
-    const sample = footerSample(attributes)
+    const sample = commonSample(attributes)
 
     // Assert
     expect(sample).toBeUndefined()
@@ -241,39 +235,5 @@ describe('amostra', () => {
 
     // Assert
     expect(text).toBe('Contagens por 90 minutos; métricas com menos de 450 min ficam sem valor.')
-  })
-})
-
-describe('refusalText', () => {
-  it('mostra a amostra contra o minimo', () => {
-    // Act
-    const text = refusalText(refused('Gols', 'AmostraInsuficiente', 312))
-
-    // Assert
-    expect(text).toBe('Amostra insuficiente: 312 de 450 min')
-  })
-
-  it('mostra so o minimo quando a amostra nao vem', () => {
-    // Act
-    const text = refusalText(refused('Gols', 'AmostraInsuficiente'))
-
-    // Assert
-    expect(text).toBe('Amostra insuficiente: mínimo de 450 min')
-  })
-
-  it('usa o separador de milhar na amostra', () => {
-    // Act
-    const text = refusalText(refused('Gols', 'AmostraInsuficiente', 1050))
-
-    // Assert
-    expect(text).toBe('Amostra insuficiente: 1.050 de 450 min')
-  })
-
-  it('diz que a fonte nao publicou', () => {
-    // Act
-    const text = refusalText(refused('Interceptacoes', 'FonteNaoAtribuiu'))
-
-    // Assert
-    expect(text).toBe('Não publicado pela fonte')
   })
 })

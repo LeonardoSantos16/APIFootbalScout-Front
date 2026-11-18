@@ -1,6 +1,6 @@
-import { $api } from '../../../api/client'
-import { isSearchableTerm } from '../../../utils/search'
-import { playerResults } from '../utils/results'
+import { $api } from '../api/client'
+import { isSearchableTerm } from '../utils/search'
+import { playerResults } from '../utils/searchResults'
 
 const SEARCH_LIFETIME_MS = 5 * 60 * 1000
 

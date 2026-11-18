@@ -2,11 +2,12 @@ import { $api } from '../../../api/client'
 import type { Slice } from '../../../interfaces/slice'
 import { sliceToQuery } from '../../../utils/slice'
 import type { MetricsPer90 } from '../interfaces/metrics'
-import { buildRows, footerSample, footerText } from '../utils/metrics'
+import { commonSample } from '../../../utils/attributes'
+import { buildRows, footerText } from '../utils/metrics'
 
 const toGrid = (response: MetricsPer90) => ({
   rows: buildRows(response),
-  footnote: footerText(footerSample(response.atributos)),
+  footnote: footerText(commonSample(response.atributos)),
 })
 
 export const useMetricsPer90 = (playerId: number, slice: Slice | undefined) =>

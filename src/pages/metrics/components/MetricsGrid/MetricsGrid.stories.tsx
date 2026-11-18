@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { buildRows, footerSample, footerText } from '../../utils/metrics'
+import { commonSample } from '../../../../utils/attributes'
+import { buildRows, footerText } from '../../utils/metrics'
 import { MetricsGrid } from './MetricsGrid'
 import {
   calculatedAttributes,
@@ -16,14 +17,14 @@ type Story = StoryObj<typeof meta>
 export const Calculated: Story = {
   args: {
     rows: buildRows(metricsResponse(calculatedAttributes)),
-    footnote: footerText(footerSample(calculatedAttributes)),
+    footnote: footerText(commonSample(calculatedAttributes)),
   },
 }
 
 export const AllRefused: Story = {
   args: {
     rows: buildRows(metricsResponse(insufficientSampleAttributes)),
-    footnote: footerText(footerSample(insufficientSampleAttributes)),
+    footnote: footerText(commonSample(insufficientSampleAttributes)),
   },
 }
 
