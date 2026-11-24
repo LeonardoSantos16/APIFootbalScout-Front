@@ -74,7 +74,7 @@ Conferidos antes do grilling, mudam as respostas abaixo:
 
 Aprovado em https://claude.ai/artifact/BzMwpv7rWYKeqeW4ursJek. Decisoes que sairam dele:
 
-- **W1.** `SemMudancaRelevante` com o valor atual em `ink-muted`, confirmando a Q8; o `MeasurementCard` do design system passa a pintar assim (README e `bundle.css`).
+- **W1.** `SemMudancaRelevante` com o valor atual em `ink-muted`, confirmando a Q8; o `MeasurementCard` do design system passa a pintar assim (README e `bundle.css`). Mudou na conferencia contra a API real: o back-end manda essa afericao sem valores, entao hoje o cartao mostra so "Sem mudança relevante" (`divida-tecnica.md`).
 - **W2.** Os dois `422` aparecem no `Notice`, logo abaixo do botao, que segue habilitado: o olheiro pode trocar o recorte e tentar de novo.
 - **W3.** Enquanto abre (do clique ate a leitura voltar, tambem depois do `409`), o seletor e o botao ficam desabilitados e o botao diz "Acompanhando…".
 - **W4.** `502` ao acompanhar: `InlineError` "Não foi possível acompanhar agora." no lugar do botao; "Tentar de novo" repete o `POST` com o mesmo recorte.

@@ -10,7 +10,7 @@ Front-end do APIFootballScout (scouting de atletas e gestao de transferencias). 
 
 | Comando | O que faz |
 | --- | --- |
-| `npm run dev` | Vite em http://localhost:5173, com proxy de `/api` para `VITE_API_PROXY_TARGET` (padrao `https://localhost:7163`). A API nao tem CORS, entao o front sempre chama `/api` relativo. Rodando o back-end no depurador, ele pausa nas excecoes de dominio (senha errada, regra de negocio) e trava todas as requisicoes: desligue a parada nessas excecoes ou use Ctrl+F5 |
+| `npm run dev` | Vite em http://localhost:5173, com proxy de `/api` para `VITE_API_PROXY_TARGET` (padrao `https://localhost:7163`). A API nao tem CORS, entao o front sempre chama `/api` relativo. Rodando o back-end no depurador, ele pausa nas excecoes de dominio (senha errada, regra de negocio) e trava todas as requisicoes: desligue a parada nessas excecoes ou use Ctrl+F5. O Mongo do AppHost nao tem volume de dados: contas e acompanhamentos somem a cada execucao da API (`docs/divida-tecnica.md`) |
 | `npm run dev:mock` | Mesmo servidor com o MSW interceptando `/api` (`.env.mock`), sem back-end, ja logado como Ana Ribeiro (`ana.ribeiro@exemplo.com` / `senhaboa123`); o access token vence a cada 20 chamadas para exercitar a renovacao |
 | `npm run lint` / `npm run typecheck` | oxlint e `tsc -b` |
 | `npm test` | Vitest uma vez; `npx vitest run caminho/do.test.tsx -t "nome"` roda um teste so; `npm run test:watch` fica observando |

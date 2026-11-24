@@ -16,7 +16,7 @@
 ## 3. Components
 
 - [x] 3.1 `ChangeChip` in `src/components/` with stories up and down; CSS Module over the tokens only; verify in Storybook
-- [x] 3.2 `MeasurementCard`, `TrackingStart` and `TrackingSkeleton` in `src/pages/tracking/components/`, with stories per state (each aferição state and title; not tracked, opening, the two 422, the opening 502); verify in Storybook at desktop and 375px and that no literal color, font or spacing enters the CSS
+- [x] 3.2 `MeasurementCard`, `TrackingStart` and `TrackingPanel` (with its skeleton) in `src/pages/tracking/components/`, with stories per state (each aferição state and title; not tracked, opening, the two 422, the opening 502); verify in Storybook at desktop and 375px and that no literal color, font or spacing enters the CSS
 - [x] 3.3 One-line player tabs below 720px in `src/components/Tabs/Tabs.module.css` (W8); verify in the `Tabs` story and on a player screen at 375px with the four tabs on one line
 
 ## 4. Acompanhamento tab
@@ -31,12 +31,12 @@
 
 ## 6. Verification
 
-- [ ] 6.1 `npm run lint`, `npm run typecheck`, `npm test` and `npm run build` pass; walk every state of the wireframe in `npm run dev:mock` (1001, 1002, 1003, 1005, 1006, 1007, 1008, and 1008 after opening) at desktop and 375px with no console errors
-- [ ] 6.2 Against the real API (`npm run dev` with the back-end running): open an acompanhamento on a real player, read it, try to open it again (409) and read a player not tracked; record the findings in `docs/divida-tecnica.md` and the delta specs
+- [x] 6.1 `npm run lint`, `npm run typecheck`, `npm test` and `npm run build` pass; walk every state of the wireframe in `npm run dev:mock` (1001, 1002, 1003, 1005, 1006, 1007, 1008, and 1008 after opening) at desktop and 375px with no console errors
+- [x] 6.2 Against the real API (`npm run dev` with the back-end running): open an acompanhamento on a real player, read it, try to open it again (409) and read a player not tracked; record the findings in `docs/divida-tecnica.md` and the delta specs
 
 ## 7. Retrospective
 
-- [ ] 7.1 Retrospective: what the spec did not foresee goes back to the delta specs; adjust the `scout-ui` skill and `CLAUDE.md`; verify with `openspec validate f1-f2-acompanhamento --strict`
+- [x] 7.1 Retrospective: what the spec did not foresee goes back to the delta specs; adjust the `scout-ui` skill and `CLAUDE.md`; verify with `openspec validate f1-f2-acompanhamento --strict`
 
 ## Workflow follow-up
 

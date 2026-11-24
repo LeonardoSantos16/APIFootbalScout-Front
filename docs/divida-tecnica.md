@@ -83,6 +83,18 @@ Pendencias conhecidas que o front contorna hoje e que precisam de correcao em ou
 - **Contorno no front:** a aba acompanhada nao mostra recorte nem seletor (grilling da F1/F2, Q5).
 - **Correcao esperada:** devolver `recorte` em `ConsultarMudancaAcompanhamentoResponseDto`.
 
+### Aferição sem mudança relevante sem os valores
+
+- **Problema:** `GET /api/Acompanhamento/{jogadorId}` responde `SemMudancaRelevante` só com o `resultado`, sem `anterior` nem `atual`: o value object `SemMudancaRelevante` do domínio não carrega valores, e o `ConsultarMudancaAcompanhamentoResponseDtoMapper` não tem o que mapear. Achado na conferência da change `f1-f2-acompanhamento` contra a API real (Neymar, 124712).
+- **Contorno no front:** o cartão mostra só "Sem mudança relevante", sem o valor atual atenuado que o grilling pediu (Q8 e W1). O caminho com o valor já existe e é exercitado no `dev:mock` (1002).
+- **Correção esperada:** levar o valor atual (e o anterior) para `SemMudancaRelevante` no domínio e no mapper; o front passa a mostrar o valor sem mudança nenhuma.
+
+### Mongo do Aspire sem volume de dados
+
+- **Problema:** o `AppHost.cs` cria o Mongo com `builder.AddMongoDB("mongodb")`, sem `.WithDataVolume()` nem `.WithLifetime(ContainerLifetime.Persistent)`. Cada execução do AppHost sobe um container novo, com um volume anônimo novo em `/data/db`, e as contas, acompanhamentos, relatórios e shortlists da execução anterior somem (havia 21 volumes anônimos órfãos no Docker). Achado na conferência da change `f1-f2-acompanhamento`: uma conta criada antes não entrava mais depois de reiniciar a API.
+- **Contorno no front:** nenhum; dentro de uma mesma execução a conta e os acompanhamentos persistem.
+- **Correção esperada:** `.WithDataVolume()` no Mongo (e, se quiser o container vivo entre execuções, `.WithLifetime(ContainerLifetime.Persistent)`); o mesmo vale para o Redis se o cache precisar sobreviver.
+
 ## Front
 
 ### Pagina inicial provisoria

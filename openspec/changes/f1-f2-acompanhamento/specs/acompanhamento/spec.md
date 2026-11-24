@@ -130,6 +130,10 @@ An aferição `SemMudancaRelevante` SHALL show the current value muted and "Sem 
 - **WHEN** the leitura of player 1002 brings the three aferições `SemMudancaRelevante`
 - **THEN** each aferição shows its current value ("Atlético Serrano", "€4,5M", "1.410 min") and "Sem mudança relevante"
 
+#### Scenario: No relevant change without values
+- **WHEN** the leitura brings an aferição `SemMudancaRelevante` with only its `resultado`, as the real API answers today
+- **THEN** the aferição shows only "Sem mudança relevante", with no value and no error
+
 ### Requirement: Unavailable aferição
 An aferição `Indisponivel` SHALL show no values and the reason in full: "A fonte passou a publicar o valor em outra moeda; comparar seria enganoso." for `MoedaInesperada` and "A temporada virou e a minutagem zerou. A leitura antiga não é comparável." for `TemporadaVirada`. It MUST NOT read "Sem mudança relevante" nor appear as an error.
 

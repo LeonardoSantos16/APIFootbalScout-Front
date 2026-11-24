@@ -55,13 +55,13 @@ ADRs applied: 0003 (recorte in the URL, used here only before tracking), 0004 (s
 
 `src/pages/tracking/hooks/useTracking.ts`: a `useQuery` with the key of `$api.queryOptions('get', '/api/Acompanhamento/{jogadorId}', …)` and a `queryFn` that calls `fetchClient.GET` and returns `null` when `isNotTracked(error)`, so the not-tracked answer is data and stays in the cache for the 5-minute `staleTime` (an error would be refetched on every mount). `select` returns `{ window: windowText(...), measurements: buildMeasurements(...) }` or `null`.
 
-`src/pages/tracking/hooks/useOpenTracking.ts`: `$api.useMutation('post', '/api/Acompanhamento')`. On success, and on `isAlreadyTracked`, it awaits `queryClient.invalidateQueries` of the leitura key; `opening` is true from the click until that refetch settles, so the button reads "Acompanhando…" until the panel can render. The mutation is not retried.
+`src/pages/tracking/hooks/useOpenTracking.ts`: a `useMutation` whose `mutationFn` takes the `Slice`, calls `fetchClient.POST('/api/Acompanhamento')`, swallows `isAlreadyTracked` (so the 409 ends as a success and never reaches the error state) and then awaits `queryClient.invalidateQueries` of the leitura key; the mutation stays pending from the click until that refetch settles, so the button reads "Acompanhando…" until the panel can render. The mutation is not retried.
 
 ### Page
 
 `src/pages/tracking/TrackingPage.tsx` receives `playerId`, `search` and `onSliceChange` (the stories run without a router), under `PageColumns`:
 
-- profile or leitura pending: `TrackingSkeleton` (janela line and three cards in skeleton);
+- profile or leitura pending: `TrackingPanel` without a view (janela line and three cards in skeleton, announced as `role="status"` "Carregando acompanhamento");
 - leitura failed: `Card` titled "Acompanhamento" with `InlineError` from `describeReadingError`;
 - not tracked and profile without `stats`: `Card` with "Sem estatísticas publicadas para este jogador.";
 - not tracked: `TrackingStart` in a `Card` titled "Acompanhamento": both texts, `Select` (`SLICE_SELECT_LABEL`), the primary `Button` "Acompanhar" / "Acompanhando…" (disabled with the select while `opening`), `Notice` below for `placement: 'below'`, `InlineError` in place of the button for `placement: 'replace'` (its "Tentar de novo" calls the mutation again with the same recorte);
@@ -73,7 +73,8 @@ ADRs applied: 0003 (recorte in the URL, used here only before tracking), 0004 (s
 
 - `src/components/ChangeChip/`: `direction` (`up` | `down`) and the text; `--up` over `--up-tint`, `--down` over `--down-tint`, `--radius-sm`; stories up and down.
 - `src/pages/tracking/components/MeasurementCard/`: `title`, `state` and, by state, `previous`/`current`/`change` or `reason`; `ComMudanca` with "previous → current" (previous and arrow in `--ink-muted`), `SemMudancaRelevante` with `current` in `--ink-muted` and "Sem mudança relevante" in `--ink-soft`, `Indisponivel` with the reason in `--ink-subtle` and the dashed `--line-strong` outline; stories per state and per title.
-- `src/pages/tracking/components/TrackingStart/` and `TrackingSkeleton/`, with stories.
+- `src/pages/tracking/components/TrackingPanel/`: the section title, the janela and the three cards in the grid, or the skeleton when it has no view; `MeasurementCard` is split into `MeasurementBody` (the content per state) and `MeasurementCardSkeleton`.
+- `src/pages/tracking/components/TrackingStart/`, with stories; `Select` gains `disabled` to lock the recorte while opening (W3).
 - `src/components/Tabs/Tabs.module.css`: below 720px, `justify-content: space-between` and `column-gap: var(--space-3)`, keeping `flex-wrap: wrap` (W8).
 
 The three cards sit in a grid of three equal columns on desktop and one column below 720px.
@@ -90,11 +91,12 @@ The three cards sit in a grid of three equal columns on desktop and one column b
 | `openTracking` | 201, adds the player to the store |
 | `openTrackingAlreadyTracked`, `openTrackingLimitReached`, `openTrackingInsufficientInformation`, `openTrackingSourceDown`, `openTrackingPending` | 409, the two 422, 502, never resolves |
 
-`src/mocks/handlers.ts` answers the `dev:mock` under `withAuth` (Q13): the leitura from the store (1001 with changes, 1002 no relevant change, 1003 club change and both unavailable, any other stored id opened today), 502 for 1007, 404 for anyone else; opening answers 422 limit for 1005, 422 insufficient information for 1006, 409 for a stored id and 201 otherwise. 1004 keeps its missing profile, so the working "Acompanhar" moves to a new player 1008, Tiago Ferraz (`D`, no club, full profile), found by "tiago" and kept out of the "atlético" search.
+`src/mocks/handlers.ts` answers the `dev:mock` under `withAuth` (Q13): the leitura from the store (1001 with changes, 1002 no relevant change, 1003 club change and both unavailable, any other stored id opened today), 502 for 1007, 404 for anyone else; opening answers 422 limit for 1005, 422 insufficient information for 1006, 409 for a stored id and 201 otherwise. 1004 keeps its missing profile, so the working "Acompanhar" moves to a new player 1008, Tiago Ferraz (`M` in the search without a club, full profile), found by "tiago" and kept out of the "atlético" search.
 
 ## Risks / Trade-offs
 
 - [The leitura does not return its recorte] → the tracked panel shows none; recorded in `docs/divida-tecnica.md`.
 - [The limit is only known after a 422] → the message appears on the first refused click; item 6b disables the button once the back-end exposes the usage.
 - [`duracaoEmDias` and `janela.de` in UTC] → the date is formatted in UTC, so a linha de base measured late at night may show the next day in Brazil; accepted for the first version.
-- [A new mock player shifts the search fixtures] → 1008 has no club, so existing "atlético" tests keep their lists.
+- [A new mock player shifts the search fixtures] → 1008 has no club in the search, so the "atlético" lists keep their players; the comparison test that lists every mock player now includes Tiago Ferraz as a comparable midfielder.
+- [The real API sends `SemMudancaRelevante` without values] → found against the real API: the card shows only "Sem mudança relevante" until the back-end carries the values (`docs/divida-tecnica.md`); the muted current value of W1 only shows in `dev:mock`.
