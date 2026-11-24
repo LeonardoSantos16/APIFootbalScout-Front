@@ -18,6 +18,7 @@ import { Route as PublicCriarContaRouteImport } from './routes/_public/criar-con
 import { Route as PublicEntrarRouteImport } from './routes/_public/entrar'
 import { Route as AuthenticatedJogadoresJogadorIdRouteImport } from './routes/_authenticated/jogadores/$jogadorId'
 import { Route as AuthenticatedJogadoresJogadorIdIndexRouteImport } from './routes/_authenticated/jogadores/$jogadorId/index'
+import { Route as AuthenticatedJogadoresJogadorIdAcompanhamentoRouteImport } from './routes/_authenticated/jogadores/$jogadorId/acompanhamento'
 import { Route as AuthenticatedJogadoresJogadorIdComparacaoRouteImport } from './routes/_authenticated/jogadores/$jogadorId/comparacao'
 import { Route as AuthenticatedJogadoresJogadorIdMetricasRouteImport } from './routes/_authenticated/jogadores/$jogadorId/metricas'
 
@@ -66,6 +67,12 @@ const AuthenticatedJogadoresJogadorIdIndexRoute =
     path: '/',
     getParentRoute: () => AuthenticatedJogadoresJogadorIdRoute,
   } as any)
+const AuthenticatedJogadoresJogadorIdAcompanhamentoRoute =
+  AuthenticatedJogadoresJogadorIdAcompanhamentoRouteImport.update({
+    id: '/acompanhamento',
+    path: '/acompanhamento',
+    getParentRoute: () => AuthenticatedJogadoresJogadorIdRoute,
+  } as any)
 const AuthenticatedJogadoresJogadorIdComparacaoRoute =
   AuthenticatedJogadoresJogadorIdComparacaoRouteImport.update({
     id: '/comparacao',
@@ -86,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/criar-conta': typeof PublicCriarContaRoute
   '/entrar': typeof PublicEntrarRoute
   '/jogadores/$jogadorId': typeof AuthenticatedJogadoresJogadorIdRouteWithChildren
+  '/jogadores/$jogadorId/acompanhamento': typeof AuthenticatedJogadoresJogadorIdAcompanhamentoRoute
   '/jogadores/$jogadorId/comparacao': typeof AuthenticatedJogadoresJogadorIdComparacaoRoute
   '/jogadores/$jogadorId/metricas': typeof AuthenticatedJogadoresJogadorIdMetricasRoute
   '/jogadores/$jogadorId/': typeof AuthenticatedJogadoresJogadorIdIndexRoute
@@ -96,6 +104,7 @@ export interface FileRoutesByTo {
   '/conta': typeof AuthenticatedContaRoute
   '/criar-conta': typeof PublicCriarContaRoute
   '/entrar': typeof PublicEntrarRoute
+  '/jogadores/$jogadorId/acompanhamento': typeof AuthenticatedJogadoresJogadorIdAcompanhamentoRoute
   '/jogadores/$jogadorId/comparacao': typeof AuthenticatedJogadoresJogadorIdComparacaoRoute
   '/jogadores/$jogadorId/metricas': typeof AuthenticatedJogadoresJogadorIdMetricasRoute
   '/jogadores/$jogadorId': typeof AuthenticatedJogadoresJogadorIdIndexRoute
@@ -110,6 +119,7 @@ export interface FileRoutesById {
   '/_public/entrar': typeof PublicEntrarRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/_authenticated/jogadores/$jogadorId': typeof AuthenticatedJogadoresJogadorIdRouteWithChildren
+  '/_authenticated/jogadores/$jogadorId/acompanhamento': typeof AuthenticatedJogadoresJogadorIdAcompanhamentoRoute
   '/_authenticated/jogadores/$jogadorId/comparacao': typeof AuthenticatedJogadoresJogadorIdComparacaoRoute
   '/_authenticated/jogadores/$jogadorId/metricas': typeof AuthenticatedJogadoresJogadorIdMetricasRoute
   '/_authenticated/jogadores/$jogadorId/': typeof AuthenticatedJogadoresJogadorIdIndexRoute
@@ -123,6 +133,7 @@ export interface FileRouteTypes {
     | '/criar-conta'
     | '/entrar'
     | '/jogadores/$jogadorId'
+    | '/jogadores/$jogadorId/acompanhamento'
     | '/jogadores/$jogadorId/comparacao'
     | '/jogadores/$jogadorId/metricas'
     | '/jogadores/$jogadorId/'
@@ -133,6 +144,7 @@ export interface FileRouteTypes {
     | '/conta'
     | '/criar-conta'
     | '/entrar'
+    | '/jogadores/$jogadorId/acompanhamento'
     | '/jogadores/$jogadorId/comparacao'
     | '/jogadores/$jogadorId/metricas'
     | '/jogadores/$jogadorId'
@@ -146,6 +158,7 @@ export interface FileRouteTypes {
     | '/_public/entrar'
     | '/_authenticated/'
     | '/_authenticated/jogadores/$jogadorId'
+    | '/_authenticated/jogadores/$jogadorId/acompanhamento'
     | '/_authenticated/jogadores/$jogadorId/comparacao'
     | '/_authenticated/jogadores/$jogadorId/metricas'
     | '/_authenticated/jogadores/$jogadorId/'
@@ -221,6 +234,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedJogadoresJogadorIdIndexRouteImport
       parentRoute: typeof AuthenticatedJogadoresJogadorIdRoute
     }
+    '/_authenticated/jogadores/$jogadorId/acompanhamento': {
+      id: '/_authenticated/jogadores/$jogadorId/acompanhamento'
+      path: '/acompanhamento'
+      fullPath: '/jogadores/$jogadorId/acompanhamento'
+      preLoaderRoute: typeof AuthenticatedJogadoresJogadorIdAcompanhamentoRouteImport
+      parentRoute: typeof AuthenticatedJogadoresJogadorIdRoute
+    }
     '/_authenticated/jogadores/$jogadorId/comparacao': {
       id: '/_authenticated/jogadores/$jogadorId/comparacao'
       path: '/comparacao'
@@ -239,6 +259,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedJogadoresJogadorIdRouteChildren {
+  AuthenticatedJogadoresJogadorIdAcompanhamentoRoute: typeof AuthenticatedJogadoresJogadorIdAcompanhamentoRoute
   AuthenticatedJogadoresJogadorIdComparacaoRoute: typeof AuthenticatedJogadoresJogadorIdComparacaoRoute
   AuthenticatedJogadoresJogadorIdMetricasRoute: typeof AuthenticatedJogadoresJogadorIdMetricasRoute
   AuthenticatedJogadoresJogadorIdIndexRoute: typeof AuthenticatedJogadoresJogadorIdIndexRoute
@@ -246,6 +267,8 @@ interface AuthenticatedJogadoresJogadorIdRouteChildren {
 
 const AuthenticatedJogadoresJogadorIdRouteChildren: AuthenticatedJogadoresJogadorIdRouteChildren =
   {
+    AuthenticatedJogadoresJogadorIdAcompanhamentoRoute:
+      AuthenticatedJogadoresJogadorIdAcompanhamentoRoute,
     AuthenticatedJogadoresJogadorIdComparacaoRoute:
       AuthenticatedJogadoresJogadorIdComparacaoRoute,
     AuthenticatedJogadoresJogadorIdMetricasRoute:

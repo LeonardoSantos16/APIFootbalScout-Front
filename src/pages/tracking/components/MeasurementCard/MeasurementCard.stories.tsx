@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { MeasurementCard, MeasurementCardSkeleton } from './MeasurementCard'
+import { MeasurementCard } from './MeasurementCard'
+import { MeasurementCardSkeleton } from './MeasurementCardSkeleton'
 
 const meta = {
   component: MeasurementCard,

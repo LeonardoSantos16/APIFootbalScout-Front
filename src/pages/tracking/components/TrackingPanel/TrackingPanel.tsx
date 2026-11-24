@@ -6,13 +6,19 @@ import styles from './TrackingPanel.module.css'
 
 const TITLE = 'Acompanhamento'
 const SKELETON_CARDS = ['clube', 'valor', 'minutagem']
+const LOADING_LABEL = 'Carregando acompanhamento'
 
 interface TrackingPanelProps {
   view?: TrackingView
 }
 
 export const TrackingPanel = ({ view }: TrackingPanelProps) => (
-  <section className={styles.panel} aria-busy={!view || undefined}>
+  <section
+    className={styles.panel}
+    aria-busy={!view || undefined}
+    role={view ? undefined : 'status'}
+    aria-label={view ? undefined : LOADING_LABEL}
+  >
     <div className={styles.head}>
       <h2 className={styles.title}>{TITLE}</h2>
       {view ? <p className={styles.window}>{view.window}</p> : <Skeleton className={styles.windowSkeleton} />}
