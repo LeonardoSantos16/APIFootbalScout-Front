@@ -28,7 +28,9 @@ Quando `code` **nao** vem, o erro e desconhecido pela API: `detail` vira `"An un
 | 401 | `Unauthorized` | `NaoAutenticadoException` ou token ausente/expirado |
 | 404 | `Resource not found` | `RecursoNaoEncontradoException` |
 | 409 | `Operation conflict` | `ConflitoDeDominioException` |
+| 412 | `Precondition failed` | `ConflitoDeConcorrenciaException`: `If-Match` com versao velha (Relatorio, Shortlist) |
 | 422 | `Business rule violation` | `RegraDeNegocioException` |
+| 428 | `Precondition required` | escrita de Relatorio ou Shortlist sem `If-Match`, sem `code` |
 | 500 | `Internal Server Error` | qualquer excecao nao mapeada |
 | 502 | `External data source unavailable` | `FonteExternaIndisponivelException` (SofaScore) |
 
@@ -91,6 +93,7 @@ Erros de validacao de modelo (`[Range]`, `[Required]`, `[EmailAddress]`) sao ger
 | `relatorio.conclusao_ausente` | 422 | Preencha nota e parecer antes de finalizar. |
 | `relatorio.conteudo_minimo_nao_atendido` | 422 | Inclua ao menos 2 pontos positivos e 2 negativos (20 caracteres no total). |
 | `relatorio.parecer_invalido` | 400 | Parecer invalido. |
+| `relatorio.alterado_por_outra_requisicao` | 412 | Este relatorio foi alterado em outra aba. |
 | `nota.fora_da_faixa` | 400 | A nota deve estar entre 0 e 10. |
 | `nota.precisao_invalida` | 400 | A nota aceita no maximo uma casa decimal. |
 

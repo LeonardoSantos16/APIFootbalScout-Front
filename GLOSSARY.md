@@ -128,6 +128,14 @@ _Evitar_: publicado, enviado, concluído
 Um novo relatório que corrige um finalizado e o referencia, sem alterá-lo.
 _Evitar_: edição, revisão, nova versão
 
+**Relato**:
+O texto livre do relatório, em que o olheiro descreve o que viu.
+_Evitar_: observações, texto, comentário
+
+**Vigente**:
+O relatório finalizado mais recente de uma cadeia de correções: o que vale hoje.
+_Evitar_: atual, última versão, ativo
+
 **Parecer**:
 A conclusão do relatório: contratar, monitorar, reavaliar ou descartar.
 _Evitar_: veredito, recomendação, decisão
@@ -200,3 +208,12 @@ Os identificadores do código são em inglês. Um termo novo entra nesta tabela 
 | Mudança relevante | `relevantChange` |
 | Indisponível | `unavailable` |
 | Nota | `rating` |
+| Relatório | `Report`, `ReportPage` |
+| Observação | `observation` |
+| Rascunho | `draft` |
+| Finalizado | `finalized` |
+| Correção | `Correction` |
+| Vigente | `current` |
+| Relato | `narrative` |
+| Parecer | `verdict` |
+| Pontos positivos, pontos negativos | `positivePoints`, `negativePoints` |

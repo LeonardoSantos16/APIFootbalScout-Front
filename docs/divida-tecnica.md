@@ -95,6 +95,24 @@ Pendencias conhecidas que o front contorna hoje e que precisam de correcao em ou
 - **Contorno no front:** nenhum; dentro de uma mesma execução a conta e os acompanhamentos persistem.
 - **Correção esperada:** `.WithDataVolume()` no Mongo (e, se quiser o container vivo entre execuções, `.WithLifetime(ContainerLifetime.Persistent)`); o mesmo vale para o Redis se o cache precisar sobreviver.
 
+### Rascunho de relatorio sem exclusao
+
+- **Problema:** o `RelatorioController` nao tem `DELETE`. Um rascunho aberto por engano ou abandonado fica para sempre na linha do tempo do jogador.
+- **Contorno no front:** nenhum; o rascunho aparece com "Rascunho" e "Continuar" (grilling da F5, Q14). Como o rascunho so nasce no primeiro salvar (Q3), o editor nao cria rascunho vazio.
+- **Correcao esperada:** `DELETE /api/Relatorio/{id}` so para rascunho, com `409 relatorio.ja_finalizado` no finalizado.
+
+### Texto vazio do relatorio responde `400` sem `code`
+
+- **Problema:** em `POST /api/Relatorio` e `POST /api/Relatorio/{id}/correcoes`, o `texto` vazio e barrado pelo `[Required]` do DTO, que responde `ValidationProblemDetails` sem `code`; so o `PUT` lanca `relatorio.texto_obrigatorio`.
+- **Contorno no front:** o editor nao envia relato vazio ou so com espacos ("Escreva o relato.", grilling da F5, Q6); o `400` sem `code` cai no erro generico.
+- **Correcao esperada:** validar o texto no dominio tambem na abertura e na correcao, com `relatorio.texto_obrigatorio`.
+
+### Concorrencia otimista fora dos docs do front do back-end
+
+- **Problema:** `docs/frontend/erros.md` e `docs/frontend/fluxos-de-tela.md` do back-end nao citam o `If-Match`, o `412 relatorio.alterado_por_outra_requisicao` (nem o equivalente da shortlist) e o `428`, que o ADR 0005 do back-end introduziu.
+- **Contorno no front:** a copia local de `erros.md` ja traz os dois status e o codigo do relatorio; o tratamento esta no ADR 0006 do front.
+- **Correcao esperada:** acrescentar os codigos e uma secao de concorrencia nos docs do back-end.
+
 ## Front
 
 ### Pagina inicial provisoria
