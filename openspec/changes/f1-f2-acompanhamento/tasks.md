@@ -27,7 +27,7 @@
 
 ## 5. Documentation
 
-- [ ] 5.1 `CLAUDE.md` with the acompanhamento tab and the `dev:mock` players (1001, 1002, 1003 tracked; 1008 opens; 1005 and 1006 the two 422; 1007 source down); `scout-ui` skill if the tab added a pattern; verify the texts against the code
+- [x] 5.1 `CLAUDE.md` with the acompanhamento tab and the `dev:mock` players (1001, 1002, 1003 tracked; 1008 opens; 1005 and 1006 the two 422; 1007 source down); `scout-ui` skill if the tab added a pattern; verify the texts against the code
 
 ## 6. Verification
 
