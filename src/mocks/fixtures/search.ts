@@ -19,6 +19,7 @@ const PLAYERS: PlayerEntry[] = [
   { id: 1005, name: 'Bruno Lacerda', position: 'M', club: 'Atlético Serrano', country: 'Brasil' },
   { id: 1006, name: 'Diego Albuquerque', position: 'F', club: 'Atlético Serrano', country: 'Brasil' },
   { id: 1007, name: 'Miguel Torres', position: null },
+  { id: 1008, name: 'Tiago Ferraz', position: 'M', country: 'Brasil' },
 ]
 
 const playerResult = (player: PlayerEntry): Schemas['SofaSearchResult'] => ({

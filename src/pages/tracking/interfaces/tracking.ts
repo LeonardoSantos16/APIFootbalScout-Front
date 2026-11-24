@@ -27,3 +27,8 @@ export type OpeningFailurePlacement = 'replace' | 'below'
 export interface OpeningFailure extends DescribedError {
   placement: OpeningFailurePlacement
 }
+
+export interface TrackingView {
+  window: string
+  measurements: Measurement[]
+}

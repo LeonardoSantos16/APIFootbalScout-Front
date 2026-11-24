@@ -113,6 +113,7 @@ describe('busca do segundo jogador', () => {
       expect.stringContaining('Lucas Prado'),
       expect.stringContaining('Bruno Lacerda'),
       expect.stringContaining('Diego Albuquerque'),
+      expect.stringContaining('Tiago Ferraz'),
     ])
     expect(screen.getByText('Mostrando só jogadores comparáveis com meio-campo.')).toBeInTheDocument()
     expect(router.state.location.search).not.toHaveProperty('termo')

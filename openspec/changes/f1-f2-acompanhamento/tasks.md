@@ -9,9 +9,9 @@
 
 ## 2. Mocks and data hooks
 
-- [ ] 2.1 `src/mocks/fixtures/tracking.ts`, `src/mocks/trackingStore.ts` (seeded with 1001, 1002, 1003, reset in `src/test/setup.ts`) and the named handlers of `src/mocks/handlers/tracking.ts` for every leitura and opening state; verify with `npm run typecheck`
-- [ ] 2.2 Default leitura and opening in `src/mocks/handlers.ts` under `withAuth` (store, 1007 502, 1005 and 1006 the two 422, 409 for a stored id); new player 1008 Tiago Ferraz in the profile and search fixtures, without a club; verify with `npm test` (the existing search and comparison tests stay green)
-- [ ] 2.3 `useTracking` (not-tracked as `null` data, 5-minute `staleTime`, `select` with the rules of group 1) and `useOpenTracking` (invalidate and await the leitura on success and on 409, `opening` until it settles); verify with `npm run typecheck`
+- [x] 2.1 `src/mocks/fixtures/tracking.ts`, `src/mocks/trackingStore.ts` (seeded with 1001, 1002, 1003, reset in `src/test/setup.ts`) and the named handlers of `src/mocks/handlers/tracking.ts` for every leitura and opening state; verify with `npm run typecheck`
+- [x] 2.2 Default leitura and opening in `src/mocks/handlers.ts` under `withAuth` (store, 1007 502, 1005 and 1006 the two 422, 409 for a stored id); new player 1008 Tiago Ferraz in the profile and search fixtures, without a club; verify with `npm test` (the existing search and comparison tests stay green)
+- [x] 2.3 `useTracking` (not-tracked as `null` data, 5-minute `staleTime`, `select` with the rules of group 1) and `useOpenTracking` (invalidate and await the leitura on success and on 409, `opening` until it settles); verify with `npm run typecheck`
 
 ## 3. Components
 
