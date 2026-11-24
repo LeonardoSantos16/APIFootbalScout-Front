@@ -1,3 +1,4 @@
+import { TRACKING_LIMIT } from '../config/scout'
 import { ApiError } from './client'
 
 export const GENERIC_MESSAGE = 'Não foi possível concluir agora.'
@@ -12,7 +13,7 @@ export const MESSAGE_BY_CODE: Record<string, string> = {
   'usuario.token_sem_identificacao': 'Sessão inválida. Entre novamente.',
 
   'acompanhamento.jogador_ja_acompanhado': 'Você já acompanha este jogador.',
-  'acompanhamento.limite_atingido': 'Limite de 10 acompanhamentos atingido. Encerre um para abrir outro.',
+  'acompanhamento.limite_atingido': `Limite de ${TRACKING_LIMIT} acompanhamentos atingido.`,
   'acompanhamento.dossie_nao_encontrado': 'Nenhum acompanhamento ativo para este jogador.',
   'jogador.perfil_nao_encontrado': 'Não há dados deste jogador para a competição e temporada escolhidas.',
   'jogador.informacoes_insuficientes': 'O jogador não tem dados suficientes para servir de linha de base.',
