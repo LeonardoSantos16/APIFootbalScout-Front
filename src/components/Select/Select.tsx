@@ -14,9 +14,10 @@ interface SelectProps {
   value?: string
   onChange?: (value: string) => void
   loading?: boolean
+  disabled?: boolean
 }
 
-export const Select = ({ label, options, value, onChange, loading }: SelectProps) => {
+export const Select = ({ label, options, value, onChange, loading, disabled }: SelectProps) => {
   const id = useId()
 
   return (
@@ -32,6 +33,7 @@ export const Select = ({ label, options, value, onChange, loading }: SelectProps
             id={id}
             className={styles.select}
             value={value}
+            disabled={disabled}
             onChange={(event) => onChange?.(event.target.value)}
           >
             {options.map((option) => (

@@ -1,12 +1,12 @@
 import type { DescribedError } from '../../../api/errors'
 import type { components } from '../../../api/schema'
+import type { ChangeDirection } from '../../../components/ChangeChip/ChangeChip'
 
 type Schemas = components['schemas']
 
 export type TrackingResponse = Schemas['ConsultarMudancaAcompanhamentoResponseDto']
 export type TrackingWindow = Schemas['JanelaDaComparacaoDto']
 export type MeasurementState = Schemas['ResultadoDaAfericaoDto']
-export type ChangeDirection = 'up' | 'down'
 
 export interface MeasurementChange {
   direction: ChangeDirection

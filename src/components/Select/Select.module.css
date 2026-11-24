@@ -27,8 +27,13 @@
   text-overflow: ellipsis;
 }
 
-.select:hover {
+.select:hover:not(:disabled) {
   background: var(--surface-strong);
+}
+
+.select:disabled {
+  cursor: default;
+  color: var(--ink-muted);
 }
 
 .caret {

@@ -34,3 +34,17 @@ export const Buttons: Story = {
     ],
   },
 }
+
+export const PlayerTabs: Story = {
+  args: {
+    ...Links.args,
+    value: 'tracking',
+    items: [
+      { id: 'profile', label: 'Perfil' },
+      { id: 'metrics', label: 'Métricas' },
+      { id: 'comparison', label: 'Comparação' },
+      { id: 'tracking', label: 'Acompanhamento' },
+    ],
+  },
+  globals: { viewport: { value: 'mobile1' } },
+}

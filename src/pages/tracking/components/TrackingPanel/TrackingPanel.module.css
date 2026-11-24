@@ -1,0 +1,39 @@
+.panel {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.head {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.title {
+  margin: 0;
+  font: var(--text-section-title);
+  color: var(--ink);
+}
+
+.window {
+  margin: 0;
+  font: var(--text-body);
+  color: var(--ink-soft);
+}
+
+.windowSkeleton {
+  width: min(100%, 360px);
+  height: 14px;
+  margin-block: 3px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+@media (max-width: 719px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
