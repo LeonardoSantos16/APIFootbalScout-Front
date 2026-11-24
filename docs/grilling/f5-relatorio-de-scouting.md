@@ -41,15 +41,15 @@ Conferidos antes do grilling, mudam as respostas abaixo:
 
 ## Falhas e concorrencia
 
-- **Q15. `412`:** as edicoes locais ficam e um `Notice` acima do botao diz "Este relatório foi alterado em outra aba." com "Carregar a versão atual", que refaz o `GET` e descarta as edicoes locais. Salvar e finalizar ficam desabilitados ate isso. `409 relatorio.ja_finalizado`: refaz o `GET`, mostra a leitura do finalizado e o `Notice` "Este relatório já foi finalizado.".
+- **Q15. `412`:** as edicoes locais ficam e um `InlineError` junto aos botoes (W1) diz "Este relatório foi alterado em outra aba." com "Carregar a versão atual", que refaz o `GET` e descarta as edicoes locais. Salvar e finalizar ficam desabilitados ate isso. `409 relatorio.ja_finalizado`: refaz o `GET`, mostra a leitura do finalizado e o `Notice` "Este relatório já foi finalizado.".
 - **Q16. ADR 0006:** `If-Match` montado com a `version` do corpo da ultima resposta; uma escrita em voo por vez; no `412` o servidor vence, sem merge. A resposta de cada escrita substitui o estado salvo, como no ADR 0004.
 - **Q17. `POST` ok e `PUT` seguinte com falha:** navega para `/relatorios/$relatorioId` mantendo os campos nao salvos, com "Alterações não salvas" e o erro junto ao botao; o proximo salvar manda so o `PUT`.
 - **Q18. Sair com alteracoes nao salvas:** `useBlocker` do TanStack Router com `Dialog` "Sair sem salvar?" / "As alterações deste relatório serão perdidas." / "Sair" e "Continuar editando"; `beforeunload` nativo para fechar ou recarregar a janela.
 
 ## Finalizado e correcao
 
-- **Q12. Correcao:** "Criar correção" abre o editor local com o relato do original preenchido e editavel; nota, parecer e pontos vazios (o olheiro reavalia). A data vem do original, somente leitura. O `POST /correcoes` sai no primeiro salvar. O editor mostra "Corrige o relatório de 24/11/2026" com link para o original; titulo "Correção".
-- **Q19. Leitura do finalizado:** relato, "7,5 de 10", parecer, as duas listas e "Observado em 24/11/2026 · finalizado em 25/11/2026". "Criar correção" so no vigente do grupo, para a cadeia ficar linear; se ja existe uma correcao em rascunho dele, o botao vira "Continuar correção". Os nao vigentes mostram "Corrigido por relatório de 26/11/2026", com link.
+- **Q12. Correcao:** "Criar correção" abre o editor local com o relato do original preenchido e editavel; nota, parecer e pontos vazios (o olheiro reavalia). A data vem do original, somente leitura. O `POST /correcoes` sai no primeiro salvar. O editor mostra "Corrige o relatório observado em 24/11/2026" (ou "Corrige a correção de 26/11/2026") com link para o anterior; titulo "Correção" (W4).
+- **Q19. Leitura do finalizado:** relato, "7,5 de 10", parecer, as duas listas e "Observado em 24/11/2026 · finalizado em 25/11/2026". "Criar correção" so no vigente do grupo, para a cadeia ficar linear; se ja existe uma correcao em rascunho dele, o botao vira "Continuar correção". Os nao vigentes mostram "Corrigido pela correção de 26/11/2026", com link (W4, W5).
 - **Q20.** Varios rascunhos do mesmo jogador sao permitidos (R5.6), sem aviso.
 
 ## Linha do tempo
@@ -88,3 +88,16 @@ Conferidos antes do grilling, mudam as respostas abaixo:
 ## Glossario
 
 - **Q28.** Termos novos: "Relato" e "Vigente". Nomes no codigo seguem a tabela do `GLOSSARY.md`, que ja fixa Nota como `rating`: Relatório `Report`, Rascunho `draft`, Finalizado `finalized`, Correção `Correction`, Parecer `verdict`, Relato `narrative`, Pontos positivos e negativos `positivePoints` e `negativePoints`, Vigente `current`, Observação `observation`.
+
+## Wireframe
+
+Aprovado em https://claude.ai/artifact/K4QfFWZxsiSkBYu4oBNj9o. Decisoes que sairam dele:
+
+- **W1.** O `412` aparece num `InlineError` junto aos botoes, "Este relatório foi alterado em outra aba." com a acao "Carregar a versão atual" (`retryLabel`), e nao num `Notice`, que nao tem botao. O design system nao muda.
+- **W2.** Com relatorios na lista, "Escrever relatório" e secundario, no cabecalho do cartao; no vazio, primario, embaixo da frase. No editor, "Finalizar relatório" e o primario (desabilitado ate o checklist fechar) e "Salvar rascunho" o secundario.
+- **W3.** Falha ao salvar (500, rede, `PUT` depois do `POST`): mensagem do `describeError` junto aos botoes, sem "Tentar de novo"; o proprio "Salvar rascunho" e a nova tentativa.
+- **W4.** A correcao cita o anterior pelo titulo da linha do tempo: "Corrige o relatório observado em 02/11/2026" (original) ou "Corrige a correção de 05/11/2026" (outra correcao). O inverso e "Corrigido pela correção de 05/11/2026". A data da correcao e o `escritoEm`.
+- **W5.** "Corrigido pela correção de" so aparece quando a correcao que substitui o relatorio ja esta finalizada; uma correcao em rascunho nao tira o "Vigente" de ninguem.
+- **W6.** Na correcao nova, a data fica somente leitura desde o inicio, com a dica "A correção mantém a data da observação do relatório corrigido."
+- **W7.** Em 375px, as cinco abas numa linha so; se "Acompanhamento" nao couber, a implementacao decide entre encurtar para "Acompanh." e reduzir o espaco entre as abas, conferindo no navegador.
+
