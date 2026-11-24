@@ -1,0 +1,16 @@
+<!-- @dsCard group="Relatório" height=88 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>StatusBadge</title></head>
+<body style="margin:0;background:var(--ground)">
+<div id="root" class="sv-stage"></div>
+<script>
+  var V = window.ScoutVestiario, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { style: { display: 'flex', gap: '12px', background: 'var(--surface)', padding: '24px', borderRadius: 'var(--radius-lg)' } },
+      h(V.StatusBadge, { tone: 'draft' }),
+      h(V.StatusBadge, { tone: 'finalized' }),
+      h(V.StatusBadge, { tone: 'current' })));
+</script>
+</body>
+</html>

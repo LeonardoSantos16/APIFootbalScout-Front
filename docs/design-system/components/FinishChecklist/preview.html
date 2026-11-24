@@ -1,0 +1,21 @@
+<!-- @dsCard group="Relatório" height=260 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>FinishChecklist</title></head>
+<body style="margin:0;background:var(--ground)">
+<div id="root" class="sv-stage is-column"></div>
+<script>
+  var V = window.ScoutVestiario, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h('div', { style: { display: 'grid', gap: '16px', background: 'var(--surface)', padding: '24px', borderRadius: 'var(--radius-lg)', maxWidth: '360px' } },
+      h(V.FinishChecklist, { items: [
+        { label: 'Nota', done: true },
+        { label: 'Parecer', done: true },
+        { label: '2 pontos positivos', done: false, progress: '1 de 2' },
+        { label: '2 pontos negativos', done: false, progress: '0 de 2' },
+        { label: '20 caracteres nos pontos', done: true, progress: '31 de 20' }
+      ] }),
+      h('div', null, h(V.Button, { variant: 'primary', disabled: true }, 'Finalizar relatório'))));
+</script>
+</body>
+</html>

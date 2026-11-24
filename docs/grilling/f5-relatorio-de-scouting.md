@@ -22,22 +22,22 @@ Conferidos antes do grilling, mudam as respostas abaixo:
 
 ## Onde mora
 
-- **Q2.** Aba "Relatórios" no `PlayerLayout`, a ultima: "Perfil | Métricas | Comparação | Acompanhamento | Relatórios". A aba (`/jogadores/$jogadorId/relatorios`) tem a linha do tempo e "Novo relatório"; o editor e a leitura ficam em `/jogadores/$jogadorId/relatorios/$relatorioId`.
+- **Q2.** Aba "Relatórios" no `PlayerLayout`, a ultima: "Perfil | Métricas | Comparação | Acompanhamento | Relatórios". A aba (`/jogadores/$jogadorId/relatorios`) tem a linha do tempo e "Escrever relatório"; o editor e a leitura ficam em `/jogadores/$jogadorId/relatorios/$relatorioId`.
 - **Q26.** Relatorio ainda nao salvo: `/jogadores/$jogadorId/relatorios/novo`; correcao nova: `/jogadores/$jogadorId/relatorios/novo?corrige=<relatorioId>`, que carrega o original para preencher relato e data. Depois do primeiro salvar, navega com `replace` para `/relatorios/$relatorioId`.
 - **Q25.** A area de acoes do perfil segue escondida; o perfil nao mostra nada dos relatorios (fica para o item 9).
 
 ## Editor
 
-- **Q3. Como o rascunho nasce:** "Novo relatório" abre o editor local completo (data, relato, nota, parecer, pontos). O primeiro "Salvar rascunho" faz o `POST` (texto e data) e, se houver mais campos, um `PUT` em seguida com a `version` recebida.
-- **Q4. Salvar:** botao "Salvar rascunho", com o aviso "Alterações não salvas" enquanto o estado local diferir do salvo. Uma escrita em voo por vez: o botao fica desabilitado ate a resposta. "Finalizar" salva antes, se houver mudanca, e finaliza com a `version` nova.
+- **Q3. Como o rascunho nasce:** "Escrever relatório" abre o editor local completo (data, relato, nota, parecer, pontos). O primeiro "Salvar rascunho" faz o `POST` (texto e data) e, se houver mais campos, um `PUT` em seguida com a `version` recebida.
+- **Q4. Salvar:** botao "Salvar rascunho", com o aviso "Alterações não salvas" enquanto o estado local diferir do salvo. Uma escrita em voo por vez: o botao fica desabilitado ate a resposta. "Finalizar relatório" salva antes, se houver mudanca, e finaliza com a `version` nova.
 - **Q5. Data da observacao:** padrao hoje, so a data (`input type="date"` com `max` = hoje no fuso local). Envia meia-noite local com offset (`2026-11-24T00:00:00-03:00`) e mostra "24/11/2026". Depois do primeiro salvar fica somente leitura, com a dica "A data da observação não muda depois de salvar." O `409 relatorio.observacao_futura` e rede de seguranca.
 - **Q6. Relato:** rotulo "Relato" para o `texto`, `textarea` obrigatorio; termo novo no `GLOSSARY.md` ("observações" a evitar, porque observacao e o ato de assistir). Vazio ou so espacos: "Escreva o relato.", o que tambem evita o `400` sem `code`.
 - **Q7. Nota:** campo de texto com `inputmode="decimal"`, aceita virgula ("7,5"), validado no cliente com as mensagens de `nota.fora_da_faixa` e `nota.precisao_invalida`. Leitura "7,5 de 10". Sem "limpar nota" depois de salva.
 - **Q8. Parecer:** radio group segmentado "Contratar", "Monitorar", "Reavaliar", "Descartar", sem cor por parecer; `pitch` so no selecionado. Escolhido, nao volta a vazio.
 - **Q9. Pontos:** duas listas, um campo de uma linha por item com "Remover" e "Adicionar ponto" no fim. O estado local guarda a lista inteira e o `PUT` envia inteira. Itens vazios ou so com espacos sao descartados e cada item vai com trim; a contagem dos 20 caracteres usa os itens limpos. Sem ordem nem arrastar.
-- **Q10. O que falta para finalizar:** checklist neutro, sempre visivel junto ao "Finalizar": "Nota", "Parecer", "2 pontos positivos (1 de 2)", "2 pontos negativos (0 de 2)", "20 caracteres nos pontos (12 de 20)". Cumprido com o icone de check, pendente em `ink-muted`, nunca vermelho. "Finalizar" desabilitado ate tudo cumprido. Os minimos vem de `src/config/scout.ts`. Os `422` do servidor aparecem num `Notice` com o texto do `erros.md`.
-- **Q11. Confirmar a finalizacao:** `Dialog` "Finalizar relatório?" / "Depois de finalizado, o relatório não muda mais. Para ajustar, crie uma correção." / "Finalizar" e "Voltar".
-- **Q27. Layout:** no desktop, `PageColumns`: campos a esquerda (data, relato, nota, parecer, pontos positivos, pontos negativos) e, na coluna de apoio, o checklist, "Salvar rascunho" e "Finalizar". Em 375px, uma coluna, com checklist e botoes no fim do formulario, sem rodape fixo.
+- **Q10. O que falta para finalizar:** checklist neutro, sempre visivel junto ao "Finalizar relatório": "Nota", "Parecer", "2 pontos positivos (1 de 2)", "2 pontos negativos (0 de 2)", "20 caracteres nos pontos (12 de 20)". Cumprido com o icone de check, pendente em `ink-muted`, nunca vermelho. "Finalizar relatório" desabilitado ate tudo cumprido. Os minimos vem de `src/config/scout.ts`. Os `422` do servidor aparecem num `Notice` com o texto do `erros.md`.
+- **Q11. Confirmar a finalizacao:** `Dialog` "Finalizar relatório?" / "Depois de finalizado, o relatório não muda mais. Para ajustar, crie uma correção." / "Finalizar relatório" e "Voltar".
+- **Q27. Layout:** no desktop, `PageColumns`: campos a esquerda (data, relato, nota, parecer, pontos positivos, pontos negativos) e, na coluna de apoio, o checklist, "Salvar rascunho" e "Finalizar relatório". Em 375px, uma coluna, com checklist e botoes no fim do formulario, sem rodape fixo.
 
 ## Falhas e concorrencia
 
@@ -66,10 +66,11 @@ Conferidos antes do grilling, mudam as respostas abaixo:
 - **Q22.**
   - Aba "Relatórios", titulo da pagina "Relatórios"; editor "Relatório", ou "Correção" quando tem `corrigeRelatorioId`.
   - Carregando: skeleton de tres linhas da linha do tempo; no editor, skeleton dos campos.
-  - Vazio: "Você ainda não escreveu relatórios sobre este jogador." e "Novo relatório".
+  - Vazio: "Nenhum relatório sobre este jogador." e "Escrever relatório".
   - Linha da linha do tempo: "Observado em 24/11/2026", status ("Rascunho", "Finalizado", "Vigente"), "7,5 de 10" e o parecer, ou "Sem nota" e "Sem parecer" no rascunho.
   - Erro: `describeError`. No editor, `404 relatorio.nao_encontrado` mostra "Relatório não encontrado." com "Voltar aos relatórios". Sem "Tentar de novo" proprio do 502 (o relatorio nao passa pelo SofaScore), so o generico.
-  - Botoes: "Salvar rascunho" / "Salvando…"; "Finalizar" / "Finalizando…".
+  - Botoes: "Salvar rascunho" / "Salvando…"; "Finalizar relatório" / "Finalizando…".
+  - Os textos do estado vazio e dos botoes "Escrever relatório" e "Finalizar relatório" seguem o `README.md` do design system, que ja os fixava (ajustado depois do grilling).
 
 ## Design system e componentes
 

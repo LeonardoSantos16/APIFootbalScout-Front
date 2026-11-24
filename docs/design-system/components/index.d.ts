@@ -152,6 +152,74 @@ export interface RowListProps {
 }
 export declare function RowList(props: RowListProps): React.ReactElement;
 
+export type TextAreaProps = Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'id'> & {
+  label: string;
+  hint?: string;
+  error?: string;
+};
+export declare function TextArea(props: TextAreaProps): React.ReactElement;
+
+export interface DateFieldProps {
+  label: string;
+  value: string;
+  max?: string;
+  onChange?: (value: string) => void;
+  readOnly?: boolean;
+  hint?: string;
+  error?: string;
+  disabled?: boolean;
+}
+export declare function DateField(props: DateFieldProps): React.ReactElement;
+
+export interface SegmentedOption { value: string; label: string }
+export interface SegmentedControlProps {
+  label: string;
+  options: SegmentedOption[];
+  value?: string | null;
+  onChange?: (value: string) => void;
+  disabled?: boolean;
+  error?: string;
+}
+export declare function SegmentedControl(props: SegmentedControlProps): React.ReactElement;
+
+export interface StatusBadgeProps {
+  tone?: 'draft' | 'finalized' | 'current';
+  children?: React.ReactNode;
+}
+export declare function StatusBadge(props: StatusBadgeProps): React.ReactElement;
+
+export interface PointListProps {
+  label: string;
+  items: string[];
+  onChange?: (items: string[]) => void;
+  count?: string;
+  placeholder?: string;
+  addLabel?: string;
+  readOnly?: boolean;
+  emptyText?: string;
+  disabled?: boolean;
+}
+export declare function PointList(props: PointListProps): React.ReactElement;
+
+export interface ChecklistItem { label: string; done: boolean; progress?: string }
+export interface FinishChecklistProps {
+  items: ChecklistItem[];
+  title?: string;
+}
+export declare function FinishChecklist(props: FinishChecklistProps): React.ReactElement;
+
+export interface TimelineItem {
+  id: string;
+  title: React.ReactNode;
+  detail?: React.ReactNode;
+  note?: React.ReactNode;
+  status: 'draft' | 'finalized' | 'current';
+  href?: string;
+}
+export interface TimelineGroup { id: string; label: string; items: TimelineItem[] }
+export interface ReportTimelineProps { groups: TimelineGroup[] }
+export declare function ReportTimeline(props: ReportTimelineProps): React.ReactElement;
+
 declare global {
   interface Window {
     ScoutVestiario: {
@@ -172,6 +240,13 @@ declare global {
       SearchField: typeof SearchField;
       PlayerPhoto: typeof PlayerPhoto;
       RowList: typeof RowList;
+      TextArea: typeof TextArea;
+      DateField: typeof DateField;
+      SegmentedControl: typeof SegmentedControl;
+      StatusBadge: typeof StatusBadge;
+      PointList: typeof PointList;
+      FinishChecklist: typeof FinishChecklist;
+      ReportTimeline: typeof ReportTimeline;
     };
   }
 }

@@ -1,0 +1,24 @@
+<!-- @dsCard group="Formulários" height=220 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>SegmentedControl</title></head>
+<body style="margin:0;background:var(--ground)">
+<div id="root" class="sv-stage is-column"></div>
+<script>
+  var V = window.ScoutVestiario, h = React.createElement;
+  var options = [
+    { value: 'Contratar', label: 'Contratar' },
+    { value: 'Monitorar', label: 'Monitorar' },
+    { value: 'Reavaliar', label: 'Reavaliar' },
+    { value: 'Descartar', label: 'Descartar' }
+  ];
+  function Demo() {
+    var s = React.useState('Monitorar');
+    return h('div', { style: { display: 'grid', gap: '20px', background: 'var(--surface)', padding: '24px', borderRadius: 'var(--radius-lg)', maxWidth: '520px' } },
+      h(V.SegmentedControl, { label: 'Parecer', options: options, value: s[0], onChange: s[1] }),
+      h(V.SegmentedControl, { label: 'Parecer', options: options, value: null }));
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>
