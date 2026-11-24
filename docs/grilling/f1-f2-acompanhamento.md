@@ -65,7 +65,7 @@ Conferidos antes do grilling, mudam as respostas abaixo:
   - 1001: acompanhado, com mudanca nas tres afericoes.
   - 1002: acompanhado, sem mudanca relevante.
   - 1003: acompanhado, clube com mudanca, valor e minutagem indisponiveis (`MoedaInesperada`, `TemporadaVirada`).
-  - 1004: nao acompanhado; "Acompanhar" funciona.
+  - 1008 (Tiago Ferraz, novo, sem clube): nao acompanhado; "Acompanhar" funciona. Mudou na spec: o 1004 e o perfil inexistente dos testes de perfil e metricas.
   - 1005: nao acompanhado; "Acompanhar" responde `422 acompanhamento.limite_atingido`.
   - 1006: nao acompanhado; "Acompanhar" responde `422 jogador.informacoes_insuficientes`.
   - 1007: leitura com `502`.

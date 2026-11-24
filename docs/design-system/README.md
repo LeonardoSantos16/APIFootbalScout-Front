@@ -35,7 +35,7 @@ Scout Vestiário é a interface escura do APIFootballScout, uma ferramenta para 
 | Comparação recusada | os dois jogadores lado a lado com nome e posição, a frase do motivo em `ink-soft` e "Escolher outro jogador"; não é erro |
 | Aferição indisponível | igual à recusada, com frase própria (moeda mudou, temporada virou) |
 | Com mudança | valor em `up` ou `down`, com o chip colorido e `anterior → atual` |
-| Sem mudança relevante | `ink-soft`, sem chip |
+| Sem mudança relevante | frase em `ink-soft` e valor atual em `ink-muted`, sem chip |
 | Carregando | blocos skeleton em `surface-strong` no formato do layout final; a fonte é lenta, então o layout não pode pular |
 | Erro (4xx/5xx) | mensagem no próprio cartão em `ink-soft` com uma pílula "Tentar de novo"; todo 502 oferece nova tentativa |
 | Erro de campo | borda do campo e frase embaixo dele em `down`, ligada por `aria-describedby`; aparece só depois do primeiro envio |
