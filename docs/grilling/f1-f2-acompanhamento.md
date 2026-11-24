@@ -70,6 +70,19 @@ Conferidos antes do grilling, mudam as respostas abaixo:
   - 1006: nao acompanhado; "Acompanhar" responde `422 jogador.informacoes_insuficientes`.
   - 1007: leitura com `502`.
 
+## Wireframe
+
+Aprovado em https://claude.ai/artifact/BzMwpv7rWYKeqeW4ursJek. Decisoes que sairam dele:
+
+- **W1.** `SemMudancaRelevante` com o valor atual em `ink-muted`, confirmando a Q8; o `MeasurementCard` do design system passa a pintar assim (README e `bundle.css`).
+- **W2.** Os dois `422` aparecem no `Notice`, logo abaixo do botao, que segue habilitado: o olheiro pode trocar o recorte e tentar de novo.
+- **W3.** Enquanto abre (do clique ate a leitura voltar, tambem depois do `409`), o seletor e o botao ficam desabilitados e o botao diz "Acompanhando…".
+- **W4.** `502` ao acompanhar: `InlineError` "Não foi possível acompanhar agora." no lugar do botao; "Tentar de novo" repete o `POST` com o mesmo recorte.
+- **W5.** `502` na leitura: "Não foi possível ler o acompanhamento agora." com "Tentar de novo".
+- **W6.** Perfil sem recortes: o texto do estado vazio das Metricas, so no estado "nao acompanhado". Acompanhado, o painel aparece mesmo sem recortes.
+- **W7.** "Acompanhar" e o botao primario (pilula branca), ao lado do seletor no desktop; em 375px os dois ocupam a largura toda.
+- **W8.** Ate 720px as abas do jogador ficam numa linha so, distribuidas na largura (`space-between`, no minimo `space-3`), sem rolagem; so quebram linha quando nao cabem. Muda o `Tabs` de producao e o do design system.
+
 ## Glossario e divida tecnica
 
 - **Q15.** Entram em "Nomes no código": Acompanhamento (`Tracking`, `TrackingPage`), Linha de base (`baseline`), Leitura (`reading`), Janela (`TrackingWindow`), Aferição (`Measurement`), Mudança relevante (`relevantChange`), Indisponível (`unavailable`).
