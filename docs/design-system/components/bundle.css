@@ -19,6 +19,7 @@
 .sv-tab.is-selected { color: var(--ink); border-bottom-color: var(--pitch); }
 .sv-tab-count { font-size: 11px; line-height: 14px; font-weight: 500; font-variant-numeric: tabular-nums; color: var(--ink-muted); }
 @media (prefers-reduced-motion: no-preference) { .sv-tab { transition: color 150ms, border-color 150ms; } }
+@media (max-width: 720px) { .sv-tabs { justify-content: space-between; column-gap: var(--space-3); } }
 
 .sv-band { background: var(--club); color: var(--on-club); padding: 20px var(--space-5); display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3) var(--space-5); }
 .sv-band-crest { width: 40px; height: 40px; object-fit: contain; }
@@ -64,6 +65,7 @@
 .sv-measure-curr { color: var(--ink); }
 .sv-measure-note { margin: 0; color: var(--ink-soft); font-size: 14px; line-height: 20px; }
 .sv-measure-reason { margin: 0; color: var(--ink-subtle); font-size: 14px; line-height: 20px; font-weight: 500; }
+.sv-measure.is-SemMudancaRelevante .sv-measure-curr { color: var(--ink-muted); }
 .sv-measure.is-Indisponivel { background: var(--surface); outline: 1px dashed var(--line-strong); outline-offset: -1px; }
 
 .sv-error { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3); padding: var(--space-4) 0; }

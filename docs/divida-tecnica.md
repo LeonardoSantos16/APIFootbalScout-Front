@@ -71,6 +71,30 @@ Pendencias conhecidas que o front contorna hoje e que precisam de correcao em ou
 - **Contorno no front:** a tabela fica em skeleton no formato final enquanto isso; a comparacao fica 5 min no cache do front.
 - **Correcao esperada:** cache das leituras da fonte no back-end, ou leituras em paralelo no `ComparacaoDiretaUseCase`.
 
+### Acompanhamentos sem lista, sem consumo do limite e sem encerramento
+
+- **Problema:** o `AcompanhamentoController` so abre e le. Nao ha endpoint que liste os acompanhamentos ativos, devolva o consumo do limite ("7 de 10") ou encerre um acompanhamento, embora o dominio tenha `Dossie.Encerrar` e o contador de ativos.
+- **Contorno no front:** a change `f1-f2-acompanhamento` entrega so abrir e ler. O limite aparece quando o `POST` responde `422 acompanhamento.limite_atingido` ("Limite de 10 acompanhamentos atingido.", sem sugerir encerrar), em vez de o botao ser desabilitado antes, como pede o `fluxos-de-tela.md` (grilling da F1/F2, Q3 e Q11).
+- **Correcao esperada:** `GET /api/Acompanhamento` com os ativos e o consumo do limite, e um endpoint de encerramento. Entram no item 6b do planejamento.
+
+### Leitura do acompanhamento sem o recorte
+
+- **Problema:** `POST /api/Acompanhamento` recebe o recorte, mas `GET /api/Acompanhamento/{jogadorId}` nao o devolve. O painel nao consegue dizer de qual competicao e temporada e a minutagem.
+- **Contorno no front:** a aba acompanhada nao mostra recorte nem seletor (grilling da F1/F2, Q5).
+- **Correcao esperada:** devolver `recorte` em `ConsultarMudancaAcompanhamentoResponseDto`.
+
+### Aferição sem mudança relevante sem os valores
+
+- **Problema:** `GET /api/Acompanhamento/{jogadorId}` responde `SemMudancaRelevante` só com o `resultado`, sem `anterior` nem `atual`: o value object `SemMudancaRelevante` do domínio não carrega valores, e o `ConsultarMudancaAcompanhamentoResponseDtoMapper` não tem o que mapear. Achado na conferência da change `f1-f2-acompanhamento` contra a API real (Neymar, 124712).
+- **Contorno no front:** o cartão mostra só "Sem mudança relevante", sem o valor atual atenuado que o grilling pediu (Q8 e W1). O caminho com o valor já existe e é exercitado no `dev:mock` (1002).
+- **Correção esperada:** levar o valor atual (e o anterior) para `SemMudancaRelevante` no domínio e no mapper; o front passa a mostrar o valor sem mudança nenhuma.
+
+### Mongo do Aspire sem volume de dados
+
+- **Problema:** o `AppHost.cs` cria o Mongo com `builder.AddMongoDB("mongodb")`, sem `.WithDataVolume()` nem `.WithLifetime(ContainerLifetime.Persistent)`. Cada execução do AppHost sobe um container novo, com um volume anônimo novo em `/data/db`, e as contas, acompanhamentos, relatórios e shortlists da execução anterior somem (havia 21 volumes anônimos órfãos no Docker). Achado na conferência da change `f1-f2-acompanhamento`: uma conta criada antes não entrava mais depois de reiniciar a API.
+- **Contorno no front:** nenhum; dentro de uma mesma execução a conta e os acompanhamentos persistem.
+- **Correção esperada:** `.WithDataVolume()` no Mongo (e, se quiser o container vivo entre execuções, `.WithLifetime(ContainerLifetime.Persistent)`); o mesmo vale para o Redis se o cache precisar sobreviver.
+
 ## Front
 
 ### Pagina inicial provisoria

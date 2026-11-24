@@ -41,12 +41,12 @@ Rotulo com unidade: "Desarmes, por 90", "Nota, média". O `%` vai no valor: "86,
 
 | Valor | Texto |
 | --- | --- |
-| `ComMudanca` | `anterior → atual` e chip com sinal e palavra: "+12% valor de mercado", "−340 min" |
-| `SemMudancaRelevante` | Sem mudança relevante |
-| `Indisponivel` + `MoedaInesperada` | A fonte passou a publicar o valor em outra moeda |
-| `Indisponivel` + `TemporadaVirada` | A temporada virou: a minutagem antiga não é comparável |
+| `ComMudanca` | `anterior → atual`; valor de mercado com chip "+20,0% alta" ou "−20,0% queda", minutagem com "+420 min a mais", clube sem chip |
+| `SemMudancaRelevante` | Sem mudança relevante, com o valor atual atenuado |
+| `Indisponivel` + `MoedaInesperada` | A fonte passou a publicar o valor em outra moeda; comparar seria enganoso. |
+| `Indisponivel` + `TemporadaVirada` | A temporada virou e a minutagem zerou. A leitura antiga não é comparável. |
 
-A janela sempre aparece: "Comparando os últimos `<duracaoEmDias>` dias com a linha de base."
+A janela sempre aparece: "Linha de base de 22/10/2026 · comparando os últimos 27 dias", com `janela.de` e `duracaoEmDias` arredondado para baixo; "comparando o último dia" com 1 dia; "Linha de base medida hoje" com menos de 1.
 
 ## Comparacao (`ResultadoDaComparacaoDto`, `MotivoDaRecusaDaComparacaoDto`)
 

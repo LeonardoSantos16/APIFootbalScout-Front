@@ -12,9 +12,17 @@ import {
   buildSparseProfile,
 } from './fixtures/profiles'
 import { searchPlayers } from './fixtures/search'
+import {
+  openedTrackingResult,
+  trackingNoRelevantChangeResponse,
+  trackingOpenedTodayResponse,
+  trackingUnavailableResponse,
+  trackingWithChangesResponse,
+} from './fixtures/tracking'
 import { authHandlers, withAuth } from './handlers/auth'
 import { http } from './http'
 import { plainText, problem } from './responses'
+import { isTracked, startTracking } from './trackingStore'
 
 type Contexto = components['schemas']['ContextoDeRecorteDto']
 
@@ -25,6 +33,7 @@ const PROFILES: Record<number, (id: number) => PlayerProfile> = {
   1005: (id) => buildFullProfile(id, 'Bruno Lacerda'),
   1006: (id) => buildManyRecortesProfile(id),
   1007: (id) => buildSparseProfile(id),
+  1008: (id) => buildFullProfile(id, 'Tiago Ferraz'),
 }
 
 const METRICS_SOURCE_DOWN = new Set([1005])
@@ -105,4 +114,57 @@ const comparisonByPair = http.get(
   }),
 )
 
-export const handlers: RequestHandler[] = [...authHandlers, profileById, metricsById, searchByTerm, comparisonByPair]
+const TRACKING_READINGS: Record<number, (id: number) => components['schemas']['ConsultarMudancaAcompanhamentoResponseDto']> = {
+  1001: trackingWithChangesResponse,
+  1002: trackingNoRelevantChangeResponse,
+  1003: trackingUnavailableResponse,
+}
+
+const TRACKING_SOURCE_DOWN = new Set([1007])
+const TRACKING_LIMIT_REACHED = new Set([1005])
+const TRACKING_INSUFFICIENT_INFORMATION = new Set([1006])
+const OPENING_INSTANCE = 'POST /api/Acompanhamento'
+
+const trackingById = http.get(
+  '/api/Acompanhamento/{jogadorId}',
+  withAuth(({ params, response }) => {
+    const jogadorId = Number(params.jogadorId)
+    const instance = `GET /api/Acompanhamento/${jogadorId}`
+    if (TRACKING_SOURCE_DOWN.has(jogadorId)) {
+      return response.untyped(problem(502, 'sofascore.perfil_do_jogador_indisponivel', instance))
+    }
+    if (!isTracked(jogadorId)) {
+      return response.untyped(problem(404, 'acompanhamento.dossie_nao_encontrado', instance))
+    }
+    const build = TRACKING_READINGS[jogadorId] ?? trackingOpenedTodayResponse
+    return response(200).json(build(jogadorId))
+  }),
+)
+
+const openTracking = http.post(
+  '/api/Acompanhamento',
+  withAuth(async ({ request, response }) => {
+    const { jogadorId = 0 } = await request.json()
+    if (TRACKING_LIMIT_REACHED.has(jogadorId)) {
+      return response.untyped(problem(422, 'acompanhamento.limite_atingido', OPENING_INSTANCE))
+    }
+    if (TRACKING_INSUFFICIENT_INFORMATION.has(jogadorId)) {
+      return response.untyped(problem(422, 'jogador.informacoes_insuficientes', OPENING_INSTANCE))
+    }
+    if (isTracked(jogadorId)) {
+      return response.untyped(problem(409, 'acompanhamento.jogador_ja_acompanhado', OPENING_INSTANCE))
+    }
+    startTracking(jogadorId)
+    return response(201).json(openedTrackingResult())
+  }),
+)
+
+export const handlers: RequestHandler[] = [
+  ...authHandlers,
+  profileById,
+  metricsById,
+  searchByTerm,
+  comparisonByPair,
+  trackingById,
+  openTracking,
+]

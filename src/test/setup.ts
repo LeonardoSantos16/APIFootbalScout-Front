@@ -3,6 +3,7 @@ import { cleanup, configure } from '@testing-library/react'
 import { afterAll, afterEach, beforeAll } from 'vitest'
 import { resetAuthStore } from '../mocks/authStore'
 import { server } from '../mocks/server'
+import { resetTrackingStore } from '../mocks/trackingStore'
 
 configure({ asyncUtilTimeout: 3000 })
 
@@ -11,6 +12,7 @@ afterEach(() => {
   cleanup()
   server.resetHandlers()
   resetAuthStore()
+  resetTrackingStore()
   localStorage.clear()
 })
 afterAll(() => server.close())

@@ -46,3 +46,10 @@ a.tab {
   color: var(--ink-subtle);
   cursor: default;
 }
+
+@media (max-width: 719px) {
+  .tabs {
+    justify-content: space-between;
+    column-gap: var(--space-3);
+  }
+}

@@ -30,6 +30,7 @@ O contexto e as regras por artefato do OpenSpec ficam em `openspec/config.yaml`.
 | 4 | Busca e perfil | `busca-de-jogadores`, `perfil-do-jogador` | 2, 3 |
 | 5 | F10 Comparacao direta | `comparacao-direta` | 2, 4 |
 | 6 | F1/F2 Acompanhamento | `acompanhamento` | 4 |
+| 6b | Lista e encerramento de acompanhamentos | `acompanhamento` | 6; endpoints novos no back-end |
 | 7 | F5 Relatorio de scouting | `relatorio-de-scouting` | 4 |
 | 8 | F7 Shortlist priorizada | `shortlist-priorizada` | 4 |
 | 9 | Navegacao e acessibilidade | `navegacao` | 2–8 |
@@ -100,15 +101,22 @@ Head-to-head entre dois jogadores no mesmo recorte. A recusa inteira e a recusa 
 
 ## 6. F1/F2 Acompanhamento
 
-"O que mudou desde que comecei a acompanhar." A tela compara contra a linha de base congelada na abertura, nao contra um historico.
+"O que mudou desde que comecei a acompanhar." A tela compara contra a linha de base congelada na abertura, nao contra um historico. Decisoes em [grilling/f1-f2-acompanhamento.md](grilling/f1-f2-acompanhamento.md).
 
-- **Escopo:** acompanhar a partir do perfil no recorte selecionado; janela ("comparando os ultimos 27 dias"); tres afericoes independentes, cada uma `ComMudanca`, `SemMudancaRelevante` ou `Indisponivel` com texto proprio para `MoedaInesperada` e `TemporadaVirada`; limite de 10 ativos.
+- **Escopo:** acompanhar pela aba "Acompanhamento" do jogador, no recorte selecionado; janela ("Linha de base de 22/10/2026 · comparando os últimos 27 dias"); tres afericoes independentes, cada uma `ComMudanca`, `SemMudancaRelevante` ou `Indisponivel` com texto proprio para `MoedaInesperada` e `TemporadaVirada`; limite de 10 ativos so pelo `422`. A lista, o consumo "7 de 10" e o encerramento ficaram para o item 6b.
 - **Endpoints:** `POST /api/Acompanhamento`, `GET /api/Acompanhamento/{jogadorId}`.
 - **Para o grilling:**
   - O contrato nao lista os acompanhamentos ativos nem encerra um acompanhamento. Sem isso, de onde vem o "7 de 10" e a lista de acompanhados? Pedir os endpoints ao back-end ou cortar do escopo?
   - Como o perfil sabe se o jogador ja e acompanhado sem chamar o painel?
   - Qual recorte o painel usa se o olheiro mudou o recorte depois de acompanhar?
-- **Fora do escopo:** serie acumulada, alertas.
+- **Fora do escopo:** serie acumulada, alertas, lista e encerramento (item 6b).
+
+## 6b. Lista e encerramento de acompanhamentos
+
+Cortado do item 6 porque o contrato so abre e le (ver [divida-tecnica.md](divida-tecnica.md)). Depende de endpoints novos no back-end: listar os ativos com o consumo do limite e encerrar.
+
+- **Escopo:** lista dos acompanhados, com o consumo "7 de 10"; "Acompanhar" desabilitado antes do `422`; encerrar um acompanhamento; reacompanhar cria nova linha de base (R1.6).
+- **Para o grilling:** onde a lista mora (destino "acompanhamentos" do item 9?); confirmacao antes de encerrar; o que a aba mostra de um acompanhamento encerrado.
 
 ## 7. F5 Relatorio de scouting
 

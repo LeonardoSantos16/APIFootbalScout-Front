@@ -35,7 +35,7 @@ Scout Vestiário é a interface escura do APIFootballScout, uma ferramenta para 
 | Comparação recusada | os dois jogadores lado a lado com nome e posição, a frase do motivo em `ink-soft` e "Escolher outro jogador"; não é erro |
 | Aferição indisponível | igual à recusada, com frase própria (moeda mudou, temporada virou) |
 | Com mudança | valor em `up` ou `down`, com o chip colorido e `anterior → atual` |
-| Sem mudança relevante | `ink-soft`, sem chip |
+| Sem mudança relevante | frase em `ink-soft` e valor atual em `ink-muted`, sem chip |
 | Carregando | blocos skeleton em `surface-strong` no formato do layout final; a fonte é lenta, então o layout não pode pular |
 | Erro (4xx/5xx) | mensagem no próprio cartão em `ink-soft` com uma pílula "Tentar de novo"; todo 502 oferece nova tentativa |
 | Erro de campo | borda do campo e frase embaixo dele em `down`, ligada por `aria-describedby`; aparece só depois do primeiro envio |
@@ -63,7 +63,7 @@ Scout Vestiário é a interface escura do APIFootballScout, uma ferramenta para 
 - Botão desabilitado: `surface-strong` com texto `ink-soft`, em qualquer variante; o `ghost` desabilitado fica só com o texto em `ink-subtle`. Não há variante destrutiva: a confirmação de uma ação irreversível fica num `Dialog` que só habilita o botão depois que o olheiro confirma.
 - Diálogos (`Dialog`) ficam centralizados sobre um fundo preto translúcido, em `surface` com borda `line` e `radius-lg`, com título em `section-title` e `x` para fechar. Os botões ficam à direita; abaixo de 480px, empilhados com a ação principal em cima.
 - O campo de busca (`SearchField`) é uma pílula em `surface-raised` com a lupa e o botão principal "Buscar"; no header, a versão compacta envia com Enter. Busca só no envio.
-- Abas são texto, com sublinhado de 2px em `pitch` na selecionada; `ink` na selecionada, `ink-muted` nas demais. Quando cada aba é uma rota (Perfil, Métricas, Comparação), as abas são links.
+- Abas são texto, com sublinhado de 2px em `pitch` na selecionada; `ink` na selecionada, `ink-muted` nas demais. Quando cada aba é uma rota (Perfil, Métricas, Comparação), as abas são links. Até 720px, distribuídas na largura numa linha só, sem rolagem.
 - Chips e etiquetas de posição usam `radius-sm`.
 - Foco: anel sólido de 2px em `pitch` com 2px de afastamento em todo elemento interativo.
 
