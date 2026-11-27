@@ -20,8 +20,19 @@ import {
   trackingWithChangesResponse,
 } from './fixtures/tracking'
 import { authHandlers, withAuth } from './handlers/auth'
+import {
+  REPORT_CORRECT,
+  REPORT_FINALIZE,
+  REPORT_ITEM,
+  REPORT_LIST,
+  REPORT_OPEN,
+  itemResponse,
+  listResponse,
+  outcomeResponse,
+} from './handlers/reports'
 import { http } from './http'
 import { plainText, problem } from './responses'
+import { correctReport, createReport, editReport, finalizeReport, findReport } from './reportStore'
 import { isTracked, startTracking } from './trackingStore'
 
 type Contexto = components['schemas']['ContextoDeRecorteDto']
@@ -159,6 +170,67 @@ const openTracking = http.post(
   }),
 )
 
+const REPORTS_LIST_DOWN = new Set([1007])
+const REPORTS_ALWAYS_CONFLICT = new Set([1005])
+
+const reportsByPlayer = http.get(
+  REPORT_LIST,
+  withAuth(({ params, response }) => {
+    const jogadorId = Number(params.jogadorId)
+    if (REPORTS_LIST_DOWN.has(jogadorId)) {
+      return response.untyped(problem(500, undefined, `GET /api/Relatorio/jogador/${jogadorId}`))
+    }
+    return response.untyped(listResponse(params.jogadorId))
+  }),
+)
+
+const reportById = http.get(
+  REPORT_ITEM,
+  withAuth(({ params, response }) => response.untyped(itemResponse(params.relatorioId))),
+)
+
+const openReport = http.post(
+  REPORT_OPEN,
+  withAuth(async ({ request, response }) =>
+    response.untyped(outcomeResponse(createReport(await request.json()), 'POST /api/Relatorio', 201)),
+  ),
+)
+
+const editReportById = http.put(
+  REPORT_ITEM,
+  withAuth(async ({ params, request, response }) => {
+    const instance = `PUT /api/Relatorio/${params.relatorioId}`
+    const report = findReport(params.relatorioId)
+    if (report && REPORTS_ALWAYS_CONFLICT.has(report.jogadorId)) {
+      return response.untyped(problem(412, 'relatorio.alterado_por_outra_requisicao', instance))
+    }
+    const edit = await request.json()
+    return response.untyped(outcomeResponse(editReport(params.relatorioId, request.headers.get('If-Match'), edit), instance))
+  }),
+)
+
+const finalizeReportById = http.put(
+  REPORT_FINALIZE,
+  withAuth(({ params, request, response }) =>
+    response.untyped(
+      outcomeResponse(
+        finalizeReport(params.relatorioId, request.headers.get('If-Match')),
+        `PUT /api/Relatorio/${params.relatorioId}/finalizar`,
+      ),
+    ),
+  ),
+)
+
+const correctReportById = http.post(
+  REPORT_CORRECT,
+  withAuth(async ({ params, request, response }) => {
+    const { texto } = await request.json()
+    return response.untyped(
+      outcomeResponse(correctReport(params.relatorioId, texto), `POST /api/Relatorio/${params.relatorioId}/correcoes`, 201),
+    )
+  }),
+)
+
 export const handlers: RequestHandler[] = [
   ...authHandlers,
   profileById,
@@ -167,4 +239,10 @@ export const handlers: RequestHandler[] = [
   comparisonByPair,
   trackingById,
   openTracking,
+  reportsByPlayer,
+  reportById,
+  openReport,
+  editReportById,
+  finalizeReportById,
+  correctReportById,
 ]
