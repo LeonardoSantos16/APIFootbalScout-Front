@@ -1,0 +1,34 @@
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: var(--radius-sm);
+  padding: 2px var(--space-2);
+  font: var(--text-label);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.draft {
+  color: var(--ink-soft);
+  outline: 1px dashed var(--line-strong);
+  outline-offset: -1px;
+}
+
+.finalized {
+  background: var(--surface-raised);
+  color: var(--ink-muted);
+}
+
+.current {
+  background: var(--surface-strong);
+  color: var(--ink);
+}
+
+.dot {
+  flex: none;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--pitch);
+}

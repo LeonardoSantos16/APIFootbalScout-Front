@@ -1,0 +1,126 @@
+.points {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+.label {
+  font: var(--text-label);
+  color: var(--ink-muted);
+}
+
+.count {
+  font: var(--text-caption);
+  color: var(--ink-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.wrap {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  box-sizing: border-box;
+  background: var(--surface-raised);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+}
+
+.wrap:focus-within {
+  outline: 2px solid var(--pitch);
+  outline-offset: 2px;
+}
+
+.disabled {
+  border-color: var(--line);
+}
+
+.input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 42px;
+  box-sizing: border-box;
+  padding: 0 var(--space-3);
+  background: transparent;
+  border: 0;
+  outline: 0;
+  color: var(--ink);
+  color-scheme: dark;
+  font: var(--text-body);
+}
+
+.input::placeholder {
+  color: var(--ink-muted);
+}
+
+.input:disabled {
+  color: var(--ink-muted);
+  cursor: not-allowed;
+}
+
+.remove {
+  height: 42px;
+  padding: 0 var(--space-3);
+  background: none;
+  border: 0;
+  border-radius: var(--radius-md);
+  color: var(--ink-soft);
+  font: var(--text-label);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.remove:hover:not(:disabled) {
+  color: var(--ink);
+}
+
+.remove:focus-visible {
+  outline: 2px solid var(--pitch);
+  outline-offset: -2px;
+}
+
+.remove:disabled {
+  color: var(--ink-subtle);
+  cursor: not-allowed;
+}
+
+.add {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-left: 0;
+}
+
+.read {
+  margin: 0;
+  padding-left: var(--space-5);
+  display: grid;
+  gap: var(--space-1);
+  color: var(--ink);
+  font: var(--text-body);
+}
+
+.empty {
+  margin: 0;
+  color: var(--ink-subtle);
+  font: var(--text-body);
+}
+
+@media (max-width: 720px) {
+  .input {
+    font: var(--text-input-touch);
+  }
+}

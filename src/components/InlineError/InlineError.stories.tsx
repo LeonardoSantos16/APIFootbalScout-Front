@@ -15,3 +15,7 @@ export const WithRetry: Story = {
 export const WithoutRetry: Story = {
   args: { message: 'Jogador não encontrado.' },
 }
+
+export const WithActionLabel: Story = {
+  args: { message: 'Este relatório foi alterado em outra aba.', onRetry: fn(), actionLabel: 'Carregar a versão atual' },
+}
