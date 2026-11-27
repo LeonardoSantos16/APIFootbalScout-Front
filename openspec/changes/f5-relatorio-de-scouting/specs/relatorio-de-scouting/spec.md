@@ -303,7 +303,7 @@ While the relatório is loading, the editor SHALL show its fields in skeleton.
 - **THEN** the editor shows the fields in skeleton
 
 ### Requirement: Leaving with unsaved changes
-When the editor has unsaved changes, following a link or switching tabs SHALL ask "Sair sem salvar?" with "As alterações deste relatório serão perdidas.", "Sair" and "Continuar editando". Closing or reloading the window SHALL trigger the browser's own warning.
+When the editor has unsaved changes, following a link or switching tabs SHALL ask "Sair sem salvar?" with "As alterações deste relatório serão perdidas.", "Sair" and "Continuar editando". Closing or reloading the window SHALL trigger the browser's own warning. A new relatório or correção left as it opened SHALL not ask.
 
 #### Scenario: Switching tabs with changes
 - **WHEN** the scout edits the relato and clicks "Métricas"
@@ -312,3 +312,7 @@ When the editor has unsaved changes, following a link or switching tabs SHALL as
 #### Scenario: Leaving without changes
 - **WHEN** the editor has no unsaved change and the scout clicks "Métricas"
 - **THEN** the metrics open without a dialog
+
+#### Scenario: Leaving an untouched new relatório
+- **WHEN** the scout opens "Escrever relatório" and leaves without typing anything
+- **THEN** no dialog appears, even though "Alterações não salvas" is shown

@@ -487,6 +487,20 @@ describe('finalizacao, leitura e correcao', () => {
     await waitFor(() => expect(router.state.location.pathname).toBe('/jogadores/1001/metricas'))
   })
 
+  it('sai do relatorio novo sem perguntar quando nada foi digitado', async () => {
+    // Arrange
+    const user = userEvent.setup()
+    const { router } = renderRoute(NEW)
+    await screen.findByLabelText('Relato')
+
+    // Act
+    await user.click(await screen.findByRole('link', { name: 'Métricas' }))
+
+    // Assert
+    await waitFor(() => expect(router.state.location.pathname).toBe('/jogadores/1001/metricas'))
+    expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+  })
+
   it('sai sem perguntar quando nada mudou', async () => {
     // Arrange
     const user = userEvent.setup()

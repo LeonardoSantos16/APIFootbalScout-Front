@@ -40,11 +40,11 @@
 ## 7. Verification
 
 - [x] 7.1 `npm run lint`, `npm run typecheck`, `npm test` and `npm run build` pass; walk every state of the wireframe in `npm run dev:mock` (1001, 1002, 1003, 1005, 1007, a new relatório and a new correção) at desktop and 375px with no console errors
-- [ ] 7.2 Against the real API (`npm run dev` with the back-end running): write a rascunho, save it twice, finalize it, create and finalize a correção, cause a 412 with two tabs, and read the linha do tempo; record the findings in `docs/divida-tecnica.md` and the delta specs
+- [x] 7.2 Against the real API (`npm run dev` with the back-end running): write a rascunho, save it twice, finalize it, create and finalize a correção, cause a 412 with two tabs, and read the linha do tempo; record the findings in `docs/divida-tecnica.md` and the delta specs
 
 ## 8. Retrospective
 
-- [ ] 8.1 Retrospective: what the spec did not foresee goes back to the delta specs; adjust the `scout-ui` skill and `CLAUDE.md`; verify with `openspec validate f5-relatorio-de-scouting --strict`
+- [x] 8.1 Retrospective: what the spec did not foresee goes back to the delta specs; adjust the `scout-ui` skill and `CLAUDE.md`; verify with `openspec validate f5-relatorio-de-scouting --strict`
 
 ## Workflow follow-up
 
