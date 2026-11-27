@@ -53,12 +53,16 @@ The recorte search params and the second player of the comparison (`com`) SHALL 
 - **THEN** the comparison opens with the same recorte and the same second player
 
 ### Requirement: Player tabs on phones
-Below 720px, the player tabs SHALL stay on one line, spread across the width with at least 12px between them, with no horizontal scrolling. They SHALL wrap only when they do not fit.
+Below 720px, the player tabs SHALL stay on one line, spread across the width with at least 12px between them, with no horizontal scrolling, in 13px with "Acompanhamento" shortened to "Acompanh." and its full name kept for screen readers. They SHALL wrap only when they do not fit.
 
 #### Scenario: Four tabs at 375px
 - **WHEN** the scout opens a player screen at 375px
-- **THEN** "Perfil", "Métricas", "Comparação" and "Acompanhamento" appear on one line across the width, without a scroll bar
+- **THEN** "Perfil", "Métricas", "Comparação" and the acompanhamento tab appear on one line across the width, without a scroll bar
 
 #### Scenario: Five tabs at 375px
 - **WHEN** the scout opens a player screen at 375px
-- **THEN** the five player tabs appear on one line across the width, without a scroll bar
+- **THEN** "Perfil", "Métricas", "Comparação", "Acompanh." and "Relatórios" appear on one line across the width, without a scroll bar
+
+#### Scenario: Short label read in full
+- **WHEN** a screen reader reaches the short "Acompanh." tab
+- **THEN** it reads "Acompanhamento"

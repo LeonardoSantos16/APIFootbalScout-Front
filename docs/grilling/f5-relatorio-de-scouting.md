@@ -99,5 +99,5 @@ Aprovado em https://claude.ai/artifact/K4QfFWZxsiSkBYu4oBNj9o. Decisoes que sair
 - **W4.** A correcao cita o anterior pelo titulo da linha do tempo: "Corrige o relatório observado em 02/11/2026" (original) ou "Corrige a correção de 05/11/2026" (outra correcao). O inverso e "Corrigido pela correção de 05/11/2026". A data da correcao e o `escritoEm`.
 - **W5.** "Corrigido pela correção de" so aparece quando a correcao que substitui o relatorio ja esta finalizada; uma correcao em rascunho nao tira o "Vigente" de ninguem.
 - **W6.** Na correcao nova, a data fica somente leitura desde o inicio, com a dica "A correção mantém a data da observação do relatório corrigido."
-- **W7.** Em 375px, as cinco abas numa linha so; se "Acompanhamento" nao couber, a implementacao decide entre encurtar para "Acompanh." e reduzir o espaco entre as abas, conferindo no navegador.
+- **W7.** Em 375px, as cinco abas numa linha so. Decidido na conferencia: as abas medem 352px mais 48px de espaco minimo em 343px, entao so encurtar ou so reduzir o espaco nao bastava. Abaixo de 720px as abas usam 13px (`label`, peso 600) e "Acompanhamento" vira "Acompanh.", com o nome inteiro para o leitor de tela; cabem com folga (~333px).
 

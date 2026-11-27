@@ -84,7 +84,10 @@ The form state lives in the page (`useState` seeded by `toForm`), reset when a n
 - `src/components/TextArea/`, `src/components/DateField/` (with the read-only text form), `src/components/SegmentedControl/` (native radios in a `fieldset`), `src/components/StatusBadge/`: CSS Modules over the tokens, stories per state, as in the design system.
 - `src/components/InlineError/` gains `actionLabel` for "Carregar a versão atual" (W1), keeping "Tentar de novo" as the default.
 - `src/pages/report/components/PointList/`, `FinishChecklist/`, `ReportTimeline/` (over `RowList` rows, with the indented correções), `ReportForm/`, `ReportActions/`, `ReportReading/`, with stories per state.
-- `Tabs` keeps the one-line rule; if the five labels do not fit at 375px, the "Acompanhamento" label gets a short form on phones (W7), decided in the browser check.
+- `Tabs` gains `shortLabel`: below 720px the tabs use the `label` text style (13px, weight 600) and "Acompanhamento" reads "Acompanh.", with the full label as the accessible name (W7, decided in the browser check: 352px of labels plus 48px of gaps did not fit in 343px).
+- `ReportTimeline` renders its own rows with the `RowList` look instead of reusing `RowList`, which has no slot for the status, the note and the indented correções.
+- `Button` exposes `buttonClassName` and `linkButtonClassName` (`src/components/Button/buttonClassName.ts`) so a router `Link` can look like a button ("Escrever relatório", "Criar correção", "Voltar aos relatórios").
+- The leave blocker lives in `src/routes/_authenticated/jogadores/$jogadorId/relatorios/-ReportEditorRoute.tsx` (ignored by the route generator), shared by `novo` and `$relatorioId`; the page only reports whether it has unsaved changes. A rascunho created by a first save whose second request failed carries the local edits and the error to the new URL (`carriedEdits`).
 
 ### MSW per state
 
@@ -105,4 +108,4 @@ The form state lives in the page (`useState` seeded by `toForm`), reset when a n
 - [Two requests on the first save] → the `POST` can succeed and the `PUT` fail; the page moves to the new URL with the fields kept and the next save sends only the `PUT` (Q17).
 - [Abandoned rascunhos accumulate] → no delete endpoint; recorded in `docs/divida-tecnica.md`.
 - [`escritoEm` changes on finalization] → the correção title shows the finalization date once finalized; the order inside a group stays right because a correção is always finalized after the relatório it corrects.
-- [Five tabs at 375px] → may not fit with 12px gaps; the short label is decided in the browser check (W7) and recorded back in the spec if it changes the text.
+- [Five tabs at 375px] → resolved with the 13px tabs and the short "Acompanh." label on phones (W7), recorded in the spec.
