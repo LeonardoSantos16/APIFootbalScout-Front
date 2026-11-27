@@ -1,0 +1,23 @@
+.actions {
+  padding-top: var(--space-5);
+  display: grid;
+  gap: var(--space-4);
+}
+
+.unsaved {
+  margin: 0;
+  font: var(--text-label);
+  color: var(--ink-muted);
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+@media (max-width: 719px) {
+  .buttons {
+    flex-direction: column;
+  }
+}

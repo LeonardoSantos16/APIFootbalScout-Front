@@ -31,6 +31,7 @@ export const MESSAGE_BY_CODE: Record<string, string> = {
   'relatorio.conteudo_minimo_nao_atendido':
     'Inclua ao menos 2 pontos positivos e 2 negativos (20 caracteres no total).',
   'relatorio.parecer_invalido': 'Parecer inválido.',
+  'relatorio.alterado_por_outra_requisicao': 'Este relatório foi alterado em outra aba.',
   'nota.fora_da_faixa': 'A nota deve estar entre 0 e 10.',
   'nota.precisao_invalida': 'A nota aceita no máximo uma casa decimal.',
 

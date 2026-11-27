@@ -43,7 +43,7 @@ describe('describeError pelo code', () => {
     const codes = Object.keys(MESSAGE_BY_CODE)
 
     // Assert
-    expect(codes).toHaveLength(47)
+    expect(codes).toHaveLength(48)
   })
 
   it('escreve todas as mensagens com ponto final e sem a palavra recorte', () => {

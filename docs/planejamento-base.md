@@ -120,7 +120,7 @@ Cortado do item 6 porque o contrato so abre e le (ver [divida-tecnica.md](divida
 
 ## 7. F5 Relatorio de scouting
 
-A avaliacao do olheiro. Edicao parcial com listas substituidas por inteiro, pre-requisitos para finalizar e imutabilidade depois de finalizado. O formulario e uma das partes a escrever a mao.
+A avaliacao do olheiro. Edicao parcial com listas substituidas por inteiro, pre-requisitos para finalizar e imutabilidade depois de finalizado. O formulario e uma das partes a escrever a mao. Decisoes em [grilling/f5-relatorio-de-scouting.md](grilling/f5-relatorio-de-scouting.md).
 
 - **Escopo:** rascunho a partir do perfil, sem exigir acompanhamento; edicao de nota, parecer, pontos positivos, negativos e observacoes; lista do que falta para finalizar; finalizar; criar correcao; linha do tempo por jogador agrupada por `corrigeRelatorioId`.
 - **Endpoints:** todos de `/api/Relatorio`.

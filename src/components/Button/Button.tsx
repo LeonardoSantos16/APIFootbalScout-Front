@@ -1,16 +1,12 @@
 import type { ButtonHTMLAttributes } from 'react'
-import styles from './Button.module.css'
+import { buttonClassName, type ButtonVariant } from './buttonClassName'
 
-export type ButtonVariant = 'primary' | 'secondary' | 'ghost'
+export type { ButtonVariant } from './buttonClassName'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant
 }
 
 export const Button = ({ variant = 'secondary', className, type = 'button', ...rest }: ButtonProps) => (
-  <button
-    type={type}
-    className={[styles.button, styles[variant], className].filter(Boolean).join(' ')}
-    {...rest}
-  />
+  <button type={type} className={buttonClassName(variant, className)} {...rest} />
 )

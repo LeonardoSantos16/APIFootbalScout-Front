@@ -10,13 +10,14 @@ import { usePlayerProfile } from '../../hooks/usePlayerProfile'
 import { playerSummary } from '../../utils/player'
 import styles from './PlayerLayout.module.css'
 
-export type PlayerTab = 'profile' | 'metrics' | 'comparison' | 'tracking'
+export type PlayerTab = 'profile' | 'metrics' | 'comparison' | 'tracking' | 'reports'
 
-const TABS: { id: PlayerTab; label: string }[] = [
+const TABS: { id: PlayerTab; label: string; shortLabel?: string }[] = [
   { id: 'profile', label: 'Perfil' },
   { id: 'metrics', label: 'Métricas' },
   { id: 'comparison', label: 'Comparação' },
-  { id: 'tracking', label: 'Acompanhamento' },
+  { id: 'tracking', label: 'Acompanhamento', shortLabel: 'Acompanh.' },
+  { id: 'reports', label: 'Relatórios' },
 ]
 
 const TAB_TITLE: Record<PlayerTab, string> = {
@@ -24,6 +25,7 @@ const TAB_TITLE: Record<PlayerTab, string> = {
   metrics: 'Métricas por 90',
   comparison: 'Comparação',
   tracking: 'Acompanhamento',
+  reports: 'Relatórios',
 }
 
 const NOT_FOUND_TITLE = 'Jogador não encontrado'

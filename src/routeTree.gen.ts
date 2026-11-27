@@ -21,6 +21,9 @@ import { Route as AuthenticatedJogadoresJogadorIdIndexRouteImport } from './rout
 import { Route as AuthenticatedJogadoresJogadorIdAcompanhamentoRouteImport } from './routes/_authenticated/jogadores/$jogadorId/acompanhamento'
 import { Route as AuthenticatedJogadoresJogadorIdComparacaoRouteImport } from './routes/_authenticated/jogadores/$jogadorId/comparacao'
 import { Route as AuthenticatedJogadoresJogadorIdMetricasRouteImport } from './routes/_authenticated/jogadores/$jogadorId/metricas'
+import { Route as AuthenticatedJogadoresJogadorIdRelatoriosIndexRouteImport } from './routes/_authenticated/jogadores/$jogadorId/relatorios/index'
+import { Route as AuthenticatedJogadoresJogadorIdRelatoriosRelatorioIdRouteImport } from './routes/_authenticated/jogadores/$jogadorId/relatorios/$relatorioId'
+import { Route as AuthenticatedJogadoresJogadorIdRelatoriosNovoRouteImport } from './routes/_authenticated/jogadores/$jogadorId/relatorios/novo'
 
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
@@ -85,6 +88,24 @@ const AuthenticatedJogadoresJogadorIdMetricasRoute =
     path: '/metricas',
     getParentRoute: () => AuthenticatedJogadoresJogadorIdRoute,
   } as any)
+const AuthenticatedJogadoresJogadorIdRelatoriosIndexRoute =
+  AuthenticatedJogadoresJogadorIdRelatoriosIndexRouteImport.update({
+    id: '/relatorios/',
+    path: '/relatorios/',
+    getParentRoute: () => AuthenticatedJogadoresJogadorIdRoute,
+  } as any)
+const AuthenticatedJogadoresJogadorIdRelatoriosRelatorioIdRoute =
+  AuthenticatedJogadoresJogadorIdRelatoriosRelatorioIdRouteImport.update({
+    id: '/relatorios/$relatorioId',
+    path: '/relatorios/$relatorioId',
+    getParentRoute: () => AuthenticatedJogadoresJogadorIdRoute,
+  } as any)
+const AuthenticatedJogadoresJogadorIdRelatoriosNovoRoute =
+  AuthenticatedJogadoresJogadorIdRelatoriosNovoRouteImport.update({
+    id: '/relatorios/novo',
+    path: '/relatorios/novo',
+    getParentRoute: () => AuthenticatedJogadoresJogadorIdRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
@@ -97,6 +118,9 @@ export interface FileRoutesByFullPath {
   '/jogadores/$jogadorId/comparacao': typeof AuthenticatedJogadoresJogadorIdComparacaoRoute
   '/jogadores/$jogadorId/metricas': typeof AuthenticatedJogadoresJogadorIdMetricasRoute
   '/jogadores/$jogadorId/': typeof AuthenticatedJogadoresJogadorIdIndexRoute
+  '/jogadores/$jogadorId/relatorios/$relatorioId': typeof AuthenticatedJogadoresJogadorIdRelatoriosRelatorioIdRoute
+  '/jogadores/$jogadorId/relatorios/novo': typeof AuthenticatedJogadoresJogadorIdRelatoriosNovoRoute
+  '/jogadores/$jogadorId/relatorios/': typeof AuthenticatedJogadoresJogadorIdRelatoriosIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof AuthenticatedIndexRoute
@@ -108,6 +132,9 @@ export interface FileRoutesByTo {
   '/jogadores/$jogadorId/comparacao': typeof AuthenticatedJogadoresJogadorIdComparacaoRoute
   '/jogadores/$jogadorId/metricas': typeof AuthenticatedJogadoresJogadorIdMetricasRoute
   '/jogadores/$jogadorId': typeof AuthenticatedJogadoresJogadorIdIndexRoute
+  '/jogadores/$jogadorId/relatorios/$relatorioId': typeof AuthenticatedJogadoresJogadorIdRelatoriosRelatorioIdRoute
+  '/jogadores/$jogadorId/relatorios/novo': typeof AuthenticatedJogadoresJogadorIdRelatoriosNovoRoute
+  '/jogadores/$jogadorId/relatorios': typeof AuthenticatedJogadoresJogadorIdRelatoriosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -123,6 +150,9 @@ export interface FileRoutesById {
   '/_authenticated/jogadores/$jogadorId/comparacao': typeof AuthenticatedJogadoresJogadorIdComparacaoRoute
   '/_authenticated/jogadores/$jogadorId/metricas': typeof AuthenticatedJogadoresJogadorIdMetricasRoute
   '/_authenticated/jogadores/$jogadorId/': typeof AuthenticatedJogadoresJogadorIdIndexRoute
+  '/_authenticated/jogadores/$jogadorId/relatorios/$relatorioId': typeof AuthenticatedJogadoresJogadorIdRelatoriosRelatorioIdRoute
+  '/_authenticated/jogadores/$jogadorId/relatorios/novo': typeof AuthenticatedJogadoresJogadorIdRelatoriosNovoRoute
+  '/_authenticated/jogadores/$jogadorId/relatorios/': typeof AuthenticatedJogadoresJogadorIdRelatoriosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -137,6 +167,9 @@ export interface FileRouteTypes {
     | '/jogadores/$jogadorId/comparacao'
     | '/jogadores/$jogadorId/metricas'
     | '/jogadores/$jogadorId/'
+    | '/jogadores/$jogadorId/relatorios/$relatorioId'
+    | '/jogadores/$jogadorId/relatorios/novo'
+    | '/jogadores/$jogadorId/relatorios/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -148,6 +181,9 @@ export interface FileRouteTypes {
     | '/jogadores/$jogadorId/comparacao'
     | '/jogadores/$jogadorId/metricas'
     | '/jogadores/$jogadorId'
+    | '/jogadores/$jogadorId/relatorios/$relatorioId'
+    | '/jogadores/$jogadorId/relatorios/novo'
+    | '/jogadores/$jogadorId/relatorios'
   id:
     | '__root__'
     | '/_authenticated'
@@ -162,6 +198,9 @@ export interface FileRouteTypes {
     | '/_authenticated/jogadores/$jogadorId/comparacao'
     | '/_authenticated/jogadores/$jogadorId/metricas'
     | '/_authenticated/jogadores/$jogadorId/'
+    | '/_authenticated/jogadores/$jogadorId/relatorios/$relatorioId'
+    | '/_authenticated/jogadores/$jogadorId/relatorios/novo'
+    | '/_authenticated/jogadores/$jogadorId/relatorios/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -255,6 +294,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedJogadoresJogadorIdMetricasRouteImport
       parentRoute: typeof AuthenticatedJogadoresJogadorIdRoute
     }
+    '/_authenticated/jogadores/$jogadorId/relatorios/': {
+      id: '/_authenticated/jogadores/$jogadorId/relatorios/'
+      path: '/relatorios'
+      fullPath: '/jogadores/$jogadorId/relatorios/'
+      preLoaderRoute: typeof AuthenticatedJogadoresJogadorIdRelatoriosIndexRouteImport
+      parentRoute: typeof AuthenticatedJogadoresJogadorIdRoute
+    }
+    '/_authenticated/jogadores/$jogadorId/relatorios/$relatorioId': {
+      id: '/_authenticated/jogadores/$jogadorId/relatorios/$relatorioId'
+      path: '/relatorios/$relatorioId'
+      fullPath: '/jogadores/$jogadorId/relatorios/$relatorioId'
+      preLoaderRoute: typeof AuthenticatedJogadoresJogadorIdRelatoriosRelatorioIdRouteImport
+      parentRoute: typeof AuthenticatedJogadoresJogadorIdRoute
+    }
+    '/_authenticated/jogadores/$jogadorId/relatorios/novo': {
+      id: '/_authenticated/jogadores/$jogadorId/relatorios/novo'
+      path: '/relatorios/novo'
+      fullPath: '/jogadores/$jogadorId/relatorios/novo'
+      preLoaderRoute: typeof AuthenticatedJogadoresJogadorIdRelatoriosNovoRouteImport
+      parentRoute: typeof AuthenticatedJogadoresJogadorIdRoute
+    }
   }
 }
 
@@ -263,6 +323,9 @@ interface AuthenticatedJogadoresJogadorIdRouteChildren {
   AuthenticatedJogadoresJogadorIdComparacaoRoute: typeof AuthenticatedJogadoresJogadorIdComparacaoRoute
   AuthenticatedJogadoresJogadorIdMetricasRoute: typeof AuthenticatedJogadoresJogadorIdMetricasRoute
   AuthenticatedJogadoresJogadorIdIndexRoute: typeof AuthenticatedJogadoresJogadorIdIndexRoute
+  AuthenticatedJogadoresJogadorIdRelatoriosRelatorioIdRoute: typeof AuthenticatedJogadoresJogadorIdRelatoriosRelatorioIdRoute
+  AuthenticatedJogadoresJogadorIdRelatoriosNovoRoute: typeof AuthenticatedJogadoresJogadorIdRelatoriosNovoRoute
+  AuthenticatedJogadoresJogadorIdRelatoriosIndexRoute: typeof AuthenticatedJogadoresJogadorIdRelatoriosIndexRoute
 }
 
 const AuthenticatedJogadoresJogadorIdRouteChildren: AuthenticatedJogadoresJogadorIdRouteChildren =
@@ -275,6 +338,12 @@ const AuthenticatedJogadoresJogadorIdRouteChildren: AuthenticatedJogadoresJogado
       AuthenticatedJogadoresJogadorIdMetricasRoute,
     AuthenticatedJogadoresJogadorIdIndexRoute:
       AuthenticatedJogadoresJogadorIdIndexRoute,
+    AuthenticatedJogadoresJogadorIdRelatoriosRelatorioIdRoute:
+      AuthenticatedJogadoresJogadorIdRelatoriosRelatorioIdRoute,
+    AuthenticatedJogadoresJogadorIdRelatoriosNovoRoute:
+      AuthenticatedJogadoresJogadorIdRelatoriosNovoRoute,
+    AuthenticatedJogadoresJogadorIdRelatoriosIndexRoute:
+      AuthenticatedJogadoresJogadorIdRelatoriosIndexRoute,
   }
 
 const AuthenticatedJogadoresJogadorIdRouteWithChildren =

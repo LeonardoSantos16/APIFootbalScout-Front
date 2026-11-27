@@ -1,4 +1,4 @@
-/* @ds-bundle: {"format":4,"namespace":"ScoutVestiario","components":[{"name":"Button"},{"name":"Tabs"},{"name":"ClubBand"},{"name":"Card"},{"name":"StatCell"},{"name":"MetricsGrid"},{"name":"ChangeChip"},{"name":"MeasurementCard"},{"name":"InlineError"},{"name":"Select"},{"name":"TextField"},{"name":"PasswordField"},{"name":"Notice"},{"name":"Dialog"},{"name":"SearchField"},{"name":"PlayerPhoto"},{"name":"RowList"}]} */
+/* @ds-bundle: {"format":4,"namespace":"ScoutVestiario","components":[{"name":"Button"},{"name":"Tabs"},{"name":"ClubBand"},{"name":"Card"},{"name":"StatCell"},{"name":"MetricsGrid"},{"name":"ChangeChip"},{"name":"MeasurementCard"},{"name":"InlineError"},{"name":"Select"},{"name":"TextField"},{"name":"PasswordField"},{"name":"Notice"},{"name":"Dialog"},{"name":"SearchField"},{"name":"PlayerPhoto"},{"name":"RowList"},{"name":"TextArea"},{"name":"DateField"},{"name":"SegmentedControl"},{"name":"StatusBadge"},{"name":"PointList"},{"name":"FinishChecklist"},{"name":"ReportTimeline"}]} */
 (function () {
   var React = window.React;
   var h = React.createElement;
@@ -330,6 +330,177 @@
       props.footer ? h("div", { className: "sv-rows-foot" }, props.footer) : null);
   }
 
+  function TextArea(props) {
+    var id = React.useId();
+    var hintId = id + "-hint";
+    var errorId = id + "-error";
+    var described = props.error ? errorId : props.hint ? hintId : undefined;
+    var rest = Object.assign({}, props);
+    ["label", "hint", "error", "className"].forEach(function (k) { delete rest[k]; });
+    return h("div", { className: cx("sv-field", props.className) },
+      h("label", { className: "sv-field-label", htmlFor: id }, props.label),
+      h("div", { className: cx("sv-input-wrap", "is-multiline", props.error && "is-invalid", props.disabled && "is-disabled") },
+        h("textarea", Object.assign({ rows: 6 }, rest, {
+          id: id,
+          className: "sv-textarea",
+          "aria-invalid": props.error ? true : undefined,
+          "aria-describedby": described
+        }))),
+      props.error ? h("span", { className: "sv-field-error", id: errorId }, props.error)
+        : props.hint ? h("span", { className: "sv-field-hint", id: hintId }, props.hint) : null);
+  }
+
+  function formatIsoDate(value) {
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(value || ""));
+    return m ? m[3] + "/" + m[2] + "/" + m[1] : value;
+  }
+
+  function DateField(props) {
+    var id = React.useId();
+    if (props.readOnly) {
+      return h("div", { className: "sv-field" },
+        h("span", { className: "sv-field-label", id: id }, props.label),
+        h("span", { className: "sv-field-static", "aria-labelledby": id }, formatIsoDate(props.value)),
+        props.hint ? h("span", { className: "sv-field-hint" }, props.hint) : null);
+    }
+    return h(TextField, {
+      label: props.label,
+      type: "date",
+      value: props.value,
+      max: props.max,
+      hint: props.hint,
+      error: props.error,
+      disabled: props.disabled,
+      className: "sv-date",
+      onChange: function (e) { if (props.onChange) props.onChange(e.target.value); }
+    });
+  }
+
+  function SegmentedControl(props) {
+    var name = React.useId();
+    var errorId = name + "-error";
+    return h("fieldset", { className: "sv-field sv-segmented", disabled: props.disabled, "aria-describedby": props.error ? errorId : undefined },
+      h("legend", { className: "sv-field-label" }, props.label),
+      h("div", { className: cx("sv-segments", props.error && "is-invalid") },
+        props.options.map(function (o) {
+          var checked = o.value === props.value;
+          return h("label", { key: o.value, className: cx("sv-segment", checked && "is-selected") },
+            h("input", {
+              type: "radio",
+              className: "sv-visually-hidden",
+              name: name,
+              value: o.value,
+              checked: checked,
+              onChange: function () { if (props.onChange) props.onChange(o.value); }
+            }),
+            checked ? h("span", { className: "sv-dot", "aria-hidden": true }) : null,
+            o.label);
+        })),
+      props.error ? h("span", { className: "sv-field-error", id: errorId }, props.error) : null);
+  }
+
+  var STATUS_LABEL = { draft: "Rascunho", finalized: "Finalizado", current: "Vigente" };
+
+  function StatusBadge(props) {
+    var tone = props.tone || "draft";
+    return h("span", { className: cx("sv-status", "sv-status-" + tone) },
+      tone === "current" ? h("span", { className: "sv-dot", "aria-hidden": true }) : null,
+      props.children || STATUS_LABEL[tone]);
+  }
+
+  var PLUS_PATH = "M224,128a8,8,0,0,1-8,8H136v80a8,8,0,0,1-16,0V136H40a8,8,0,0,1,0-16h80V40a8,8,0,0,1,16,0v80h80A8,8,0,0,1,224,128Z";
+
+  function PointList(props) {
+    var items = props.items || [];
+    var labelId = React.useId();
+    function change(index, value) {
+      var next = items.slice();
+      next[index] = value;
+      if (props.onChange) props.onChange(next);
+    }
+    function remove(index) {
+      var next = items.slice();
+      next.splice(index, 1);
+      if (props.onChange) props.onChange(next);
+    }
+    function add() {
+      if (props.onChange) props.onChange(items.concat([""]));
+    }
+    var head = h("div", { className: "sv-points-head" },
+      h("span", { className: "sv-field-label", id: labelId }, props.label),
+      props.count ? h("span", { className: "sv-points-count" }, props.count) : null);
+    if (props.readOnly) {
+      return h("div", { className: "sv-field sv-points" }, head,
+        items.length
+          ? h("ul", { className: "sv-points-read", "aria-labelledby": labelId },
+            items.map(function (item, i) { return h("li", { key: i }, item); }))
+          : h("p", { className: "sv-points-empty" }, props.emptyText || "Nenhum ponto."));
+    }
+    return h("div", { className: "sv-field sv-points", role: "group", "aria-labelledby": labelId }, head,
+      items.length ? h("ol", { className: "sv-points-list" },
+        items.map(function (item, i) {
+          return h("li", { key: i, className: cx("sv-input-wrap", props.disabled && "is-disabled") },
+            h("input", {
+              type: "text",
+              className: "sv-input",
+              value: item,
+              disabled: props.disabled,
+              placeholder: props.placeholder,
+              "aria-label": props.label + ", ponto " + (i + 1),
+              onChange: function (e) { change(i, e.target.value); }
+            }),
+            h("button", {
+              type: "button",
+              className: "sv-input-toggle",
+              disabled: props.disabled,
+              "aria-label": "Remover ponto " + (i + 1),
+              onClick: function () { remove(i); }
+            }, "Remover"));
+        })) : null,
+      h("div", null, h(Button, { variant: "ghost", disabled: props.disabled, onClick: add, className: "sv-points-add" },
+        h("svg", { viewBox: "0 0 256 256", width: 20, height: 20, fill: "currentColor", "aria-hidden": true }, h("path", { d: PLUS_PATH })),
+        props.addLabel || "Adicionar ponto")));
+  }
+
+  var CHECK_PATH = "M229.66,77.66l-128,128a8,8,0,0,1-11.32,0l-56-56a8,8,0,0,1,11.32-11.32L96,188.69,218.34,66.34a8,8,0,0,1,11.32,11.32Z";
+
+  function FinishChecklist(props) {
+    var titleId = React.useId();
+    return h("div", { className: "sv-checklist" },
+      h("p", { className: "sv-checklist-title", id: titleId }, props.title || "Para finalizar"),
+      h("ul", { className: "sv-checklist-list", "aria-labelledby": titleId },
+        props.items.map(function (item) {
+          return h("li", { key: item.label, className: cx("sv-checklist-item", item.done && "is-done") },
+            item.done
+              ? h("svg", { className: "sv-checklist-mark", viewBox: "0 0 256 256", fill: "currentColor", "aria-hidden": true }, h("path", { d: CHECK_PATH }))
+              : h("span", { className: "sv-checklist-ring", "aria-hidden": true }),
+            h("span", null, item.label,
+              item.progress ? h("span", { className: "sv-checklist-progress" }, " (" + item.progress + ")") : null,
+              h("span", { className: "sv-visually-hidden" }, item.done ? ", cumprido" : ", pendente")));
+        })));
+  }
+
+  function ReportTimeline(props) {
+    function row(item, index) {
+      var body = [
+        h("span", { key: "main", className: "sv-row-main" },
+          h("span", { className: "sv-row-title" }, item.title),
+          item.detail ? h("span", { className: "sv-row-detail" }, item.detail) : null,
+          item.note ? h("span", { className: "sv-timeline-note" }, item.note) : null),
+        h("span", { key: "aside", className: "sv-row-aside sv-timeline-aside" },
+          h(StatusBadge, { tone: item.status }),
+          item.status === "draft" && item.href ? h("span", { className: "sv-timeline-continue" }, "Continuar") : null)
+      ];
+      return h("li", { key: item.id, className: cx("sv-timeline-item", index > 0 && "is-correction") },
+        item.href ? h("a", { className: "sv-row is-link", href: item.href }, body) : h("div", { className: "sv-row" }, body));
+    }
+    return h("div", { className: "sv-timeline" },
+      props.groups.map(function (group) {
+        return h("ol", { key: group.id, className: "sv-timeline-group", "aria-label": group.label },
+          group.items.map(row));
+      }));
+  }
+
   window.ScoutVestiario = Object.assign(window.ScoutVestiario || {}, {
     SearchField: SearchField,
     PlayerPhoto: PlayerPhoto,
@@ -347,6 +518,13 @@
     MetricsGrid: MetricsGrid,
     ChangeChip: ChangeChip,
     MeasurementCard: MeasurementCard,
-    InlineError: InlineError
+    InlineError: InlineError,
+    TextArea: TextArea,
+    DateField: DateField,
+    SegmentedControl: SegmentedControl,
+    StatusBadge: StatusBadge,
+    PointList: PointList,
+    FinishChecklist: FinishChecklist,
+    ReportTimeline: ReportTimeline
   });
 })();

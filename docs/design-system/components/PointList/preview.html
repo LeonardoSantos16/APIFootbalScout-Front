@@ -1,0 +1,19 @@
+<!-- @dsCard group="Relatório" height=420 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>PointList</title></head>
+<body style="margin:0;background:var(--ground)">
+<div id="root" class="sv-stage is-column"></div>
+<script>
+  var V = window.ScoutVestiario, h = React.createElement;
+  function Demo() {
+    var s = React.useState(['Recebe de costas e gira rápido', '']);
+    var filled = s[0].filter(function (p) { return p.trim(); }).length;
+    return h('div', { style: { display: 'grid', gap: '24px', background: 'var(--surface)', padding: '24px', borderRadius: 'var(--radius-lg)', maxWidth: '520px' } },
+      h(V.PointList, { label: 'Pontos positivos', items: s[0], onChange: s[1], count: filled + ' de 2', placeholder: 'Uma qualidade do jogador' }),
+      h(V.PointList, { label: 'Pontos negativos', readOnly: true, items: ['Perde intensidade no segundo tempo', 'Pouco jogo aéreo'] }));
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

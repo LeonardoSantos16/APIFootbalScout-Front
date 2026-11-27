@@ -1,0 +1,24 @@
+.field {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.label {
+  font: var(--text-label);
+  color: var(--ink-muted);
+}
+
+.value {
+  font: var(--text-body-strong);
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.hint {
+  font: var(--text-caption);
+  color: var(--ink-muted);
+}
+
+.input {
+  width: min(100%, 220px);
+}

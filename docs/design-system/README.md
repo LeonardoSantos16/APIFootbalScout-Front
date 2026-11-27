@@ -41,6 +41,9 @@ Scout Vestiário é a interface escura do APIFootballScout, uma ferramenta para 
 | Erro de campo | borda do campo e frase embaixo dele em `down`, ligada por `aria-describedby`; aparece só depois do primeiro envio |
 | Aviso | `Notice`: frase em `ink-soft` sobre `surface-raised`, com `role="status"` ("Sua sessão expirou. Entre novamente.", "Senha alterada."); não é erro e não tem botão |
 | Enviando | campos e botões desabilitados; o botão principal troca o texto pelo gerúndio ("Entrando…") |
+| Relatório: rascunho, finalizado, vigente | `StatusBadge`: rascunho com contorno tracejado em `ink-soft`, finalizado em `surface-raised` e `ink-muted`, vigente em `surface-strong` e `ink` com o ponto em `pitch` |
+| O que falta para finalizar | `FinishChecklist` sempre visível: pendente em `ink-muted`, cumprido em `ink` com `check`; não é erro e nunca usa `down` |
+| Alterações não salvas | frase em `ink-muted` junto ao botão de salvar; o salvar é explícito, sem salvamento automático |
 
 ### Tipografia
 
@@ -53,17 +56,18 @@ Scout Vestiário é a interface escura do APIFootballScout, uma ferramenta para 
 - No desktop, página em duas colunas: o cartão principal à esquerda (cerca de dois terços) e os de apoio à direita. Uma coluna abaixo de 720px.
 - Cartões: `radius-lg`, padding interno `space-5`, espaço entre cartões `space-3`. Sem sombra; a elevação é o degrau de `ground` para `surface`.
 - As métricas formam uma grade de pares rótulo/valor separados por linhas `line`, com `space-4` de padding vertical por par. Sete linhas fixas, nunca filtradas.
-- Listas de linhas (resultados da busca, recortes, transferências, alvos da shortlist, relatórios) usam a `RowList`: `line` entre as linhas e `space-3` de padding vertical. Uma linha com destino é um link inteiro. Números em colunas viram uma linha de apoio abaixo de 720px.
+- Listas de linhas (resultados da busca, recortes, transferências, alvos da shortlist, relatórios) usam a `RowList`: `line` entre as linhas e `space-3` de padding vertical. Uma linha com destino é um link inteiro. Números em colunas viram uma linha de apoio abaixo de 720px. Os relatórios de um jogador usam a `ReportTimeline`, a mesma linha agrupada por cadeia de correções, com as correções recuadas.
 - Margem lateral da página de pelo menos `space-4`; espaço entre regiões `space-6`.
 
 ### Forma e controles
 
 - Botões, o campo de busca e o `Select` são pílulas (`radius-pill`). O `Select` é um `<select>` nativo em `surface-raised` com borda `line-strong` e a seta `caret-down`; a parte que diferencia as opções vem no começo do texto, porque o corte no celular come o fim. O botão principal é branco com texto `on-light`; os secundários são `surface-raised` com borda `line-strong`.
-- Campos de texto (`TextField`, `PasswordField`) têm 44px de altura, `surface-raised` com borda `line-strong` e `radius-md`, com o rótulo em `label`, `ink-muted`, em cima e a dica ou o erro embaixo. O campo de senha mostra e oculta com o texto "Mostrar"/"Ocultar", sem ícone.
+- Campos de texto (`TextField`, `PasswordField`) têm 44px de altura, `surface-raised` com borda `line-strong` e `radius-md`, com o rótulo em `label`, `ink-muted`, em cima e a dica ou o erro embaixo. O campo de senha mostra e oculta com o texto "Mostrar"/"Ocultar", sem ícone. O `TextArea` (relato) usa a mesma moldura com 6 linhas; o `DateField` é o `<input type="date">` nativo nessa moldura e, somente leitura, vira o valor em texto ("24/11/2026"). Os pontos do relatório (`PointList`) são campos de uma linha com "Remover" em texto dentro deles.
+- Escolha única entre até quatro opções curtas (o parecer) é um `SegmentedControl`: trilho pílula em `surface-raised`, o escolhido em `surface-strong` com o ponto em `pitch`, sem cor por opção.
 - Botão desabilitado: `surface-strong` com texto `ink-soft`, em qualquer variante; o `ghost` desabilitado fica só com o texto em `ink-subtle`. Não há variante destrutiva: a confirmação de uma ação irreversível fica num `Dialog` que só habilita o botão depois que o olheiro confirma.
 - Diálogos (`Dialog`) ficam centralizados sobre um fundo preto translúcido, em `surface` com borda `line` e `radius-lg`, com título em `section-title` e `x` para fechar. Os botões ficam à direita; abaixo de 480px, empilhados com a ação principal em cima.
 - O campo de busca (`SearchField`) é uma pílula em `surface-raised` com a lupa e o botão principal "Buscar"; no header, a versão compacta envia com Enter. Busca só no envio.
-- Abas são texto, com sublinhado de 2px em `pitch` na selecionada; `ink` na selecionada, `ink-muted` nas demais. Quando cada aba é uma rota (Perfil, Métricas, Comparação), as abas são links. Até 720px, distribuídas na largura numa linha só, sem rolagem.
+- Abas são texto, com sublinhado de 2px em `pitch` na selecionada; `ink` na selecionada, `ink-muted` nas demais. Quando cada aba é uma rota (Perfil, Métricas, Comparação), as abas são links. Até 720px, distribuídas na largura numa linha só, sem rolagem, em `label` com peso 600 e a forma curta do rótulo longo ("Acompanh.").
 - Chips e etiquetas de posição usam `radius-sm`.
 - Foco: anel sólido de 2px em `pitch` com 2px de afastamento em todo elemento interativo.
 

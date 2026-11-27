@@ -1,0 +1,23 @@
+<!-- @dsCard group="Relatório" height=460 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>ReportTimeline</title></head>
+<body style="margin:0;background:var(--ground)">
+<div id="root" class="sv-stage is-column"></div>
+<script>
+  var V = window.ScoutVestiario, h = React.createElement;
+  ReactDOM.createRoot(document.getElementById('root')).render(
+    h(V.Card, { title: 'Relatórios', aside: h(V.Button, null, 'Escrever relatório') },
+      h(V.ReportTimeline, { groups: [
+        { id: 'g1', label: 'Relatório observado em 20/11/2026', items: [
+          { id: 'r1', title: 'Observado em 20/11/2026', detail: 'Sem nota · Sem parecer', status: 'draft', href: '#' }
+        ] },
+        { id: 'g2', label: 'Relatório observado em 02/11/2026', items: [
+          { id: 'r2', title: 'Observado em 02/11/2026', detail: '6,5 de 10 · Monitorar', note: 'Corrigido pela correção de 05/11/2026', status: 'finalized', href: '#' },
+          { id: 'r3', title: 'Correção de 05/11/2026', detail: '7,5 de 10 · Contratar', status: 'current', href: '#' },
+          { id: 'r4', title: 'Correção de 12/11/2026', detail: 'Sem nota · Sem parecer', status: 'draft', href: '#' }
+        ] }
+      ] })));
+</script>
+</body>
+</html>
