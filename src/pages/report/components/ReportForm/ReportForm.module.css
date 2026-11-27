@@ -1,0 +1,8 @@
+.form {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.rating {
+  width: min(100%, 200px);
+}

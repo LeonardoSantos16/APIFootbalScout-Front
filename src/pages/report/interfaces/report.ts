@@ -14,6 +14,7 @@ export interface TimelineItem {
   detail: string
   status: ReportStatus
   note?: string
+  replacedById?: string
   pendingCorrectionId?: string
 }
 

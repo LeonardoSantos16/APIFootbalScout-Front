@@ -43,7 +43,10 @@ const buildItem = (report: ReportResponse, members: ReportResponse[], currentId?
     title: titleOf(report),
     detail: detailOf(report),
     status,
-    ...(replacement && { note: `Corrigido pela correção de ${formatDate(replacement.escritoEm)}` }),
+    ...(replacement && {
+      note: `Corrigido pela correção de ${formatDate(replacement.escritoEm)}`,
+      replacedById: replacement.relatorioId,
+    }),
     ...(pendingCorrection && { pendingCorrectionId: pendingCorrection.relatorioId }),
   }
 }
