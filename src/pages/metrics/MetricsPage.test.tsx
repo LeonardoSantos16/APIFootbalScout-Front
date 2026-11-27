@@ -151,9 +151,11 @@ describe('abertura da tela', () => {
 
     // Assert
     expect(await screen.findByRole('searchbox', { name: 'Buscar jogador' })).toBeInTheDocument()
-    for (const item of ['Acompanhamentos', 'Shortlists', 'Relatórios', 'Sair']) {
-      expect(screen.getByText(item)).toBeInTheDocument()
+    const top = screen.getByRole('navigation', { name: 'Principal' })
+    for (const item of ['Acompanhamentos', 'Shortlists', 'Relatórios']) {
+      expect(within(top).getByText(item)).toBeInTheDocument()
     }
+    expect(screen.getByText('Sair')).toBeInTheDocument()
   })
 
   it('nunca mostra a palavra recorte', async () => {

@@ -10,8 +10,10 @@ export const Route = createFileRoute('/_authenticated/jogadores/$jogadorId')({
 const METRICS_SUFFIX = '/metricas'
 const COMPARISON_SUFFIX = '/comparacao'
 const TRACKING_SUFFIX = '/acompanhamento'
+const REPORTS_SEGMENT = '/relatorios'
 
 const TAB_ACTIVE = { exact: true, includeSearch: false }
+const REPORTS_ACTIVE = { exact: false, includeSearch: false }
 
 function PlayerRoute() {
   const { jogadorId } = Route.useParams()
@@ -22,14 +24,24 @@ function PlayerRoute() {
       ? 'comparison'
       : pathname.endsWith(TRACKING_SUFFIX)
         ? 'tracking'
-        : 'profile'
+        : pathname.includes(REPORTS_SEGMENT)
+          ? 'reports'
+          : 'profile'
 
   return (
     <PlayerLayout
       playerId={Number(jogadorId)}
       tab={tab}
       renderTabLink={(target, props) =>
-        target === 'tracking' ? (
+        target === 'reports' ? (
+          <Link
+            to="/jogadores/$jogadorId/relatorios"
+            params={{ jogadorId }}
+            search={(prev) => prev}
+            activeOptions={REPORTS_ACTIVE}
+            {...props}
+          />
+        ) : target === 'tracking' ? (
           <Link
             to="/jogadores/$jogadorId/acompanhamento"
             params={{ jogadorId }}

@@ -47,9 +47,26 @@ a.tab {
   cursor: default;
 }
 
+.short {
+  display: none;
+}
+
 @media (max-width: 719px) {
   .tabs {
     justify-content: space-between;
     column-gap: var(--space-3);
+  }
+
+  .tab {
+    font: var(--text-label);
+    font-weight: 600;
+  }
+
+  .full {
+    display: none;
+  }
+
+  .short {
+    display: inline;
   }
 }

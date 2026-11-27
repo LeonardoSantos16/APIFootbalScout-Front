@@ -4,11 +4,13 @@ import styles from './Tabs.module.css'
 export interface TabItem {
   id: string
   label: string
+  shortLabel?: string
 }
 
 export interface TabLinkProps {
   className: string
   'aria-current'?: 'page'
+  'aria-label'?: string
   children: ReactNode
 }
 
@@ -21,6 +23,20 @@ interface TabsProps {
   disabled?: boolean
 }
 
+const content = (item: TabItem) =>
+  item.shortLabel ? (
+    <>
+      <span className={styles.full}>{item.label}</span>
+      <span className={styles.short} aria-hidden>
+        {item.shortLabel}
+      </span>
+    </>
+  ) : (
+    item.label
+  )
+
+const nameOf = (item: TabItem) => (item.shortLabel ? item.label : undefined)
+
 const classNames = (selected: boolean, disabled?: boolean) =>
   [styles.tab, selected && styles.selected, disabled && styles.disabled].filter(Boolean).join(' ')
 
@@ -32,8 +48,8 @@ export const Tabs = ({ items, value, ariaLabel, onChange, renderLink, disabled }
           const selected = item.id === value
           if (disabled) {
             return (
-              <span key={item.id} className={classNames(false, true)} aria-disabled="true">
-                {item.label}
+              <span key={item.id} className={classNames(false, true)} aria-disabled="true" aria-label={nameOf(item)}>
+                {content(item)}
               </span>
             )
           }
@@ -42,7 +58,8 @@ export const Tabs = ({ items, value, ariaLabel, onChange, renderLink, disabled }
               {renderLink(item, {
                 className: classNames(selected),
                 'aria-current': selected ? 'page' : undefined,
-                children: item.label,
+                'aria-label': nameOf(item),
+                children: content(item),
               })}
             </Fragment>
           )
@@ -64,8 +81,9 @@ export const Tabs = ({ items, value, ariaLabel, onChange, renderLink, disabled }
             disabled={disabled}
             className={classNames(selected, disabled)}
             onClick={() => onChange?.(item.id)}
+            aria-label={nameOf(item)}
           >
-            {item.label}
+            {content(item)}
           </button>
         )
       })}

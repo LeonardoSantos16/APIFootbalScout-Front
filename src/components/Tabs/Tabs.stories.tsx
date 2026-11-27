@@ -43,8 +43,13 @@ export const PlayerTabs: Story = {
       { id: 'profile', label: 'Perfil' },
       { id: 'metrics', label: 'Métricas' },
       { id: 'comparison', label: 'Comparação' },
-      { id: 'tracking', label: 'Acompanhamento' },
+      { id: 'tracking', label: 'Acompanhamento', shortLabel: 'Acompanh.' },
+      { id: 'reports', label: 'Relatórios' },
     ],
   },
   globals: { viewport: { value: 'mobile1' } },
+}
+
+export const PlayerTabsOnDesktop: Story = {
+  args: PlayerTabs.args,
 }
