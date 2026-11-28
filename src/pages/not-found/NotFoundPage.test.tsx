@@ -26,6 +26,8 @@ describe('rota inexistente com sessao', () => {
     expect(await screen.findByRole('heading', { level: 1, name: TITLE })).toBeInTheDocument()
     expect(screen.getByText('O endereço não existe ou foi digitado errado.')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Ir para o início' })).toBeInTheDocument()
+    expect(within(banner()).getByRole('searchbox', { name: 'Buscar jogador' })).toBeInTheDocument()
+    expect(within(banner()).getByRole('link', { name: 'Buscar' })).toBeInTheDocument()
     expect(within(banner()).getByRole('link', { name: 'Ana Ribeiro' })).not.toHaveAttribute('aria-current')
     expect(within(banner()).getByRole('link', { name: 'Shortlists' })).not.toHaveAttribute('aria-current')
   })
