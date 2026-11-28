@@ -113,8 +113,8 @@ The card "Suas shortlists" SHALL list at most five of the scout's shortlists in 
 - **THEN** the card shows the first five, not "Zagueiros sub-23", and "Ver todas as shortlists"
 
 #### Scenario: Up to five shortlists
-- **WHEN** the scout has "Laterais 2027" with 4 alvos costing €38,5M and "Meias para janeiro" without alvos
-- **THEN** the card shows "Laterais 2027" with "4 de 25 alvos · €38,5M" and "Meias para janeiro" with "0 de 25 alvos · Sem alvos", without "Ver todas as shortlists"
+- **WHEN** the scout has "Laterais 2027" with 4 alvos costing €47M and "Meias para janeiro" without alvos
+- **THEN** the card shows "Laterais 2027" with "4 de 25 alvos · €47M" and "Meias para janeiro" with "0 de 25 alvos · Sem alvos", without "Ver todas as shortlists"
 
 #### Scenario: Opening a shortlist
 - **WHEN** the scout clicks "Laterais 2027" in the card

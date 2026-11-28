@@ -5,7 +5,7 @@
 - [ ] 1.1 TDD of `src/utils/documentTitle.ts`: `documentTitle("Métricas por 90", "Rafael Montes")` is "Métricas por 90 · Rafael Montes · APIFootballScout"; `documentTitle("Shortlists")` is "Shortlists · APIFootballScout"; empty or missing parts are dropped ("Métricas por 90", "" gives "Métricas por 90 · APIFootballScout"); no parts gives "APIFootballScout"; `test:` red for the group
 - [ ] 1.2 TDD of `src/utils/routeParams.ts`: `parsePlayerId` gives 1001 for "1001" and `null` for "abc", "0", "-3", "01", "1.5" and ""; `isUuid` true for a seeded shortlist id and false for "123" and "abc"; same `test:` red
 - [ ] 1.3 TDD of `src/utils/pageChange.ts`: `shouldMoveFocus` false without a previous location, false for `/busca?termo=a` to `/busca?termo=b`, false for `/jogadores/1001` to `/jogadores/1001/metricas`, true for `/jogadores/1001/metricas` to `/jogadores/1002`, true for `/busca` to `/jogadores/1001`; `scrollKey` gives the same key for the tabs of 1001 and different keys for 1001 and 1002 and for `/busca` and `/shortlists`; same `test:` red
-- [ ] 1.4 TDD of `src/pages/home/utils/homeShortlists.ts`: six sorted shortlists give the first five and `hasMore` true; four give four and `hasMore` false; the detail is "4 de 25 alvos · €38,5M" and "0 de 25 alvos · Sem alvos"; same `test:` red
+- [ ] 1.4 TDD of `src/pages/home/utils/homeShortlists.ts`: six sorted shortlists give the first five and `hasMore` true; four give four and `hasMore` false; the detail is "4 de 25 alvos · €47M" and "0 de 25 alvos · Sem alvos"; same `test:` red
 - [ ] 1.5 Green of 1.1 to 1.4 in one `feat:` commit; verify with `npx vitest run src/utils src/pages/home/utils`
 
 ## 2. Components
@@ -36,7 +36,7 @@
 
 ## 7. Home page
 
-- [ ] 7.1 Route tests (`test:` red for the group): "Olá, Ana.", the search field and "Suas shortlists"; "silva" and "Buscar" open `/busca?termo=silva`; three placeholder rows while pending; Ana's four seeded shortlists in name order without "Ver todas as shortlists"; "Laterais 2027" with "4 de 25 alvos · €38,5M" opens its page; six shortlists show five without "Zagueiros sub-23" and with "Ver todas as shortlists" leading to `/shortlists`; empty shows "Você ainda não tem shortlists." with "Criar shortlist" to `/shortlists`; a 500 shows "Não foi possível concluir agora." without "Tentar de novo" and the search still works; a 502 shows "Tentar de novo", which asks again
+- [ ] 7.1 Route tests (`test:` red for the group): "Olá, Ana.", the search field and "Suas shortlists"; "silva" and "Buscar" open `/busca?termo=silva`; three placeholder rows while pending; Ana's four seeded shortlists in name order without "Ver todas as shortlists"; "Laterais 2027" with "4 de 25 alvos · €47M" opens its page; six shortlists show five without "Zagueiros sub-23" and with "Ver todas as shortlists" leading to `/shortlists`; empty shows "Você ainda não tem shortlists." with "Criar shortlist" to `/shortlists`; a 500 shows "Não foi possível concluir agora." without "Tentar de novo" and the search still works; a 502 shows "Tentar de novo", which asks again
 - [ ] 7.2 Green in one `feat:` commit: `HomePage` with `HomeShortlists` and the route passing the shortlist links; remove the "Pagina inicial provisoria" entry from `docs/divida-tecnica.md`; verify with `npm test`
 - [ ] 7.3 Stories of `HomePage` per state (`WithShortlists`, `MoreThanFive`, `Empty`, `Loading`, `UnknownError`, `SourceDown`); verify in Storybook at desktop and 375px
 
