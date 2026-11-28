@@ -1,8 +1,11 @@
-import { useEffect } from 'react'
-import { APP_NAME } from '../../components/AppShell/AppShell'
+import type { ReactNode } from 'react'
 import { Card } from '../../components/Card/Card'
+import type { RowLinkProps } from '../../components/RowList/RowList'
 import { SearchField } from '../../components/SearchField/SearchField'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 import { useSearchForm } from '../../hooks/useSearchForm'
+import { documentTitle } from '../../utils/documentTitle'
+import { HomeShortlists, type HomeLinkProps } from './components/HomeShortlists/HomeShortlists'
 import styles from './HomePage.module.css'
 
 const FIELD_LABEL = 'Nome do jogador'
@@ -10,14 +13,14 @@ const FIELD_LABEL = 'Nome do jogador'
 interface HomePageProps {
   name: string
   onSearch: (term: string) => void
+  renderShortlistLink: (shortlistId: string, props: RowLinkProps) => ReactNode
+  renderListLink: (props: HomeLinkProps) => ReactNode
 }
 
-export const HomePage = ({ name, onSearch }: HomePageProps) => {
+export const HomePage = ({ name, onSearch, renderShortlistLink, renderListLink }: HomePageProps) => {
   const form = useSearchForm({ onSearch })
 
-  useEffect(() => {
-    document.title = APP_NAME
-  }, [])
+  useDocumentTitle(documentTitle())
 
   return (
     <div className={styles.page}>
@@ -27,6 +30,7 @@ export const HomePage = ({ name, onSearch }: HomePageProps) => {
           <SearchField label={FIELD_LABEL} placeholder={FIELD_LABEL} {...form} />
         </div>
       </Card>
+      <HomeShortlists renderShortlistLink={renderShortlistLink} renderListLink={renderListLink} />
     </div>
   )
 }

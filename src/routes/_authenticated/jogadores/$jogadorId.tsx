@@ -1,10 +1,14 @@
-import { Link, Outlet, createFileRoute, useRouterState } from '@tanstack/react-router'
+import { Link, Outlet, createFileRoute, notFound, useRouterState } from '@tanstack/react-router'
 import { PlayerLayout, type PlayerTab } from '../../../pages/player/PlayerLayout'
 import { AddToShortlist } from '../../../pages/shortlist/components/AddToShortlist/AddToShortlist'
+import { parsePlayerId } from '../../../utils/routeParams'
 import { validatePlayerSearch } from '../../../utils/slice'
 
 export const Route = createFileRoute('/_authenticated/jogadores/$jogadorId')({
   validateSearch: validatePlayerSearch,
+  beforeLoad: ({ params }) => {
+    if (parsePlayerId(params.jogadorId) === null) throw notFound()
+  },
   component: PlayerRoute,
 })
 

@@ -147,6 +147,6 @@ describe('entrar', () => {
     await openSignIn()
 
     // Assert
-    expect(document.title).toBe('Entrar')
+    expect(document.title).toBe('Entrar · APIFootballScout')
   })
 })

@@ -70,7 +70,7 @@ describe('aba Comparação', () => {
     renderRoute(TAB)
 
     // Assert
-    await waitFor(() => expect(document.title).toBe('Comparação · Rafael Montes'))
+    await waitFor(() => expect(document.title).toBe('Comparação · Rafael Montes · APIFootballScout'))
   })
 
   it('corrige a URL sem recorte para o primeiro da ordem', async () => {

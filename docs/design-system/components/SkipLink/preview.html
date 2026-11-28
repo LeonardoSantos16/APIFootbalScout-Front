@@ -1,0 +1,19 @@
+<!-- @dsCard group="Navegação" height=160 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>SkipLink</title></head>
+<body style="margin:0;background:var(--ground)">
+<div id="root" class="sv-stage is-column" style="position:relative;min-height:160px"></div>
+<script>
+  var V = window.ScoutVestiario, h = React.createElement;
+  function Demo() {
+    var ref = React.useRef(null);
+    React.useEffect(function () { ref.current && ref.current.querySelector('a').focus(); }, []);
+    return h('div', { ref: ref, style: { position: 'relative', minHeight: 120, paddingTop: 64 } },
+      h(V.SkipLink, { href: '#conteudo' }),
+      h('p', { id: 'conteudo', tabIndex: -1, style: { margin: 0, color: 'var(--ink-soft)', fontFamily: 'var(--font-body)', fontSize: 14 } }, 'Visível só com o foco do teclado. Tab a partir do topo da página.'));
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

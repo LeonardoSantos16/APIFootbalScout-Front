@@ -1,10 +1,11 @@
-import { useEffect } from 'react'
 import { Card } from '../../components/Card/Card'
 import { InlineError } from '../../components/InlineError/InlineError'
 import { PageColumns } from '../../components/PageColumns/PageColumns'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 import { useSliceSelection } from '../../hooks/useSliceSelection'
 import type { PlayerSearch, Slice, SliceChangeOptions } from '../../interfaces/slice'
 import styles from './TrackingPage.module.css'
+import { documentTitle } from '../../utils/documentTitle'
 import { TrackingPanel } from './components/TrackingPanel/TrackingPanel'
 import { TrackingStart } from './components/TrackingStart/TrackingStart'
 import { useOpenTracking } from './hooks/useOpenTracking'
@@ -26,9 +27,7 @@ export const TrackingPage = ({ playerId, search, onSliceChange }: TrackingPagePr
   const opening = useOpenTracking(playerId)
   const name = profile.data?.details?.name
 
-  useEffect(() => {
-    document.title = name ? `${PAGE_TITLE} · ${name}` : PAGE_TITLE
-  }, [name])
+  useDocumentTitle(documentTitle(PAGE_TITLE, name))
 
   const renderContent = () => {
     if (tracking.isError && !tracking.isFetching) {

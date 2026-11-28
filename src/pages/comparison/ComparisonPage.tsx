@@ -1,12 +1,14 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 import { Button } from '../../components/Button/Button'
 import { Card } from '../../components/Card/Card'
 import { InlineError } from '../../components/InlineError/InlineError'
 import { PageColumns } from '../../components/PageColumns/PageColumns'
 import { Select } from '../../components/Select/Select'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 import { SLICE_SELECT_LABEL, useSliceSelection } from '../../hooks/useSliceSelection'
 import type { PlayerSearch, Slice, SliceChangeOptions } from '../../interfaces/slice'
 import { MINIMUM_RULE_TEXT } from '../../utils/attributes'
+import { documentTitle } from '../../utils/documentTitle'
 import type { SearchPlayer } from '../../utils/searchResults'
 import { sliceText } from '../../utils/slice'
 import styles from './ComparisonPage.module.css'
@@ -37,9 +39,7 @@ export const ComparisonPage = ({ playerId, search, onSliceChange, onClear, rende
   const details = profile.data?.details
   const name = details?.name
 
-  useEffect(() => {
-    document.title = name ? `${PAGE_TITLE} · ${name}` : PAGE_TITLE
-  }, [name])
+  useDocumentTitle(documentTitle(PAGE_TITLE, name))
 
   const remember = (player: SearchPlayer) => setChosenNames((names) => ({ ...names, [player.id]: player.name }))
 

@@ -1,6 +1,7 @@
-import { useEffect } from 'react'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 import { useSession } from '../../hooks/useSession'
 import styles from './AccountPage.module.css'
+import { documentTitle } from '../../utils/documentTitle'
 import { ChangePasswordCard } from './components/ChangePasswordCard'
 import { DeleteAccountCard } from './components/DeleteAccountCard'
 import { SessionsCard } from './components/SessionsCard'
@@ -15,9 +16,7 @@ interface AccountPageProps {
 export const AccountPage = ({ onSignOutAll, onAccountDeleted }: AccountPageProps) => {
   const session = useSession()
 
-  useEffect(() => {
-    document.title = PAGE_TITLE
-  }, [])
+  useDocumentTitle(documentTitle(PAGE_TITLE))
 
   return (
     <div className={styles.page}>

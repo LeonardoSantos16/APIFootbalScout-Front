@@ -1,13 +1,7 @@
 import type { QueryClient } from '@tanstack/react-query'
 import { $api, ApiError } from '../../../api/client'
+import { SHORTLIST_LIFETIME_MS, shortlistsQuery } from '../../../hooks/useShortlists'
 import type { ShortlistResponse } from '../interfaces/shortlist'
-
-const SHORTLIST_LIFETIME_MS = 60 * 1000
-
-export const shortlistsQuery = () => ({
-  ...$api.queryOptions('get', '/api/Shortlist'),
-  staleTime: SHORTLIST_LIFETIME_MS,
-})
 
 export const shortlistQuery = (shortlistId: string) => ({
   ...$api.queryOptions('get', '/api/Shortlist/{shortlistId}', { params: { path: { shortlistId } } }),

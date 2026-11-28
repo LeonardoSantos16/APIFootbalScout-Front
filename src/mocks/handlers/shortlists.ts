@@ -1,5 +1,5 @@
 import { HttpResponse, delay } from 'msw'
-import { SHORTLIST_IDS } from '../fixtures/shortlists'
+import { SHORTLIST_IDS, moreThanFiveShortlists } from '../fixtures/shortlists'
 import { http } from '../http'
 import { problem } from '../responses'
 import {
@@ -69,6 +69,14 @@ export const shortlistsEmpty = http.get(SHORTLIST_LIST, ({ response }) => respon
 
 export const shortlistsUnknownError = http.get(SHORTLIST_LIST, ({ response }) =>
   response.untyped(problem(500, undefined, 'GET /api/Shortlist')),
+)
+
+export const shortlistsMoreThanFive = http.get(SHORTLIST_LIST, ({ response }) =>
+  response(200).json(moreThanFiveShortlists()),
+)
+
+export const shortlistsSourceDown = http.get(SHORTLIST_LIST, ({ response }) =>
+  response.untyped(problem(502, undefined, 'GET /api/Shortlist')),
 )
 
 export const shortlistsPending = http.get(SHORTLIST_LIST, async ({ response }) => {

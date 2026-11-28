@@ -20,6 +20,37 @@
   color: var(--ink);
 }
 
+.sheetBackdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--surface);
+}
+
+.sheet {
+  position: fixed;
+  inset: 0;
+  box-sizing: border-box;
+  display: grid;
+  align-content: start;
+  gap: var(--space-4);
+  padding: 0 var(--space-4) var(--space-5);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.sheet .head {
+  min-height: 56px;
+  margin: 0 calc(-1 * var(--space-4));
+  padding: 0 var(--space-4);
+  border-bottom: 1px solid var(--line);
+}
+
+.sheet .close {
+  margin: 0;
+}
+
 .head {
   display: flex;
   align-items: center;

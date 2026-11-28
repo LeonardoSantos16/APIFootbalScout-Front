@@ -78,7 +78,7 @@ describe('conta', () => {
     // Assert
     await waitFor(() => expect(router.state.location.pathname).toBe('/conta'))
     expect(await screen.findByText(`Ana Ribeiro · ${EMAIL}`)).toBeInTheDocument()
-    expect(document.title).toBe('Conta')
+    expect(document.title).toBe('Conta · APIFootballScout')
   })
 })
 

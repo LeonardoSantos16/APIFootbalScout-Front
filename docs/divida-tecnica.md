@@ -77,6 +77,12 @@ Pendencias conhecidas que o front contorna hoje e que precisam de correcao em ou
 - **Contorno no front:** a change `f1-f2-acompanhamento` entrega so abrir e ler. O limite aparece quando o `POST` responde `422 acompanhamento.limite_atingido` ("Limite de 10 acompanhamentos atingido.", sem sugerir encerrar), em vez de o botao ser desabilitado antes, como pede o `fluxos-de-tela.md` (grilling da F1/F2, Q3 e Q11).
 - **Correcao esperada:** `GET /api/Acompanhamento` com os ativos e o consumo do limite, e um endpoint de encerramento. Entram no item 6b do planejamento.
 
+### Relatorios sem lista do olheiro
+
+- **Problema:** `GET /api/Relatorio/jogador/{jogadorId}` lista os relatorios de um jogador, mas nao ha endpoint com todos os relatorios do olheiro. O topo nao tem para onde levar "Relatórios".
+- **Contorno no front:** a change `navegacao` tira "Relatórios" do topo (grilling da navegacao, Q2); os relatorios continuam na aba "Relatórios" de cada jogador.
+- **Correcao esperada:** `GET /api/Relatorio` com os relatorios do olheiro, paginado e com o jogador de cada um; o link volta ao topo quando existir.
+
 ### Leitura do acompanhamento sem o recorte
 
 - **Problema:** `POST /api/Acompanhamento` recebe o recorte, mas `GET /api/Acompanhamento/{jogadorId}` nao o devolve. O painel nao consegue dizer de qual competicao e temporada e a minutagem.
@@ -136,11 +142,3 @@ Pendencias conhecidas que o front contorna hoje e que precisam de correcao em ou
 - **Problema:** `docs/frontend/erros.md` e `docs/frontend/fluxos-de-tela.md` do back-end nao citam o `If-Match`, o `412 relatorio.alterado_por_outra_requisicao` (nem o equivalente da shortlist) e o `428`, que o ADR 0005 do back-end introduziu.
 - **Contorno no front:** a copia local de `erros.md` ja traz os dois status e o codigo do relatorio; o tratamento esta no ADR 0006 do front.
 - **Correcao esperada:** acrescentar os codigos e uma secao de concorrencia nos docs do back-end.
-
-## Front
-
-### Pagina inicial provisoria
-
-- **Problema:** a pagina inicial de verdade so chega no item 9, mas o olheiro precisa cair em algum lugar depois de entrar.
-- **Contorno:** `/` mostra "Olá, {nome}." e o campo de busca (grilling da Busca e perfil, Q13). No `dev:mock`, os jogadores de teste sao achados pelo nome na busca.
-- **Correcao esperada:** substituir no item 9 (Navegacao e acessibilidade).

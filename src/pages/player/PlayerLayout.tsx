@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 import { ApiError } from '../../api/client'
 import { describeError } from '../../api/errors'
 import { Card } from '../../components/Card/Card'
@@ -6,7 +6,9 @@ import { ClubBand } from '../../components/ClubBand/ClubBand'
 import { InlineError } from '../../components/InlineError/InlineError'
 import { PlayerPhoto } from '../../components/PlayerPhoto/PlayerPhoto'
 import { Tabs, type TabLinkProps } from '../../components/Tabs/Tabs'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 import { usePlayerProfile } from '../../hooks/usePlayerProfile'
+import { documentTitle } from '../../utils/documentTitle'
 import { playerSummary } from '../../utils/player'
 import styles from './PlayerLayout.module.css'
 
@@ -47,9 +49,7 @@ export const PlayerLayout = ({ playerId, tab, renderTabLink, renderSearchLink, b
   const failed = profile.isError && !profile.isFetching
   const notFound = failed && isNotFound(profile.error)
 
-  useEffect(() => {
-    if (failed) document.title = notFound ? NOT_FOUND_TITLE : TAB_TITLE[tab]
-  }, [failed, notFound, tab])
+  useDocumentTitle(failed ? documentTitle(notFound ? NOT_FOUND_TITLE : TAB_TITLE[tab]) : null)
 
   if (failed) {
     const { message, canRetry } = describeError(profile.error, { plainText: true })

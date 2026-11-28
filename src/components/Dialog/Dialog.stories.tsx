@@ -48,3 +48,17 @@ export const Phone: Story = {
   ...ConfirmationPending,
   globals: { viewport: { value: 'mobile1', isRotated: false } },
 }
+
+export const Sheet: Story = {
+  args: {
+    variant: 'sheet',
+    title: 'Menu',
+    description: undefined,
+    children: (
+      <nav aria-label="Principal">
+        <a href="#inicio">Início</a>
+      </nav>
+    ),
+  },
+  globals: { viewport: { value: 'mobile1', isRotated: false } },
+}

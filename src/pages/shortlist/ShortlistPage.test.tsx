@@ -63,7 +63,7 @@ describe('shortlist: leitura', () => {
     const labels = screen.getAllByRole('term').map((label) => label.textContent)
     expect(labels).toEqual(['Alvos', 'Custo total', 'Moeda da lista'])
     expect(values).toEqual(['4 de 25', '€47M', 'EUR'])
-    await waitFor(() => expect(document.title).toBe('Shortlist · Laterais 2027'))
+    await waitFor(() => expect(document.title).toBe('Shortlist · Laterais 2027 · APIFootballScout'))
   })
 
   it('mostra os alvos em ordem com o perfil e o custo', async () => {
@@ -177,7 +177,7 @@ describe('shortlist: leitura', () => {
 
     // Assert
     expect(await screen.findByRole('status', { name: 'Carregando shortlist' })).toBeInTheDocument()
-    await waitFor(() => expect(document.title).toBe('Shortlist'))
+    await waitFor(() => expect(document.title).toBe('Shortlist · APIFootballScout'))
   })
 
   it('diz que a shortlist nao foi encontrada', async () => {

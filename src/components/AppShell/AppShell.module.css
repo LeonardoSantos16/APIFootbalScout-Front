@@ -13,6 +13,22 @@
   white-space: nowrap;
 }
 
+.brand a {
+  display: inline-flex;
+  align-items: center;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.brand a:hover {
+  color: var(--ink-soft);
+}
+
+.brand a:focus-visible {
+  outline: 2px solid var(--pitch);
+  outline-offset: 2px;
+}
+
 .search {
   flex: 0 1 320px;
   min-width: 0;
@@ -49,6 +65,7 @@
 .link {
   font: var(--text-body-strong);
   color: var(--ink-soft);
+  white-space: nowrap;
 }
 
 .link a {
@@ -77,6 +94,7 @@
   margin-left: auto;
   font: var(--text-body-strong);
   color: var(--ink-soft);
+  white-space: nowrap;
 }
 
 .name a {
@@ -110,17 +128,12 @@
 }
 
 .linkSkeleton,
-.linkSkeletonWide,
 .nameSkeleton {
   height: var(--space-4);
 }
 
 .linkSkeleton {
   width: 72px;
-}
-
-.linkSkeletonWide {
-  width: 128px;
 }
 
 .nameSkeleton {
@@ -154,6 +167,15 @@
 
   .phone {
     display: flex;
+  }
+
+  .top {
+    padding: var(--space-1) var(--space-4);
+  }
+
+  .brand a,
+  .menuButton {
+    min-height: 44px;
   }
 
   .main {

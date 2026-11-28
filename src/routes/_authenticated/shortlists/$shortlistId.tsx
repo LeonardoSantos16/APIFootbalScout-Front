@@ -1,7 +1,11 @@
-import { Link, createFileRoute } from '@tanstack/react-router'
+import { Link, createFileRoute, notFound } from '@tanstack/react-router'
 import { ShortlistPage } from '../../../pages/shortlist/ShortlistPage'
+import { isUuid } from '../../../utils/routeParams'
 
 export const Route = createFileRoute('/_authenticated/shortlists/$shortlistId')({
+  beforeLoad: ({ params }) => {
+    if (!isUuid(params.shortlistId)) throw notFound()
+  },
   component: ShortlistRoute,
 })
 

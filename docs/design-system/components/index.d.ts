@@ -106,11 +106,15 @@ export interface DialogProps {
   open: boolean;
   title: string;
   description?: string;
+  variant?: 'centered' | 'sheet';
   onClose: () => void;
   actions?: React.ReactNode;
   children?: React.ReactNode;
 }
 export declare function Dialog(props: DialogProps): React.ReactElement | null;
+
+export interface SkipLinkProps { href?: string; children?: React.ReactNode }
+export declare function SkipLink(props: SkipLinkProps): React.ReactElement;
 
 export interface SearchFieldProps {
   label: string;
@@ -277,6 +281,7 @@ declare global {
       PasswordField: typeof PasswordField;
       Notice: typeof Notice;
       Dialog: typeof Dialog;
+      SkipLink: typeof SkipLink;
       SearchField: typeof SearchField;
       PlayerPhoto: typeof PlayerPhoto;
       RowList: typeof RowList;

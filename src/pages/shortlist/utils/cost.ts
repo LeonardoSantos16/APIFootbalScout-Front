@@ -1,5 +1,4 @@
-import { formatMoney } from '../../../utils/number'
-import type { CostParse, MarketValue, Money } from '../interfaces/shortlist'
+import type { CostParse, MarketValue } from '../interfaces/shortlist'
 
 export const CURRENCIES = ['EUR', 'BRL', 'USD', 'GBP']
 
@@ -36,5 +35,3 @@ export const initialCurrency = (marketValue: MarketValue | null | undefined, lis
   const usable = usableMarketValue(marketValue)
   return usable && CURRENCIES.includes(usable.currency) ? usable.currency : CURRENCIES[0]
 }
-
-export const formatCost = (money: Money): string => formatMoney(money.quantiaEmCentavos / 100, money.moeda)

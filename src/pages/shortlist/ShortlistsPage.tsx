@@ -1,14 +1,15 @@
-import { useEffect, type ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import { describeError } from '../../api/errors'
 import { Card } from '../../components/Card/Card'
 import { PageColumns } from '../../components/PageColumns/PageColumns'
 import { RowList, type Row, type RowLinkProps } from '../../components/RowList/RowList'
 import { Skeleton } from '../../components/Skeleton/Skeleton'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
+import { documentTitle } from '../../utils/documentTitle'
 import { ShortlistNameForm } from './components/ShortlistNameForm/ShortlistNameForm'
-import { useShortlists } from './hooks/useShortlists'
-import type { ShortlistResponse } from './interfaces/shortlist'
-import { formatCost } from './utils/cost'
-import { targetsLabel } from './utils/shortlists'
+import { useShortlists } from '../../hooks/useShortlists'
+import type { ShortlistResponse } from '../../interfaces/shortlist'
+import { formatCost, targetsLabel } from '../../utils/shortlists'
 import styles from './ShortlistsPage.module.css'
 
 const PAGE_TITLE = 'Shortlists'
@@ -36,9 +37,7 @@ const toRow = (shortlist: ShortlistResponse): ShortlistRow => ({
 export const ShortlistsPage = ({ renderShortlistLink, onCreated }: ShortlistsPageProps) => {
   const shortlists = useShortlists()
 
-  useEffect(() => {
-    document.title = PAGE_TITLE
-  }, [])
+  useDocumentTitle(documentTitle(PAGE_TITLE))
 
   const renderList = () => {
     if (shortlists.isError && !shortlists.isFetching) {

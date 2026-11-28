@@ -152,9 +152,8 @@ describe('abertura da tela', () => {
     // Assert
     expect(await screen.findByRole('searchbox', { name: 'Buscar jogador' })).toBeInTheDocument()
     const top = screen.getByRole('navigation', { name: 'Principal' })
-    for (const item of ['Acompanhamentos', 'Shortlists', 'Relatórios']) {
-      expect(within(top).getByText(item)).toBeInTheDocument()
-    }
+    expect(within(top).getByRole('link', { name: 'Shortlists' })).toBeInTheDocument()
+    expect(top).not.toHaveTextContent('Acompanhamentos')
     expect(screen.getByText('Sair')).toBeInTheDocument()
   })
 
@@ -365,7 +364,7 @@ describe('titulo da aba', () => {
     renderRoute(`/jogadores/1001/metricas${BRASILEIRAO_2025}`)
 
     // Assert
-    await waitFor(() => expect(document.title).toBe('Métricas por 90 · Rafael Montes'))
+    await waitFor(() => expect(document.title).toBe('Métricas por 90 · Rafael Montes · APIFootballScout'))
   })
 
   it('fica so com o nome da tela quando a fonte do perfil esta fora', async () => {
@@ -378,6 +377,6 @@ describe('titulo da aba', () => {
 
     // Assert
     await screen.findByRole('alert')
-    expect(document.title).toBe('Métricas por 90')
+    expect(document.title).toBe('Métricas por 90 · APIFootballScout')
   })
 })

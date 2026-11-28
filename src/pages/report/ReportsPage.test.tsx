@@ -49,7 +49,7 @@ describe('aba Relatórios', () => {
     renderRoute(tab(1001))
 
     // Assert
-    await waitFor(() => expect(document.title).toBe('Relatórios · Rafael Montes'))
+    await waitFor(() => expect(document.title).toBe('Relatórios · Rafael Montes · APIFootballScout'))
   })
 
   it('mostra o grupo mais recente primeiro e a cadeia com o status de cada relatorio', async () => {

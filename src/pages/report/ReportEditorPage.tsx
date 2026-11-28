@@ -10,8 +10,10 @@ import { InlineError } from '../../components/InlineError/InlineError'
 import { PageColumns } from '../../components/PageColumns/PageColumns'
 import { Skeleton } from '../../components/Skeleton/Skeleton'
 import { StatusBadge } from '../../components/StatusBadge/StatusBadge'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 import { usePlayerProfile } from '../../hooks/usePlayerProfile'
 import styles from './ReportEditorPage.module.css'
+import { documentTitle } from '../../utils/documentTitle'
 import { ReportActions, type PendingAction } from './components/ReportActions/ReportActions'
 import { ReportForm, type ObservationMode } from './components/ReportForm/ReportForm'
 import { ReportReading, type ReadingLinkProps, type ReportReference } from './components/ReportReading/ReportReading'
@@ -265,9 +267,7 @@ export const ReportEditorPage = ({
     if (reportId) dropCarriedEdit(reportId)
   }, [reportId])
 
-  useEffect(() => {
-    document.title = name ? `${title} · ${name}` : title
-  }, [name, title])
+  useDocumentTitle(documentTitle(title, name))
 
   const item = reports.data?.groups.flatMap((group) => group.items).find((entry) => entry.id === reportId)
   const correctedReport = correctionOf

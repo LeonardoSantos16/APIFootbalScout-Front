@@ -1,11 +1,13 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 import { Button } from '../../components/Button/Button'
 import { Card } from '../../components/Card/Card'
 import { PageColumns } from '../../components/PageColumns/PageColumns'
 import { RowList, type RowLinkProps } from '../../components/RowList/RowList'
 import { Skeleton } from '../../components/Skeleton/Skeleton'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 import { usePlayerProfile } from '../../hooks/usePlayerProfile'
 import type { Slice } from '../../interfaces/slice'
+import { documentTitle } from '../../utils/documentTitle'
 import { marketValue } from './utils/marketValue'
 import { playerData } from './utils/playerData'
 import { sliceRows } from './utils/sliceRows'
@@ -39,9 +41,7 @@ export const ProfilePage = ({ playerId, renderSliceLink }: ProfilePageProps) => 
   const profile = usePlayerProfile(playerId)
   const name = profile.data?.details?.name
 
-  useEffect(() => {
-    document.title = name ?? PAGE_TITLE
-  }, [name])
+  useDocumentTitle(documentTitle(name ?? PAGE_TITLE))
 
   if (!profile.data) {
     return (
