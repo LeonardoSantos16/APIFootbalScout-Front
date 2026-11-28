@@ -53,7 +53,7 @@ ADRs applied: 0004 (no optimistic state; the answer replaces the list; the moved
 | `src/pages/shortlist/utils/shortlists.ts` | `sortByName(list)` with `localeCompare('pt-BR')`; `targetsCount(shortlist)` "4 de 25 alvos" and the header form "4 de 25"; `listCurrency(shortlist)` (the first alvo's `moeda` or none); `isFull(shortlist)` against `limiteDeAlvos`; `validateName(nome)` with "Dê um nome à shortlist." and the trimmed name |
 | `src/pages/shortlist/utils/addOptions.ts` | `shortlistOptions(shortlists, jogadorId)`: label "<nome>", reason "Já está nesta shortlist" or "Cheia (25 de 25)" with `disabled`, else "<n> de <limite> alvos"; `defaultShortlist(options)` the first enabled; `priorityOptions(count)` "1 — no topo" … "<n+1> — no fim" with the last as default; `addedMessage(nome, prioridade)` |
 | `src/pages/shortlist/utils/reorder.ts` | `canMoveUp`, `canMoveDown`; `dropPriority(alvos, activeId, overId)` the prioridade of the row dropped on, or none when unchanged; `pendingText(kind, prioridade)` "Movendo para a prioridade 1…" / "Removendo…"; `announcements(nameOf, count)` with "<nome> pego, prioridade 3 de 4", "movido para a prioridade 1", "solto na prioridade 1", "cancelado" |
-| `src/pages/shortlist/utils/shortlistError.ts` | `isShortlistConflict(error)` (412 with `shortlist.alterada_por_outra_requisicao` or without `code`); `conflictText('page' \| 'dialog')`; `writeErrorText(error)` from `describeError` without retry |
+| `src/pages/shortlist/utils/shortlistError.ts` | `isShortlistConflict(error)` (412 with `shortlist.alterada_por_outra_requisicao` or without `code`); `conflictText('page' \| 'dialog')`; `writeErrorText(error, place)` from `describeError` without retry; `profileFailure(error)`: 502 with retry, 404 "Perfil não encontrado." without |
 
 ### Data hooks
 
@@ -80,7 +80,7 @@ ADRs applied: 0004 (no optimistic state; the answer replaces the list; the moved
 
 ### Add dialog
 
-`src/pages/player/components/AddToShortlist/AddToShortlist.tsx` is the secondary `Button` with the `plus` icon passed as the `ClubBand` action by `PlayerLayout` once the profile arrives; it owns the `Dialog` and mounts its content only when open, so nothing is requested before the click. Content states: fields in skeleton while the list loads; without shortlists, the name field and "Criar shortlist" (reusing `useCreateShortlist`); otherwise the `Select` "Shortlist" (options disabled with the reason in the label: "Atacantes — Cheia (25 de 25)"), the `MoneyField` and the `Select` "Prioridade"; the `InlineError` next to the buttons; after success, the check line in `pitch`, "Ver shortlist" (link) and "Fechar". Changing the shortlist resets the prioridade to its end and the currency to the moeda da lista.
+`src/pages/shortlist/components/AddToShortlist/AddToShortlist.tsx` is the secondary `Button` with the `plus` icon; the player layout route passes it to `PlayerLayout` as `bandAction`, which reaches `ClubBand` only once the profile arrives, so the player pages never import the shortlist page folder; it owns the `Dialog` and mounts its content only when open, so nothing is requested before the click. Content states: fields in skeleton while the list loads; without shortlists, the name field and "Criar shortlist" (reusing `useCreateShortlist`); otherwise the `Select` "Shortlist" (options disabled with the reason in the label: "Atacantes — Cheia (25 de 25)"), the `MoneyField` and the `Select` "Prioridade"; the `InlineError` next to the buttons; after success, the check line in `pitch`, "Ver shortlist" (link) and "Fechar". Changing the shortlist resets the prioridade to its end and the currency to the moeda da lista.
 
 ### Components
 
@@ -88,7 +88,8 @@ ADRs applied: 0004 (no optimistic state; the answer replaces the list; the moved
 - `src/components/Select/`: `SelectOption` gains `disabled`.
 - `src/pages/shortlist/components/TargetRow/`: the row of the design system (prioridade, photo, name link, detail, cost, handle, "Subir", "Descer", "Remover"), with `handleProps` and `style` for the sortable wrapper, the pending, dragging, loading and unavailable states, the phone second line hiding the handle and the unavailable actions; stories per state.
 - `src/pages/shortlist/components/ShortlistHeader/`, `TargetList/`: stories per state.
-- `AppShell` and `_authenticated.tsx` as in Routes; `PlayerLayout` passes the action to `ClubBand`.
+- `AppShell` and `_authenticated.tsx` as in Routes; `PlayerLayout` gains `bandAction` and passes it to `ClubBand`.
+- `src/pages/shortlist/components/ShortlistNameForm/`: the "Nome da shortlist" field with "Criar shortlist", shared by the shortlists page and the dialog without shortlists.
 
 ### MSW per state
 
@@ -101,7 +102,7 @@ ADRs applied: 0004 (no optimistic state; the answer replaces the list; the moved
 | `createShortlist`, `createShortlistUnknownError`, `addTarget`, `moveTarget`, `removeTarget` | the store operations |
 | `addTargetConflict`, `addTargetDuplicate`, `addTargetLimit`, `addTargetCurrency`, `addTargetUnknownError`, `moveTargetConflict`, `moveTargetOutOfOrder`, `moveTargetUnknownError`, `removeTargetNotFound`, `writePending` | the refusals and the pending write |
 
-`src/mocks/handlers.ts` answers the `dev:mock` under `withAuth` from the store (Q18): "Laterais 2027" with 1003 (€8M), 1001 (€12,5M), 1002 (€22M) and 1009 (€4,5M) in EUR; "Meias para janeiro" empty; "Atacantes" with 25 alvos (1001 to 1008 and 2001 to 2017) in EUR; "Conflito" with 1004 and 1005 (€9M in total), whose writes always answer 412. The profile handler answers 1009 with 502; 2001 to 2017 already fall into the plain-text 404.
+`src/mocks/handlers.ts` answers the `dev:mock` under `withAuth` from the store (Q18): "Laterais 2027" with 1007 Miguel Torres (€8M), 1001 Rafael Montes (€12,5M), 1006 Diego Albuquerque (€22M) and 1009 (€4,5M) in EUR; "Meias para janeiro" empty; "Atacantes" with 25 alvos (1001, 1002, 1003, 1005, 1006, 1007, 1008 and 2001 to 2018) in EUR; "Conflito" with 1005 Bruno Lacerda and 1008 Tiago Ferraz (€9M in total), whose writes always answer 412. The profile handler answers 1009 with 502; 1004 and 2001 to 2018 already fall into the plain-text 404.
 
 ## Risks / Trade-offs
 

@@ -54,10 +54,10 @@ Conferidos antes do grilling, mudam as respostas abaixo:
 ## Mock
 
 - **Q18.** Shortlists em `src/mocks/shortlistStore.ts`, que replica o agregado (renumeracao, limite, duplicado, moeda, `version`, `428`, `412`), zerado a cada teste e ao recarregar o `dev:mock`. Da Ana:
-  - "Laterais 2027": 1001, 1002, 1003 e 1009, em EUR.
+  - "Laterais 2027": 1007 Miguel Torres, 1001 Rafael Montes, 1006 Diego Albuquerque e 1009, em EUR.
   - "Meias para janeiro": vazia.
-  - "Atacantes": cheia, com 25 alvos; os ids alem dos oito do mock respondem `404` no perfil ("Jogador #1234").
-  - "Conflito": toda escrita responde `412`.
+  - "Atacantes": cheia, com 25 alvos (1001, 1002, 1003, 1005 a 1008 e 2001 a 2018); os ids sem perfil no mock respondem `404` ("Jogador #2017").
+  - "Conflito": 1005 Bruno Lacerda e 1008 Tiago Ferraz; toda escrita responde `412`.
   - "Laterais 2027" tem tambem o 1009, cujo perfil responde `502` (id novo, para nao mudar o perfil dos jogadores que as outras telas usam), para o "Tentar de novo". A lista com `500` fica so em teste e story.
 
 ## Wireframe
