@@ -68,7 +68,7 @@ describe('aba Acompanhamento', () => {
     renderRoute(tab(1001))
 
     // Assert
-    await waitFor(() => expect(document.title).toBe('Acompanhamento · Rafael Montes'))
+    await waitFor(() => expect(document.title).toBe('Acompanhamento · Rafael Montes · APIFootballScout'))
   })
 
   it('mostra o esqueleto enquanto a leitura nao chega', async () => {

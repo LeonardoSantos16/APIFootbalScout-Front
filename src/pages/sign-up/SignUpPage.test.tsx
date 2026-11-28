@@ -109,6 +109,6 @@ describe('criar conta', () => {
     await openSignUp()
 
     // Assert
-    expect(document.title).toBe('Criar conta')
+    expect(document.title).toBe('Criar conta · APIFootballScout')
   })
 })

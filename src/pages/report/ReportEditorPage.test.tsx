@@ -340,7 +340,7 @@ describe('editor do relatorio', () => {
     await openLooseDraft()
 
     // Assert
-    await waitFor(() => expect(document.title).toBe('Relatório · Rafael Montes'))
+    await waitFor(() => expect(document.title).toBe('Relatório · Rafael Montes · APIFootballScout'))
   })
 })
 
@@ -430,7 +430,7 @@ describe('finalizacao, leitura e correcao', () => {
     expect(screen.getByLabelText('Nota')).toHaveValue('')
     expect(screen.getByText('Alterações não salvas')).toBeInTheDocument()
     expect(screen.getByText('Corrige o relatório observado em 14/11/2026')).toBeInTheDocument()
-    await waitFor(() => expect(document.title).toBe('Correção · Caio Ventura'))
+    await waitFor(() => expect(document.title).toBe('Correção · Caio Ventura · APIFootballScout'))
 
     // Act
     await user.click(saveButton())

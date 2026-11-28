@@ -151,7 +151,7 @@ describe('envio do termo', () => {
     expect(await screen.findByRole('searchbox', { name: 'Nome do jogador' })).toHaveFocus()
     expect(screen.queryByRole('list', { name: 'Resultados' })).not.toBeInTheDocument()
     expect(terms).toEqual([])
-    expect(document.title).toBe('Buscar jogador')
+    expect(document.title).toBe('Buscar jogador · APIFootballScout')
   })
 
   it('grava o termo sem espacos na URL ao enviar', async () => {

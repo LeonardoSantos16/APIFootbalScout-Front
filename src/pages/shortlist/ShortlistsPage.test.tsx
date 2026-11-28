@@ -77,7 +77,7 @@ describe('pagina Shortlists', () => {
       'Laterais 20274 de 25 alvos · €47M',
       'Meias para janeiro0 de 25 alvos · Sem alvos',
     ])
-    await waitFor(() => expect(document.title).toBe('Shortlists'))
+    await waitFor(() => expect(document.title).toBe('Shortlists · APIFootballScout'))
   })
 
   it('abre a shortlist pela linha', async () => {

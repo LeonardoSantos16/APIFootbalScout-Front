@@ -47,7 +47,7 @@ describe('layout do jogador', () => {
     expect(screen.getByRole('img', { name: 'Rafael Montes' })).toHaveTextContent('RM')
     expect(screen.getByRole('link', { name: 'Perfil' })).toHaveAttribute('aria-current', 'page')
     expect(screen.getByRole('link', { name: 'Métricas' })).not.toHaveAttribute('aria-current')
-    expect(document.title).toBe('Rafael Montes')
+    expect(document.title).toBe('Rafael Montes · APIFootballScout')
   })
 
   it('mostra blocos e abas desabilitadas enquanto o perfil carrega', async () => {
@@ -63,7 +63,7 @@ describe('layout do jogador', () => {
     expect(screen.queryByRole('link', { name: 'Perfil' })).not.toBeInTheDocument()
     expect(screen.queryByRole('link', { name: 'Métricas' })).not.toBeInTheDocument()
     expect(screen.queryByRole('heading', { level: 1 })).not.toBeInTheDocument()
-    expect(document.title).toBe('Perfil')
+    expect(document.title).toBe('Perfil · APIFootballScout')
   })
 
   it('mostra Jogador nao encontrado com o caminho para a busca', async () => {
@@ -73,7 +73,7 @@ describe('layout do jogador', () => {
     expect(await screen.findByRole('alert')).toHaveTextContent('Jogador não encontrado.')
     expect(screen.queryByRole('link', { name: 'Perfil' })).not.toBeInTheDocument()
     expect(screen.queryByRole('button', { name: 'Tentar de novo' })).not.toBeInTheDocument()
-    expect(document.title).toBe('Jogador não encontrado')
+    expect(document.title).toBe('Jogador não encontrado · APIFootballScout')
 
     // Act
     await userEvent.click(screen.getByRole('link', { name: 'Buscar jogador' }))
@@ -95,7 +95,7 @@ describe('layout do jogador', () => {
     expect(screen.getByRole('button', { name: 'Tentar de novo' })).toBeInTheDocument()
     expect(screen.queryByRole('link', { name: 'Perfil' })).not.toBeInTheDocument()
     expect(profiles).toHaveLength(2)
-    expect(document.title).toBe('Perfil')
+    expect(document.title).toBe('Perfil · APIFootballScout')
   })
 })
 
@@ -269,7 +269,7 @@ describe('navegacao entre as abas', () => {
 
     // Assert
     expect(profiles).toHaveLength(1)
-    expect(document.title).toBe('Rafael Montes')
+    expect(document.title).toBe('Rafael Montes · APIFootballScout')
   })
 
   it('reaproveita o perfil ao abrir de novo pela busca', async () => {
