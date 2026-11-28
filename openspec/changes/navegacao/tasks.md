@@ -47,7 +47,7 @@
 
 ## 9. Documentation
 
-- [ ] 9.1 `CLAUDE.md` with the final top bar, the phone menu, the home page, the not-found page and the title rule; `scout-ui` skill with `useDocumentTitle`, `data-page-heading` and the `SkipLink`; verify the texts against the code
+- [x] 9.1 `CLAUDE.md` with the final top bar, the phone menu, the home page, the not-found page and the title rule; `scout-ui` skill with `useDocumentTitle`, `data-page-heading` and the `SkipLink`; verify the texts against the code
 
 ## 10. Verification
 
