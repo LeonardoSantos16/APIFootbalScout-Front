@@ -17,6 +17,8 @@ import { Route as AuthenticatedContaRouteImport } from './routes/_authenticated/
 import { Route as PublicCriarContaRouteImport } from './routes/_public/criar-conta'
 import { Route as PublicEntrarRouteImport } from './routes/_public/entrar'
 import { Route as AuthenticatedJogadoresJogadorIdRouteImport } from './routes/_authenticated/jogadores/$jogadorId'
+import { Route as AuthenticatedShortlistsIndexRouteImport } from './routes/_authenticated/shortlists/index'
+import { Route as AuthenticatedShortlistsShortlistIdRouteImport } from './routes/_authenticated/shortlists/$shortlistId'
 import { Route as AuthenticatedJogadoresJogadorIdIndexRouteImport } from './routes/_authenticated/jogadores/$jogadorId/index'
 import { Route as AuthenticatedJogadoresJogadorIdAcompanhamentoRouteImport } from './routes/_authenticated/jogadores/$jogadorId/acompanhamento'
 import { Route as AuthenticatedJogadoresJogadorIdComparacaoRouteImport } from './routes/_authenticated/jogadores/$jogadorId/comparacao'
@@ -62,6 +64,18 @@ const AuthenticatedJogadoresJogadorIdRoute =
   AuthenticatedJogadoresJogadorIdRouteImport.update({
     id: '/jogadores/$jogadorId',
     path: '/jogadores/$jogadorId',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedShortlistsIndexRoute =
+  AuthenticatedShortlistsIndexRouteImport.update({
+    id: '/shortlists/',
+    path: '/shortlists/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedShortlistsShortlistIdRoute =
+  AuthenticatedShortlistsShortlistIdRouteImport.update({
+    id: '/shortlists/$shortlistId',
+    path: '/shortlists/$shortlistId',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
 const AuthenticatedJogadoresJogadorIdIndexRoute =
@@ -114,6 +128,8 @@ export interface FileRoutesByFullPath {
   '/criar-conta': typeof PublicCriarContaRoute
   '/entrar': typeof PublicEntrarRoute
   '/jogadores/$jogadorId': typeof AuthenticatedJogadoresJogadorIdRouteWithChildren
+  '/shortlists/$shortlistId': typeof AuthenticatedShortlistsShortlistIdRoute
+  '/shortlists/': typeof AuthenticatedShortlistsIndexRoute
   '/jogadores/$jogadorId/acompanhamento': typeof AuthenticatedJogadoresJogadorIdAcompanhamentoRoute
   '/jogadores/$jogadorId/comparacao': typeof AuthenticatedJogadoresJogadorIdComparacaoRoute
   '/jogadores/$jogadorId/metricas': typeof AuthenticatedJogadoresJogadorIdMetricasRoute
@@ -128,6 +144,8 @@ export interface FileRoutesByTo {
   '/conta': typeof AuthenticatedContaRoute
   '/criar-conta': typeof PublicCriarContaRoute
   '/entrar': typeof PublicEntrarRoute
+  '/shortlists/$shortlistId': typeof AuthenticatedShortlistsShortlistIdRoute
+  '/shortlists': typeof AuthenticatedShortlistsIndexRoute
   '/jogadores/$jogadorId/acompanhamento': typeof AuthenticatedJogadoresJogadorIdAcompanhamentoRoute
   '/jogadores/$jogadorId/comparacao': typeof AuthenticatedJogadoresJogadorIdComparacaoRoute
   '/jogadores/$jogadorId/metricas': typeof AuthenticatedJogadoresJogadorIdMetricasRoute
@@ -146,6 +164,8 @@ export interface FileRoutesById {
   '/_public/entrar': typeof PublicEntrarRoute
   '/_authenticated/': typeof AuthenticatedIndexRoute
   '/_authenticated/jogadores/$jogadorId': typeof AuthenticatedJogadoresJogadorIdRouteWithChildren
+  '/_authenticated/shortlists/$shortlistId': typeof AuthenticatedShortlistsShortlistIdRoute
+  '/_authenticated/shortlists/': typeof AuthenticatedShortlistsIndexRoute
   '/_authenticated/jogadores/$jogadorId/acompanhamento': typeof AuthenticatedJogadoresJogadorIdAcompanhamentoRoute
   '/_authenticated/jogadores/$jogadorId/comparacao': typeof AuthenticatedJogadoresJogadorIdComparacaoRoute
   '/_authenticated/jogadores/$jogadorId/metricas': typeof AuthenticatedJogadoresJogadorIdMetricasRoute
@@ -163,6 +183,8 @@ export interface FileRouteTypes {
     | '/criar-conta'
     | '/entrar'
     | '/jogadores/$jogadorId'
+    | '/shortlists/$shortlistId'
+    | '/shortlists/'
     | '/jogadores/$jogadorId/acompanhamento'
     | '/jogadores/$jogadorId/comparacao'
     | '/jogadores/$jogadorId/metricas'
@@ -177,6 +199,8 @@ export interface FileRouteTypes {
     | '/conta'
     | '/criar-conta'
     | '/entrar'
+    | '/shortlists/$shortlistId'
+    | '/shortlists'
     | '/jogadores/$jogadorId/acompanhamento'
     | '/jogadores/$jogadorId/comparacao'
     | '/jogadores/$jogadorId/metricas'
@@ -194,6 +218,8 @@ export interface FileRouteTypes {
     | '/_public/entrar'
     | '/_authenticated/'
     | '/_authenticated/jogadores/$jogadorId'
+    | '/_authenticated/shortlists/$shortlistId'
+    | '/_authenticated/shortlists/'
     | '/_authenticated/jogadores/$jogadorId/acompanhamento'
     | '/_authenticated/jogadores/$jogadorId/comparacao'
     | '/_authenticated/jogadores/$jogadorId/metricas'
@@ -264,6 +290,20 @@ declare module '@tanstack/react-router' {
       path: '/jogadores/$jogadorId'
       fullPath: '/jogadores/$jogadorId'
       preLoaderRoute: typeof AuthenticatedJogadoresJogadorIdRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/shortlists/': {
+      id: '/_authenticated/shortlists/'
+      path: '/shortlists'
+      fullPath: '/shortlists/'
+      preLoaderRoute: typeof AuthenticatedShortlistsIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/shortlists/$shortlistId': {
+      id: '/_authenticated/shortlists/$shortlistId'
+      path: '/shortlists/$shortlistId'
+      fullPath: '/shortlists/$shortlistId'
+      preLoaderRoute: typeof AuthenticatedShortlistsShortlistIdRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/jogadores/$jogadorId/': {
@@ -356,6 +396,8 @@ interface AuthenticatedRouteChildren {
   AuthenticatedContaRoute: typeof AuthenticatedContaRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
   AuthenticatedJogadoresJogadorIdRoute: typeof AuthenticatedJogadoresJogadorIdRouteWithChildren
+  AuthenticatedShortlistsShortlistIdRoute: typeof AuthenticatedShortlistsShortlistIdRoute
+  AuthenticatedShortlistsIndexRoute: typeof AuthenticatedShortlistsIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
@@ -364,6 +406,9 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
   AuthenticatedJogadoresJogadorIdRoute:
     AuthenticatedJogadoresJogadorIdRouteWithChildren,
+  AuthenticatedShortlistsShortlistIdRoute:
+    AuthenticatedShortlistsShortlistIdRoute,
+  AuthenticatedShortlistsIndexRoute: AuthenticatedShortlistsIndexRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(

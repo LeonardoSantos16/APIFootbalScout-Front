@@ -107,6 +107,30 @@ Pendencias conhecidas que o front contorna hoje e que precisam de correcao em ou
 - **Contorno no front:** o editor nao envia relato vazio ou so com espacos ("Escreva o relato.", grilling da F5, Q6); o `400` sem `code` cai no erro generico.
 - **Correcao esperada:** validar o texto no dominio tambem na abertura e na correcao, com `relatorio.texto_obrigatorio`.
 
+### Shortlist sem renomear, excluir nem editar o custo
+
+- **Problema:** o `ShortlistController` so cria, lista e le shortlists e adiciona, reprioriza e remove alvos. Nao ha como renomear ou excluir uma shortlist, nem mudar o custo estimado de um alvo.
+- **Contorno no front:** nenhum para renomear e excluir; para mudar o custo, o olheiro remove o alvo e adiciona de novo (grilling da F7, Q1).
+- **Correcao esperada:** `PATCH /api/Shortlist/{id}` (nome), `DELETE /api/Shortlist/{id}` e `PUT /api/Shortlist/{id}/alvos/{jogadorId}/custo`, todos com `If-Match`.
+
+### `Dinheiro` sem validacao de quantia e moeda
+
+- **Problema:** `Dinheiro(QuantiaEmCentavos, Moeda)` aceita quantia zero ou negativa e qualquer texto como moeda; so a moeda divergente do primeiro alvo e barrada (`shortlist.moeda_divergente`).
+- **Contorno no front:** o campo de custo aceita so quantia maior que zero e moeda de uma lista fechada (EUR, BRL, USD, GBP) (grilling da F7, Q6).
+- **Correcao esperada:** validar no value object (quantia positiva, moeda ISO 4217) com codigos proprios em `docs/frontend/erros.md`.
+
+### Nome vazio da shortlist responde `400` sem `code`
+
+- **Problema:** `POST /api/Shortlist` barra o `nome` vazio pelo `[Required]` do DTO, com `ValidationProblemDetails` sem `code`; nome so com espacos passa.
+- **Contorno no front:** o formulario nao envia nome vazio ou so com espacos e manda o nome com trim ("Dê um nome à shortlist.", grilling da F7, Q3).
+- **Correcao esperada:** validar o nome no agregado, com `shortlist.nome_obrigatorio`.
+
+### Lista de shortlists sem ordem
+
+- **Problema:** `GET /api/Shortlist` devolve as shortlists na ordem do Mongo, sem ordenacao e sem data de criacao no DTO.
+- **Contorno no front:** ordem alfabetica pelo nome (grilling da F7, Q4).
+- **Correcao esperada:** expor `criadaEm` e ordenar no servidor, se a ordem de criacao for a desejada.
+
 ### Concorrencia otimista fora dos docs do front do back-end
 
 - **Problema:** `docs/frontend/erros.md` e `docs/frontend/fluxos-de-tela.md` do back-end nao citam o `If-Match`, o `412 relatorio.alterado_por_outra_requisicao` (nem o equivalente da shortlist) e o `428`, que o ADR 0005 do back-end introduziu.

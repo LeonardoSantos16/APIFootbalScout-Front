@@ -6,10 +6,16 @@ import { PlayerLayout, type PlayerTab } from '../pages/player/PlayerLayout'
 interface StoryShellProps {
   children: ReactNode
   withSearch?: boolean
+  shortlistsCurrent?: boolean
 }
 
-export const StoryShell = ({ children, withSearch = true }: StoryShellProps) => (
+export const StoryShell = ({ children, withSearch = true, shortlistsCurrent = false }: StoryShellProps) => (
   <AppShell
+    shortlistsLink={
+      <a href="#shortlists" aria-current={shortlistsCurrent ? 'page' : undefined}>
+        Shortlists
+      </a>
+    }
     accountLink={<a href="#conta">Ana Ribeiro</a>}
     search={
       withSearch && (
@@ -32,14 +38,16 @@ export const StoryShell = ({ children, withSearch = true }: StoryShellProps) => 
 interface PlayerStoryShellProps {
   playerId: number
   tab: PlayerTab
-  children: ReactNode
+  bandAction?: ReactNode
+  children?: ReactNode
 }
 
-export const PlayerStoryShell = ({ playerId, tab, children }: PlayerStoryShellProps) => (
+export const PlayerStoryShell = ({ playerId, tab, bandAction, children }: PlayerStoryShellProps) => (
   <StoryShell>
     <PlayerLayout
       playerId={playerId}
       tab={tab}
+      bandAction={bandAction}
       renderTabLink={(target, props) => <a href={`#${target}`} {...props} />}
       renderSearchLink={(className) => (
         <a href="#busca" className={className}>

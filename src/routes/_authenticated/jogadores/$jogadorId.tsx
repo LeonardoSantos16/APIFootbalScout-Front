@@ -1,5 +1,6 @@
 import { Link, Outlet, createFileRoute, useRouterState } from '@tanstack/react-router'
 import { PlayerLayout, type PlayerTab } from '../../../pages/player/PlayerLayout'
+import { AddToShortlist } from '../../../pages/shortlist/components/AddToShortlist/AddToShortlist'
 import { validatePlayerSearch } from '../../../utils/slice'
 
 export const Route = createFileRoute('/_authenticated/jogadores/$jogadorId')({
@@ -32,6 +33,14 @@ function PlayerRoute() {
     <PlayerLayout
       playerId={Number(jogadorId)}
       tab={tab}
+      bandAction={
+        <AddToShortlist
+          playerId={Number(jogadorId)}
+          renderShortlistLink={(shortlistId, props) => (
+            <Link to="/shortlists/$shortlistId" params={{ shortlistId }} {...props} />
+          )}
+        />
+      }
       renderTabLink={(target, props) =>
         target === 'reports' ? (
           <Link

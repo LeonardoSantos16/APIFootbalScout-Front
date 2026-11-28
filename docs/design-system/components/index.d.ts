@@ -220,6 +220,46 @@ export interface TimelineGroup { id: string; label: string; items: TimelineItem[
 export interface ReportTimelineProps { groups: TimelineGroup[] }
 export declare function ReportTimeline(props: ReportTimelineProps): React.ReactElement;
 
+export interface TargetRowProps {
+  priority: number;
+  cost: string;
+  name?: string;
+  fallbackName: string;
+  detail?: React.ReactNode;
+  photo?: React.ReactNode;
+  href?: string;
+  loading?: boolean;
+  error?: React.ReactNode;
+  onRetry?: () => void;
+  pending?: string;
+  dragging?: boolean;
+  disabled?: boolean;
+  canMoveUp?: boolean;
+  canMoveDown?: boolean;
+  onMoveUp?: () => void;
+  onMoveDown?: () => void;
+  onRemove?: () => void;
+  handleProps?: React.ButtonHTMLAttributes<HTMLButtonElement>;
+  className?: string;
+}
+export declare function TargetRow(props: TargetRowProps): React.ReactElement;
+
+export interface MoneyFieldProps {
+  label?: string;
+  value: string;
+  onChange?: (value: string) => void;
+  currency: string;
+  currencies?: string[];
+  onCurrencyChange?: (currency: string) => void;
+  lockedCurrency?: boolean;
+  placeholder?: string;
+  hint?: string;
+  error?: string;
+  disabled?: boolean;
+  className?: string;
+}
+export declare function MoneyField(props: MoneyFieldProps): React.ReactElement;
+
 declare global {
   interface Window {
     ScoutVestiario: {
@@ -247,6 +287,8 @@ declare global {
       PointList: typeof PointList;
       FinishChecklist: typeof FinishChecklist;
       ReportTimeline: typeof ReportTimeline;
+      TargetRow: typeof TargetRow;
+      MoneyField: typeof MoneyField;
     };
   }
 }

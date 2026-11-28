@@ -1,0 +1,22 @@
+<!-- @dsCard group="Shortlist" height=560 -->
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>TargetRow</title></head>
+<body style="margin:0;background:var(--ground)">
+<div id="root" class="sv-stage is-column"></div>
+<script>
+  var V = window.ScoutVestiario, h = React.createElement;
+  function photo(name) { return h(V.PlayerPhoto, { name: name, size: 'small' }); }
+  function Demo() {
+    return h('div', { style: { background: 'var(--surface)', padding: '8px 24px', borderRadius: 'var(--radius-lg)', maxWidth: '760px', display: 'grid' } },
+      h(V.TargetRow, { priority: 1, cost: '€8M', name: 'Miguel Torres', fallbackName: 'Jogador #1003', detail: 'Defesa, Atlético Serrano', photo: photo('Miguel Torres'), href: '#', canMoveUp: false }),
+      h(V.TargetRow, { priority: 2, cost: '€12,5M', fallbackName: 'Jogador #1001', loading: true }),
+      h(V.TargetRow, { priority: 3, cost: '€22M', name: 'Diego Albuquerque', fallbackName: 'Jogador #1002', detail: 'Ataque, Atlético Serrano', photo: photo('Diego Albuquerque'), pending: 'Movendo para a prioridade 1…' }),
+      h(V.TargetRow, { priority: 4, cost: '€4,5M', fallbackName: 'Jogador #1009', error: 'Não foi possível carregar o perfil agora.', onRetry: function () {} }),
+      h(V.TargetRow, { priority: 5, cost: '€9M', fallbackName: 'Jogador #2017', error: 'Perfil não encontrado.', canMoveDown: false }),
+      h(V.TargetRow, { priority: 3, cost: '€22M', name: 'Diego Albuquerque', fallbackName: 'Jogador #1002', detail: 'Ataque, Atlético Serrano', photo: photo('Diego Albuquerque'), dragging: true }));
+  }
+  ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
+</script>
+</body>
+</html>

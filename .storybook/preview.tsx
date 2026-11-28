@@ -4,12 +4,14 @@ import { mswLoader } from 'msw-storybook-addon/csf3'
 import { createQueryClient } from '../src/api/queryClient'
 import { clearSession, saveSession } from '../src/api/session'
 import { resetAuthStore, seedSession } from '../src/mocks/authStore'
+import { resetShortlistStore } from '../src/mocks/shortlistStore'
 import '../src/styles/global.css'
 
 const preview: Preview = {
   loaders: [
     ({ parameters }) => {
       resetAuthStore()
+      resetShortlistStore()
       if (parameters.session === 'signed-out') clearSession()
       else saveSession(seedSession())
     },

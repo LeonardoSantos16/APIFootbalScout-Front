@@ -41,6 +41,7 @@ export const MESSAGE_BY_CODE: Record<string, string> = {
   'shortlist.limite_de_alvos_atingido': 'A shortlist atingiu o limite de 25 alvos.',
   'shortlist.prioridade_fora_da_ordem': 'Prioridade fora da ordem da lista.',
   'shortlist.moeda_divergente': 'Todos os custos da shortlist precisam usar a mesma moeda.',
+  'shortlist.alterada_por_outra_requisicao': 'Esta shortlist foi alterada em outra aba.',
   'prioridade.nao_positiva': 'A prioridade deve ser maior que zero.',
   'dinheiro.moedas_distintas': 'Não é possível somar valores em moedas diferentes.',
 

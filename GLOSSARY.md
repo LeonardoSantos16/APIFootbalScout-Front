@@ -217,3 +217,8 @@ Os identificadores do código são em inglês. Um termo novo entra nesta tabela 
 | Relato | `narrative` |
 | Parecer | `verdict` |
 | Pontos positivos, pontos negativos | `positivePoints`, `negativePoints` |
+| Shortlist | `Shortlist`, `ShortlistPage` |
+| Alvo | `Target` |
+| Prioridade | `priority` |
+| Custo estimado | `estimatedCost` |
+| Moeda da lista | `listCurrency` |

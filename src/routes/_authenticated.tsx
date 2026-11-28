@@ -41,6 +41,8 @@ const AccountLink = () => {
 
 const SEARCH_PATH = '/busca'
 
+const ShortlistsLink = () => <Link to="/shortlists">Shortlists</Link>
+
 function AuthenticatedLayout() {
   const { signOut } = useLeaveSession()
   const pathname = useRouterState({ select: (state) => state.location.pathname })
@@ -52,6 +54,7 @@ function AuthenticatedLayout() {
       onSignOut={() => signOut('device')}
       search={onSearchPage ? undefined : <HeaderSearch key={pathname} />}
       searchLink={onSearchPage ? undefined : <Link to={SEARCH_PATH}>Buscar</Link>}
+      shortlistsLink={<ShortlistsLink />}
     >
       <Outlet />
     </AppShell>
@@ -64,7 +67,7 @@ function AuthenticatedError({ error }: ErrorComponentProps) {
   const { signOut } = useLeaveSession()
 
   return (
-    <AppShell accountLink={<AccountLink />} onSignOut={() => signOut('device')}>
+    <AppShell accountLink={<AccountLink />} onSignOut={() => signOut('device')} shortlistsLink={<ShortlistsLink />}>
       <InlineError message={message} onRetry={canRetry ? () => void router.invalidate() : undefined} />
     </AppShell>
   )

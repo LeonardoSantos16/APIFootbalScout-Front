@@ -107,6 +107,7 @@ Erros de validacao de modelo (`[Range]`, `[Required]`, `[EmailAddress]`) sao ger
 | `shortlist.limite_de_alvos_atingido` | 422 | A shortlist atingiu o limite de 25 alvos. |
 | `shortlist.prioridade_fora_da_ordem` | 422 | Prioridade fora da ordem da lista. |
 | `shortlist.moeda_divergente` | 422 | Todos os custos da shortlist precisam usar a mesma moeda. |
+| `shortlist.alterada_por_outra_requisicao` | 412 | Esta shortlist foi alterada em outra aba. |
 | `prioridade.nao_positiva` | 400 | A prioridade deve ser maior que zero. |
 | `dinheiro.moedas_distintas` | 400 | Nao e possivel somar valores em moedas diferentes. |
 
