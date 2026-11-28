@@ -1,7 +1,16 @@
 import type { ReactNode } from 'react'
 import { AppShell } from '../components/AppShell/AppShell'
+import type { MenuLinkRenderer, MenuTarget } from '../components/AppShell/PhoneMenu'
 import { SearchField } from '../components/SearchField/SearchField'
 import { PlayerLayout, type PlayerTab } from '../pages/player/PlayerLayout'
+
+const MENU_HREF: Record<MenuTarget, string> = { home: '#inicio', shortlists: '#shortlists', account: '#conta' }
+
+const renderMenuLink: MenuLinkRenderer = (target, { className, onClick, children }) => (
+  <a href={MENU_HREF[target]} className={className} onClick={onClick}>
+    {children}
+  </a>
+)
 
 interface StoryShellProps {
   children: ReactNode
@@ -11,6 +20,9 @@ interface StoryShellProps {
 
 export const StoryShell = ({ children, withSearch = true, shortlistsCurrent = false }: StoryShellProps) => (
   <AppShell
+    homeLink={<a href="#inicio">APIFootballScout</a>}
+    accountName="Ana Ribeiro"
+    renderMenuLink={renderMenuLink}
     shortlistsLink={
       <a href="#shortlists" aria-current={shortlistsCurrent ? 'page' : undefined}>
         Shortlists

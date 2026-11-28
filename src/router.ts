@@ -17,6 +17,7 @@ export const createAppRouter = ({ queryClient, history }: AppRouterOptions) =>
     routeTree,
     context: { queryClient },
     history,
+    notFoundMode: 'root',
     scrollRestoration: true,
     getScrollRestorationKey: (location) => scrollKey(location.pathname),
   })

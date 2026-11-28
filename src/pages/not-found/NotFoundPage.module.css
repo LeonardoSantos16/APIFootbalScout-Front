@@ -1,0 +1,27 @@
+.page {
+  width: min(100%, 640px);
+  margin: 0 auto;
+}
+
+.content,
+.framed {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-4);
+}
+
+.framed {
+  padding-top: var(--space-5);
+}
+
+.title {
+  margin: 0;
+  font: var(--text-section-title);
+  color: var(--ink);
+}
+
+.text {
+  margin: 0;
+  font: var(--text-body);
+  color: var(--ink-soft);
+}

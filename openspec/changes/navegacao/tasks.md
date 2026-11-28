@@ -30,9 +30,9 @@
 
 ## 6. Page not found
 
-- [ ] 6.1 Route tests (`test:` red for the group): `/xyz` with a session shows "Página não encontrada.", "O endereço não existe ou foi digitado errado.", "Ir para o início" and the scout's top with nothing current, and "Ir para o início" opens `/`; `/xyz` without a session shows "Entrar" and only the app name; `/jogadores/abc`, `/jogadores/0/metricas` and `/jogadores/-3` show it without a profile request; `/shortlists/123` without a shortlist request; `/jogadores/1001/relatorios/abc` without a relatório request; tab title "Página não encontrada · APIFootballScout"
-- [ ] 6.2 Green in one `feat:` commit: `NotFoundPage` in `src/pages/not-found/`, `-NotFoundRoute.tsx` as the root `notFoundComponent` with `notFoundMode: 'root'`, and the `beforeLoad` checks on `$jogadorId`, `$relatorioId` and `$shortlistId`; verify with `npm test` and `src/routeTree.gen.ts` regenerated
-- [ ] 6.3 Stories `SignedIn` and `SignedOut` of `NotFoundPage`; verify in Storybook at desktop and 375px
+- [x] 6.1 Route tests (`test:` red for the group): `/xyz` with a session shows "Página não encontrada.", "O endereço não existe ou foi digitado errado.", "Ir para o início" and the scout's top with nothing current, and "Ir para o início" opens `/`; `/xyz` without a session shows "Entrar" and only the app name; `/jogadores/abc`, `/jogadores/0/metricas` and `/jogadores/-3` show it without a profile request; `/shortlists/123` without a shortlist request; `/jogadores/1001/relatorios/abc` without a relatório request; tab title "Página não encontrada · APIFootballScout"
+- [x] 6.2 Green in one `feat:` commit: `NotFoundPage` in `src/pages/not-found/`, `-NotFoundRoute.tsx` as the root `notFoundComponent` with `notFoundMode: 'root'`, and the `beforeLoad` checks on `$jogadorId`, `$relatorioId` and `$shortlistId`; verify with `npm test` and `src/routeTree.gen.ts` regenerated
+- [x] 6.3 Stories `SignedIn` and `SignedOut` of `NotFoundPage`; verify in Storybook at desktop and 375px
 
 ## 7. Home page
 
