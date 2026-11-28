@@ -142,5 +142,3 @@ Pendencias conhecidas que o front contorna hoje e que precisam de correcao em ou
 - **Problema:** `docs/frontend/erros.md` e `docs/frontend/fluxos-de-tela.md` do back-end nao citam o `If-Match`, o `412 relatorio.alterado_por_outra_requisicao` (nem o equivalente da shortlist) e o `428`, que o ADR 0005 do back-end introduziu.
 - **Contorno no front:** a copia local de `erros.md` ja traz os dois status e o codigo do relatorio; o tratamento esta no ADR 0006 do front.
 - **Correcao esperada:** acrescentar os codigos e uma secao de concorrencia nos docs do back-end.
-
-## Front

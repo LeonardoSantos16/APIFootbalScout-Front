@@ -42,8 +42,8 @@
 
 ## 8. Guidelines review
 
-- [ ] 8.1 Run the `web-design-guidelines` skill over `src/components/` and `src/pages/`; fix the shell findings in a `fix:` commit and record page findings that need more than a local fix in `docs/divida-tecnica.md` under "Front"; verify with `npm test`
-- [ ] 8.2 Walk every page in `npm run dev:mock` at 375px and 768px; fix local CSS breaks inside the current layout without a new breakpoint; verify with no horizontal page scroll and no console errors
+- [x] 8.1 Run the `web-design-guidelines` skill over `src/components/` and `src/pages/`; fix the shell findings in a `fix:` commit and record page findings that need more than a local fix in `docs/divida-tecnica.md` under "Front"; verify with `npm test`
+- [x] 8.2 Walk every page in `npm run dev:mock` at 375px and 768px; fix local CSS breaks inside the current layout without a new breakpoint; verify with no horizontal page scroll and no console errors
 
 ## 9. Documentation
 

@@ -35,6 +35,7 @@
   gap: var(--space-4);
   padding: 0 var(--space-4) var(--space-5);
   overflow-y: auto;
+  overscroll-behavior: contain;
   background: var(--surface);
   color: var(--ink);
 }
