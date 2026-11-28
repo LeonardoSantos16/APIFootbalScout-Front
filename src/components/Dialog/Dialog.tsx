@@ -3,8 +3,11 @@ import { XIcon } from '@phosphor-icons/react'
 import type { ReactNode } from 'react'
 import styles from './Dialog.module.css'
 
+export type DialogVariant = 'centered' | 'sheet'
+
 interface DialogProps {
   open: boolean
+  variant?: DialogVariant
   title: string
   description?: string
   onClose: () => void
@@ -12,11 +15,11 @@ interface DialogProps {
   children?: ReactNode
 }
 
-export const Dialog = ({ open, title, description, onClose, actions, children }: DialogProps) => (
+export const Dialog = ({ open, variant = 'centered', title, description, onClose, actions, children }: DialogProps) => (
   <RadixDialog.Root open={open} onOpenChange={(next) => !next && onClose()}>
     <RadixDialog.Portal>
-      <RadixDialog.Overlay className={styles.backdrop} />
-      <RadixDialog.Content className={styles.dialog} {...(description ? {} : { 'aria-describedby': undefined })}>
+      <RadixDialog.Overlay className={variant === 'sheet' ? styles.sheetBackdrop : styles.backdrop} />
+      <RadixDialog.Content className={variant === 'sheet' ? styles.sheet : styles.dialog} {...(description ? {} : { 'aria-describedby': undefined })}>
         <div className={styles.head}>
           <RadixDialog.Title className={styles.title}>{title}</RadixDialog.Title>
           <RadixDialog.Close className={styles.close} aria-label="Fechar">

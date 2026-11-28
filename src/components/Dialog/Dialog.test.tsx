@@ -45,4 +45,21 @@ describe('Dialog', () => {
     // Assert
     expect(onClose).toHaveBeenCalledOnce()
   })
+
+  it('em tela cheia tambem fecha com Esc', async () => {
+    // Arrange
+    const onClose = vi.fn()
+    render(
+      <Dialog open variant="sheet" title="Menu" onClose={onClose}>
+        <a href="#inicio">Início</a>
+      </Dialog>,
+    )
+
+    // Act
+    await userEvent.keyboard('{Escape}')
+
+    // Assert
+    expect(screen.getByRole('dialog', { name: 'Menu' })).toBeInTheDocument()
+    expect(onClose).toHaveBeenCalledOnce()
+  })
 })
