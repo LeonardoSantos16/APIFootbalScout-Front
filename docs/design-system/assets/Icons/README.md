@@ -9,6 +9,8 @@
 | `list-numbers` | Shortlist |
 | `arrows-left-right` | Comparar dois jogadores |
 | `dots-six-vertical` | Alça de arrastar na shortlist |
+| `arrow-up` | Subir um alvo na shortlist |
+| `arrow-down` | Descer um alvo na shortlist |
 | `arrow-left` | Voltar |
 | `x` | Fechar e remover alvo |
 | `arrow-clockwise` | Tentar de novo |

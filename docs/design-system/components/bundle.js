@@ -1,4 +1,4 @@
-/* @ds-bundle: {"format":4,"namespace":"ScoutVestiario","components":[{"name":"Button"},{"name":"Tabs"},{"name":"ClubBand"},{"name":"Card"},{"name":"StatCell"},{"name":"MetricsGrid"},{"name":"ChangeChip"},{"name":"MeasurementCard"},{"name":"InlineError"},{"name":"Select"},{"name":"TextField"},{"name":"PasswordField"},{"name":"Notice"},{"name":"Dialog"},{"name":"SearchField"},{"name":"PlayerPhoto"},{"name":"RowList"},{"name":"TextArea"},{"name":"DateField"},{"name":"SegmentedControl"},{"name":"StatusBadge"},{"name":"PointList"},{"name":"FinishChecklist"},{"name":"ReportTimeline"}]} */
+/* @ds-bundle: {"format":4,"namespace":"ScoutVestiario","components":[{"name":"Button"},{"name":"Tabs"},{"name":"ClubBand"},{"name":"Card"},{"name":"StatCell"},{"name":"MetricsGrid"},{"name":"ChangeChip"},{"name":"MeasurementCard"},{"name":"InlineError"},{"name":"Select"},{"name":"TextField"},{"name":"PasswordField"},{"name":"Notice"},{"name":"Dialog"},{"name":"SearchField"},{"name":"PlayerPhoto"},{"name":"RowList"},{"name":"TextArea"},{"name":"DateField"},{"name":"SegmentedControl"},{"name":"StatusBadge"},{"name":"PointList"},{"name":"FinishChecklist"},{"name":"ReportTimeline"},{"name":"TargetRow"},{"name":"MoneyField"}]} */
 (function () {
   var React = window.React;
   var h = React.createElement;
@@ -501,7 +501,113 @@
       }));
   }
 
+  var HANDLE_PATH = "M104,60A12,12,0,1,1,92,48,12,12,0,0,1,104,60Zm60,12a12,12,0,1,0-12-12A12,12,0,0,0,164,72ZM92,116a12,12,0,1,0,12,12A12,12,0,0,0,92,116Zm72,0a12,12,0,1,0,12,12A12,12,0,0,0,164,116ZM92,184a12,12,0,1,0,12,12A12,12,0,0,0,92,184Zm72,0a12,12,0,1,0,12,12A12,12,0,0,0,164,184Z";
+  var UP_PATH = "M205.66,117.66a8,8,0,0,1-11.32,0L136,59.31V216a8,8,0,0,1-16,0V59.31L61.66,117.66a8,8,0,0,1-11.32-11.32l72-72a8,8,0,0,1,11.32,0l72,72A8,8,0,0,1,205.66,117.66Z";
+  var DOWN_PATH = "M205.66,149.66l-72,72a8,8,0,0,1-11.32,0l-72-72a8,8,0,0,1,11.32-11.32L120,196.69V40a8,8,0,0,1,16,0V196.69l58.34-58.35a8,8,0,0,1,11.32,11.32Z";
+  var X_PATH = "M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z";
+
+  function icon(path) {
+    return h("svg", { className: "sv-target-icon", viewBox: "0 0 256 256", fill: "currentColor", "aria-hidden": true }, h("path", { d: path }));
+  }
+
+  function TargetRow(props) {
+    var name = props.name || props.fallbackName;
+    var locked = props.disabled || Boolean(props.pending);
+    function action(key, path, label, onClick, enabled) {
+      return h("button", {
+        key: key,
+        type: "button",
+        className: cx("sv-target-action", !enabled && "is-unavailable"),
+        disabled: locked || !enabled,
+        "aria-label": label + " " + name,
+        onClick: onClick
+      }, icon(path), h("span", { className: "sv-target-action-label", "aria-hidden": true }, label));
+    }
+    var main;
+    if (props.loading) {
+      main = h("span", { className: "sv-row-main", "aria-hidden": true },
+        h("span", { className: "sv-skeleton sv-target-skeleton-name" }),
+        h("span", { className: "sv-skeleton sv-target-skeleton-sub" }));
+    } else {
+      var title = props.href && props.name
+        ? h("a", { className: "sv-target-name", href: props.href }, props.name)
+        : h("span", { className: cx("sv-target-name", !props.name && "is-fallback") }, name);
+      var detail = props.pending
+        ? h("span", { className: "sv-target-detail", role: "status" }, props.pending)
+        : props.error
+          ? h("span", { className: "sv-target-detail" }, props.error,
+            props.onRetry ? h("button", { type: "button", className: "sv-target-retry", onClick: props.onRetry }, "Tentar de novo") : null)
+          : props.detail ? h("span", { className: "sv-target-detail" }, props.detail) : null;
+      main = h("span", { className: "sv-row-main" }, title, detail);
+    }
+    return h("div", {
+      className: cx("sv-target", props.pending && "is-pending", props.dragging && "is-dragging", props.className),
+      "aria-busy": props.pending ? true : undefined
+    },
+      h("span", { className: "sv-target-priority" },
+        h("span", { className: "sv-visually-hidden" }, "Prioridade "), props.priority),
+      props.loading || !props.photo ? h("span", { className: cx("sv-photo sv-photo-small sv-target-photo", props.loading && "sv-skeleton"), "aria-hidden": true }) : props.photo,
+      main,
+      h("span", { className: "sv-target-cost" },
+        h("span", { className: "sv-target-cost-value" }, props.cost),
+        h("span", { className: "sv-target-cost-label" }, "Custo estimado")),
+      h("span", { className: "sv-target-actions" },
+        h("button", Object.assign({
+          type: "button",
+          className: "sv-target-action sv-target-handle",
+          disabled: locked,
+          "aria-label": "Arrastar " + name
+        }, props.handleProps || {}), icon(HANDLE_PATH)),
+        action("up", UP_PATH, "Subir", props.onMoveUp, props.canMoveUp !== false),
+        action("down", DOWN_PATH, "Descer", props.onMoveDown, props.canMoveDown !== false),
+        action("remove", X_PATH, "Remover", props.onRemove, true)));
+  }
+
+  var CURRENCIES = ["EUR", "BRL", "USD", "GBP"];
+
+  function MoneyField(props) {
+    var id = React.useId();
+    var hintId = id + "-hint";
+    var errorId = id + "-error";
+    var described = props.error ? errorId : props.hint ? hintId : undefined;
+    var currencies = props.currencies || CURRENCIES;
+    var currency = props.lockedCurrency
+      ? h("span", { className: "sv-money-locked", "aria-label": "Moeda " + props.currency + ", definida pela lista" }, props.currency)
+      : h("div", { className: "sv-money-currency" },
+        h("select", {
+          className: "sv-money-select",
+          "aria-label": "Moeda",
+          value: props.currency,
+          disabled: props.disabled,
+          onChange: function (e) { if (props.onCurrencyChange) props.onCurrencyChange(e.target.value); }
+        }, currencies.map(function (c) { return h("option", { key: c, value: c }, c); })),
+        h("svg", { className: "sv-select-caret", viewBox: "0 0 256 256", fill: "currentColor", "aria-hidden": true },
+          h("path", { d: "M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z" })));
+    return h("div", { className: cx("sv-field", props.className) },
+      h("label", { className: "sv-field-label", htmlFor: id }, props.label || "Custo estimado"),
+      h("div", { className: "sv-money" },
+        h("div", { className: cx("sv-input-wrap", props.error && "is-invalid", props.disabled && "is-disabled") },
+          h("input", {
+            id: id,
+            type: "text",
+            inputMode: "decimal",
+            className: "sv-input sv-money-input",
+            value: props.value,
+            disabled: props.disabled,
+            placeholder: props.placeholder,
+            "aria-invalid": props.error ? true : undefined,
+            "aria-describedby": described,
+            onChange: function (e) { if (props.onChange) props.onChange(e.target.value); }
+          }),
+          h("span", { className: "sv-money-suffix", "aria-hidden": true }, "M")),
+        currency),
+      props.error ? h("span", { className: "sv-field-error", id: errorId }, props.error)
+        : props.hint ? h("span", { className: "sv-field-hint", id: hintId }, props.hint) : null);
+  }
+
   window.ScoutVestiario = Object.assign(window.ScoutVestiario || {}, {
+    TargetRow: TargetRow,
+    MoneyField: MoneyField,
     SearchField: SearchField,
     PlayerPhoto: PlayerPhoto,
     RowList: RowList,

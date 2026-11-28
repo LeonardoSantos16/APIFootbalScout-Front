@@ -24,7 +24,7 @@ Scout Vestiário é a interface escura do APIFootballScout, uma ferramenta para 
 ### A faixa do clube
 
 - O cartão de perfil abre com uma faixa na cor do clube do jogador, com o nome em `player-name` e posição e idade em `on-club-soft`. A cor vem de `team.teamColors` no perfil: use a primária, troque pela secundária quando a primária for quase branca ou quase preta, e use `club` quando nenhuma servir. A regra está na `ClubBand`. O contrato da API ainda não expõe `teamColors`; até expor, a faixa usa sempre `club`.
-- Escolha `on-club` (branco) ou `on-light` (preto) pela luminância da cor do clube. A faixa leva no máximo a foto do jogador (`PlayerPhoto`, com as iniciais quando a imagem falha), a linha do nome, a linha de apoio e um botão pílula branco. Carregando, a faixa fica em `surface`, sem a cor do clube.
+- Escolha `on-club` (branco) ou `on-light` (preto) pela luminância da cor do clube. A faixa leva no máximo a foto do jogador (`PlayerPhoto`, com as iniciais quando a imagem falha), a linha do nome, a linha de apoio e um botão pílula: o principal branco ou o secundário, como "Adicionar à shortlist". Carregando, a faixa fica em `surface`, sem a cor do clube.
 
 ### Estados
 
@@ -43,6 +43,7 @@ Scout Vestiário é a interface escura do APIFootballScout, uma ferramenta para 
 | Enviando | campos e botões desabilitados; o botão principal troca o texto pelo gerúndio ("Entrando…") |
 | Relatório: rascunho, finalizado, vigente | `StatusBadge`: rascunho com contorno tracejado em `ink-soft`, finalizado em `surface-raised` e `ink-muted`, vigente em `surface-strong` e `ink` com o ponto em `pitch` |
 | O que falta para finalizar | `FinishChecklist` sempre visível: pendente em `ink-muted`, cumprido em `ink` com `check`; não é erro e nunca usa `down` |
+| Alvo da shortlist pendente | `TargetRow` com prioridade, nome e custo em `ink-muted`, a frase do estado ("Movendo para a prioridade 1…") no lugar da linha de apoio e as ações da lista inteira desabilitadas até a resposta |
 | Alterações não salvas | frase em `ink-muted` junto ao botão de salvar; o salvar é explícito, sem salvamento automático |
 
 ### Tipografia
@@ -56,13 +57,13 @@ Scout Vestiário é a interface escura do APIFootballScout, uma ferramenta para 
 - No desktop, página em duas colunas: o cartão principal à esquerda (cerca de dois terços) e os de apoio à direita. Uma coluna abaixo de 720px.
 - Cartões: `radius-lg`, padding interno `space-5`, espaço entre cartões `space-3`. Sem sombra; a elevação é o degrau de `ground` para `surface`.
 - As métricas formam uma grade de pares rótulo/valor separados por linhas `line`, com `space-4` de padding vertical por par. Sete linhas fixas, nunca filtradas.
-- Listas de linhas (resultados da busca, recortes, transferências, alvos da shortlist, relatórios) usam a `RowList`: `line` entre as linhas e `space-3` de padding vertical. Uma linha com destino é um link inteiro. Números em colunas viram uma linha de apoio abaixo de 720px. Os relatórios de um jogador usam a `ReportTimeline`, a mesma linha agrupada por cadeia de correções, com as correções recuadas.
+- Listas de linhas (resultados da busca, recortes, transferências, shortlists, relatórios) usam a `RowList`: `line` entre as linhas e `space-3` de padding vertical. Uma linha com destino é um link inteiro. Números em colunas viram uma linha de apoio abaixo de 720px. Os relatórios de um jogador usam a `ReportTimeline`, a mesma linha agrupada por cadeia de correções, com as correções recuadas. Os alvos de uma shortlist usam a `TargetRow`, a mesma linha com a prioridade à esquerda, o custo estimado e as ações de repriorizar e remover.
 - Margem lateral da página de pelo menos `space-4`; espaço entre regiões `space-6`.
 
 ### Forma e controles
 
 - Botões, o campo de busca e o `Select` são pílulas (`radius-pill`). O `Select` é um `<select>` nativo em `surface-raised` com borda `line-strong` e a seta `caret-down`; a parte que diferencia as opções vem no começo do texto, porque o corte no celular come o fim. O botão principal é branco com texto `on-light`; os secundários são `surface-raised` com borda `line-strong`.
-- Campos de texto (`TextField`, `PasswordField`) têm 44px de altura, `surface-raised` com borda `line-strong` e `radius-md`, com o rótulo em `label`, `ink-muted`, em cima e a dica ou o erro embaixo. O campo de senha mostra e oculta com o texto "Mostrar"/"Ocultar", sem ícone. O `TextArea` (relato) usa a mesma moldura com 6 linhas; o `DateField` é o `<input type="date">` nativo nessa moldura e, somente leitura, vira o valor em texto ("24/11/2026"). Os pontos do relatório (`PointList`) são campos de uma linha com "Remover" em texto dentro deles.
+- Campos de texto (`TextField`, `PasswordField`) têm 44px de altura, `surface-raised` com borda `line-strong` e `radius-md`, com o rótulo em `label`, `ink-muted`, em cima e a dica ou o erro embaixo. O campo de senha mostra e oculta com o texto "Mostrar"/"Ocultar", sem ícone. O `TextArea` (relato) usa a mesma moldura com 6 linhas; o `DateField` é o `<input type="date">` nativo nessa moldura e, somente leitura, vira o valor em texto ("24/11/2026"). Os pontos do relatório (`PointList`) são campos de uma linha com "Remover" em texto dentro deles. O custo estimado (`MoneyField`) é a quantia em milhões, com o sufixo "M", ao lado do `<select>` da moeda na mesma moldura; com a moeda da lista definida, o seletor vira o código em `ink-muted`.
 - Escolha única entre até quatro opções curtas (o parecer) é um `SegmentedControl`: trilho pílula em `surface-raised`, o escolhido em `surface-strong` com o ponto em `pitch`, sem cor por opção.
 - Botão desabilitado: `surface-strong` com texto `ink-soft`, em qualquer variante; o `ghost` desabilitado fica só com o texto em `ink-subtle`. Não há variante destrutiva: a confirmação de uma ação irreversível fica num `Dialog` que só habilita o botão depois que o olheiro confirma.
 - Diálogos (`Dialog`) ficam centralizados sobre um fundo preto translúcido, em `surface` com borda `line` e `radius-lg`, com título em `section-title` e `x` para fechar. Os botões ficam à direita; abaixo de 480px, empilhados com a ação principal em cima.
@@ -79,7 +80,7 @@ Scout Vestiário é a interface escura do APIFootballScout, uma ferramenta para 
 
 - Um estado vazio diz o que vai aparecer ali e oferece a ação que preenche a tela. Uma frase em `ink-soft` e um `Button` dentro do próprio `Card`, sem ilustração.
 - Nenhum acompanhamento: "Você ainda não acompanha nenhum jogador. Abra o perfil de um jogador e escolha Acompanhar." com o botão "Buscar jogador".
-- Shortlist sem alvos: "Esta shortlist ainda não tem alvos. O primeiro alvo define a moeda da lista." com o botão "Adicionar alvo".
+- Shortlist sem alvos: "Nenhum alvo ainda. Adicione jogadores pelo perfil." com o botão "Buscar jogador", porque o alvo entra pelo perfil do jogador.
 - Nenhum relatório do jogador: "Nenhum relatório sobre este jogador." com o botão "Escrever relatório".
 - Busca sem resultado: "Nenhum jogador encontrado para "<termo>". Confira a grafia ou busque pelo sobrenome." Sem botão.
 - Vazio não é recusa: uma métrica recusada continua na grade com o motivo (`StatCell`), não vira estado vazio.
@@ -88,5 +89,5 @@ Scout Vestiário é a interface escura do APIFootballScout, uma ferramenta para 
 
 - Use o Phosphor, estilo regular, em 20px. Os ícones aprovados estão no grupo Icons, cada um com seu uso; não misture outro conjunto.
 - No código, use `@phosphor-icons/react` com `currentColor`: o ícone fica em `ink-muted` por padrão e em `ink` quando acompanha um texto em `ink`.
-- Ícone acompanha texto; sozinho, só em botões compactos de fechar (`x`) e na alça de arrastar (`dots-six-vertical`), sempre com `aria-label`.
+- Ícone acompanha texto; sozinho, só em botões compactos de fechar (`x`), na alça de arrastar (`dots-six-vertical`) e nas ações da linha do alvo no desktop (`arrow-up`, `arrow-down`, `x`), sempre com `aria-label`.
 - Sem emoji. O escudo do clube vem da fonte e não é ícone.
