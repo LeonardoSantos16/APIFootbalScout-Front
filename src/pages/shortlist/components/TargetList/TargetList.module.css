@@ -1,0 +1,48 @@
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item + .item {
+  border-top: 1px solid var(--line);
+}
+
+.skeletonRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+}
+
+.skeletonPriority {
+  width: 24px;
+  height: 24px;
+}
+
+.skeletonPhoto {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-pill);
+}
+
+.skeletonMain {
+  flex: 1 1 auto;
+  display: grid;
+  gap: 6px;
+}
+
+.skeletonName {
+  width: min(100%, 180px);
+  height: 16px;
+}
+
+.skeletonDetail {
+  width: min(100%, 120px);
+  height: 12px;
+}
+
+.skeletonCost {
+  width: 64px;
+  height: 20px;
+}

@@ -1,0 +1,53 @@
+.body {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.text {
+  margin: 0;
+  font: var(--text-body);
+  color: var(--ink-soft);
+}
+
+.added {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  font: var(--text-body);
+  color: var(--ink);
+}
+
+.check {
+  flex: none;
+  color: var(--pitch);
+}
+
+.skeletonField {
+  height: 44px;
+  border-radius: var(--radius-md);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+@media (max-width: 479px) {
+  .actions {
+    flex-direction: column-reverse;
+  }
+
+  .actions > * {
+    width: 100%;
+  }
+}
+
+.open {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  white-space: nowrap;
+}

@@ -1,0 +1,11 @@
+.message {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-2) 0;
+}
+
+.text {
+  margin: 0;
+  font: var(--text-body);
+  color: var(--ink-soft);
+}

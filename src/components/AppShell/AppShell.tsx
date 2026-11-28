@@ -6,7 +6,9 @@ import styles from './AppShell.module.css'
 
 export const APP_NAME = 'APIFootballScout'
 
-const LINKS = ['Acompanhamentos', 'Shortlists', 'Relatórios']
+const SHORTLISTS = 'Shortlists'
+
+const LINKS = ['Acompanhamentos', SHORTLISTS, 'Relatórios']
 
 interface AppShellProps {
   children?: ReactNode
@@ -15,9 +17,10 @@ interface AppShellProps {
   loading?: boolean
   search?: ReactNode
   searchLink?: ReactNode
+  shortlistsLink?: ReactNode
 }
 
-export const AppShell = ({ children, accountLink, onSignOut, loading, search, searchLink }: AppShellProps) => (
+export const AppShell = ({ children, accountLink, onSignOut, loading, search, searchLink, shortlistsLink }: AppShellProps) => (
   <>
     <header className={styles.top} aria-busy={loading || undefined}>
       <span className={styles.brand}>{APP_NAME}</span>
@@ -41,7 +44,7 @@ export const AppShell = ({ children, accountLink, onSignOut, loading, search, se
             <ul className={styles.links}>
               {LINKS.map((link) => (
                 <li key={link} className={styles.link}>
-                  {link}
+                  {link === SHORTLISTS && shortlistsLink ? shortlistsLink : link}
                 </li>
               ))}
             </ul>

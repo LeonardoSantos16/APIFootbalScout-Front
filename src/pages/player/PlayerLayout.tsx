@@ -35,12 +35,13 @@ interface PlayerLayoutProps {
   tab: PlayerTab
   renderTabLink: (tab: PlayerTab, props: TabLinkProps) => ReactNode
   renderSearchLink: (className: string) => ReactNode
+  bandAction?: ReactNode
   children?: ReactNode
 }
 
 const isNotFound = (error: unknown) => error instanceof ApiError && error.status === 404
 
-export const PlayerLayout = ({ playerId, tab, renderTabLink, renderSearchLink, children }: PlayerLayoutProps) => {
+export const PlayerLayout = ({ playerId, tab, renderTabLink, renderSearchLink, bandAction, children }: PlayerLayoutProps) => {
   const [today] = useState(() => new Date())
   const profile = usePlayerProfile(playerId)
   const failed = profile.isError && !profile.isFetching
@@ -84,6 +85,7 @@ export const PlayerLayout = ({ playerId, tab, renderTabLink, renderSearchLink, c
             name={name}
             subtitle={details ? playerSummary(details, today) || undefined : undefined}
             photo={<PlayerPhoto name={name} src={profile.data.playerImage} />}
+            action={bandAction}
           />
         ) : (
           <ClubBand loading />

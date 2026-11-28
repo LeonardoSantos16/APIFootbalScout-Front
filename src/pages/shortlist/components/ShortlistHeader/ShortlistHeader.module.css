@@ -1,0 +1,56 @@
+.header {
+  display: grid;
+  gap: var(--space-4);
+  padding-top: var(--space-5);
+}
+
+.name {
+  margin: 0;
+  font: var(--text-player-name);
+  font-stretch: 112%;
+}
+
+.values {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4) var(--space-6);
+  margin: 0;
+}
+
+.item {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 2px;
+}
+
+.label {
+  font: var(--text-label);
+  color: var(--ink-muted);
+}
+
+.value {
+  margin: 0;
+  font: var(--text-stat-value);
+  font-variant-numeric: tabular-nums;
+}
+
+.skeletonName {
+  width: min(100%, 260px);
+  height: 30px;
+}
+
+.skeletonValue {
+  width: 80px;
+  height: 44px;
+}
+
+@media (max-width: 720px) {
+  .values {
+    column-gap: var(--space-5);
+  }
+
+  .value {
+    font: var(--text-section-title);
+    font-variant-numeric: tabular-nums;
+  }
+}
