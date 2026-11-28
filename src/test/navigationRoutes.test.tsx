@@ -221,6 +221,20 @@ describe('foco na troca de pagina', () => {
     expect(screen.getByRole('combobox', { name: 'Competição e temporada' })).toHaveFocus()
   })
 
+  it('fica no campo da busca aberta pelo Buscar do topo', async () => {
+    // Arrange
+    const { router } = renderRoute('/jogadores/1001')
+    await screen.findByRole('heading', { name: 'Rafael Montes' })
+
+    // Act
+    await userEvent.click(within(banner()).getByRole('link', { name: 'Buscar' }))
+
+    // Assert
+    await waitFor(() => expect(router.state.location.pathname).toBe('/busca'))
+    const field = await screen.findByRole('searchbox', { name: 'Nome do jogador' })
+    await waitFor(() => expect(field).toHaveFocus())
+  })
+
   it('nao se move no primeiro carregamento', async () => {
     // Act
     renderRoute('/')
