@@ -1,5 +1,5 @@
 import { SignOutIcon } from '@phosphor-icons/react'
-import { useState, type ReactNode } from 'react'
+import { useRef, useState, type ReactNode } from 'react'
 import { APP_NAME } from '../../utils/documentTitle'
 import { Button } from '../Button/Button'
 import { Skeleton } from '../Skeleton/Skeleton'
@@ -34,6 +34,7 @@ export const AppShell = ({
   renderMenuLink,
 }: AppShellProps) => {
   const [menuOpen, setMenuOpen] = useState(false)
+  const menuButton = useRef<HTMLButtonElement>(null)
 
   return (
     <>
@@ -73,6 +74,7 @@ export const AppShell = ({
         <div className={styles.phone}>
           {!loading && searchLink && <span className={styles.searchLink}>{searchLink}</span>}
           <Button
+            ref={menuButton}
             variant="ghost"
             className={styles.menuButton}
             aria-haspopup="dialog"
@@ -86,6 +88,7 @@ export const AppShell = ({
       {renderMenuLink && (
         <PhoneMenu
           open={menuOpen}
+          trigger={menuButton}
           accountName={accountName}
           renderLink={renderMenuLink}
           onClose={() => setMenuOpen(false)}

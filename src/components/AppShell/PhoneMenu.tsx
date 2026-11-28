@@ -1,5 +1,5 @@
 import { SignOutIcon } from '@phosphor-icons/react'
-import type { ReactNode } from 'react'
+import type { ReactNode, RefObject } from 'react'
 import { Button } from '../Button/Button'
 import { Dialog } from '../Dialog/Dialog'
 import styles from './PhoneMenu.module.css'
@@ -16,6 +16,7 @@ export type MenuLinkRenderer = (target: MenuTarget, props: MenuLinkProps) => Rea
 
 interface PhoneMenuProps {
   open: boolean
+  trigger: RefObject<HTMLButtonElement | null>
   accountName?: string
   renderLink: MenuLinkRenderer
   onClose: () => void
@@ -24,13 +25,13 @@ interface PhoneMenuProps {
 
 const ACCOUNT_LABEL = 'Conta'
 
-export const PhoneMenu = ({ open, accountName, renderLink, onClose, onSignOut }: PhoneMenuProps) => {
+export const PhoneMenu = ({ open, trigger, accountName, renderLink, onClose, onSignOut }: PhoneMenuProps) => {
   const link = (target: MenuTarget, children: ReactNode) => (
     <li className={styles.item}>{renderLink(target, { className: styles.link, onClick: onClose, children })}</li>
   )
 
   return (
-    <Dialog open={open} variant="sheet" title="Menu" onClose={onClose}>
+    <Dialog open={open} variant="sheet" finalFocus={trigger} title="Menu" onClose={onClose}>
       <nav aria-label="Menu">
         <ul className={styles.list}>
           {link('home', 'Início')}
@@ -38,7 +39,7 @@ export const PhoneMenu = ({ open, accountName, renderLink, onClose, onSignOut }:
           {link(
             'account',
             <span className={styles.account}>
-              <span>{accountName}</span>
+              <span>{accountName}</span>{' '}
               <span className={styles.accountHint}>{ACCOUNT_LABEL}</span>
             </span>,
           )}
