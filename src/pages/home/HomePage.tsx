@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { APP_NAME } from '../../components/AppShell/AppShell'
+import { APP_NAME } from '../../utils/documentTitle'
 import { Card } from '../../components/Card/Card'
 import { SearchField } from '../../components/SearchField/SearchField'
 import { useSearchForm } from '../../hooks/useSearchForm'

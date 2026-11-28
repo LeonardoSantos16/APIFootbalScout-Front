@@ -47,7 +47,7 @@
 }
 
 .sheet .close {
-  margin: 0 calc(-1 * var(--space-3)) 0 0;
+  margin: 0;
 }
 
 .head {

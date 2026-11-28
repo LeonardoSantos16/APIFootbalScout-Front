@@ -22,3 +22,7 @@ body {
   outline: 2px solid var(--pitch);
   outline-offset: 2px;
 }
+
+[tabindex='-1']:focus {
+  outline: none;
+}

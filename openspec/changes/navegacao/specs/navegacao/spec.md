@@ -64,7 +64,7 @@ At 375px wide, "Menu" SHALL open a full-screen menu titled "Menu" with, in order
 - **THEN** the session ends and "Entrar" opens
 
 ### Requirement: Current page in the navigation
-"Shortlists" SHALL be marked as current on `/shortlists` and on every shortlist page, and the scout's name on `/conta`, both at the top and in the phone menu. "Início" SHALL be marked as current on `/` in the phone menu. The app name at the top SHALL never be marked. On any other page nothing SHALL be marked as current.
+"Shortlists" SHALL be marked as current on `/shortlists` and on every shortlist page, and the scout's name on `/conta`, both at the top and in the phone menu. "Início" SHALL be marked as current on `/` in the phone menu. The app name at the top SHALL never show the current-page underline. On any other page no link SHALL be marked as current.
 
 #### Scenario: Shortlists link
 - **WHEN** the scout clicks "Shortlists" at the top

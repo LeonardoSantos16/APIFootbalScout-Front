@@ -10,8 +10,8 @@
 
 ## 2. Components
 
-- [ ] 2.1 `SkipLink` in `src/components/SkipLink/` with its CSS Module and a focused story, moving the focus to `#conteudo` on click; and `Dialog` `variant="sheet"` with the `Sheet` story; component tests for the focus move and for the sheet closing with Esc; verify in Storybook at desktop and 375px with no literal color, font or spacing in the CSS
-- [ ] 2.2 `AppShell` without `LINKS`, with `homeLink`, `SkipLink`, `<main id="conteudo" tabIndex={-1}>`, the single link placeholder while loading, 44px targets below 720px and the `PhoneMenu` sheet with render props and the `pitch` dot on `[aria-current='page']`; `AuthShell` with `SkipLink` and the `main` target; stories `Desktop`, `Phone`, `PhoneMenuOpen`, `Loading`, `AccountCurrent`; verify in Storybook at desktop and 375px
+- [x] 2.1 `SkipLink` in `src/components/SkipLink/` with its CSS Module and a focused story, moving the focus to `#conteudo` on click; and `Dialog` `variant="sheet"` with the `Sheet` story; component tests for the focus move and for the sheet closing with Esc; verify in Storybook at desktop and 375px with no literal color, font or spacing in the CSS
+- [x] 2.2 `AppShell` without `LINKS`, with `homeLink`, `SkipLink`, `<main id="conteudo" tabIndex={-1}>`, the single link placeholder while loading, 44px targets below 720px and the `PhoneMenu` sheet with render props and the `pitch` dot on `[aria-current='page']`; `AuthShell` with `SkipLink` and the `main` target; stories `Desktop`, `Phone`, `PhoneMenuOpen`, `Loading`, `AccountCurrent`; verify in Storybook at desktop and 375px
 
 ## 3. Mocks
 
