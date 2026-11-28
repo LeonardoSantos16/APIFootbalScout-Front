@@ -9,7 +9,7 @@ describe('server', () => {
     saveSession(seedSession())
 
     // Act
-    const call = fetchClient.GET('/api/Shortlist')
+    const call = fetchClient.GET('/api/Tournament/tournament', { params: { query: { tournamentId: 325, seasonId: 72034 } } })
 
     // Assert
     await expect(call).rejects.toThrow(/onUnhandledRequest/)

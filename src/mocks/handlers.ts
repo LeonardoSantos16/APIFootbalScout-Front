@@ -30,6 +30,19 @@ import {
   listResponse,
   outcomeResponse,
 } from './handlers/reports'
+import {
+  addTargetResponse,
+  createShortlistResponse,
+  moveTargetResponse,
+  removeTargetResponse,
+  shortlistItemResponse,
+  shortlistsResponse,
+  SHORTLIST_ITEM,
+  SHORTLIST_LIST,
+  SHORTLIST_TARGET,
+  SHORTLIST_TARGETS,
+} from './handlers/shortlists'
+import { PROFILE_SOURCE_DOWN_PLAYER } from './fixtures/shortlists'
 import { http } from './http'
 import { plainText, problem } from './responses'
 import { correctReport, createReport, editReport, finalizeReport, findReport } from './reportStore'
@@ -53,6 +66,9 @@ const profileById = http.get(
   '/api/Players/{id}/profile',
   withAuth(({ params, response }) => {
     const id = Number(params.id)
+    if (id === PROFILE_SOURCE_DOWN_PLAYER) {
+      return response.untyped(problem(502, 'sofascore.perfil_do_jogador_indisponivel', `GET /api/Players/${id}/profile`))
+    }
     const build = PROFILES[id]
     return build
       ? response(200).json(build(id))
@@ -231,6 +247,37 @@ const correctReportById = http.post(
   }),
 )
 
+const shortlistsDefault = http.get(SHORTLIST_LIST, withAuth(({ response }) => response.untyped(shortlistsResponse())))
+
+const createShortlistDefault = http.post(
+  SHORTLIST_LIST,
+  withAuth(async ({ request, response }) => response.untyped(await createShortlistResponse(request))),
+)
+
+const shortlistByIdDefault = http.get(
+  SHORTLIST_ITEM,
+  withAuth(({ params, response }) => response.untyped(shortlistItemResponse(params.shortlistId))),
+)
+
+const addTargetDefault = http.post(
+  SHORTLIST_TARGETS,
+  withAuth(async ({ params, request, response }) => response.untyped(await addTargetResponse(params.shortlistId, request))),
+)
+
+const moveTargetDefault = http.put(
+  SHORTLIST_TARGET,
+  withAuth(async ({ params, request, response }) =>
+    response.untyped(await moveTargetResponse(params.shortlistId, params.jogadorId, request)),
+  ),
+)
+
+const removeTargetDefault = http.delete(
+  SHORTLIST_TARGET,
+  withAuth(({ params, request, response }) =>
+    response.untyped(removeTargetResponse(params.shortlistId, params.jogadorId, request)),
+  ),
+)
+
 export const handlers: RequestHandler[] = [
   ...authHandlers,
   profileById,
@@ -245,4 +292,10 @@ export const handlers: RequestHandler[] = [
   editReportById,
   finalizeReportById,
   correctReportById,
+  shortlistsDefault,
+  createShortlistDefault,
+  shortlistByIdDefault,
+  addTargetDefault,
+  moveTargetDefault,
+  removeTargetDefault,
 ]
