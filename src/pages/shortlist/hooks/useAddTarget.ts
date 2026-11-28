@@ -2,7 +2,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { fetchClient } from '../../../api/client'
 import type { ShortlistResponse } from '../interfaces/shortlist'
 import { isShortlistConflict } from '../utils/shortlistError'
-import { ifMatch, invalidateShortlists, rememberShortlist, required, shortlistsQuery } from './shortlistQueries'
+import { shortlistsQuery } from '../../../hooks/useShortlists'
+import { ifMatch, invalidateShortlists, rememberShortlist, required } from './shortlistQueries'
 
 export interface AddTargetInput {
   shortlist: ShortlistResponse

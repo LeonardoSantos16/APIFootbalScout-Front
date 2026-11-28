@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from 'react'
 import { InlineError } from '../../../../components/InlineError/InlineError'
-import { useShortlists } from '../../hooks/useShortlists'
+import { useShortlists } from '../../../../hooks/useShortlists'
 import type { MarketValue, ShortlistResponse, ShortlistLinkProps } from '../../interfaces/shortlist'
 import { withCreated } from '../../utils/addForm'
 import { writeErrorText } from '../../utils/shortlistError'

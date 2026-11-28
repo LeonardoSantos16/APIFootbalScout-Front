@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { COST_PRECISION, COST_REQUIRED, formatCost, initialCurrency, millionsInput, parseMillions } from './cost'
+import { COST_PRECISION, COST_REQUIRED, initialCurrency, millionsInput, parseMillions } from './cost'
 
 describe('parseMillions', () => {
   it.each([
@@ -100,20 +100,5 @@ describe('initialCurrency', () => {
     // Assert
     expect(missing).toBe('EUR')
     expect(other).toBe('EUR')
-  })
-})
-
-describe('formatCost', () => {
-  it.each([
-    [1_250_000_000, 'EUR', '€12,5M'],
-    [85_000_000, 'EUR', '€850 mil'],
-    [975_000_000, 'GBP', '£9,8M'],
-    [400_000_000, 'BRL', 'R$4M'],
-  ])('mostra %i centavos em %s como %s', (quantiaEmCentavos, moeda, text) => {
-    // Act
-    const formatted = formatCost({ quantiaEmCentavos, moeda })
-
-    // Assert
-    expect(formatted).toBe(text)
   })
 })

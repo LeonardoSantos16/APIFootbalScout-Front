@@ -2,14 +2,6 @@ import type { NameCheck, ShortlistResponse } from '../interfaces/shortlist'
 
 export const NAME_REQUIRED = 'Dê um nome à shortlist.'
 
-export const sortByName = (shortlists: ShortlistResponse[]): ShortlistResponse[] =>
-  [...shortlists].sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'))
-
-export const targetsCount = (shortlist: ShortlistResponse): string =>
-  `${shortlist.alvos.length} de ${shortlist.limiteDeAlvos}`
-
-export const targetsLabel = (shortlist: ShortlistResponse): string => `${targetsCount(shortlist)} alvos`
-
 export const listCurrency = (shortlist: ShortlistResponse): string | undefined =>
   shortlist.alvos[0]?.custoEstimado.moeda
 

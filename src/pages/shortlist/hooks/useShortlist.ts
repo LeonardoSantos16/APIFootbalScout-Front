@@ -1,6 +1,7 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import type { ShortlistResponse } from '../interfaces/shortlist'
-import { shortlistQuery, shortlistsQuery } from './shortlistQueries'
+import { shortlistsQuery } from '../../../hooks/useShortlists'
+import { shortlistQuery } from './shortlistQueries'
 
 export const useShortlist = (shortlistId: string) => {
   const queryClient = useQueryClient()

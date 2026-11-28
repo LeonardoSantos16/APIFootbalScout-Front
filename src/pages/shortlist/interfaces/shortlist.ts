@@ -1,11 +1,11 @@
 import type { ReactNode } from 'react'
 import type { components } from '../../../api/schema'
+import type { Money, ShortlistResponse } from '../../../interfaces/shortlist'
 
 type Schemas = components['schemas']
 
-export type ShortlistResponse = Schemas['ShortlistResponseDto']
+export type { Money, ShortlistResponse }
 export type TargetResponse = Schemas['AlvoResponseDto']
-export type Money = Schemas['DinheiroDto']
 export type MarketValue = Schemas['SofaMarketValue']
 
 export type CostParse = { ok: true; cents: number } | { ok: false; error: string }

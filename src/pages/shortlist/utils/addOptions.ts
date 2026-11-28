@@ -1,5 +1,6 @@
 import type { PriorityOption, ShortlistOption, ShortlistResponse } from '../interfaces/shortlist'
-import { isFull, sortByName, targetsLabel } from './shortlists'
+import { sortByName, targetsLabel } from '../../../utils/shortlists'
+import { isFull } from './shortlists'
 
 export const ALREADY_IN_SHORTLIST = 'Já está nesta shortlist'
 

@@ -1,8 +1,8 @@
 import { Card } from '../../../../components/Card/Card'
 import { Skeleton } from '../../../../components/Skeleton/Skeleton'
 import type { ShortlistResponse } from '../../interfaces/shortlist'
-import { formatCost } from '../../utils/cost'
-import { listCurrency, targetsCount } from '../../utils/shortlists'
+import { formatCost, targetsCount } from '../../../../utils/shortlists'
+import { listCurrency } from '../../utils/shortlists'
 import styles from './ShortlistHeader.module.css'
 
 interface ShortlistHeaderProps {
