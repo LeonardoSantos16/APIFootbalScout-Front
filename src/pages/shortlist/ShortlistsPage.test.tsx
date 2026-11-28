@@ -52,7 +52,7 @@ describe('navegacao no topo', () => {
     expect(within(topNavigation()).getByRole('link', { name: 'Shortlists' })).toHaveAttribute('aria-current', 'page')
   })
 
-  it('nao marca link nenhum no perfil e deixa os outros como texto', async () => {
+  it('nao marca link nenhum no perfil', async () => {
     // Act
     renderRoute('/jogadores/1001')
 
@@ -60,9 +60,6 @@ describe('navegacao no topo', () => {
     await screen.findByRole('heading', { name: 'Rafael Montes' })
     const top = topNavigation()
     expect(within(top).getByRole('link', { name: 'Shortlists' })).not.toHaveAttribute('aria-current')
-    expect(within(top).queryByRole('link', { name: 'Acompanhamentos' })).not.toBeInTheDocument()
-    expect(within(top).queryByRole('link', { name: 'Relatórios' })).not.toBeInTheDocument()
-    expect(within(top).getByText('Acompanhamentos')).toBeInTheDocument()
   })
 })
 

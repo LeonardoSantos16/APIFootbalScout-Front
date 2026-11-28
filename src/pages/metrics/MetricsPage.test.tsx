@@ -152,9 +152,8 @@ describe('abertura da tela', () => {
     // Assert
     expect(await screen.findByRole('searchbox', { name: 'Buscar jogador' })).toBeInTheDocument()
     const top = screen.getByRole('navigation', { name: 'Principal' })
-    for (const item of ['Acompanhamentos', 'Shortlists', 'Relatórios']) {
-      expect(within(top).getByText(item)).toBeInTheDocument()
-    }
+    expect(within(top).getByRole('link', { name: 'Shortlists' })).toBeInTheDocument()
+    expect(top).not.toHaveTextContent('Acompanhamentos')
     expect(screen.getByText('Sair')).toBeInTheDocument()
   })
 
