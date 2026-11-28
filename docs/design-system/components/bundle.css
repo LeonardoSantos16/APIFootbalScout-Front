@@ -106,6 +106,12 @@
 .sv-dialog-close:focus-visible { outline: 2px solid var(--pitch); outline-offset: 2px; }
 .sv-dialog-desc { margin: 0; color: var(--ink-soft); font-size: 14px; line-height: 20px; }
 .sv-dialog-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-2); }
+.sv-dialog-backdrop.is-sheet { padding: 0; align-items: stretch; justify-content: stretch; background: var(--surface); }
+.sv-dialog.is-sheet { width: 100%; max-width: none; min-height: 100%; align-content: start; border: 0; border-radius: 0; padding: var(--space-2) var(--space-4) var(--space-5); }
+.sv-dialog.is-sheet .sv-dialog-head { margin: 0 calc(-1 * var(--space-4)); padding: 0 var(--space-4) var(--space-2); border-bottom: 1px solid var(--line); }
+.sv-dialog.is-sheet .sv-dialog-close { margin: 0 -10px 0 0; }
+.sv-skip-link { position: absolute; top: var(--space-2); left: var(--space-2); z-index: 20; display: inline-flex; align-items: center; min-height: 44px; padding: 0 var(--space-4); border-radius: var(--radius-pill); background: var(--ink); color: var(--on-light); font-family: var(--font-body); font-size: 14px; line-height: 20px; font-weight: 600; text-decoration: none; transform: translateY(-200%); }
+.sv-skip-link:focus-visible { transform: none; outline: 2px solid var(--pitch); outline-offset: 2px; }
 @media (max-width: 480px) { .sv-dialog-actions { flex-direction: column-reverse; } .sv-dialog-actions .sv-btn { width: 100%; } }
 
 .sv-visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }

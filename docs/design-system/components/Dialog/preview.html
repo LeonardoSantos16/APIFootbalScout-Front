@@ -7,12 +7,18 @@
 <script>
   var V = window.ScoutVestiario, h = React.createElement;
   var EMAIL = 'ana.ribeiro@exemplo.com';
+  var LINK = { display: 'flex', alignItems: 'center', gap: 8, minHeight: 44, borderBottom: '1px solid var(--line)', color: 'var(--ink-soft)', font: '600 14px/20px var(--font-body)', textDecoration: 'none' };
+  var DOT = { width: 8, height: 8, borderRadius: 999, background: 'var(--pitch)' };
   function Demo() {
     var open = React.useState(true);
+    var menu = React.useState(false);
     var typed = React.useState('');
     var close = function () { open[1](false); };
+    var closeMenu = function () { menu[1](false); };
     return h(React.Fragment, null,
-      h(V.Button, { variant: 'secondary', onClick: function () { typed[1](''); open[1](true); } }, 'Excluir conta'),
+      h('div', { style: { display: 'flex', gap: 8 } },
+        h(V.Button, { variant: 'secondary', onClick: function () { typed[1](''); open[1](true); } }, 'Excluir conta'),
+        h(V.Button, { variant: 'ghost', onClick: function () { menu[1](true); } }, 'Menu')),
       h(V.Dialog, {
         open: open[0],
         title: 'Excluir conta',
@@ -22,7 +28,13 @@
           h(V.Button, { key: 'c', variant: 'secondary', onClick: close }, 'Cancelar'),
           h(V.Button, { key: 'e', variant: 'primary', disabled: typed[0] !== EMAIL, onClick: close }, 'Excluir conta')
         ]
-      }, h(V.TextField, { label: 'Digite ' + EMAIL + ' para confirmar', type: 'email', value: typed[0], onChange: function (e) { typed[1](e.target.value); } })));
+      }, h(V.TextField, { label: 'Digite ' + EMAIL + ' para confirmar', type: 'email', value: typed[0], onChange: function (e) { typed[1](e.target.value); } })),
+      h(V.Dialog, { open: menu[0], variant: 'sheet', title: 'Menu', onClose: closeMenu },
+        h('nav', { 'aria-label': 'Principal' },
+          h('a', { href: '#', 'aria-current': 'page', style: Object.assign({}, LINK, { color: 'var(--ink)' }), onClick: closeMenu }, h('span', { style: DOT, 'aria-hidden': true }), 'Início'),
+          h('a', { href: '#', style: Object.assign({}, LINK, { paddingLeft: 16 }), onClick: closeMenu }, 'Shortlists'),
+          h('a', { href: '#', style: Object.assign({}, LINK, { paddingLeft: 16 }), onClick: closeMenu }, 'Ana Ribeiro')),
+        h('div', null, h(V.Button, { variant: 'ghost', onClick: closeMenu }, 'Sair'))));
   }
   ReactDOM.createRoot(document.getElementById('root')).render(h(Demo));
 </script>

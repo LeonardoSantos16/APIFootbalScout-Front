@@ -1,4 +1,4 @@
-/* @ds-bundle: {"format":4,"namespace":"ScoutVestiario","components":[{"name":"Button"},{"name":"Tabs"},{"name":"ClubBand"},{"name":"Card"},{"name":"StatCell"},{"name":"MetricsGrid"},{"name":"ChangeChip"},{"name":"MeasurementCard"},{"name":"InlineError"},{"name":"Select"},{"name":"TextField"},{"name":"PasswordField"},{"name":"Notice"},{"name":"Dialog"},{"name":"SearchField"},{"name":"PlayerPhoto"},{"name":"RowList"},{"name":"TextArea"},{"name":"DateField"},{"name":"SegmentedControl"},{"name":"StatusBadge"},{"name":"PointList"},{"name":"FinishChecklist"},{"name":"ReportTimeline"},{"name":"TargetRow"},{"name":"MoneyField"}]} */
+/* @ds-bundle: {"format":4,"namespace":"ScoutVestiario","components":[{"name":"Button"},{"name":"Tabs"},{"name":"ClubBand"},{"name":"Card"},{"name":"StatCell"},{"name":"MetricsGrid"},{"name":"ChangeChip"},{"name":"MeasurementCard"},{"name":"InlineError"},{"name":"Select"},{"name":"TextField"},{"name":"PasswordField"},{"name":"Notice"},{"name":"Dialog"},{"name":"SearchField"},{"name":"PlayerPhoto"},{"name":"RowList"},{"name":"TextArea"},{"name":"DateField"},{"name":"SegmentedControl"},{"name":"StatusBadge"},{"name":"PointList"},{"name":"FinishChecklist"},{"name":"ReportTimeline"},{"name":"TargetRow"},{"name":"MoneyField"},{"name":"SkipLink"}]} */
 (function () {
   var React = window.React;
   var h = React.createElement;
@@ -240,8 +240,9 @@
   function Dialog(props) {
     var titleId = React.useId();
     if (!props.open) return null;
-    return h("div", { className: "sv-dialog-backdrop" },
-      h("div", { className: "sv-dialog", role: "dialog", "aria-modal": true, "aria-labelledby": titleId },
+    var sheet = props.variant === "sheet";
+    return h("div", { className: sheet ? "sv-dialog-backdrop is-sheet" : "sv-dialog-backdrop" },
+      h("div", { className: sheet ? "sv-dialog is-sheet" : "sv-dialog", role: "dialog", "aria-modal": true, "aria-labelledby": titleId },
         h("div", { className: "sv-dialog-head" },
           h("h2", { className: "sv-dialog-title", id: titleId }, props.title),
           h("button", { type: "button", className: "sv-dialog-close", "aria-label": "Fechar", onClick: props.onClose },
@@ -250,6 +251,10 @@
         props.description ? h("p", { className: "sv-dialog-desc" }, props.description) : null,
         props.children,
         props.actions ? h("div", { className: "sv-dialog-actions" }, props.actions) : null));
+  }
+
+  function SkipLink(props) {
+    return h("a", { className: "sv-skip-link", href: props.href || "#conteudo" }, props.children || "Pular para o conteúdo");
   }
 
   var SEARCH_PATH = "M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z";
@@ -615,6 +620,7 @@
     PasswordField: PasswordField,
     Notice: Notice,
     Dialog: Dialog,
+    SkipLink: SkipLink,
     Select: Select,
     Button: Button,
     Tabs: Tabs,

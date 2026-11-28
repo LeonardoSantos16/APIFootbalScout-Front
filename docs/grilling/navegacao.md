@@ -52,3 +52,4 @@ Conferidos antes do grilling, mudam as respostas abaixo:
 ## Wireframe e design system
 
 - **Q15.** Wireframes da pagina inicial (carregando, com shortlists, com mais de 5, vazia, erro; desktop e 375px), do menu do celular aberto e da rota inexistente com e sem sessao. Entram antes no design system o `SkipLink` e a variante de painel de tela cheia do `Dialog` para o menu; o resto reaproveita componentes existentes.
+- Wireframe aprovado: https://claude.ai/artifact/RYJD2GUiUdX2MXw2yYV5oB (pagina inicial no desktop, estados do cartao, pagina inicial e menu em 375px, pagina nao encontrada com e sem sessao). Detalhes do wireframe: o menu marca a rota atual com o ponto em `pitch`, o nome do olheiro no menu leva "Conta" na linha de apoio, e a pagina nao encontrada tem a frase "O endereço não existe ou foi digitado errado.".
