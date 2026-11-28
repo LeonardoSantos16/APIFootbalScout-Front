@@ -178,7 +178,7 @@ Every page SHALL start with the link "Pular para o conteúdo" as the first focus
 - **THEN** the focus is on the main content and the next Tab reaches the first element after the top bar
 
 ### Requirement: Focus on page change
-When the scout goes to another page, the focus SHALL move to the page's main heading. It SHALL stay where it is on the first load of the app, when the scout switches between the tabs of the same player, and when only the search params change, such as the recorte, the compared player or the search term.
+When the scout goes to another page, the focus SHALL move to the page's main heading. It SHALL stay where it is on the first load of the app, when the scout switches between the tabs of the same player, when only the search params change, such as the recorte, the compared player or the search term, and when the new page already put the focus in its content, such as the search field.
 
 #### Scenario: Opening a profile from the search
 - **WHEN** the scout opens a player's profile from the results of "silva"
@@ -191,6 +191,10 @@ When the scout goes to another page, the focus SHALL move to the page's main hea
 #### Scenario: Changing the recorte
 - **WHEN** the scout picks another recorte on the metrics page
 - **THEN** the focus stays on the recorte selector
+
+#### Scenario: Opening the search
+- **WHEN** the scout taps "Buscar" at the top at 375px wide
+- **THEN** the focus is on the search field, not on the page heading
 
 #### Scenario: First load
 - **WHEN** the scout opens the app on `/`

@@ -30,7 +30,7 @@ Conferidos antes do grilling, mudam as respostas abaixo:
 ## Pagina inicial
 
 - **Q3.** `/` mostra "Olá, {nome}.", a busca e o cartao "Suas shortlists" com as shortlists de `GET /api/Shortlist`. "Vistos recentemente" fica de fora: criaria estado local novo fora da sessao.
-- **Q9. Cartao "Suas shortlists":** mesma ordem por nome de `/shortlists` (reaproveita `useShortlists`), no maximo 5, com "Ver todas as shortlists" para `/shortlists` quando ha mais. Cada linha: o nome como link e "n alvos" com o custo total, como na lista. Carregando: skeleton de 3 linhas. Vazio: "Você ainda não tem shortlists." com o link "Criar shortlist" para `/shortlists`. Erro: `InlineError` dentro do cartao, com "Tentar de novo" no 502; a busca continua funcionando. Nao cria shortlist na pagina inicial.
+- **Q9. Cartao "Suas shortlists":** mesma ordem por nome de `/shortlists` (reaproveita `useShortlists`), no maximo 5, com "Ver todas as shortlists" para `/shortlists` quando ha mais. Cada linha: o nome como link e "n alvos" com o custo total, como na lista. Carregando: skeleton de 3 linhas. Vazio: "Você ainda não tem shortlists." com o link "Criar shortlist" para `/shortlists`. Erro: `InlineError` dentro do cartao, com "Tentar de novo" sempre que o `describeError` oferece (qualquer 5xx sem `code`, nao so o 502); a busca continua funcionando. Nao cria shortlist na pagina inicial.
 - **Q10. Layout:** uma coluna, com a saudacao e a busca em cima e as shortlists embaixo, sem coluna de apoio.
 
 ## Rota inexistente
@@ -41,7 +41,7 @@ Conferidos antes do grilling, mudam as respostas abaixo:
 ## Acessibilidade
 
 - **Q7.** Entram o link "Pular para o conteúdo" (primeiro focavel, visivel so no foco), o foco no `h1` na troca de rota, o padrao de titulo "<Página> · APIFootballScout" e alvo de toque de 44px no topo do celular.
-- **Q12. Foco na troca de rota:** o foco vai para o `h1` da pagina (`tabIndex={-1}`) quando o `pathname` muda, exceto no primeiro carregamento, na troca de aba dentro do mesmo jogador (o foco fica no link da aba) e nas mudancas so de search params (recorte, `com`, `termo`). O "Pular para o conteúdo" leva ao `main`, tambem com `tabIndex={-1}`. Sem regiao `aria-live` propria: o anuncio vem do titulo.
+- **Q12. Foco na troca de rota:** o foco vai para o `h1` da pagina (`tabIndex={-1}`) quando o `pathname` muda, exceto no primeiro carregamento, na troca de aba dentro do mesmo jogador (o foco fica no link da aba) e nas mudancas so de search params (recorte, `com`, `termo`). O "Pular para o conteúdo" leva ao `main`, tambem com `tabIndex={-1}`. Sem regiao `aria-live` propria: o anuncio vem do titulo. Na implementacao, o foco vai ao primeiro `h1` do `main` sem marcar cada pagina, e nao se move quando a pagina ja focou algo no `main` (o campo de `/busca`).
 - **Q13. Titulos:** um hook `useDocumentTitle(...parts)` junta as partes com " · " e poe "APIFootballScout" no fim ("Métricas · Rafael Souza · APIFootballScout"); a pagina inicial e so "APIFootballScout". Toda tela troca o `document.title` direto pelo hook.
 - **Q16. Rolagem:** `scrollRestoration` do TanStack Router. Rota nova comeca no topo; voltar e avancar do navegador restauram a posicao; troca de aba do jogador e mudanca so de search params mantem a rolagem.
 

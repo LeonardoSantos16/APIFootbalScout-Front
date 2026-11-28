@@ -25,7 +25,7 @@ ADRs applied: 0001 (the session read through `useSession` and `readSession`, use
 
 | Use | Contract | Note |
 | --- | --- | --- |
-| Home shortlists | `GET /api/Shortlist` | `ShortlistResponseDto[]`, unordered; reuses `useShortlists` (sorted by name, 1-minute `staleTime`) |
+| Home shortlists | `GET /api/Shortlist` | `ShortlistResponseDto[]`, unordered; reuses `useShortlists`, moved to `src/hooks/` with `sortByName`, `targetsLabel` and `formatCost` moved to `src/utils/shortlists.ts`, since the home page is the second screen to need them |
 
 ### Routes and search params
 
@@ -50,13 +50,13 @@ No search param changes. The router gets `scrollRestoration: true` and `getScrol
 
 ### Hooks
 
-- `useDocumentTitle(...parts)` (`src/hooks/`): sets `document.title = documentTitle(...parts)` in an effect; every page in the list above replaces its direct write, keeping its current parts (the player layout passes `TAB_TITLE[tab]` or "Jogador não encontrado").
-- `usePageFocus()` (`src/hooks/`): subscribes to the router's `onResolved` and, when `shouldMoveFocus` holds, focuses the element with `data-page-heading` inside `#conteudo`, falling back to `#conteudo` itself. Mounted once in the authenticated and the public layouts. Each page's `h1` gets `tabIndex={-1}` and `data-page-heading`; the player pages mark the player name heading of the layout.
+- `useDocumentTitle(title)` (`src/hooks/`): sets `document.title` in an effect, or nothing when `title` is `null`; pages call it with `documentTitle(...parts)`. The player layout passes `null` until the profile fails, then `TAB_TITLE[tab]` or "Jogador não encontrado".
+- `usePageFocus()` (`src/hooks/`): mounted once in the root route, so it also covers the move from "Entrar" to `/`. It subscribes to the router's `onResolved` and, when `shouldMoveFocus` holds, focuses the first `h1` inside `#conteudo` (adding `tabindex="-1"`), or `#conteudo` itself while the `h1` is not rendered yet and then the `h1` when it appears (up to 5 s). It does nothing when the page already put the focus inside `#conteudo` (the search field). No page marks its heading.
 
 ### Shell
 
 - `AppShell`: `SkipLink` first; the brand through a new `homeLink` render prop (a `Link` to `/` from the route, text in stories); `LINKS` removed, only `shortlistsLink`; `<main id="conteudo" tabIndex={-1}>`; below 720px, "Menu" opens `PhoneMenu`. The loading skeleton keeps one link placeholder instead of three.
-- `PhoneMenu` (`src/components/AppShell/PhoneMenu.tsx`): `Dialog` with `variant="sheet"`, title "Menu", children are render props from the route (`homeLink`, `shortlistsLink`, `accountLink`, each closing the menu on click) and "Sair" as a ghost `Button` with `sign-out`. The route closes it on `onResolved` as well, for links followed from elsewhere. The current link gets `aria-current="page"` from `Link` (`activeProps`, `activeOptions: { exact: true }` for `/`, prefix for `/shortlists`) and the `pitch` dot through CSS on `[aria-current='page']`.
+- `PhoneMenu` (`src/components/AppShell/PhoneMenu.tsx`): `Dialog` with `variant="sheet"` and `finalFocus` on the "Menu" button (Radix only returns focus to a `Dialog.Trigger`), title "Menu", the links from `renderMenuLink(target, props)` with `props.onClick` closing the menu, and "Sair" as a ghost `Button` with `sign-out`. The current link gets `aria-current="page"` from `Link` (`activeOptions: { exact: true }` for `/`, prefix for the others) and the `pitch` dot through CSS on `[aria-current='page']`. The shell links, the menu and the header search live in `src/routes/-AuthenticatedShell.tsx`, shared by the authenticated layout, its error component and the not-found page.
 - `Dialog` gains `variant?: 'centered' | 'sheet'`, with the sheet styles of the design system reference.
 - `SkipLink` (`src/components/SkipLink/`): `<a href="#conteudo">Pular para o conteúdo</a>` off-screen until `:focus-visible`; its click moves focus to `#conteudo` explicitly, since hash links do not focus a `tabIndex=-1` target in every browser.
 - `AuthShell`: `SkipLink` and `<main id="conteudo" tabIndex={-1}>`; the brand stays text.
@@ -64,15 +64,15 @@ No search param changes. The router gets `scrollRestoration: true` and `getScrol
 
 ### Pages
 
-- `HomePage` (`src/pages/home/`): receives `name`, `onSearch` and `renderShortlistLink(shortlistId, props)` / `renderAllShortlistsLink(props)` (stories run without a router). The greeting card as today, then `HomeShortlists`: `Card` titled "Suas shortlists"; three `RowList` skeleton rows while pending; `RowList` of `homeShortlists` with the footer "Ver todas as shortlists" when `hasMore`; empty text "Você ainda não tem shortlists." with "Criar shortlist" (secondary button look, link to `/shortlists`); `InlineError` with `describeError` and `onRetry` only when `canRetry`. Single column at the existing 640px width; the row keeps the `RowList` look (no trailing caret, which the wireframe drew but the component does not have).
-- `NotFoundPage` (`src/pages/not-found/`): `Card` with the `h1` "Página não encontrada.", "O endereço não existe ou foi digitado errado." and the link from `renderLink` ("Ir para o início" or "Entrar"); title through `useDocumentTitle('Página não encontrada')`.
-- `NotFoundRoute` (`src/routes/-NotFoundRoute.tsx`): with a session (`readSession()` and a non-expired refresh), the authenticated `AppShell` with the not-found page and "Ir para o início"; without, `AuthShell` with "Entrar". It does not call `me`: the top only needs the session name.
+- `HomePage` (`src/pages/home/`): receives `name`, `onSearch`, `renderShortlistLink(shortlistId, props)` and `renderListLink(props)` (stories run without a router). The greeting card as today, then `HomeShortlists` (`src/pages/home/components/`): `Card` titled "Suas shortlists"; three skeleton rows in a `status` list while pending; `RowList` of `homeShortlists` with the footer "Ver todas as shortlists" when `hasMore`; empty text "Você ainda não tem shortlists." with "Criar shortlist" (secondary button look, link to `/shortlists`); `InlineError` with `describeError` and `onRetry` when `canRetry`, which holds for any 5xx without `code`. Single column at the existing 640px width; the row keeps the `RowList` look (no trailing caret).
+- `NotFoundPage` (`src/pages/not-found/`): the `h1` "Página não encontrada.", "O endereço não existe ou foi digitado errado." and the `action` link, inside a `Card` when `framed` (the scout's shell) and bare inside the `AuthShell` card; title through `useDocumentTitle(documentTitle('Página não encontrada'))`.
+- `NotFoundRoute` (`src/routes/-NotFoundRoute.tsx`): with a session (`readSession()` and a non-expired refresh), the `AuthenticatedShell` (top search included) with the framed page and "Ir para o início"; without, `AuthShell` with "Entrar". It does not call `me`: the top only needs the session name.
 
 ### Components and stories
 
 - `src/components/SkipLink/`: story focused.
 - `src/components/Dialog/`: story `Sheet`.
-- `src/components/AppShell/`: stories `Desktop`, `Phone`, `PhoneMenuOpen`, `Loading`, `AccountCurrent`.
+- `src/components/AppShell/`: stories `Desktop`, `OnSearchPage`, `Phone`, `PhoneMenuOpen`, `Loading`, `AccountCurrent`, `ShortlistsCurrent`. `Button` takes `ref`; `StoryShell` gets the brand link and the menu.
 - `src/pages/home/`: stories `WithShortlists`, `MoreThanFive`, `Empty`, `Loading`, `UnknownError`, `SourceDown`, each also at 375px through the viewport parameter.
 - `src/pages/not-found/`: stories `SignedIn`, `SignedOut`.
 

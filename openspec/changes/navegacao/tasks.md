@@ -51,9 +51,9 @@
 
 ## 10. Verification
 
-- [ ] 10.1 `npm run lint`, `npm run typecheck`, `npm test` and `npm run build` pass; walk every state of the wireframe in `npm run dev:mock` (home with the four shortlists, the phone menu, `/xyz` signed in and out, `/jogadores/abc`, the skip link and the focus after opening a profile) at desktop and 375px with no console errors
+- [x] 10.1 `npm run lint`, `npm run typecheck`, `npm test` and `npm run build` pass; walk every state of the wireframe in `npm run dev:mock` (home with the four shortlists, the phone menu, `/xyz` signed in and out, `/jogadores/abc`, the skip link and the focus after opening a profile) at desktop and 375px with no console errors
 - [ ] 10.2 Against the real API (`npm run dev` with the back-end running): sign in, see the home shortlists, open one, use the phone menu, open `/xyz` and an invalid player id; record the findings in `docs/divida-tecnica.md` and the delta spec
 
 ## 11. Retrospective
 
-- [ ] 11.1 Retrospective: what the spec did not foresee, adjustments to the delta spec, the `scout-ui` skill and `CLAUDE.md`, before `/openspec-archive-change`
+- [x] 11.1 Retrospective: what the spec did not foresee, adjustments to the delta spec, the `scout-ui` skill and `CLAUDE.md`, before `/openspec-archive-change`
