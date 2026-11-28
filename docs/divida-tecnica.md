@@ -144,9 +144,3 @@ Pendencias conhecidas que o front contorna hoje e que precisam de correcao em ou
 - **Correcao esperada:** acrescentar os codigos e uma secao de concorrencia nos docs do back-end.
 
 ## Front
-
-### Pagina inicial provisoria
-
-- **Problema:** a pagina inicial de verdade so chega no item 9, mas o olheiro precisa cair em algum lugar depois de entrar.
-- **Contorno:** `/` mostra "Olá, {nome}." e o campo de busca (grilling da Busca e perfil, Q13). No `dev:mock`, os jogadores de teste sao achados pelo nome na busca.
-- **Correcao esperada:** substituir no item 9 (Navegacao e acessibilidade).

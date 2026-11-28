@@ -36,9 +36,9 @@
 
 ## 7. Home page
 
-- [ ] 7.1 Route tests (`test:` red for the group): "Olá, Ana.", the search field and "Suas shortlists"; "silva" and "Buscar" open `/busca?termo=silva`; three placeholder rows while pending; Ana's four seeded shortlists in name order without "Ver todas as shortlists"; "Laterais 2027" with "4 de 25 alvos · €47M" opens its page; six shortlists show five without "Zagueiros sub-23" and with "Ver todas as shortlists" leading to `/shortlists`; empty shows "Você ainda não tem shortlists." with "Criar shortlist" to `/shortlists`; a 500 shows "Não foi possível concluir agora." with "Tentar de novo" and the search still works; a 502 shows "Tentar de novo", which asks again
-- [ ] 7.2 Green in one `feat:` commit: `HomePage` with `HomeShortlists` and the route passing the shortlist links; remove the "Pagina inicial provisoria" entry from `docs/divida-tecnica.md`; verify with `npm test`
-- [ ] 7.3 Stories of `HomePage` per state (`WithShortlists`, `MoreThanFive`, `Empty`, `Loading`, `UnknownError`, `SourceDown`); verify in Storybook at desktop and 375px
+- [x] 7.1 Route tests (`test:` red for the group): "Olá, Ana.", the search field and "Suas shortlists"; "silva" and "Buscar" open `/busca?termo=silva`; three placeholder rows while pending; Ana's four seeded shortlists in name order without "Ver todas as shortlists"; "Laterais 2027" with "4 de 25 alvos · €47M" opens its page; six shortlists show five without "Zagueiros sub-23" and with "Ver todas as shortlists" leading to `/shortlists`; empty shows "Você ainda não tem shortlists." with "Criar shortlist" to `/shortlists`; a 500 shows "Não foi possível concluir agora." with "Tentar de novo" and the search still works; a 502 shows "Tentar de novo", which asks again
+- [x] 7.2 Green in one `feat:` commit: `HomePage` with `HomeShortlists` and the route passing the shortlist links; remove the "Pagina inicial provisoria" entry from `docs/divida-tecnica.md`; verify with `npm test`
+- [x] 7.3 Stories of `HomePage` per state (`WithShortlists`, `MoreThanFive`, `Empty`, `Loading`, `UnknownError`, `SourceDown`); verify in Storybook at desktop and 375px
 
 ## 8. Guidelines review
 

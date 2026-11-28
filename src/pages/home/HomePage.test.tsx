@@ -139,13 +139,16 @@ describe('suas shortlists', () => {
     server.use(shortlistsUnknownError)
     const { router } = renderRoute('/')
 
-    // Act
     const alert = await screen.findByRole('alert')
+    const message = alert.textContent
+    const retry = within(alert).queryByRole('button', { name: 'Tentar de novo' })
+
+    // Act
     await user.type(screen.getByRole('searchbox', { name: 'Nome do jogador' }), 'silva{Enter}')
 
     // Assert
-    expect(alert).toHaveTextContent('Não foi possível concluir agora.')
-    expect(within(alert).getByRole('button', { name: 'Tentar de novo' })).toBeInTheDocument()
+    expect(message).toContain('Não foi possível concluir agora.')
+    expect(retry).not.toBeNull()
     await waitFor(() => expect(router.state.location.pathname).toBe('/busca'))
   })
 
