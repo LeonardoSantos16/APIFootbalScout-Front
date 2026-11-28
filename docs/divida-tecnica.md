@@ -77,6 +77,12 @@ Pendencias conhecidas que o front contorna hoje e que precisam de correcao em ou
 - **Contorno no front:** a change `f1-f2-acompanhamento` entrega so abrir e ler. O limite aparece quando o `POST` responde `422 acompanhamento.limite_atingido` ("Limite de 10 acompanhamentos atingido.", sem sugerir encerrar), em vez de o botao ser desabilitado antes, como pede o `fluxos-de-tela.md` (grilling da F1/F2, Q3 e Q11).
 - **Correcao esperada:** `GET /api/Acompanhamento` com os ativos e o consumo do limite, e um endpoint de encerramento. Entram no item 6b do planejamento.
 
+### Relatorios sem lista do olheiro
+
+- **Problema:** `GET /api/Relatorio/jogador/{jogadorId}` lista os relatorios de um jogador, mas nao ha endpoint com todos os relatorios do olheiro. O topo nao tem para onde levar "Relatórios".
+- **Contorno no front:** a change `navegacao` tira "Relatórios" do topo (grilling da navegacao, Q2); os relatorios continuam na aba "Relatórios" de cada jogador.
+- **Correcao esperada:** `GET /api/Relatorio` com os relatorios do olheiro, paginado e com o jogador de cada um; o link volta ao topo quando existir.
+
 ### Leitura do acompanhamento sem o recorte
 
 - **Problema:** `POST /api/Acompanhamento` recebe o recorte, mas `GET /api/Acompanhamento/{jogadorId}` nao o devolve. O painel nao consegue dizer de qual competicao e temporada e a minutagem.

@@ -146,7 +146,7 @@ Lista ordenada de alvos com prioridade `1..n` contigua. A tela reflete sempre a 
 
 ## 9. Navegacao e acessibilidade
 
-Consolida o que cada feature entregou com navegacao minima. O header no topo entra na F9 como esqueleto; aqui ele ganha destinos, estado ativo e o menu do celular.
+Consolida o que cada feature entregou com navegacao minima. O header no topo entra na F9 como esqueleto; aqui ele ganha destinos, estado ativo e o menu do celular. Decisoes em [grilling/navegacao.md](grilling/navegacao.md).
 
 - **Escopo:** layout geral com navegacao entre busca, acompanhamentos, shortlists e conta; pagina inicial; rota inexistente; responsivo basico; revisao com `web-design-guidelines`.
 - **Para o grilling:** o que a pagina inicial mostra; se a navegacao entra antes, junto da sessao.
