@@ -10,6 +10,8 @@ export const SHORTLIST_IDS = {
   meias: '70000000-0000-4000-8000-000000000002',
   atacantes: '70000000-0000-4000-8000-000000000003',
   conflito: '70000000-0000-4000-8000-000000000004',
+  goleiros: '70000000-0000-4000-8000-000000000005',
+  zagueiros: '70000000-0000-4000-8000-000000000006',
   missing: '79999999-0000-4000-8000-000000000001',
 } as const
 
@@ -96,4 +98,10 @@ export const anaShortlists = (): Shortlist[] => [
   conflitoShortlist(),
   meiasShortlist(),
   atacantesShortlist(),
+]
+
+export const moreThanFiveShortlists = (): Shortlist[] => [
+  ...anaShortlists(),
+  buildShortlist({ shortlistId: SHORTLIST_IDS.goleiros, nome: 'Goleiros', alvos: buildTargets([[1003, 3.5]]) }),
+  buildShortlist({ shortlistId: SHORTLIST_IDS.zagueiros, nome: 'Zagueiros sub-23' }),
 ]

@@ -126,7 +126,7 @@ The card "Suas shortlists" SHALL list at most five of the scout's shortlists in 
 
 #### Scenario: Unknown error
 - **WHEN** the shortlists answer with a 500 without `code`
-- **THEN** the card shows "Não foi possível concluir agora." without "Tentar de novo" and the search field still works
+- **THEN** the card shows "Não foi possível concluir agora." with "Tentar de novo" and the search field still works
 
 #### Scenario: Source failure
 - **WHEN** the shortlists answer with a 502
