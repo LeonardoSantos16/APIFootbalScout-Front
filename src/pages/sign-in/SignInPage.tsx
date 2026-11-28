@@ -1,4 +1,4 @@
-import { useEffect, type ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import { $api } from '../../api/client'
 import { saveSession } from '../../api/session'
 import { Button } from '../../components/Button/Button'
@@ -6,8 +6,10 @@ import { InlineError } from '../../components/InlineError/InlineError'
 import { Notice } from '../../components/Notice/Notice'
 import { PasswordField } from '../../components/PasswordField/PasswordField'
 import { TextField } from '../../components/TextField/TextField'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 import { useFormSubmit } from '../../hooks/useFormSubmit'
 import type { SessionNotice } from '../../interfaces/session'
+import { documentTitle } from '../../utils/documentTitle'
 import styles from '../../styles/accountForm.module.css'
 import { noticeText } from '../../utils/accountErrors'
 import { validateSignIn } from '../../utils/accountValidation'
@@ -39,9 +41,7 @@ export const SignInPage = ({ notice, onSignedIn, signUpLink }: SignInPageProps) 
   })
   const sending = signIn.isPending
 
-  useEffect(() => {
-    document.title = PAGE_TITLE
-  }, [])
+  useDocumentTitle(documentTitle(PAGE_TITLE))
 
   return (
     <>

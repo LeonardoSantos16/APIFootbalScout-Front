@@ -1,8 +1,8 @@
-import { useEffect } from 'react'
-import { APP_NAME } from '../../utils/documentTitle'
 import { Card } from '../../components/Card/Card'
 import { SearchField } from '../../components/SearchField/SearchField'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 import { useSearchForm } from '../../hooks/useSearchForm'
+import { documentTitle } from '../../utils/documentTitle'
 import styles from './HomePage.module.css'
 
 const FIELD_LABEL = 'Nome do jogador'
@@ -15,9 +15,7 @@ interface HomePageProps {
 export const HomePage = ({ name, onSearch }: HomePageProps) => {
   const form = useSearchForm({ onSearch })
 
-  useEffect(() => {
-    document.title = APP_NAME
-  }, [])
+  useDocumentTitle(documentTitle())
 
   return (
     <div className={styles.page}>

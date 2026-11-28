@@ -1,11 +1,12 @@
-import { useEffect } from 'react'
 import { describeError } from '../../api/errors'
 import { Card } from '../../components/Card/Card'
 import { InlineError } from '../../components/InlineError/InlineError'
 import { PageColumns } from '../../components/PageColumns/PageColumns'
 import { Select } from '../../components/Select/Select'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 import { SLICE_SELECT_LABEL, useSliceSelection } from '../../hooks/useSliceSelection'
 import type { Slice, SliceChangeOptions, SliceSearch } from '../../interfaces/slice'
+import { documentTitle } from '../../utils/documentTitle'
 import { MetricsGrid } from './components/MetricsGrid/MetricsGrid'
 import { useMetricsPer90 } from './hooks/useMetricsPer90'
 import styles from './MetricsPage.module.css'
@@ -24,9 +25,7 @@ export const MetricsPage = ({ playerId, search, onSliceChange }: MetricsPageProp
   const metrics = useMetricsPer90(playerId, selected)
   const name = profile.data?.details?.name
 
-  useEffect(() => {
-    document.title = name ? `${PAGE_TITLE} · ${name}` : PAGE_TITLE
-  }, [name])
+  useDocumentTitle(documentTitle(PAGE_TITLE, name))
 
   if (!profile.data) {
     return (

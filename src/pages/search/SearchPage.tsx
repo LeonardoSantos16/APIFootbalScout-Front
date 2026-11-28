@@ -1,10 +1,12 @@
-import { useEffect, type ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import { Card } from '../../components/Card/Card'
 import { InlineError } from '../../components/InlineError/InlineError'
 import { RowList, type Row, type RowLinkProps } from '../../components/RowList/RowList'
 import { SearchField } from '../../components/SearchField/SearchField'
 import { Skeleton } from '../../components/Skeleton/Skeleton'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 import { useSearchForm } from '../../hooks/useSearchForm'
+import { documentTitle } from '../../utils/documentTitle'
 import { isSearchableTerm } from '../../utils/search'
 import { useSearchPlayers } from '../../hooks/useSearchPlayers'
 import { describeSearchError, resultSummary, type SearchPlayer } from '../../utils/searchResults'
@@ -46,9 +48,7 @@ export const SearchPage = ({ term, onSearch, renderPlayerLink }: SearchPageProps
   const searchable = isSearchableTerm(term)
   const search = useSearchPlayers(term)
 
-  useEffect(() => {
-    document.title = PAGE_TITLE
-  }, [])
+  useDocumentTitle(documentTitle(PAGE_TITLE))
 
   const renderResults = () => {
     if (!searchable) return null

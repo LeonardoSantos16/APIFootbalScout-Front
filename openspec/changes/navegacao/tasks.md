@@ -25,8 +25,8 @@
 
 ## 5. Tab titles
 
-- [ ] 5.1 Route tests (`test:` red): "Métricas por 90 · Rafael Montes · APIFootballScout", "Shortlists · APIFootballScout", "Entrar · APIFootballScout", "APIFootballScout" on `/`; update the title assertions of the existing page tests to the full title in the same commit
-- [ ] 5.2 Green in one `feat:` commit: `useDocumentTitle` in `src/hooks/` replacing the direct `document.title` writes of the fourteen pages and of `PlayerLayout`; verify with `npm test` and `grep -rn "document.title =" src` finding only the hook
+- [x] 5.1 Route tests (`test:` red): "Métricas por 90 · Rafael Montes · APIFootballScout", "Shortlists · APIFootballScout", "Entrar · APIFootballScout", "APIFootballScout" on `/`; update the title assertions of the existing page tests to the full title in the same commit
+- [x] 5.2 Green in one `feat:` commit: `useDocumentTitle` in `src/hooks/` replacing the direct `document.title` writes of the fourteen pages and of `PlayerLayout`; verify with `npm test` and `grep -rn "document.title =" src` finding only the hook
 
 ## 6. Page not found
 

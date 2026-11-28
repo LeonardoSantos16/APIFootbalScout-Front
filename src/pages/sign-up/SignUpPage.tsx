@@ -1,11 +1,13 @@
-import { useEffect, type ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import { $api } from '../../api/client'
 import { saveSession } from '../../api/session'
 import { Button } from '../../components/Button/Button'
 import { InlineError } from '../../components/InlineError/InlineError'
 import { PasswordField } from '../../components/PasswordField/PasswordField'
 import { TextField } from '../../components/TextField/TextField'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
 import { useFormSubmit } from '../../hooks/useFormSubmit'
+import { documentTitle } from '../../utils/documentTitle'
 import styles from '../../styles/accountForm.module.css'
 import { PASSWORD_HINT, validateSignUp } from '../../utils/accountValidation'
 
@@ -35,9 +37,7 @@ export const SignUpPage = ({ onSignedUp, signInLink }: SignUpPageProps) => {
   })
   const sending = signUp.isPending
 
-  useEffect(() => {
-    document.title = PAGE_TITLE
-  }, [])
+  useDocumentTitle(documentTitle(PAGE_TITLE))
 
   return (
     <>

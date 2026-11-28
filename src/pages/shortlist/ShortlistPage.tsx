@@ -1,11 +1,13 @@
 import { ArrowLeftIcon, MagnifyingGlassIcon } from '@phosphor-icons/react'
-import { useEffect, type ReactNode } from 'react'
+import { type ReactNode } from 'react'
 import { ApiError } from '../../api/client'
 import { describeError } from '../../api/errors'
 import { linkButtonClassName } from '../../components/Button/buttonClassName'
 import { Card } from '../../components/Card/Card'
 import { Notice } from '../../components/Notice/Notice'
 import { PageColumns } from '../../components/PageColumns/PageColumns'
+import { useDocumentTitle } from '../../hooks/useDocumentTitle'
+import { documentTitle } from '../../utils/documentTitle'
 import { ShortlistHeader } from './components/ShortlistHeader/ShortlistHeader'
 import { ShortlistMessage } from './components/ShortlistMessage/ShortlistMessage'
 import { TargetList } from './components/TargetList/TargetList'
@@ -41,9 +43,7 @@ export const ShortlistPage = ({ shortlistId, renderListLink, renderSearchLink, r
   const actions = useTargetActions(shortlistId)
   const name = shortlist.data?.nome
 
-  useEffect(() => {
-    document.title = name ? `${PAGE_TITLE} · ${name}` : PAGE_TITLE
-  }, [name])
+  useDocumentTitle(documentTitle(PAGE_TITLE, name))
 
   if (shortlist.isError && !shortlist.data && !shortlist.isFetching) {
     const notFound = isNotFound(shortlist.error)
