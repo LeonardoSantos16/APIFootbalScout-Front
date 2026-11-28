@@ -21,8 +21,8 @@ The scout needs to turn the players they evaluated into an ordered list of targe
 - `shortlist-priorizada`: the shortlists page and creation, the shortlist page with its alvos, repriorizar and remover, adding an alvo from the player, the cost field, concurrency and the loading, empty, full, conflict and error states.
 
 ### Modified Capabilities
-- `navegacao`: the top "Shortlists" link gains its destination and the current state.
-- `perfil-do-jogador`: the club band gains the "Adicionar à shortlist" action on every player tab.
+- `navegacao`: new requirement for the top "Shortlists" link, with its destination and the current state.
+- `perfil-do-jogador`: new requirement for the "Adicionar à shortlist" action in the club band on every player tab.
 
 ## Impact
 
